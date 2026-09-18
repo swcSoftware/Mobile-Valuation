@@ -55,7 +55,7 @@ error/empty states should explain *which* limitation applied (TASKS Sprint 1).
 - **TestFlight** (needs an Apple Developer account, $99/yr): archive with a real team ID in
   `project.yml` (`DEVELOPMENT_TEAM`), upload, invite up to 10,000 external testers.
 - Until then: the web mirror published from this session is a throwaway preview of the same
-  data and screens for feedback only.
+  data and screens for feedback only: https://claude.ai/artifact/VQYGXRHyyEMSPQB3swSKJj
 
 ### Effort estimate
 Hosting + Release URL: half a day. Rate limiting + persistent cache: half a day. Licensed

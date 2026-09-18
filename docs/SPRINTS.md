@@ -11,6 +11,8 @@
   Model A/B toggle → PDF dossier and 1:1 share card exported to Documents.
 - `apps/android`: scaffold with contract models.
 - `docs/`: this folder. Branches `main`, `staging`, `dev`.
+- Tester web preview (throwaway HTML mirror with bundled data, not part of the codebase):
+  https://claude.ai/artifact/VQYGXRHyyEMSPQB3swSKJj — private until shared from its Share menu.
 
 **Bugs found and fixed during the session**
 - Snake-case decoding of `treasury_10y_pct` (Swift capitalizes the `y`).
