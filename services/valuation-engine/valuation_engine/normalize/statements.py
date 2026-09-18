@@ -184,9 +184,10 @@ def _ttm_flow(cf: CompanyFacts, concept: Concept, fy_value: SourcedValue | None)
             continue
         p = _latest_filed(prior)
         ttm = fy_value.value + cur.value - p.value
+        fmt = ",.2f" if concept.unit == "USD/shares" else ",.0f"
         note = (
-            f"TTM = FY({fy_value.period_end}) {fy_value.value:,.0f} + YTD({cur.start}→{cur.end}) "
-            f"{cur.value:,.0f} − YTD({p.start}→{p.end}) {p.value:,.0f}"
+            f"TTM = FY({fy_value.period_end}) {fy_value.value:{fmt}} + YTD({cur.start}→{cur.end}) "
+            f"{cur.value:{fmt}} − YTD({p.start}→{p.end}) {p.value:{fmt}}"
         )
         if concept.unit == "USD/shares":
             note += " (EPS TTM is an additive approximation)"
@@ -219,6 +220,11 @@ def _derive(period: Period, prev: Period | None) -> None:
             filed=base.filed, derived=True, note=note,
         )
 
+    # operating income fallback (companies like JNJ don't tag OperatingIncomeLoss)
+    if "operating_income" not in v and "pretax_income" in v:
+        interest = abs(v["interest_expense"].value) if "interest_expense" in v else 0.0
+        v["operating_income"] = mk(v["pretax_income"].value + interest,
+                                   "pretax_income + interest_expense (EBIT proxy; OperatingIncomeLoss not tagged)", v["pretax_income"])
     # total_liabilities fallback
     if "total_liabilities" not in v and "liabilities_and_equity" in v and "equity" in v:
         v["total_liabilities"] = mk(
@@ -326,6 +332,11 @@ def _adjust_for_splits(periods: list[Period], warnings: list[str]) -> None:
                         sv.note = (sv.note + " " if sv.note else "") + f"split-adjusted ×{factor:g}"
 
 
+def fiscal_year_for(end: date) -> int:
+    """52/53-week fiscal years can end on Jan 1–7 of the following calendar year (JNJ, etc.)."""
+    return end.year - 1 if (end.month == 1 and end.day <= 7) else end.year
+
+
 # --------------------------------------------------------------------------- entry point
 def normalize(cf: CompanyFacts, max_years: int = 10) -> NormalizedFinancials:
     warnings: list[str] = []
@@ -343,7 +354,8 @@ def normalize(cf: CompanyFacts, max_years: int = 10) -> NormalizedFinancials:
 
     periods: list[Period] = []
     for end in ends:
-        p = Period(label=f"FY{end.year}", period_end=end, fiscal_year=end.year, form="10-K")
+        fy = fiscal_year_for(end)
+        p = Period(label=f"FY{fy}", period_end=end, fiscal_year=fy, form="10-K")
         for key, series in annual_flow_values.items():
             if end in series:
                 p.values[key] = series[end]
