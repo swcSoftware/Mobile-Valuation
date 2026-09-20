@@ -1,0 +1,54 @@
+# Publishes keyless data files to GitHub Pages for the apps:
+#   https://swcsoftware.github.io/Mobile-Valuation/rates.json    (daily, FRED via repo secret)
+#   https://swcsoftware.github.io/Mobile-Valuation/tickers.json  (weekly, SEC mirror)
+#
+# Owner setup (once):
+#   1. Settings → Secrets and variables → Actions → New repository secret: FRED_API_KEY
+#   2. Settings → Pages → Source: "Deploy from a branch", branch: gh-pages, folder: / (root)
+#   3. Actions → "Publish data files" → Run workflow (first run creates gh-pages)
+name: Publish data files
+
+on:
+  schedule:
+    - cron: "0 11 * * 1-5"   # weekdays 11:00 UTC (07:00 ET) — after FRED posts the prior close
+    - cron: "0 12 * * 0"     # Sundays: refresh the ticker mirror
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Fetch current published files (keep what we don't regenerate)
+        run: |
+          git fetch origin gh-pages:gh-pages || true
+          mkdir -p site
+          git show gh-pages:rates.json   > site/rates.json   2>/dev/null || true
+          git show gh-pages:tickers.json > site/tickers.json 2>/dev/null || true
+
+      - name: Publish rates.json
+        env:
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+        run: python3 scripts/publish_rates.py site
+
+      - name: Publish tickers.json (weekly or manual)
+        if: github.event.schedule == '0 12 * * 0' || github.event_name == 'workflow_dispatch'
+        env:
+          SEC_USER_AGENT: "ValueLens Publisher valuelens@swcsoftware.com"
+        run: python3 scripts/publish_tickers.py site
+
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site
+          publish_branch: gh-pages
+          keep_files: true
+          commit_message: "data: publish ${{ github.run_id }}"
