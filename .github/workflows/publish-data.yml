@@ -26,12 +26,15 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Fetch current published files (keep what we don't regenerate)
+      # Carry forward files this run doesn't regenerate (tickers.json on weekdays), then publish
+      # ONLY site/ — keep_files is false so nothing else (e.g. source) can end up on the public branch.
+      - name: Fetch current published files
         run: |
           git fetch origin gh-pages:gh-pages || true
           mkdir -p site
           git show gh-pages:rates.json   > site/rates.json   2>/dev/null || true
           git show gh-pages:tickers.json > site/tickers.json 2>/dev/null || true
+          find site -size 0 -delete
 
       - name: Publish rates.json
         env:
@@ -50,5 +53,5 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./site
           publish_branch: gh-pages
-          keep_files: true
+          keep_files: false
           commit_message: "data: publish ${{ github.run_id }}"

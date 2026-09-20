@@ -48,3 +48,4 @@ instruction for alpha). Severity: **P1** blocks core flow · **P2** wrong number
 | 41 | P3 | core | `Edgar.masterList()` parses the full 800 KB ticker list on every search keystroke (debounced 300 ms); fine on modern phones, wasteful. | Cache the parsed list in memory. | open |
 | 42 | P3 | core | Check thresholds (0.5% balance-sheet tolerance, 10% EPS tolerance, 130-day freshness) are first guesses; expect false warnings on 52/53-week filers around year end. | Tune after tester feedback. | open |
 | 43 | P3 | web | Web preview's basic/expert toggle is a static mirror; it does not run the core. | | accepted |
+| 44 | P2 | ci | First Pages deploy used `keep_files: true` on a `gh-pages` branch created from `dev`, so the whole source tree was published to the public Pages site. | Workflow now `keep_files: false` (replaces the branch with `site/` only). Owner: run "Publish data files" once to prune. | fixed |
