@@ -42,7 +42,7 @@ class Edgar(private val fetcher: Fetcher, cache: KeyValueCache, private val user
     private fun getText(url: String, ttlMillis: Long, headers: Map<String, String> = headers()): String {
         ttl.get(url, ttlMillis)?.let { return it }
         lastCall = clock.nowMillis()  // a single device issues a handful of requests per lookup; far below SEC's 10 req/s
-        val text = try { fetcher.get(url, headers) } catch (e: FetchException) {
+        val text = try { fetcher.text(url, headers) } catch (e: FetchException) {
             when {
                 e.status == 404 -> throw EngineException.NoAnnualData("SEC has no XBRL company facts for this filer.")
                 e.status == 403 || e.status >= 500 -> throw EngineException.UpstreamUnavailable("SEC EDGAR returned ${e.status}")

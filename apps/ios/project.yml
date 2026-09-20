@@ -19,6 +19,20 @@ targets:
     platform: iOS
     sources:
       - path: ValueLens
+    dependencies:
+      - framework: ../../packages/valuation-core/build/XCFrameworks/release/ValuationCore.xcframework
+        embed: false
+    preBuildScripts:
+      - name: Build ValuationCore.xcframework if missing
+        script: |
+          set -e
+          FW="$SRCROOT/../../packages/valuation-core/build/XCFrameworks/release/ValuationCore.xcframework"
+          if [ ! -d "$FW" ]; then
+            cd "$SRCROOT/../android"
+            export JAVA_HOME="${JAVA_HOME:-/Applications/Android Studio.app/Contents/jbr/Contents/Home}"
+            ./gradlew :valuation-core:assembleValuationCoreReleaseXCFramework -q
+          fi
+        basedOnDependencyAnalysis: false
     info:
       path: ValueLens/Info.plist
       properties:
@@ -28,10 +42,7 @@ targets:
         UIUserInterfaceStyle: Dark
         UIFileSharingEnabled: true
         LSSupportsOpeningDocumentsInPlace: true
-        NSAppTransportSecurity:
-          NSAllowsLocalNetworking: true
         ITSAppUsesNonExemptEncryption: false
-        ENGINE_BASE_URL: $(ENGINE_BASE_URL)
         CFBundleURLTypes:
           - CFBundleURLName: com.swcsoftware.valuelens
             CFBundleURLSchemes: [valuelens]
@@ -43,12 +54,6 @@ targets:
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
         ENABLE_PREVIEWS: true
         SWIFT_STRICT_CONCURRENCY: minimal
-      configs:
-        Debug:
-          ENGINE_BASE_URL: http://127.0.0.1:8000
-        Release:
-          # Placeholder until the engine is hosted (docs/PATH_TO_ANY_TICKER.md). Users can override in Settings.
-          ENGINE_BASE_URL: https://valuelens-engine.fly.dev
   ValueLensTests:
     type: bundle.unit-test
     platform: iOS

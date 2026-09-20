@@ -57,13 +57,13 @@ struct RootView: View {
             }
         }
         .background(Theme.background)
-        .task { await settings.checkEngine() }
+        .task { await settings.refreshRates() }
         .onChange(of: scenePhase) { _, phase in
             guard phase == .active else { return }
             Task {
-                await settings.checkEngine()
+                await settings.refreshRates()
                 // Refresh the watchlist when the app comes to the foreground and data is > 15 min old.
-                if settings.engineReachable, watchlist.lastUpdated.map({ Date.now.timeIntervalSince($0) > 900 }) ?? true {
+                if settings.identity != nil, watchlist.lastUpdated.map({ Date.now.timeIntervalSince($0) > 900 }) ?? true {
                     await watchlist.refreshAll(using: settings.repository, overrides: settings.overrides)
                 }
             }

@@ -21,7 +21,7 @@ class Market(private val fetcher: Fetcher, cache: KeyValueCache, private val clo
     private fun chart(symbol: String, range: String, interval: String, ttlMillis: Long): String? {
         val url = "https://query1.finance.yahoo.com/v8/finance/chart/${symbol.uppercase().replace(".", "-")}?range=$range&interval=$interval"
         ttl.get(url, ttlMillis)?.let { return it }
-        return runCatching { fetcher.get(url, ua) }.getOrNull()?.also { ttl.put(url, it) }
+        return runCatching { fetcher.text(url, ua) }.getOrNull()?.also { ttl.put(url, it) }
     }
 
     fun quote(ticker: String): Quote? {
@@ -107,7 +107,7 @@ object Rates {
     fun fetch(fetcher: Fetcher, cache: KeyValueCache, clock: Clock, url: String): RatesSnapshot? {
         val ttl = TtlCache(cache, clock)
         val fresh = ttl.get(url, 12L * 3600 * 1000)
-        val text = fresh ?: runCatching { fetcher.get(url, emptyMap()) }.getOrNull()?.also { ttl.put(url, it) } ?: ttl.getStale(url)
+        val text = fresh ?: runCatching { fetcher.text(url, emptyMap()) }.getOrNull()?.also { ttl.put(url, it) } ?: ttl.getStale(url)
         return text?.let { RatesSnapshot.parse(it) }
     }
 }

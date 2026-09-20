@@ -22,27 +22,26 @@ struct SettingsView: View {
                 }
 
                 Section {
-                    TextField("http://127.0.0.1:8000", text: $settings.engineURL).keyboardType(.URL).textInputAutocapitalization(.never).autocorrectionDisabled()
-                    HStack {
-                        Text("Status")
-                        Spacer()
-                        Label(settings.engineReachable ? "Connected" : "Offline (sample data)", systemImage: settings.engineReachable ? "checkmark.circle.fill" : "wifi.slash")
-                            .foregroundStyle(settings.engineReachable ? Theme.value : Theme.warning).font(.caption)
-                    }
-                    Button("Test connection") { Task { await settings.checkEngine() } }
-                    if !settings.engineLANAddresses.isEmpty {
-                        ForEach(settings.engineLANAddresses, id: \.self) { ip in
-                            Button {
-                                settings.engineURL = "http://\(ip):8000"
-                                Task { await settings.checkEngine() }
-                            } label: {
-                                Label("Use LAN address http://\(ip):8000", systemImage: "iphone.radiowaves.left.and.right")
-                            }
+                    Toggle(isOn: $settings.expertMode) {
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Expert Mode")
+                            Text(settings.expertMode ? "Showing the full math" : "Showing the basics").font(.caption).foregroundStyle(Theme.textSecondary)
                         }
                     }
-                    Button("Reset to default (\(AppSettings.builtInEngineURL))") { settings.resetEngineURL(); Task { await settings.checkEngine() } }
-                } header: { Text("Valuation engine") } footer: {
-                    Text("The Python service that ingests EDGAR and runs the models. Simulator: 127.0.0.1. Physical iPhone on the same Wi-Fi: run `scripts/serve-lan.sh` on your Mac and pick the LAN address above. Hosted: paste its https URL.")
+                    NavigationLink("Glossary — what these terms mean") { GlossaryView() }
+                } header: { Text("Presentation") } footer: {
+                    Text("Off: plain-language values and health facts. On: every formula, XBRL tag and assumption, with expand-all.")
+                }
+
+                Section {
+                    if let r = settings.rates {
+                        LabeledContent("FRED rates as of \(r.asOf)", value: "AAA \(Fmt.pct(r.aaaYieldPct, decimals: 2)) · 10-yr \(Fmt.pct(r.treasury10YPct, decimals: 2))")
+                    } else {
+                        Text("Rates not loaded yet").foregroundStyle(Theme.textSecondary)
+                    }
+                    Button("Refresh rates") { Task { await settings.refreshRates() } }
+                } header: { Text("Data sources") } footer: {
+                    Text("SEC EDGAR filings are fetched directly from this device using your identity. Interest rates come from a daily published FRED snapshot; market prices and beta from a public quote feed.")
                 }
 
                 Section {

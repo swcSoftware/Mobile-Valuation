@@ -9,6 +9,10 @@ struct CompanyDetailView: View {
     @State private var showPriceSheet = false
     @State private var exportItem: ExportItem?
     @State private var showExportMenu = false
+    @State private var showMath = false
+    @State private var expandAll: Bool? = nil
+    @State private var expandVersion = 0
+    @State private var explain: ExplainSummary?
 
     init(company: CompanyRef) {
         _vm = State(initialValue: CompanyViewModel(company: company))
@@ -55,6 +59,7 @@ struct CompanyDetailView: View {
             }
         }
         .task { if vm.report == nil { await vm.load(using: settings.repository, overrides: settings.overrides) } }
+        .task(id: vm.report) { if let r = vm.report { explain = await settings.repository.explain(r) } }
         .onChange(of: vm.model) { old, new in
             guard let r = vm.report else { return }
             let before = r.result(for: old).marginOfSafety.verdict, after = r.result(for: new).marginOfSafety.verdict
@@ -73,47 +78,89 @@ struct CompanyDetailView: View {
     // MARK: - content
     @ViewBuilder
     private func content(_ r: ValuationReport) -> some View {
+        let expert = settings.expertMode || showMath
         let result = r.result(for: vm.model)
         VStack(alignment: .leading, spacing: 16) {
-            header(r)
-            ModelToggle(model: $vm.model)
-            Card { MarginOfSafetyView(mos: result.marginOfSafety) }
-            if result.marginOfSafety.verdict == .insufficientData {
-                InsufficientDataCard(report: r, result: result)
-            }
+            header(r, expert: expert)
+            ModelToggle(model: $vm.model, expert: expert)
 
-            SectionHeader(title: result.name, subtitle: "Tap any metric for the formula and SEC line items")
-            Card {
-                VStack(spacing: 14) {
-                    MetricRow(metric: result.composite, emphasize: true)
-                    Divider().overlay(Theme.border)
-                    ForEach(result.metrics.filter { $0.key != "fcff_projection" }) { m in
-                        MetricRow(metric: m)
-                    }
-                }
-            }
-
-            SectionHeader(title: "Balance sheet & quality", subtitle: "Trailing twelve months")
-            Card { SnapshotGrid(snapshot: r.snapshot) }
-
-            SectionHeader(title: "10-K history", subtitle: "\(r.history.count) fiscal years from annual filings")
-            Card { HistoryCharts(history: r.history) }
-            Card(padding: 0) { HistoryTable(history: r.history) }
-
-            SectionHeader(title: "Growth (CAGR)")
-            Card { GrowthGrid(growth: r.growth) }
-
-            SectionHeader(title: "Assumptions", subtitle: "Rates: \(r.assumptions.rateSource)")
-            Card { AssumptionsGrid(a: r.assumptions) }
-
-            if !r.warnings.isEmpty {
-                SectionHeader(title: "Data notes")
+            if r.checksFailed {
                 Card {
                     VStack(alignment: .leading, spacing: 6) {
-                        ForEach(r.warnings, id: \.self) { w in
-                            Label(w, systemImage: "info.circle").font(.caption).foregroundStyle(Theme.textSecondary)
+                        Label("Value withheld", systemImage: "hand.raised").font(.vlHeadline).foregroundStyle(Theme.danger)
+                        Text("Some of the numbers pulled from SEC didn't pass verification, so ValueLens won't show a fair value it can't stand behind. Details in the data checks below.")
+                            .font(.caption).foregroundStyle(Theme.textSecondary).fixedSize(horizontal: false, vertical: true)
+                    }
+                }
+            } else {
+                Card {
+                    VStack(alignment: .leading, spacing: 12) {
+                        if !expert, let e = explain {
+                            Text(vm.model == .traditional ? e.verdictA : e.verdictB).font(.vlBody).foregroundStyle(Theme.textPrimary).fixedSize(horizontal: false, vertical: true)
+                        }
+                        MarginOfSafetyView(mos: result.marginOfSafety, compact: !expert)
+                    }
+                }
+                if result.marginOfSafety.verdict == .insufficientData {
+                    InsufficientDataCard(report: r, result: result)
+                }
+            }
+            DataChecksCard(checks: r.dataChecks, summary: explain?.checksSummary ?? "\(r.dataChecks.count) checks run", expanded: expert)
+
+            if !expert {
+                SectionHeader(title: "How healthy is the business?", subtitle: "Tap a tile for a plain-English explanation")
+                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], alignment: .leading, spacing: 8) {
+                    ForEach(explain?.facts ?? []) { FactTile(fact: $0) }
+                }
+                Button { withAnimation { showMath = true } } label: { Text("Show me the math").frame(maxWidth: .infinity) }
+                    .buttonStyle(.bordered).tint(Theme.value)
+                Text("Turn on Expert Mode in Settings to always see formulas and SEC line items.")
+                    .font(.caption).foregroundStyle(Theme.textTertiary).multilineTextAlignment(.center).frame(maxWidth: .infinity)
+            } else {
+                SectionHeader(title: result.name, subtitle: "Tap any metric for the formula and SEC line items")
+                HStack {
+                    Spacer()
+                    Button("Expand all") { expandAll = true; expandVersion += 1 }.font(.caption)
+                    Button("Collapse all") { expandAll = false; expandVersion += 1 }.font(.caption).foregroundStyle(Theme.textSecondary)
+                }
+                Card {
+                    VStack(spacing: 14) {
+                        MetricRow(metric: result.composite, emphasize: true, expandAll: expandAll, expandVersion: expandVersion)
+                        Divider().overlay(Theme.border)
+                        ForEach(result.metrics.filter { $0.key != "fcff_projection" }) { m in
+                            MetricRow(metric: m, expandAll: expandAll, expandVersion: expandVersion)
                         }
                     }
+                }
+                if let beta = r.provenance["beta_detail"] {
+                    Text(beta).font(.caption).foregroundStyle(Theme.textTertiary)
+                }
+
+                SectionHeader(title: "Balance sheet & quality", subtitle: "Trailing twelve months")
+                Card { SnapshotGrid(snapshot: r.snapshot) }
+
+                SectionHeader(title: "10-K history", subtitle: "\(r.history.count) fiscal years from annual filings")
+                Card { HistoryCharts(history: r.history) }
+                Card(padding: 0) { HistoryTable(history: r.history) }
+
+                SectionHeader(title: "Growth (CAGR)")
+                Card { GrowthGrid(growth: r.growth) }
+
+                SectionHeader(title: "Assumptions", subtitle: "Rates: \(r.assumptions.rateSource) · beta: \(r.provenance["beta"] ?? "?")")
+                Card { AssumptionsGrid(a: r.assumptions, betaSource: r.provenance["beta"]) }
+
+                if !r.warnings.isEmpty {
+                    SectionHeader(title: "Data notes")
+                    Card {
+                        VStack(alignment: .leading, spacing: 6) {
+                            ForEach(r.warnings, id: \.self) { w in
+                                Label(w, systemImage: "info.circle").font(.caption).foregroundStyle(Theme.textSecondary)
+                            }
+                        }
+                    }
+                }
+                if !settings.expertMode {
+                    Button("Hide the math") { withAnimation { showMath = false } }.font(.caption).foregroundStyle(Theme.textSecondary).frame(maxWidth: .infinity)
                 }
             }
             Text(r.disclaimer).font(.caption2).foregroundStyle(Theme.textTertiary).multilineTextAlignment(.center).frame(maxWidth: .infinity)
@@ -121,7 +168,7 @@ struct CompanyDetailView: View {
         .padding(16)
     }
 
-    private func header(_ r: ValuationReport) -> some View {
+    private func header(_ r: ValuationReport, expert: Bool) -> some View {
         VStack(alignment: .leading, spacing: 6) {
             Text(r.company.name).font(.vlTitle).foregroundStyle(Theme.textPrimary)
             HStack(alignment: .firstTextBaseline, spacing: 12) {
@@ -132,8 +179,8 @@ struct CompanyDetailView: View {
                     }
                 }.buttonStyle(.plain)
                 VStack(alignment: .leading, spacing: 0) {
-                    Text(r.quote.map { "\($0.source) · \(Fmt.shortDate($0.asOf))" } ?? "no quote").font(.caption2).foregroundStyle(Theme.textTertiary)
-                    Text("CIK " + String(r.company.cik)).font(.caption2).foregroundStyle(Theme.textTertiary)
+                    Text(r.quote.map { "\($0.source) · \(Fmt.shortDate($0.asOf))" } ?? "no quote — tap to enter").font(.caption2).foregroundStyle(Theme.textTertiary)
+                    if expert { Text("CIK " + String(r.company.cik)).font(.caption2).foregroundStyle(Theme.textTertiary) }
                 }
             }
         }
@@ -219,13 +266,14 @@ struct GrowthGrid: View {
 
 struct AssumptionsGrid: View {
     let a: Assumptions
+    var betaSource: String? = nil
     var body: some View {
         let rows: [(String, String)] = [
             ("AAA corporate yield (Y)", Fmt.pct(a.aaaYieldPct, decimals: 2)),
             ("10-yr Treasury (rf)", Fmt.pct(a.treasury10YPct, decimals: 2)),
             ("Hurdle rate", Fmt.pct(a.hurdleRatePct)),
             ("Equity risk premium", Fmt.pct(a.equityRiskPremiumPct)),
-            ("Beta", Fmt.number(a.beta)),
+            ("Beta (\(betaSource ?? "?"))", Fmt.number(a.beta)),
             ("Terminal growth", Fmt.pct(a.terminalGrowthPct)),
             ("Exit multiple", Fmt.number(a.exitMultiple, decimals: 0) + "×"),
             ("Projection years", "\(a.projectionYears)"),

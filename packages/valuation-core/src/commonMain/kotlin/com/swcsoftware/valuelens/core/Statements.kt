@@ -194,7 +194,7 @@ object Statements {
         val instants = Concepts.ALL.filter { it.kind == Kind.INSTANT && it.taxonomy == "us-gaap" }
         val annualFlowValues = LinkedHashMap<String, LinkedHashMap<Day, SourcedValueCore>>()
         for (c in flows) annualFlowValues[c.key] = annualFlow(cf, c)
-        var ends = (annualFlowValues["revenue"]!!.keys + annualFlowValues["net_income"]!!.keys).toSortedSet().toList()
+        var ends: List<Day> = (annualFlowValues["revenue"]!!.keys + annualFlowValues["net_income"]!!.keys).toSet().sorted()
         ends = ends.takeLast(maxYears)
         if (ends.isEmpty()) warnings += "No annual 10-K income statement data found."
         val annualInstantValues = LinkedHashMap<String, LinkedHashMap<Day, SourcedValueCore>>()

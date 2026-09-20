@@ -5,6 +5,9 @@ import SwiftUI
 struct MetricRow: View {
     let metric: Metric
     var emphasize: Bool = false
+    /// Bump `expandVersion` with a new `expandAll` value to force every row open/closed.
+    var expandAll: Bool? = nil
+    var expandVersion: Int = 0
     @State private var expanded = false
 
     var body: some View {
@@ -26,6 +29,7 @@ struct MetricRow: View {
                 .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
+            .onChange(of: expandVersion) { _, _ in if let expandAll { expanded = expandAll } }
 
             if expanded {
                 VStack(alignment: .leading, spacing: 8) {

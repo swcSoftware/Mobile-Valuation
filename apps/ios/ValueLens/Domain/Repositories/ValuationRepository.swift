@@ -2,19 +2,37 @@ import Foundation
 
 /// Abstraction over the valuation engine. Remote implementation talks to FastAPI; the
 /// sample implementation serves bundled JSON so the app is fully tappable offline.
+/// Abstraction over the on-device valuation core. The sample implementation serves bundled JSON
+/// so the app stays tappable offline.
 protocol ValuationRepository: Sendable {
     func search(query: String) async throws -> [CompanyRef]
     func valuation(ticker: String, priceOverride: Double?, overrides: RateOverrides) async throws -> ValuationReport
-    func health() async -> Bool
-    func healthDetails() async -> EngineHealth?
+    func rates() async -> RatesInfo?
+    func explain(_ report: ValuationReport) async -> ExplainSummary?
+    func glossary() -> [GlossaryEntry]
 }
 
-struct EngineHealth: Decodable, Sendable {
-    let status: String
-    let version: String
-    let lanAddresses: [String]?
-    let priceProviders: [String]?
-    let requireIdentity: Bool?
+/// Published FRED snapshot (rates.json on GitHub Pages, or the bundled copy).
+struct RatesInfo: Codable, Sendable {
+    let asOf: String
+    let aaaYieldPct: Double
+    let treasury10YPct: Double
+    let source: String?
+    enum CodingKeys: String, CodingKey { case asOf = "as_of", aaaYieldPct = "aaa_yield_pct", treasury10YPct = "treasury_10y_pct", source }
+}
+
+/// Plain-language layer computed by the core (Explain.kt).
+struct ExplainSummary: Codable, Sendable {
+    struct Fact: Codable, Sendable, Identifiable { let label: String; let value: String; let tone: String; let plain: String; var id: String { label } }
+    let verdictA: String
+    let verdictB: String
+    let facts: [Fact]
+    let checksSummary: String
+}
+
+struct GlossaryEntry: Codable, Sendable, Identifiable {
+    let key: String; let term: String; let plain: String; let expert: String
+    var id: String { key }
 }
 
 /// User-editable assumptions sent as query parameters. `nil` means "use the engine's live/default value".

@@ -23,7 +23,7 @@ struct WatchlistView: View {
                         Section {
                             ForEach(watchlist.entries) { entry in
                                 NavigationLink(value: entry.company) {
-                                    WatchlistRow(entry: entry)
+                                    WatchlistRow(entry: entry, expert: settings.expertMode)
                                 }
                                 .listRowBackground(Theme.surface)
                             }
@@ -46,10 +46,7 @@ struct WatchlistView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     HStack(spacing: 12) {
                         if refreshing { ProgressView().controlSize(.small) }
-                        if !settings.engineReachable {
-                            Image(systemName: "wifi.slash").foregroundStyle(Theme.warning)
-                                .accessibilityLabel("Valuation engine offline")
-                        } else if !watchlist.entries.isEmpty {
+                        if !watchlist.entries.isEmpty {
                             Button { Task { await refresh() } } label: { Image(systemName: "arrow.clockwise") }
                                 .accessibilityLabel("Refresh watchlist")
                         }
@@ -94,6 +91,7 @@ struct LastUpdatedStamp: View {
 
 struct WatchlistRow: View {
     let entry: WatchlistEntry
+    var expert = true
     var body: some View {
         let mos = entry.lastReport?.modelA.marginOfSafety
         HStack(spacing: 12) {
@@ -105,8 +103,10 @@ struct WatchlistRow: View {
             VStack(alignment: .trailing, spacing: 3) {
                 HStack(spacing: 6) {
                     Text(Fmt.money(mos?.marketPrice)).font(.body.monospacedDigit()).foregroundStyle(Theme.price)
-                    Text("vs").font(.caption2).foregroundStyle(Theme.textTertiary)
-                    Text(Fmt.money(mos?.intrinsicValue)).font(.body.monospacedDigit()).foregroundStyle(Theme.value)
+                    if expert {
+                        Text("vs").font(.caption2).foregroundStyle(Theme.textTertiary)
+                        Text(Fmt.money(mos?.intrinsicValue)).font(.body.monospacedDigit()).foregroundStyle(Theme.value)
+                    }
                 }
                 if let v = mos?.verdict {
                     Text(v.title).font(.caption2).foregroundStyle(Theme.verdictColor(v))

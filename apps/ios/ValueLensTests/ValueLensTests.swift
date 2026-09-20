@@ -98,3 +98,40 @@ final class VerdictTests: XCTestCase {
         XCTAssertLessThan(Verdict.rank(.aboveIntrinsic), Verdict.rank(.insufficientData))
     }
 }
+
+final class Sprint2ContractTests: XCTestCase {
+    func testDataChecksAndProvenanceDecodeWithDefaults() throws {
+        // Sprint-1 payloads (no data_checks/provenance) must still decode.
+        let url = try XCTUnwrap(Bundle.main.url(forResource: "AAPL", withExtension: "json"))
+        let r = try JSONDecoder.engine.decode(ValuationReport.self, from: Data(contentsOf: url))
+        XCTAssertNotNil(r.dataChecks); XCTAssertNotNil(r.provenance)
+        XCTAssertFalse(r.checksFailed)
+    }
+
+    func testRatesInfoDecodesPublishedFormat() throws {
+        let json = #"{"as_of":"2026-09-17","published_at":"2026-09-19T21:00:00Z","aaa_yield_pct":5.94,"treasury_10y_pct":4.94,"source":"FRED"}"#
+        let r = try JSONDecoder().decode(RatesInfo.self, from: Data(json.utf8))
+        XCTAssertEqual(r.asOf, "2026-09-17"); XCTAssertEqual(r.treasury10YPct, 4.94)
+    }
+
+    func testBundledRatesSnapshotPresent() throws {
+        let url = try XCTUnwrap(Bundle.main.url(forResource: "rates", withExtension: "json"))
+        let r = try JSONDecoder().decode(RatesInfo.self, from: Data(contentsOf: url))
+        XCTAssertGreaterThan(r.aaaYieldPct, 0)
+    }
+
+    func testGlossaryComesFromCore() {
+        let g = CoreValuationRepository(userAgent: nil).glossary()
+        XCTAssertGreaterThanOrEqual(g.count, 8)
+        XCTAssertTrue(g.contains { $0.key == "beta" && !$0.plain.isEmpty && !$0.expert.isEmpty })
+    }
+
+    func testExplainRoundTripsThroughCore() async throws {
+        let repo = SampleValuationRepository()
+        let r = try await repo.valuation(ticker: "KO", priceOverride: nil, overrides: .none)
+        let e = await repo.explain(r)
+        let summary = try XCTUnwrap(e)
+        XCTAssertTrue(summary.verdictA.contains("COCA COLA") || summary.verdictA.contains("Coca"))
+        XCTAssertFalse(summary.facts.isEmpty)
+    }
+}

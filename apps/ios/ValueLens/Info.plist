@@ -31,17 +31,10 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
-	<key>ENGINE_BASE_URL</key>
-	<string>$(ENGINE_BASE_URL)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<true/>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsLocalNetworking</key>
-		<true/>
-	</dict>
 	<key>UIFileSharingEnabled</key>
 	<true/>
 	<key>UILaunchScreen</key>

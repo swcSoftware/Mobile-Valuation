@@ -6,6 +6,7 @@ import com.swcsoftware.valuelens.domain.RateOverrides
 import com.swcsoftware.valuelens.domain.ValuationReport
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.Serializable
 
 /** Everything the apps need, behind one blocking facade. Call off the main thread. */
 class ValuationCore(
@@ -19,6 +20,7 @@ class ValuationCore(
     private fun edgar(userAgent: String) = Edgar(fetcher, cache, userAgent, clock, "$publishedBaseUrl/tickers.json")
     private val market = Market(fetcher, cache, clock)
 
+    @Throws(Exception::class)
     fun search(query: String, userAgent: String, limit: Int = 15): List<CompanyRef> = edgar(userAgent).search(query, limit)
 
     fun rates(): RatesSnapshot? = Rates.fetch(fetcher, cache, clock, "$publishedBaseUrl/rates.json") ?: bundledRates
@@ -26,6 +28,7 @@ class ValuationCore(
     /**
      * Full report. Order of precedence for assumptions: user override > measured/published > default.
      */
+    @Throws(Exception::class)
     fun valuation(ticker: String, userAgent: String, priceOverride: Double? = null, overrides: RateOverrides = RateOverrides.NONE,
                   defaults: AssumptionsCore = AssumptionsCore(aaaYieldPct = 5.0, treasury10yPct = 4.2)): ValuationReport {
         val ed = edgar(userAgent)
@@ -54,12 +57,44 @@ class ValuationCore(
     }
 
     /** JSON form for hosts without Kotlin interop (iOS decodes it with ValuationReport.swift). */
+    @Throws(Exception::class)
     fun valuationJson(ticker: String, userAgent: String, priceOverride: Double? = null, overridesJson: String? = null): String {
         val ov = overridesJson?.let { json.decodeFromString<RateOverrides>(it) } ?: RateOverrides.NONE
         return json.encodeToString(valuation(ticker, userAgent, priceOverride, ov))
     }
+    @Throws(Exception::class)
     fun searchJson(query: String, userAgent: String): String = json.encodeToString(search(query, userAgent))
+
+    /** Plain-language layer for a report (iOS passes the JSON it received back in). */
+    @Throws(Exception::class)
+    fun explainJson(reportJson: String): String {
+        val r = json.decodeFromString<ValuationReport>(reportJson)
+        return json.encodeToString(ExplainSummary(
+            verdictA = Explain.verdictSentence(r, r.modelA), verdictB = Explain.verdictSentence(r, r.modelB),
+            facts = Explain.healthFacts(r), checksSummary = Explain.checksSummary(r),
+        ))
+    }
+    @Throws(Exception::class)
+    fun glossaryJson(): String = json.encodeToString(Explain.glossary)
+    @Throws(Exception::class)
+    fun ratesJson(): String? = rates()?.let { json.encodeToString(it) }
+
+    /** Stable error code for the host ("unknown_ticker", "offline", …) — Swift sees Kotlin exceptions as NSError. */
+    companion object {
+        fun errorCode(e: Throwable): String = when (e) {
+            is com.swcsoftware.valuelens.domain.EngineException.UnknownTicker -> "unknown_ticker"
+            is com.swcsoftware.valuelens.domain.EngineException.NoAnnualData -> "no_annual_data"
+            is com.swcsoftware.valuelens.domain.EngineException.RateLimited -> "rate_limited"
+            is com.swcsoftware.valuelens.domain.EngineException.InvalidIdentity -> "invalid_identity"
+            is com.swcsoftware.valuelens.domain.EngineException.UpstreamUnavailable -> "upstream_unavailable"
+            is com.swcsoftware.valuelens.domain.EngineException.Offline -> "offline"
+            else -> "engine_error"
+        }
+    }
 }
+
+@Serializable
+data class ExplainSummary(val verdictA: String, val verdictB: String, val facts: List<Explain.Fact>, val checksSummary: String)
 
 private fun ValuationReport.withBeta(b: BetaResult): ValuationReport =
     copy(warnings = warnings, provenance = provenance + mapOf("beta_detail" to "β ${PyFmt.fixed(b.beta, 2)} · ${b.months} monthly returns ${b.window} · R² ${PyFmt.fixed(b.r2, 2)}"))

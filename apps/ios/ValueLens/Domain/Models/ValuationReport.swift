@@ -144,6 +144,15 @@ struct GrowthEntry: Codable, Hashable {
     let fiveYearCagr: Double?
 }
 
+struct DataCheck: Codable, Hashable, Identifiable {
+    let key: String
+    let label: String
+    let status: String   // pass | warn | fail
+    let message: String
+    let inputs: [String]
+    var id: String { key }
+}
+
 struct ValuationReport: Codable, Hashable {
     let company: CompanyRef
     let quote: Quote?
@@ -156,8 +165,32 @@ struct ValuationReport: Codable, Hashable {
     let warnings: [String]
     let disclaimer: String
     let generatedAt: String
+    var dataChecks: [DataCheck] = []
+    var provenance: [String: String] = [:]
+    /// The exact JSON the core produced (not part of Codable); handed back to the core for `explain`.
+    var rawJSON: String? = nil
 
     var price: Double? { quote?.price }
+    var checksFailed: Bool { dataChecks.contains { $0.status == "fail" } }
+
+    enum CodingKeys: String, CodingKey { case company, quote, assumptions, snapshot, history, growth, modelA, modelB, warnings, disclaimer, generatedAt, dataChecks, provenance }
+
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        company = try c.decode(CompanyRef.self, forKey: .company)
+        quote = try c.decodeIfPresent(Quote.self, forKey: .quote)
+        assumptions = try c.decode(Assumptions.self, forKey: .assumptions)
+        snapshot = try c.decode([String: SourcedValue].self, forKey: .snapshot)
+        history = try c.decode([HistoryPoint].self, forKey: .history)
+        growth = try c.decode([String: GrowthEntry].self, forKey: .growth)
+        modelA = try c.decode(ModelResult.self, forKey: .modelA)
+        modelB = try c.decode(ModelResult.self, forKey: .modelB)
+        warnings = try c.decode([String].self, forKey: .warnings)
+        disclaimer = try c.decode(String.self, forKey: .disclaimer)
+        generatedAt = try c.decode(String.self, forKey: .generatedAt)
+        dataChecks = try c.decodeIfPresent([DataCheck].self, forKey: .dataChecks) ?? []
+        provenance = try c.decodeIfPresent([String: String].self, forKey: .provenance) ?? [:]
+    }
 }
 
 enum ValuationModel: String, CaseIterable, Identifiable {
@@ -170,6 +203,13 @@ enum ValuationModel: String, CaseIterable, Identifiable {
         case .modern: "DCF · WACC · ROIC"
         }
     }
+    /// Basic-mode names (Explain.modelName in the core).
+    var friendlyName: String { self == .traditional ? "Classic value" : "Cash-flow value" }
+    var friendlyBlurb: String {
+        self == .traditional
+            ? "The classic approach: what the business earns for its owners, priced the way Graham and Buffett would."
+            : "The modern approach: project the cash the business will generate and discount it back to today."
+    }
 }
 
 extension ValuationReport {
@@ -178,11 +218,18 @@ extension ValuationReport {
     }
 }
 
-/// JSONDecoder configured for the engine's snake_case payloads.
+/// JSONDecoder/Encoder configured for the core's snake_case payloads.
 extension JSONDecoder {
     static let engine: JSONDecoder = {
         let d = JSONDecoder()
         d.keyDecodingStrategy = .convertFromSnakeCase
         return d
+    }()
+}
+extension JSONEncoder {
+    static let engine: JSONEncoder = {
+        let e = JSONEncoder()
+        e.keyEncodingStrategy = .convertToSnakeCase
+        return e
     }()
 }

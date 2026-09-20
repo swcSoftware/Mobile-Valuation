@@ -14,9 +14,12 @@ import kotlin.test.assertTrue
 /** Fake network: serves the recorded SEC fixtures, a synthetic Yahoo chart, and a rates.json. */
 class FakeFetcher(private val fixtures: File, private val betaFactor: Double = 1.5, var ratesJson: String? = null, var offline: Boolean = false) : Fetcher {
     val calls = mutableListOf<String>()
-    override fun get(url: String, headers: Map<String, String>): String {
+    override fun get(url: String, headers: Map<String, String>): FetchResult {
         calls += url
-        if (offline) throw FetchException(0, "offline")
+        if (offline) return FetchResult(0, null)
+        return try { FetchResult(200, body(url)) } catch (e: FetchException) { FetchResult(e.status, null) }
+    }
+    private fun body(url: String): String {
         return when {
             url.endsWith("company_tickers.json") -> File(fixtures, "company_tickers.json").readText()
             "companyfacts/CIK" in url -> {
@@ -88,7 +91,7 @@ class CoreFacadeTest {
 
     @Test fun assumedBetaAndDefaultRatesAreFlagged() {
         val f = FakeFetcher(fixtures, ratesJson = null)
-        val c = ValuationCore(object : Fetcher { override fun get(url: String, headers: Map<String, String>): String = if ("range=5y" in url) throw FetchException(500, "no history") else f.get(url, headers) }, MemCache(), Clock { now })
+        val c = ValuationCore(object : Fetcher { override fun get(url: String, headers: Map<String, String>): FetchResult = if ("range=5y" in url) FetchResult(500, null) else f.get(url, headers) }, MemCache(), Clock { now })
         val r = c.valuation("KO", ua)
         assertEquals(1.0, r.assumptions.beta)
         assertEquals("assumed", r.provenance["beta"]); assertEquals("assumed", r.provenance["rates"])

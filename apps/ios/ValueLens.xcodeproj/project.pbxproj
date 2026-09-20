@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		009A9F4DA8C1ABEA70CC94B1 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421C7C372FD71F9BFB46598A /* APIClient.swift */; };
 		03E085E9A8D6C35465BC1520 /* Exporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC933DEDE177B7935DF124C9 /* Exporter.swift */; };
+		083F3581611D5E21D30EFE4C /* ExplainViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DBC1A2858240171F95189B /* ExplainViews.swift */; };
 		0BB46564FD3C46CD7A80C44E /* DossierView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C04C1974599039FEB6F870 /* DossierView.swift */; };
 		0C3D0C6657F3AA9FA75E66A7 /* MarginOfSafetyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9047AF702CA9D5061FABA1FF /* MarginOfSafetyView.swift */; };
 		0F0A7F62B3A1D5DDEE8EF4BC /* ShareCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5295BB2379D69947D0EDD444 /* ShareCardView.swift */; };
@@ -21,19 +21,22 @@
 		49E6F5826DBF807D57E07645 /* WatchlistStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9AEED314DF764CAEEF2CC9C /* WatchlistStore.swift */; };
 		4F05C103A7A445E2C8966C1F /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB47EAD56F25075486E3A65 /* Theme.swift */; };
 		5A07A1A0BC124BC2AA287000 /* ValuationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A4A835F0EC58DE68BE74F9 /* ValuationRepository.swift */; };
+		5DBCB9DF0085217FFFCF91FF /* rates.json in Resources */ = {isa = PBXBuildFile; fileRef = 2B1C1148B8A673BC52165E8D /* rates.json */; };
+		5E55F3A541CF9B0EDB504946 /* GlossaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070A0FF05C2C083C8FB8F36F /* GlossaryView.swift */; };
 		6119CA8B0347CFBDE3FAF17D /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C043C8119525143FFB7C42 /* Formatters.swift */; };
 		6B4B634737935EF98ADE30CF /* ValueLensTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5856ECA7F48C2ED9D111CF0B /* ValueLensTests.swift */; };
+		7FF00B198D4240252B2C11D4 /* ValuationCore.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43D36BD403078C5709F7FF7A /* ValuationCore.xcframework */; };
 		80EA9A94EF2BD9D704067699 /* MSFT.json in Resources */ = {isa = PBXBuildFile; fileRef = F423BFE4865CBAE084D7C598 /* MSFT.json */; };
 		88FF4BBF0BA4DA663435FFAA /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C00A5297374505B57523778 /* SearchView.swift */; };
 		8983B812D72FA8135CB756F4 /* WatchlistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7748DEB7230EEA4CC058323D /* WatchlistView.swift */; };
 		8995C4700D4DD80960465581 /* ValuationReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AE70A4B292870DAFC649FAF /* ValuationReport.swift */; };
 		9CAC5FF43A8E43F0CCF37C4E /* CompanyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC1AEBA453D2052D2086EDD /* CompanyViewModel.swift */; };
+		9CD8A86C612EAF2F547F2EBB /* CoreValuationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77388731AFFA62409AB7DCD /* CoreValuationRepository.swift */; };
 		A0F062DAD8E884965CD94B2D /* KeychainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4CA76E5A25F2C0FA1889C6 /* KeychainStore.swift */; };
 		A1CD4707B5CDB794E4DAD6C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAC3C817B428D42604856D88 /* Assets.xcassets */; };
 		AC7BE9CA035657034FC653A7 /* OnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E311EF4DF9987D997F058F /* OnboardingFlow.swift */; };
 		C31EF9E367860AC017094E42 /* ValueLensApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50CCF8165A7C93B1F85A1F5 /* ValueLensApp.swift */; };
 		D4B96328671050DF7F869DA6 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5086FDE0F067158F24661A0 /* SettingsView.swift */; };
-		E2A4D4E2B989D31A711991F3 /* RemoteValuationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E07C164CFA68A7243EAB4A4 /* RemoteValuationRepository.swift */; };
 		E666A05AA194F613B9C61C45 /* MetricRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C0F4EA23293AB9E82A1525 /* MetricRow.swift */; };
 		F7B895159BD986E7CFCFD3A0 /* HistoryViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7BFE79DA868AD4461872CE /* HistoryViews.swift */; };
 /* End PBXBuildFile section */
@@ -50,14 +53,17 @@
 
 /* Begin PBXFileReference section */
 		04CDD9F59AAA2D8AAF8AA34A /* CaseStudyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaseStudyView.swift; sourceTree = "<group>"; };
+		070A0FF05C2C083C8FB8F36F /* GlossaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlossaryView.swift; sourceTree = "<group>"; };
 		15EC3465FADA4B4DF8DBC951 /* AAPL.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = AAPL.json; sourceTree = "<group>"; };
 		1EC1AEBA453D2052D2086EDD /* CompanyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyViewModel.swift; sourceTree = "<group>"; };
 		22EE3D26153E84F4C07598DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		2B1C1148B8A673BC52165E8D /* rates.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = rates.json; sourceTree = "<group>"; };
 		3C36AAD6F63B1113A18354AB /* Identity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identity.swift; sourceTree = "<group>"; };
-		421C7C372FD71F9BFB46598A /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		43D36BD403078C5709F7FF7A /* ValuationCore.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ValuationCore.xcframework; path = "../../packages/valuation-core/build/XCFrameworks/release/ValuationCore.xcframework"; sourceTree = "<group>"; };
 		5295BB2379D69947D0EDD444 /* ShareCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareCardView.swift; sourceTree = "<group>"; };
 		56C043C8119525143FFB7C42 /* Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
 		5856ECA7F48C2ED9D111CF0B /* ValueLensTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueLensTests.swift; sourceTree = "<group>"; };
+		58DBC1A2858240171F95189B /* ExplainViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplainViews.swift; sourceTree = "<group>"; };
 		6824CE7A8843FFD85FD18DCC /* KO.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = KO.json; sourceTree = "<group>"; };
 		7748DEB7230EEA4CC058323D /* WatchlistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistView.swift; sourceTree = "<group>"; };
 		78A4A835F0EC58DE68BE74F9 /* ValuationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValuationRepository.swift; sourceTree = "<group>"; };
@@ -66,9 +72,9 @@
 		803AB71A36B0E9BDE5AE5933 /* ValueLensTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = ValueLensTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8111CC9E464DFABF1A2F9270 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		86E311EF4DF9987D997F058F /* OnboardingFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFlow.swift; sourceTree = "<group>"; };
-		8E07C164CFA68A7243EAB4A4 /* RemoteValuationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteValuationRepository.swift; sourceTree = "<group>"; };
 		9047AF702CA9D5061FABA1FF /* MarginOfSafetyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarginOfSafetyView.swift; sourceTree = "<group>"; };
 		BC933DEDE177B7935DF124C9 /* Exporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exporter.swift; sourceTree = "<group>"; };
+		C77388731AFFA62409AB7DCD /* CoreValuationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreValuationRepository.swift; sourceTree = "<group>"; };
 		CA7BFE79DA868AD4461872CE /* HistoryViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViews.swift; sourceTree = "<group>"; };
 		D5B6F7420AF70A9854D8231F /* CompanyDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyDetailView.swift; sourceTree = "<group>"; };
 		D8C04C1974599039FEB6F870 /* DossierView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DossierView.swift; sourceTree = "<group>"; };
@@ -82,6 +88,17 @@
 		F9AEED314DF764CAEEF2CC9C /* WatchlistStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistStore.swift; sourceTree = "<group>"; };
 		FAC3C817B428D42604856D88 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		BB28825F59DFEB8A9765862A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7FF00B198D4240252B2C11D4 /* ValuationCore.xcframework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		04B414C34AA855A13F1774C8 /* Search */ = {
@@ -153,6 +170,7 @@
 			children = (
 				64BAC03B6AE889A83DC301F6 /* ValueLens */,
 				78AEB3D327D59A466138D5F9 /* ValueLensTests */,
+				40F7E6DC33C8614DD01D8A20 /* Frameworks */,
 				80E80B4FD36B076824222FE5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -167,9 +185,18 @@
 			path = Export;
 			sourceTree = "<group>";
 		};
+		40F7E6DC33C8614DD01D8A20 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				43D36BD403078C5709F7FF7A /* ValuationCore.xcframework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		509ABD7878ABA228149B5464 /* DesignSystem */ = {
 			isa = PBXGroup;
 			children = (
+				58DBC1A2858240171F95189B /* ExplainViews.swift */,
 				56C043C8119525143FFB7C42 /* Formatters.swift */,
 				9047AF702CA9D5061FABA1FF /* MarginOfSafetyView.swift */,
 				E1C0F4EA23293AB9E82A1525 /* MetricRow.swift */,
@@ -224,6 +251,7 @@
 				15EC3465FADA4B4DF8DBC951 /* AAPL.json */,
 				6824CE7A8843FFD85FD18DCC /* KO.json */,
 				F423BFE4865CBAE084D7C598 /* MSFT.json */,
+				2B1C1148B8A673BC52165E8D /* rates.json */,
 			);
 			path = SampleData;
 			sourceTree = "<group>";
@@ -231,10 +259,9 @@
 		8CAC3FFD98F472578F13ECC0 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				421C7C372FD71F9BFB46598A /* APIClient.swift */,
 				8111CC9E464DFABF1A2F9270 /* AppSettings.swift */,
+				C77388731AFFA62409AB7DCD /* CoreValuationRepository.swift */,
 				ED4CA76E5A25F2C0FA1889C6 /* KeychainStore.swift */,
-				8E07C164CFA68A7243EAB4A4 /* RemoteValuationRepository.swift */,
 				F9AEED314DF764CAEEF2CC9C /* WatchlistStore.swift */,
 			);
 			path = Data;
@@ -243,6 +270,7 @@
 		CBB7778F7B1200B0B33C961F /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				070A0FF05C2C083C8FB8F36F /* GlossaryView.swift */,
 				E5086FDE0F067158F24661A0 /* SettingsView.swift */,
 			);
 			path = Settings;
@@ -273,8 +301,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2F78B5ABD48ABCBACA9158A8 /* Build configuration list for PBXNativeTarget "ValueLens" */;
 			buildPhases = (
+				E1FD00DADE6F7D67756ED378 /* Build ValuationCore.xcframework if missing */,
 				5054D22DA233B7E985B0E0B1 /* Sources */,
 				8078CF2A680EB4D415638086 /* Resources */,
+				BB28825F59DFEB8A9765862A /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -353,31 +383,55 @@
 				A1CD4707B5CDB794E4DAD6C0 /* Assets.xcassets in Resources */,
 				23B716BF4FF96B048CBA5211 /* KO.json in Resources */,
 				80EA9A94EF2BD9D704067699 /* MSFT.json in Resources */,
+				5DBCB9DF0085217FFFCF91FF /* rates.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		E1FD00DADE6F7D67756ED378 /* Build ValuationCore.xcframework if missing */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Build ValuationCore.xcframework if missing";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\nFW=\"$SRCROOT/../../packages/valuation-core/build/XCFrameworks/release/ValuationCore.xcframework\"\nif [ ! -d \"$FW\" ]; then\n  cd \"$SRCROOT/../android\"\n  export JAVA_HOME=\"${JAVA_HOME:-/Applications/Android Studio.app/Contents/jbr/Contents/Home}\"\n  ./gradlew :valuation-core:assembleValuationCoreReleaseXCFramework -q\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		5054D22DA233B7E985B0E0B1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				009A9F4DA8C1ABEA70CC94B1 /* APIClient.swift in Sources */,
 				460805DB73A3824BC5551855 /* AppSettings.swift in Sources */,
 				1EB863BB628BD2DD8125BE6D /* CaseStudyView.swift in Sources */,
 				43FA3BE9EDEF282EAFBAC800 /* CompanyDetailView.swift in Sources */,
 				9CAC5FF43A8E43F0CCF37C4E /* CompanyViewModel.swift in Sources */,
+				9CD8A86C612EAF2F547F2EBB /* CoreValuationRepository.swift in Sources */,
 				0BB46564FD3C46CD7A80C44E /* DossierView.swift in Sources */,
+				083F3581611D5E21D30EFE4C /* ExplainViews.swift in Sources */,
 				03E085E9A8D6C35465BC1520 /* Exporter.swift in Sources */,
 				6119CA8B0347CFBDE3FAF17D /* Formatters.swift in Sources */,
+				5E55F3A541CF9B0EDB504946 /* GlossaryView.swift in Sources */,
 				F7B895159BD986E7CFCFD3A0 /* HistoryViews.swift in Sources */,
 				2F063405C38709B89C73A9A1 /* Identity.swift in Sources */,
 				A0F062DAD8E884965CD94B2D /* KeychainStore.swift in Sources */,
 				0C3D0C6657F3AA9FA75E66A7 /* MarginOfSafetyView.swift in Sources */,
 				E666A05AA194F613B9C61C45 /* MetricRow.swift in Sources */,
 				AC7BE9CA035657034FC653A7 /* OnboardingFlow.swift in Sources */,
-				E2A4D4E2B989D31A711991F3 /* RemoteValuationRepository.swift in Sources */,
 				88FF4BBF0BA4DA663435FFAA /* SearchView.swift in Sources */,
 				D4B96328671050DF7F869DA6 /* SettingsView.swift in Sources */,
 				0F0A7F62B3A1D5DDEE8EF4BC /* ShareCardView.swift in Sources */,
@@ -510,7 +564,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_PREVIEWS = YES;
-				ENGINE_BASE_URL = "http://127.0.0.1:8000";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"../../packages/valuation-core/build/XCFrameworks/release\"",
+				);
 				INFOPLIST_FILE = ValueLens/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -597,7 +654,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_PREVIEWS = YES;
-				ENGINE_BASE_URL = "https://valuelens-engine.fly.dev";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"../../packages/valuation-core/build/XCFrameworks/release\"",
+				);
 				INFOPLIST_FILE = ValueLens/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

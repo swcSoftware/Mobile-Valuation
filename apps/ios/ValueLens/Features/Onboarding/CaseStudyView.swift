@@ -55,7 +55,7 @@ struct CaseStudyView: View {
                     .buttonStyle(.plain)
                     .disabled(loading)
                 }
-                if settings.engineReachable {
+                do {
                     Text("…or any other SEC filer").font(.caption).foregroundStyle(Theme.textTertiary).padding(.top, 4)
                     TextField("Ticker or company name", text: $query)
                         .textFieldStyle(.roundedBorder)
@@ -92,10 +92,6 @@ struct CaseStudyView: View {
                 }
                 if let error {
                     Text(error).font(.caption).foregroundStyle(Theme.danger)
-                }
-                if !settings.engineReachable {
-                    Label("Engine offline — using bundled sample filings for these three companies.", systemImage: "wifi.slash")
-                        .font(.caption).foregroundStyle(Theme.warning)
                 }
             }
             .padding(20)
@@ -256,15 +252,17 @@ private struct MoSStep: View {
 
 struct ModelToggle: View {
     @Binding var model: ValuationModel
+    var expert = true
     var body: some View {
         VStack(spacing: 6) {
             Picker("Model", selection: $model) {
                 ForEach(ValuationModel.allCases) { m in
-                    Text(m.rawValue).tag(m)
+                    Text(expert ? m.rawValue : m.friendlyName).tag(m)
                 }
             }
             .pickerStyle(.segmented)
-            Text(model.subtitle).font(.caption).foregroundStyle(Theme.textSecondary)
+            Text(expert ? model.subtitle : model.friendlyBlurb).font(.caption).foregroundStyle(Theme.textSecondary)
+                .multilineTextAlignment(.center).fixedSize(horizontal: false, vertical: true)
         }
     }
 }

@@ -1,7 +1,7 @@
 package com.swcsoftware.valuelens.data
 
 import android.content.Context
-import com.swcsoftware.valuelens.core.FetchException
+import com.swcsoftware.valuelens.core.FetchResult
 import com.swcsoftware.valuelens.core.Fetcher
 import com.swcsoftware.valuelens.core.KeyValueCache
 import com.swcsoftware.valuelens.core.RatesSnapshot
@@ -29,10 +29,10 @@ interface ValuationRepository {
 /** OkHttp-backed blocking fetcher for the core. */
 class OkHttpFetcher : Fetcher {
     private val client = OkHttpClient.Builder().connectTimeout(10, TimeUnit.SECONDS).readTimeout(60, TimeUnit.SECONDS).build()
-    override fun get(url: String, headers: Map<String, String>): String {
+    override fun get(url: String, headers: Map<String, String>): FetchResult {
         val req = Request.Builder().url(url).apply { headers.forEach { (k, v) -> header(k, v) } }.build()
-        val resp = try { client.newCall(req).execute() } catch (e: IOException) { throw FetchException(0, e.message ?: "offline") }
-        resp.use { if (!it.isSuccessful) throw FetchException(it.code, "HTTP ${it.code}"); return it.body?.string().orEmpty() }
+        val resp = try { client.newCall(req).execute() } catch (e: IOException) { return FetchResult(0, null) }
+        resp.use { return FetchResult(it.code, if (it.isSuccessful) it.body?.string().orEmpty() else null) }
     }
 }
 
