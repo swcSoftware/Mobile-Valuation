@@ -1,5 +1,10 @@
 # Architecture
 
+> **Target (Sprint 2+): on-device.** The diagram below is the Sprint 0–1 shape. From Sprint 2 the
+> Python engine is a reference implementation only; a shared Kotlin Multiplatform core
+> (`packages/valuation-core`) runs inside both apps, and rates come from a static
+> `rates.json` on GitHub Pages. See PLAN.md.
+
 ```
 ┌─────────────┐   X-SEC-User-Agent    ┌──────────────────────────────┐   User-Agent   ┌───────────┐
 │ iOS/Android │ ───── JSON/HTTP ────▶ │ valuation-engine (FastAPI)   │ ─────────────▶ │ SEC EDGAR │

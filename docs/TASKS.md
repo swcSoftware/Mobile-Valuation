@@ -63,17 +63,52 @@ Status: `[x]` done · `[ ]` todo · `[~]` in progress. Move finished sprints to 
 - [x] Deep link, foreground refresh, typed errors, haptics
 - [x] 7 JVM unit tests; verified live (JNJ, KO) on Pixel 10 emulator
 
-## Sprint 2 — Data quality & model depth
-- [ ] Host the engine (Fly.io/Railway) and set the Release `ENGINE_BASE_URL` (carried from Sprint 1)
-- [ ] Verify LAN mode on a physical iPhone + Android phone (ATS for private IPs, ISSUES #19)
-- [ ] Android: share-card PNG visual check; light theme; Compose UI tests
-- [ ] Multi-class shares via dimensioned facts (`frames` API or full XBRL instance) — BRK, GOOG, META
-- [ ] Sector tag maps: banks/insurers (no operating income, different working capital), REITs (FFO)
-- [ ] ΔNWC smoothing (3-yr average) for owner earnings — KO 2025 swing
-- [ ] 10-Q trajectory panel: TTM vs last 10-K for revenue, margins, CFO (blueprint §3.2)
-- [ ] User-selectable maintenance-capex method (D&A / avg capex / Greenwald)
-- [ ] `/companies/{ticker}/financials` consumed by iOS for a full statement browser
-- [ ] Engine unit tests with recorded companyfacts fixtures (respx)
+## Sprint 2 — On-device engine, consumer clarity, verified data
+
+### A. On-device core (no hosted engine)
+- [ ] Create `packages/valuation-core` (Kotlin Multiplatform, targets android + iosArm64/iosSimulatorArm64)
+- [ ] Port `normalize/tags.py` + `statements.py` (concept map, annual/TTM, splits, derived items, fiscal-year rule)
+- [ ] Port `valuation/model_a.py`, `model_b.py`, `types.py` (Metric with formula/inputs/sources)
+- [ ] EDGAR client in core: User-Agent, 10 req/s limiter, on-device cache (24 h), `no_annual_data` etc. as core errors
+- [ ] Cross-implementation test: Python vs KMP on AAPL/KO/JNJ fixtures, diff within 1e-6
+- [ ] Android: depend on the core module; delete `EngineApi`/`RemoteValuationRepository`
+- [ ] iOS: XCFramework via `./gradlew :valuation-core:assembleXCFramework`, Swift wrapper conforming to `ValuationRepository`; delete `APIClient`/remote repo
+- [ ] Remove engine URL / LAN / "engine offline" UI from both Settings screens
+- [ ] Python engine: mark as reference/oracle in README; keep `pytest` green
+
+### B. Rates & tickers via GitHub Pages
+- [ ] `scripts/publish_rates.py` (FRED DAAA/DGS10 → `rates.json` with 30-day history)
+- [ ] `.github/workflows/rates.yml` cron weekdays 11:00 UTC, `FRED_API_KEY` repo secret, commit to `gh-pages`
+- [ ] Enable GitHub Pages on `gh-pages` (owner action) and document the URL
+- [ ] `scripts/publish_tickers.py` weekly mirror of SEC `company_tickers.json`
+- [ ] Apps: fetch `rates.json` on launch (12 h TTL), cache, "as of" label, stale (>7 d) amber note, override wins
+- [ ] Apps: search uses cached `tickers.json`; instant + offline
+
+### C. Expert Mode & consumer clarity
+- [ ] Settings → **Expert Mode** toggle (persisted), default off
+- [ ] Basic company screen: price, plain-language fair-value sentence per model, MoS bar, verdict, 4 health facts
+- [ ] ⓘ explainers (≤ 60 words, no formulas) on every basic-mode number
+- [ ] Expert mode: full detail + **Expand all / Collapse all** for metric disclosures
+- [ ] Case study: general-audience copy with "Show me the math" expert variant
+- [ ] Glossary screen (Settings → Glossary)
+- [ ] Basic-mode model names: "Classic value" / "Cash-flow value"; expert keeps Model A/B labels
+- [ ] Watchlist row in basic mode: verdict sentence instead of "$269.99 vs $74.08"
+- [ ] Web preview mirrors basic/expert toggle for tester feedback
+
+### D. Data verification gate
+- [ ] `DataCheck` framework in core: pass/warn/fail, message, affected inputs
+- [ ] Checks: balance-sheet identity, EPS ≈ NI/shares, share-count/market-cap plausibility, TTM period alignment, freshness (filing ≤ 130 d, price ≤ 5 d), sign/non-negativity, provenance for every input
+- [ ] "Data checks" card (basic: one-line summary; expert: full list) shown above valuation; **fail blocks the fair-value number** with an explanation
+- [ ] **Beta derived, not assumed** (#31): 5-yr monthly regression vs S&P 500 from keyless price history; show method, window, R²; "assumed β 1.0" amber flag only when < 36 months of data
+- [ ] Tax rate, cost of debt, growth: label "derived from <filing>" vs "assumed", never a bare default
+- [ ] Price freshness + source shown next to price; stale price blocks MoS verdict (shows "enter price")
+- [ ] `docs/DATA_VERIFICATION.md`: every input → source → check → how to reconcile with Yahoo/Morningstar
+- [ ] Multi-class shares via dimensioned XBRL (`frames` API or instance doc) — BRK, GOOG, META (#1)
+
+### Carried over
+- [ ] Physical iPhone + Android test (#19 becomes moot once on-device; verify EDGAR direct from device)
+- [ ] Android share-card PNG visual check (#22)
+- [ ] Android light theme (#23), concurrent watchlist refresh (#24), chart axes (#25)
 
 ## Sprint 3 — Polish & beta
 - [ ] TestFlight + Play internal testing

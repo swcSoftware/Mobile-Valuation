@@ -1,5 +1,13 @@
 # Path to "any ticker, on a real phone"
 
+> **Direction change (2026-09-19):** the engine will run **on the device**; there will be no
+> hosted server. Sections 1–2 below describe the hosting route that is now *not* being pursued
+> and are kept for reference only. See `PLAN.md` → "Architecture decision" and Sprint 2 Tracks A/B.
+>
+> On-device summary: the phone calls SEC EDGAR directly with the user's own identity, runs the
+> shared Kotlin Multiplatform valuation core, and reads a keyless `rates.json` published daily to
+> GitHub Pages by a scheduled Action (the FRED key lives only in GitHub Secrets).
+
 ## Where we are
 
 Today the pipeline is already ticker-agnostic: `Search` queries SEC's full company list

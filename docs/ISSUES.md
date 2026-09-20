@@ -35,3 +35,7 @@ instruction for alpha). Severity: **P1** blocks core flow · **P2** wrong number
 | 28 | P3 | engine | `/health` calls FRED on every request (cached 6 h); with a bad key each call retries. | Cache failures too. | open |
 | 29 | P3 | engine | Test suite depends on `CACHE_DB` env being set before import (conftest does it); running a single test file with a different cwd could touch the dev cache. | | accepted |
 | 30 | P3 | both | Bundled sample JSON captured with FRED rates of 2026-09-17; will drift from live values. | Refresh via RUNBOOK §5 each sprint. | accepted |
+| 31 | **P2** | engine/both | **Beta is silently assumed = 1.0** for every company (it is not an SEC datum, and no price-history source was wired). Yahoo shows e.g. AAPL ≈ 1.2, KO ≈ 0.6, so WACC and every Model B fair value are off. The Assumptions card does list "Beta 1.00" but nothing marks it as assumed rather than measured. | Sprint 2 Track D: derive 5-yr monthly regression beta; flag assumptions explicitly. Until then, users can override beta in Settings. | open |
+| 32 | P2 | both | No pre-calculation data validation: a wrong share count, mismatched TTM periods or a stale price flows straight into the fair-value number. | Sprint 2 Track D `DataCheck` gate. | open |
+| 33 | P3 | both | Presentation is expert-only: formulas, XBRL tags and 15+ metric rows are the default view. | Sprint 2 Track C Expert Mode. | open |
+| 34 | P3 | engine | Hosting artifacts (Dockerfile, fly.toml, middleware rate limiter) become non-critical once the core moves on-device; keep but don't extend. | | accepted |
