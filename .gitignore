@@ -29,3 +29,5 @@ apps/android/.idea/
 node_modules/
 apps/android/app/build/
 apps/android/.kotlin/
+packages/valuation-core/build/
+packages/valuation-core/.kotlin/

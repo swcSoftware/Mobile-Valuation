@@ -1,0 +1,6078 @@
+{
+ "annual": [
+  {
+   "fiscal_year": 2016,
+   "form": "10-K",
+   "label": "FY2016",
+   "period_end": "2017-01-01",
+   "values": {
+    "book_value_per_share": {
+     "accession": "0000200406-20-000010",
+     "derived": true,
+     "filed": "2020-02-18",
+     "form": "10-K",
+     "note": "equity / shares_diluted",
+     "period_end": "2017-01-01",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 25.249381476567823
+    },
+    "buybacks": {
+     "accession": "0000200406-19-000009",
+     "derived": false,
+     "filed": "2019-02-20",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-01-01",
+     "period_start": "2016-01-04",
+     "tag": "us-gaap:PaymentsForRepurchaseOfCommonStock",
+     "value": 8979000000.0
+    },
+    "capex": {
+     "accession": "0000200406-19-000009",
+     "derived": false,
+     "filed": "2019-02-20",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-01-01",
+     "period_start": "2016-01-04",
+     "tag": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+     "value": 3226000000.0
+    },
+    "cash": {
+     "accession": "0000200406-19-000009",
+     "derived": false,
+     "filed": "2019-02-20",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-01-01",
+     "period_start": null,
+     "tag": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+     "value": 18972000000.0
+    },
+    "cfo": {
+     "accession": "0000200406-19-000009",
+     "derived": false,
+     "filed": "2019-02-20",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-01-01",
+     "period_start": "2016-01-04",
+     "tag": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+     "value": 18767000000.0
+    },
+    "cost_of_revenue": {
+     "accession": "0000200406-19-000009",
+     "derived": false,
+     "filed": "2019-02-20",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-01-01",
+     "period_start": "2016-01-04",
+     "tag": "us-gaap:CostOfGoodsSold",
+     "value": 21789000000.0
+    },
+    "current_assets": {
+     "accession": "0000200406-18-000005",
+     "derived": false,
+     "filed": "2018-02-21",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-01-01",
+     "period_start": null,
+     "tag": "us-gaap:AssetsCurrent",
+     "value": 65032000000.0
+    },
+    "current_liabilities": {
+     "accession": "0000200406-18-000005",
+     "derived": false,
+     "filed": "2018-02-21",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-01-01",
+     "period_start": null,
+     "tag": "us-gaap:LiabilitiesCurrent",
+     "value": 26287000000.0
+    },
+    "current_ratio": {
+     "accession": "0000200406-18-000005",
+     "derived": true,
+     "filed": "2018-02-21",
+     "form": "10-K",
+     "note": "current_assets / current_liabilities",
+     "period_end": "2017-01-01",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 2.473922471183475
+    },
+    "d_and_a": {
+     "accession": "0000200406-19-000009",
+     "derived": false,
+     "filed": "2019-02-20",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-01-01",
+     "period_start": "2016-01-04",
+     "tag": "us-gaap:DepreciationDepletionAndAmortization",
+     "value": 3754000000.0
+    },
+    "debt_to_equity": {
+     "accession": "0000200406-18-000005",
+     "derived": true,
+     "filed": "2018-02-21",
+     "form": "10-K",
+     "note": "total_debt / equity",
+     "period_end": "2017-01-01",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 0.3854412224147235
+    },
+    "effective_tax_rate": {
+     "accession": "0000200406-19-000009",
+     "derived": true,
+     "filed": "2019-02-20",
+     "form": "10-K",
+     "note": "income_tax / pretax_income (clamped 0\u201350%)",
+     "period_end": "2017-01-01",
+     "period_start": "2016-01-04",
+     "tag": "valuelens:derived",
+     "value": 0.16477301418976922
+    },
+    "eps_diluted": {
+     "accession": "0000200406-19-000009",
+     "derived": false,
+     "filed": "2019-02-20",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-01-01",
+     "period_start": "2016-01-04",
+     "tag": "us-gaap:EarningsPerShareDiluted",
+     "value": 5.93
+    },
+    "equity": {
+     "accession": "0000200406-20-000010",
+     "derived": false,
+     "filed": "2020-02-18",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-01-01",
+     "period_start": null,
+     "tag": "us-gaap:StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest",
+     "value": 70418000000.0
+    },
+    "fcf": {
+     "accession": "0000200406-19-000009",
+     "derived": true,
+     "filed": "2019-02-20",
+     "form": "10-K",
+     "note": "cfo \u2212 capex",
+     "period_end": "2017-01-01",
+     "period_start": "2016-01-04",
+     "tag": "valuelens:derived",
+     "value": 15541000000.0
+    },
+    "fcff": {
+     "accession": "0000200406-19-000009",
+     "derived": true,
+     "filed": "2019-02-20",
+     "form": "10-K",
+     "note": "nopat + d_and_a \u2212 capex \u2212 delta_nwc",
+     "period_end": "2017-01-01",
+     "period_start": "2016-01-04",
+     "tag": "valuelens:derived",
+     "value": 17674374791.698227
+    },
+    "goodwill": {
+     "accession": "0000200406-19-000009",
+     "derived": false,
+     "filed": "2019-02-20",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-01-01",
+     "period_start": null,
+     "tag": "us-gaap:Goodwill",
+     "value": 22805000000.0
+    },
+    "income_tax": {
+     "accession": "0000200406-19-000009",
+     "derived": false,
+     "filed": "2019-02-20",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-01-01",
+     "period_start": "2016-01-04",
+     "tag": "us-gaap:IncomeTaxExpenseBenefit",
+     "value": 3263000000.0
+    },
+    "intangibles": {
+     "accession": "0000200406-18-000005",
+     "derived": false,
+     "filed": "2018-02-21",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-01-01",
+     "period_start": null,
+     "tag": "us-gaap:IntangibleAssetsNetExcludingGoodwill",
+     "value": 26876000000.0
+    },
+    "interest_expense": {
+     "accession": "0000200406-19-000009",
+     "derived": false,
+     "filed": "2019-02-20",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-01-01",
+     "period_start": "2016-01-04",
+     "tag": "us-gaap:InterestExpense",
+     "value": 726000000.0
+    },
+    "inventory": {
+     "accession": "0000200406-18-000005",
+     "derived": false,
+     "filed": "2018-02-21",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-01-01",
+     "period_start": null,
+     "tag": "us-gaap:InventoryNet",
+     "value": 8144000000.0
+    },
+    "invested_capital": {
+     "accession": "0000200406-20-000010",
+     "derived": true,
+     "filed": "2020-02-18",
+     "form": "10-K",
+     "note": "equity + total_debt \u2212 cash",
+     "period_end": "2017-01-01",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 78588000000.0
+    },
+    "liabilities_and_equity": {
+     "accession": "0000200406-18-000005",
+     "derived": false,
+     "filed": "2018-02-21",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-01-01",
+     "period_start": null,
+     "tag": "us-gaap:LiabilitiesAndStockholdersEquity",
+     "value": 141208000000.0
+    },
+    "long_term_debt": {
+     "accession": "0000200406-18-000005",
+     "derived": false,
+     "filed": "2018-02-21",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-01-01",
+     "period_start": null,
+     "tag": "us-gaap:LongTermDebtNoncurrent",
+     "value": 22442000000.0
+    },
+    "maintenance_capex": {
+     "accession": "0000200406-19-000009",
+     "derived": true,
+     "filed": "2019-02-20",
+     "form": "10-K",
+     "note": "min(capex, d_and_a) \u2014 conservative proxy; Buffett's 'average capex to maintain competitive position'",
+     "period_end": "2017-01-01",
+     "period_start": "2016-01-04",
+     "tag": "valuelens:derived",
+     "value": 3226000000.0
+    },
+    "net_income": {
+     "accession": "0000200406-19-000009",
+     "derived": false,
+     "filed": "2019-02-20",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-01-01",
+     "period_start": "2016-01-04",
+     "tag": "us-gaap:NetIncomeLoss",
+     "value": 16540000000.0
+    },
+    "net_margin": {
+     "accession": "0000200406-19-000009",
+     "derived": true,
+     "filed": "2019-02-20",
+     "form": "10-K",
+     "note": "net_income / revenue",
+     "period_end": "2017-01-01",
+     "period_start": "2016-01-04",
+     "tag": "valuelens:derived",
+     "value": 0.23007372374460983
+    },
+    "nopat": {
+     "accession": "0000200406-19-000009",
+     "derived": true,
+     "filed": "2019-02-20",
+     "form": "10-K",
+     "note": "operating_income \u00d7 (1 \u2212 0.165)",
+     "period_end": "2017-01-01",
+     "period_start": "2016-01-04",
+     "tag": "valuelens:derived",
+     "value": 17146374791.698229
+    },
+    "nwc": {
+     "accession": "0000200406-18-000005",
+     "derived": true,
+     "filed": "2018-02-21",
+     "form": "10-K",
+     "note": "(current_assets \u2212 cash \u2212 short_term_investments) \u2212 (current_liabilities \u2212 short_term_debt)",
+     "period_end": "2017-01-01",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 1538000000.0
+    },
+    "operating_income": {
+     "accession": "0000200406-19-000009",
+     "derived": true,
+     "filed": "2019-02-20",
+     "form": "10-K",
+     "note": "pretax_income + interest_expense (EBIT proxy; OperatingIncomeLoss not tagged)",
+     "period_end": "2017-01-01",
+     "period_start": "2016-01-04",
+     "tag": "valuelens:derived",
+     "value": 20529000000.0
+    },
+    "operating_margin": {
+     "accession": "0000200406-19-000009",
+     "derived": true,
+     "filed": "2019-02-20",
+     "form": "10-K",
+     "note": "operating_income / revenue",
+     "period_end": "2017-01-01",
+     "period_start": "2016-01-04",
+     "tag": "valuelens:derived",
+     "value": 0.2855612741688691
+    },
+    "owner_earnings": {
+     "accession": "0000200406-19-000009",
+     "derived": true,
+     "filed": "2019-02-20",
+     "form": "10-K",
+     "note": "net_income + d_and_a \u2212 maintenance_capex \u2212 delta_nwc",
+     "period_end": "2017-01-01",
+     "period_start": "2016-01-04",
+     "tag": "valuelens:derived",
+     "value": 17068000000.0
+    },
+    "pretax_income": {
+     "accession": "0000200406-19-000009",
+     "derived": false,
+     "filed": "2019-02-20",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-01-01",
+     "period_start": "2016-01-04",
+     "tag": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesMinorityInterestAndIncomeLossFromEquityMethodInvestments",
+     "value": 19803000000.0
+    },
+    "receivables": {
+     "accession": "0000200406-18-000005",
+     "derived": false,
+     "filed": "2018-02-21",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-01-01",
+     "period_start": null,
+     "tag": "us-gaap:AccountsReceivableNetCurrent",
+     "value": 11699000000.0
+    },
+    "revenue": {
+     "accession": "0000200406-19-000009",
+     "derived": false,
+     "filed": "2019-02-20",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-01-01",
+     "period_start": "2016-01-04",
+     "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+     "value": 71890000000.0
+    },
+    "roe": {
+     "accession": "0000200406-19-000009",
+     "derived": true,
+     "filed": "2019-02-20",
+     "form": "10-K",
+     "note": "net_income / equity",
+     "period_end": "2017-01-01",
+     "period_start": "2016-01-04",
+     "tag": "valuelens:derived",
+     "value": 0.2348831264733449
+    },
+    "roic": {
+     "accession": "0000200406-19-000009",
+     "derived": true,
+     "filed": "2019-02-20",
+     "form": "10-K",
+     "note": "nopat / invested_capital",
+     "period_end": "2017-01-01",
+     "period_start": "2016-01-04",
+     "tag": "valuelens:derived",
+     "value": 0.21818057199188462
+    },
+    "shares_diluted": {
+     "accession": "0000200406-19-000009",
+     "derived": false,
+     "filed": "2019-02-20",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-01-01",
+     "period_start": "2016-01-04",
+     "tag": "us-gaap:WeightedAverageNumberOfDilutedSharesOutstanding",
+     "value": 2788900000.0
+    },
+    "short_term_debt": {
+     "accession": "0000200406-18-000005",
+     "derived": false,
+     "filed": "2018-02-21",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-01-01",
+     "period_start": null,
+     "tag": "us-gaap:DebtCurrent",
+     "value": 4700000000.0
+    },
+    "short_term_investments": {
+     "accession": "0000200406-18-000005",
+     "derived": false,
+     "filed": "2018-02-21",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-01-01",
+     "period_start": null,
+     "tag": "us-gaap:MarketableSecuritiesCurrent",
+     "value": 22935000000.0
+    },
+    "total_assets": {
+     "accession": "0000200406-18-000005",
+     "derived": false,
+     "filed": "2018-02-21",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-01-01",
+     "period_start": null,
+     "tag": "us-gaap:Assets",
+     "value": 141208000000.0
+    },
+    "total_debt": {
+     "accession": "0000200406-18-000005",
+     "derived": true,
+     "filed": "2018-02-21",
+     "form": "10-K",
+     "note": "short_term_debt + long_term_debt",
+     "period_end": "2017-01-01",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 27142000000.0
+    },
+    "total_liabilities": {
+     "accession": "0000200406-18-000005",
+     "derived": false,
+     "filed": "2018-02-21",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-01-01",
+     "period_start": null,
+     "tag": "us-gaap:Liabilities",
+     "value": 70790000000.0
+    }
+   }
+  },
+  {
+   "fiscal_year": 2017,
+   "form": "10-K",
+   "label": "FY2017",
+   "period_end": "2017-12-31",
+   "values": {
+    "book_value_per_share": {
+     "accession": "0000200406-21-000008",
+     "derived": true,
+     "filed": "2021-02-22",
+     "form": "10-K",
+     "note": "equity / shares_diluted",
+     "period_end": "2017-12-31",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 21.913816340654936
+    },
+    "buybacks": {
+     "accession": "0000200406-20-000010",
+     "derived": false,
+     "filed": "2020-02-18",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-12-31",
+     "period_start": "2017-01-02",
+     "tag": "us-gaap:PaymentsForRepurchaseOfCommonStock",
+     "value": 6358000000.0
+    },
+    "capex": {
+     "accession": "0000200406-20-000010",
+     "derived": false,
+     "filed": "2020-02-18",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-12-31",
+     "period_start": "2017-01-02",
+     "tag": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+     "value": 3279000000.0
+    },
+    "cash": {
+     "accession": "0000200406-19-000009",
+     "derived": false,
+     "filed": "2019-02-20",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-12-31",
+     "period_start": null,
+     "tag": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+     "value": 17824000000.0
+    },
+    "cfo": {
+     "accession": "0000200406-20-000010",
+     "derived": false,
+     "filed": "2020-02-18",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-12-31",
+     "period_start": "2017-01-02",
+     "tag": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+     "value": 21056000000.0
+    },
+    "cost_of_revenue": {
+     "accession": "0000200406-20-000010",
+     "derived": false,
+     "filed": "2020-02-18",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-12-31",
+     "period_start": "2017-01-02",
+     "tag": "us-gaap:CostOfGoodsAndServicesSold",
+     "value": 25439000000.0
+    },
+    "current_assets": {
+     "accession": "0000200406-19-000009",
+     "derived": false,
+     "filed": "2019-02-20",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-12-31",
+     "period_start": null,
+     "tag": "us-gaap:AssetsCurrent",
+     "value": 43088000000.0
+    },
+    "current_liabilities": {
+     "accession": "0000200406-19-000009",
+     "derived": false,
+     "filed": "2019-02-20",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-12-31",
+     "period_start": null,
+     "tag": "us-gaap:LiabilitiesCurrent",
+     "value": 30537000000.0
+    },
+    "current_ratio": {
+     "accession": "0000200406-19-000009",
+     "derived": true,
+     "filed": "2019-02-20",
+     "form": "10-K",
+     "note": "current_assets / current_liabilities",
+     "period_end": "2017-12-31",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 1.4110095949176409
+    },
+    "d_and_a": {
+     "accession": "0000200406-20-000010",
+     "derived": false,
+     "filed": "2020-02-18",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-12-31",
+     "period_start": "2017-01-02",
+     "tag": "us-gaap:DepreciationDepletionAndAmortization",
+     "value": 5642000000.0
+    },
+    "debt_to_equity": {
+     "accession": "0000200406-19-000009",
+     "derived": true,
+     "filed": "2019-02-20",
+     "form": "10-K",
+     "note": "total_debt / equity",
+     "period_end": "2017-12-31",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 0.574717420212766
+    },
+    "delta_nwc": {
+     "accession": "0000200406-19-000009",
+     "derived": true,
+     "filed": "2019-02-20",
+     "form": "10-K",
+     "note": "nwc \u2212 nwc(2017-01-01)",
+     "period_end": "2017-12-31",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": -3383000000.0
+    },
+    "effective_tax_rate": {
+     "accession": "0000200406-20-000010",
+     "derived": true,
+     "filed": "2020-02-18",
+     "form": "10-K",
+     "note": "income_tax / pretax_income (clamped 0\u201350%)",
+     "period_end": "2017-12-31",
+     "period_start": "2017-01-02",
+     "tag": "valuelens:derived",
+     "value": 0.5
+    },
+    "eps_diluted": {
+     "accession": "0000200406-20-000010",
+     "derived": false,
+     "filed": "2020-02-18",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-12-31",
+     "period_start": "2017-01-02",
+     "tag": "us-gaap:EarningsPerShareDiluted",
+     "value": 0.47
+    },
+    "equity": {
+     "accession": "0000200406-21-000008",
+     "derived": false,
+     "filed": "2021-02-22",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-12-31",
+     "period_start": null,
+     "tag": "us-gaap:StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest",
+     "value": 60160000000.0
+    },
+    "fcf": {
+     "accession": "0000200406-20-000010",
+     "derived": true,
+     "filed": "2020-02-18",
+     "form": "10-K",
+     "note": "cfo \u2212 capex",
+     "period_end": "2017-12-31",
+     "period_start": "2017-01-02",
+     "tag": "valuelens:derived",
+     "value": 17777000000.0
+    },
+    "fcff": {
+     "accession": "0000200406-20-000010",
+     "derived": true,
+     "filed": "2020-02-18",
+     "form": "10-K",
+     "note": "nopat + d_and_a \u2212 capex \u2212 delta_nwc",
+     "period_end": "2017-12-31",
+     "period_start": "2017-01-02",
+     "tag": "valuelens:derived",
+     "value": 15049500000.0
+    },
+    "goodwill": {
+     "accession": "0000200406-20-000010",
+     "derived": false,
+     "filed": "2020-02-18",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-12-31",
+     "period_start": null,
+     "tag": "us-gaap:Goodwill",
+     "value": 31906000000.0
+    },
+    "income_tax": {
+     "accession": "0000200406-20-000010",
+     "derived": false,
+     "filed": "2020-02-18",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-12-31",
+     "period_start": "2017-01-02",
+     "tag": "us-gaap:IncomeTaxExpenseBenefit",
+     "value": 16373000000.0
+    },
+    "intangibles": {
+     "accession": "0000200406-19-000009",
+     "derived": false,
+     "filed": "2019-02-20",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-12-31",
+     "period_start": null,
+     "tag": "us-gaap:IntangibleAssetsNetExcludingGoodwill",
+     "value": 53228000000.0
+    },
+    "interest_expense": {
+     "accession": "0000200406-20-000010",
+     "derived": false,
+     "filed": "2020-02-18",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-12-31",
+     "period_start": "2017-01-02",
+     "tag": "us-gaap:InterestExpense",
+     "value": 934000000.0
+    },
+    "inventory": {
+     "accession": "0000200406-19-000009",
+     "derived": false,
+     "filed": "2019-02-20",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-12-31",
+     "period_start": null,
+     "tag": "us-gaap:InventoryNet",
+     "value": 8765000000.0
+    },
+    "invested_capital": {
+     "accession": "0000200406-21-000008",
+     "derived": true,
+     "filed": "2021-02-22",
+     "form": "10-K",
+     "note": "equity + total_debt \u2212 cash",
+     "period_end": "2017-12-31",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 76911000000.0
+    },
+    "liabilities_and_equity": {
+     "accession": "0000200406-19-000009",
+     "derived": false,
+     "filed": "2019-02-20",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-12-31",
+     "period_start": null,
+     "tag": "us-gaap:LiabilitiesAndStockholdersEquity",
+     "value": 157303000000.0
+    },
+    "long_term_debt": {
+     "accession": "0000200406-19-000009",
+     "derived": false,
+     "filed": "2019-02-20",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-12-31",
+     "period_start": null,
+     "tag": "us-gaap:LongTermDebtNoncurrent",
+     "value": 30675000000.0
+    },
+    "maintenance_capex": {
+     "accession": "0000200406-20-000010",
+     "derived": true,
+     "filed": "2020-02-18",
+     "form": "10-K",
+     "note": "min(capex, d_and_a) \u2014 conservative proxy; Buffett's 'average capex to maintain competitive position'",
+     "period_end": "2017-12-31",
+     "period_start": "2017-01-02",
+     "tag": "valuelens:derived",
+     "value": 3279000000.0
+    },
+    "net_income": {
+     "accession": "0000200406-20-000010",
+     "derived": false,
+     "filed": "2020-02-18",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-12-31",
+     "period_start": "2017-01-02",
+     "tag": "us-gaap:NetIncomeLoss",
+     "value": 1300000000.0
+    },
+    "net_margin": {
+     "accession": "0000200406-20-000010",
+     "derived": true,
+     "filed": "2020-02-18",
+     "form": "10-K",
+     "note": "net_income / revenue",
+     "period_end": "2017-12-31",
+     "period_start": "2017-01-02",
+     "tag": "valuelens:derived",
+     "value": 0.017004578155657292
+    },
+    "nopat": {
+     "accession": "0000200406-20-000010",
+     "derived": true,
+     "filed": "2020-02-18",
+     "form": "10-K",
+     "note": "operating_income \u00d7 (1 \u2212 0.500)",
+     "period_end": "2017-12-31",
+     "period_start": "2017-01-02",
+     "tag": "valuelens:derived",
+     "value": 9303500000.0
+    },
+    "nwc": {
+     "accession": "0000200406-19-000009",
+     "derived": true,
+     "filed": "2019-02-20",
+     "form": "10-K",
+     "note": "(current_assets \u2212 cash \u2212 short_term_investments) \u2212 (current_liabilities \u2212 short_term_debt)",
+     "period_end": "2017-12-31",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": -1845000000.0
+    },
+    "operating_income": {
+     "accession": "0000200406-20-000010",
+     "derived": true,
+     "filed": "2020-02-18",
+     "form": "10-K",
+     "note": "pretax_income + interest_expense (EBIT proxy; OperatingIncomeLoss not tagged)",
+     "period_end": "2017-12-31",
+     "period_start": "2017-01-02",
+     "tag": "valuelens:derived",
+     "value": 18607000000.0
+    },
+    "operating_margin": {
+     "accession": "0000200406-20-000010",
+     "derived": true,
+     "filed": "2020-02-18",
+     "form": "10-K",
+     "note": "operating_income / revenue",
+     "period_end": "2017-12-31",
+     "period_start": "2017-01-02",
+     "tag": "valuelens:derived",
+     "value": 0.24338783518639634
+    },
+    "owner_earnings": {
+     "accession": "0000200406-20-000010",
+     "derived": true,
+     "filed": "2020-02-18",
+     "form": "10-K",
+     "note": "net_income + d_and_a \u2212 maintenance_capex \u2212 delta_nwc",
+     "period_end": "2017-12-31",
+     "period_start": "2017-01-02",
+     "tag": "valuelens:derived",
+     "value": 7046000000.0
+    },
+    "pretax_income": {
+     "accession": "0000200406-20-000010",
+     "derived": false,
+     "filed": "2020-02-18",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-12-31",
+     "period_start": "2017-01-02",
+     "tag": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesMinorityInterestAndIncomeLossFromEquityMethodInvestments",
+     "value": 17673000000.0
+    },
+    "receivables": {
+     "accession": "0000200406-19-000009",
+     "derived": false,
+     "filed": "2019-02-20",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-12-31",
+     "period_start": null,
+     "tag": "us-gaap:AccountsReceivableNetCurrent",
+     "value": 13490000000.0
+    },
+    "revenue": {
+     "accession": "0000200406-20-000010",
+     "derived": false,
+     "filed": "2020-02-18",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-12-31",
+     "period_start": "2017-01-02",
+     "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+     "value": 76450000000.0
+    },
+    "roe": {
+     "accession": "0000200406-20-000010",
+     "derived": true,
+     "filed": "2020-02-18",
+     "form": "10-K",
+     "note": "net_income / equity",
+     "period_end": "2017-12-31",
+     "period_start": "2017-01-02",
+     "tag": "valuelens:derived",
+     "value": 0.02160904255319149
+    },
+    "roic": {
+     "accession": "0000200406-20-000010",
+     "derived": true,
+     "filed": "2020-02-18",
+     "form": "10-K",
+     "note": "nopat / invested_capital",
+     "period_end": "2017-12-31",
+     "period_start": "2017-01-02",
+     "tag": "valuelens:derived",
+     "value": 0.12096449142515375
+    },
+    "shares_diluted": {
+     "accession": "0000200406-20-000010",
+     "derived": false,
+     "filed": "2020-02-18",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-12-31",
+     "period_start": "2017-01-02",
+     "tag": "us-gaap:WeightedAverageNumberOfDilutedSharesOutstanding",
+     "value": 2745300000.0
+    },
+    "short_term_debt": {
+     "accession": "0000200406-19-000009",
+     "derived": false,
+     "filed": "2019-02-20",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-12-31",
+     "period_start": null,
+     "tag": "us-gaap:DebtCurrent",
+     "value": 3900000000.0
+    },
+    "short_term_investments": {
+     "accession": "0000200406-19-000009",
+     "derived": false,
+     "filed": "2019-02-20",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-12-31",
+     "period_start": null,
+     "tag": "us-gaap:MarketableSecuritiesCurrent",
+     "value": 472000000.0
+    },
+    "total_assets": {
+     "accession": "0000200406-19-000009",
+     "derived": false,
+     "filed": "2019-02-20",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-12-31",
+     "period_start": null,
+     "tag": "us-gaap:Assets",
+     "value": 157303000000.0
+    },
+    "total_debt": {
+     "accession": "0000200406-19-000009",
+     "derived": true,
+     "filed": "2019-02-20",
+     "form": "10-K",
+     "note": "short_term_debt + long_term_debt",
+     "period_end": "2017-12-31",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 34575000000.0
+    },
+    "total_liabilities": {
+     "accession": "0000200406-19-000009",
+     "derived": false,
+     "filed": "2019-02-20",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-12-31",
+     "period_start": null,
+     "tag": "us-gaap:Liabilities",
+     "value": 97143000000.0
+    }
+   }
+  },
+  {
+   "fiscal_year": 2018,
+   "form": "10-K",
+   "label": "FY2018",
+   "period_end": "2018-12-30",
+   "values": {
+    "book_value_per_share": {
+     "accession": "0000200406-22-000022",
+     "derived": true,
+     "filed": "2022-02-17",
+     "form": "10-K",
+     "note": "equity / shares_diluted",
+     "period_end": "2018-12-30",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 21.8976069190457
+    },
+    "buybacks": {
+     "accession": "0000200406-21-000008",
+     "derived": false,
+     "filed": "2021-02-22",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2018-12-30",
+     "period_start": "2018-01-01",
+     "tag": "us-gaap:PaymentsForRepurchaseOfCommonStock",
+     "value": 5868000000.0
+    },
+    "capex": {
+     "accession": "0000200406-21-000008",
+     "derived": false,
+     "filed": "2021-02-22",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2018-12-30",
+     "period_start": "2018-01-01",
+     "tag": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+     "value": 3670000000.0
+    },
+    "cash": {
+     "accession": "0000200406-20-000010",
+     "derived": false,
+     "filed": "2020-02-18",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2018-12-30",
+     "period_start": null,
+     "tag": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+     "value": 18107000000.0
+    },
+    "cfo": {
+     "accession": "0000200406-21-000008",
+     "derived": false,
+     "filed": "2021-02-22",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2018-12-30",
+     "period_start": "2018-01-01",
+     "tag": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+     "value": 22201000000.0
+    },
+    "cost_of_revenue": {
+     "accession": "0000200406-21-000008",
+     "derived": false,
+     "filed": "2021-02-22",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2018-12-30",
+     "period_start": "2018-01-01",
+     "tag": "us-gaap:CostOfGoodsAndServicesSold",
+     "value": 27091000000.0
+    },
+    "current_assets": {
+     "accession": "0000200406-20-000010",
+     "derived": false,
+     "filed": "2020-02-18",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2018-12-30",
+     "period_start": null,
+     "tag": "us-gaap:AssetsCurrent",
+     "value": 46033000000.0
+    },
+    "current_liabilities": {
+     "accession": "0000200406-20-000010",
+     "derived": false,
+     "filed": "2020-02-18",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2018-12-30",
+     "period_start": null,
+     "tag": "us-gaap:LiabilitiesCurrent",
+     "value": 31230000000.0
+    },
+    "current_ratio": {
+     "accession": "0000200406-20-000010",
+     "derived": true,
+     "filed": "2020-02-18",
+     "form": "10-K",
+     "note": "current_assets / current_liabilities",
+     "period_end": "2018-12-30",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 1.4739993595901377
+    },
+    "d_and_a": {
+     "accession": "0000200406-21-000008",
+     "derived": false,
+     "filed": "2021-02-22",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2018-12-30",
+     "period_start": "2018-01-01",
+     "tag": "us-gaap:DepreciationDepletionAndAmortization",
+     "value": 6929000000.0
+    },
+    "debt_to_equity": {
+     "accession": "0000200406-20-000010",
+     "derived": true,
+     "filed": "2020-02-18",
+     "form": "10-K",
+     "note": "total_debt / equity",
+     "period_end": "2018-12-30",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 0.5101753916186906
+    },
+    "delta_nwc": {
+     "accession": "0000200406-20-000010",
+     "derived": true,
+     "filed": "2020-02-18",
+     "form": "10-K",
+     "note": "nwc \u2212 nwc(2017-12-31)",
+     "period_end": "2018-12-30",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": -239000000.0
+    },
+    "effective_tax_rate": {
+     "accession": "0000200406-21-000008",
+     "derived": true,
+     "filed": "2021-02-22",
+     "form": "10-K",
+     "note": "income_tax / pretax_income (clamped 0\u201350%)",
+     "period_end": "2018-12-30",
+     "period_start": "2018-01-01",
+     "tag": "valuelens:derived",
+     "value": 0.15011945108061558
+    },
+    "eps_diluted": {
+     "accession": "0000200406-21-000008",
+     "derived": false,
+     "filed": "2021-02-22",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2018-12-30",
+     "period_start": "2018-01-01",
+     "tag": "us-gaap:EarningsPerShareDiluted",
+     "value": 5.61
+    },
+    "equity": {
+     "accession": "0000200406-22-000022",
+     "derived": false,
+     "filed": "2022-02-17",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2018-12-30",
+     "period_start": null,
+     "tag": "us-gaap:StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest",
+     "value": 59752000000.0
+    },
+    "fcf": {
+     "accession": "0000200406-21-000008",
+     "derived": true,
+     "filed": "2021-02-22",
+     "form": "10-K",
+     "note": "cfo \u2212 capex",
+     "period_end": "2018-12-30",
+     "period_start": "2018-01-01",
+     "tag": "valuelens:derived",
+     "value": 18531000000.0
+    },
+    "fcff": {
+     "accession": "0000200406-21-000008",
+     "derived": true,
+     "filed": "2021-02-22",
+     "form": "10-K",
+     "note": "nopat + d_and_a \u2212 capex \u2212 delta_nwc",
+     "period_end": "2018-12-30",
+     "period_start": "2018-01-01",
+     "tag": "valuelens:derived",
+     "value": 19649129951.66398
+    },
+    "goodwill": {
+     "accession": "0000200406-21-000008",
+     "derived": false,
+     "filed": "2021-02-22",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2018-12-30",
+     "period_start": null,
+     "tag": "us-gaap:Goodwill",
+     "value": 30453000000.0
+    },
+    "income_tax": {
+     "accession": "0000200406-21-000008",
+     "derived": false,
+     "filed": "2021-02-22",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2018-12-30",
+     "period_start": "2018-01-01",
+     "tag": "us-gaap:IncomeTaxExpenseBenefit",
+     "value": 2702000000.0
+    },
+    "intangibles": {
+     "accession": "0000200406-20-000010",
+     "derived": false,
+     "filed": "2020-02-18",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2018-12-30",
+     "period_start": null,
+     "tag": "us-gaap:IntangibleAssetsNetExcludingGoodwill",
+     "value": 47611000000.0
+    },
+    "interest_expense": {
+     "accession": "0000200406-21-000008",
+     "derived": false,
+     "filed": "2021-02-22",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2018-12-30",
+     "period_start": "2018-01-01",
+     "tag": "us-gaap:InterestExpense",
+     "value": 1005000000.0
+    },
+    "inventory": {
+     "accession": "0000200406-20-000010",
+     "derived": false,
+     "filed": "2020-02-18",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2018-12-30",
+     "period_start": null,
+     "tag": "us-gaap:InventoryNet",
+     "value": 8599000000.0
+    },
+    "invested_capital": {
+     "accession": "0000200406-22-000022",
+     "derived": true,
+     "filed": "2022-02-17",
+     "form": "10-K",
+     "note": "equity + total_debt \u2212 cash",
+     "period_end": "2018-12-30",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 72129000000.0
+    },
+    "liabilities_and_equity": {
+     "accession": "0000200406-20-000010",
+     "derived": false,
+     "filed": "2020-02-18",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2018-12-30",
+     "period_start": null,
+     "tag": "us-gaap:LiabilitiesAndStockholdersEquity",
+     "value": 152954000000.0
+    },
+    "long_term_debt": {
+     "accession": "0000200406-20-000010",
+     "derived": false,
+     "filed": "2020-02-18",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2018-12-30",
+     "period_start": null,
+     "tag": "us-gaap:LongTermDebtNoncurrent",
+     "value": 27684000000.0
+    },
+    "maintenance_capex": {
+     "accession": "0000200406-21-000008",
+     "derived": true,
+     "filed": "2021-02-22",
+     "form": "10-K",
+     "note": "min(capex, d_and_a) \u2014 conservative proxy; Buffett's 'average capex to maintain competitive position'",
+     "period_end": "2018-12-30",
+     "period_start": "2018-01-01",
+     "tag": "valuelens:derived",
+     "value": 3670000000.0
+    },
+    "net_income": {
+     "accession": "0000200406-21-000008",
+     "derived": false,
+     "filed": "2021-02-22",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2018-12-30",
+     "period_start": "2018-01-01",
+     "tag": "us-gaap:NetIncomeLoss",
+     "value": 15297000000.0
+    },
+    "net_margin": {
+     "accession": "0000200406-21-000008",
+     "derived": true,
+     "filed": "2021-02-22",
+     "form": "10-K",
+     "note": "net_income / revenue",
+     "period_end": "2018-12-30",
+     "period_start": "2018-01-01",
+     "tag": "valuelens:derived",
+     "value": 0.18750689498780354
+    },
+    "nopat": {
+     "accession": "0000200406-21-000008",
+     "derived": true,
+     "filed": "2021-02-22",
+     "form": "10-K",
+     "note": "operating_income \u00d7 (1 \u2212 0.150)",
+     "period_end": "2018-12-30",
+     "period_start": "2018-01-01",
+     "tag": "valuelens:derived",
+     "value": 16151129951.66398
+    },
+    "nwc": {
+     "accession": "0000200406-20-000010",
+     "derived": true,
+     "filed": "2020-02-18",
+     "form": "10-K",
+     "note": "(current_assets \u2212 cash \u2212 short_term_investments) \u2212 (current_liabilities \u2212 short_term_debt)",
+     "period_end": "2018-12-30",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": -2084000000.0
+    },
+    "operating_income": {
+     "accession": "0000200406-21-000008",
+     "derived": true,
+     "filed": "2021-02-22",
+     "form": "10-K",
+     "note": "pretax_income + interest_expense (EBIT proxy; OperatingIncomeLoss not tagged)",
+     "period_end": "2018-12-30",
+     "period_start": "2018-01-01",
+     "tag": "valuelens:derived",
+     "value": 19004000000.0
+    },
+    "operating_margin": {
+     "accession": "0000200406-21-000008",
+     "derived": true,
+     "filed": "2021-02-22",
+     "form": "10-K",
+     "note": "operating_income / revenue",
+     "period_end": "2018-12-30",
+     "period_start": "2018-01-01",
+     "tag": "valuelens:derived",
+     "value": 0.23294639683259583
+    },
+    "owner_earnings": {
+     "accession": "0000200406-21-000008",
+     "derived": true,
+     "filed": "2021-02-22",
+     "form": "10-K",
+     "note": "net_income + d_and_a \u2212 maintenance_capex \u2212 delta_nwc",
+     "period_end": "2018-12-30",
+     "period_start": "2018-01-01",
+     "tag": "valuelens:derived",
+     "value": 18795000000.0
+    },
+    "pretax_income": {
+     "accession": "0000200406-21-000008",
+     "derived": false,
+     "filed": "2021-02-22",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2018-12-30",
+     "period_start": "2018-01-01",
+     "tag": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesMinorityInterestAndIncomeLossFromEquityMethodInvestments",
+     "value": 17999000000.0
+    },
+    "receivables": {
+     "accession": "0000200406-20-000010",
+     "derived": false,
+     "filed": "2020-02-18",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2018-12-30",
+     "period_start": null,
+     "tag": "us-gaap:AccountsReceivableNetCurrent",
+     "value": 14098000000.0
+    },
+    "revenue": {
+     "accession": "0000200406-21-000008",
+     "derived": false,
+     "filed": "2021-02-22",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2018-12-30",
+     "period_start": "2018-01-01",
+     "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+     "value": 81581000000.0
+    },
+    "roe": {
+     "accession": "0000200406-21-000008",
+     "derived": true,
+     "filed": "2021-02-22",
+     "form": "10-K",
+     "note": "net_income / equity",
+     "period_end": "2018-12-30",
+     "period_start": "2018-01-01",
+     "tag": "valuelens:derived",
+     "value": 0.25600816709064134
+    },
+    "roic": {
+     "accession": "0000200406-21-000008",
+     "derived": true,
+     "filed": "2021-02-22",
+     "form": "10-K",
+     "note": "nopat / invested_capital",
+     "period_end": "2018-12-30",
+     "period_start": "2018-01-01",
+     "tag": "valuelens:derived",
+     "value": 0.2239200592225593
+    },
+    "shares_diluted": {
+     "accession": "0000200406-21-000008",
+     "derived": false,
+     "filed": "2021-02-22",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2018-12-30",
+     "period_start": "2018-01-01",
+     "tag": "us-gaap:WeightedAverageNumberOfDilutedSharesOutstanding",
+     "value": 2728700000.0
+    },
+    "short_term_debt": {
+     "accession": "0000200406-20-000010",
+     "derived": false,
+     "filed": "2020-02-18",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2018-12-30",
+     "period_start": null,
+     "tag": "us-gaap:DebtCurrent",
+     "value": 2800000000.0
+    },
+    "short_term_investments": {
+     "accession": "0000200406-20-000010",
+     "derived": false,
+     "filed": "2020-02-18",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2018-12-30",
+     "period_start": null,
+     "tag": "us-gaap:MarketableSecuritiesCurrent",
+     "value": 1580000000.0
+    },
+    "total_assets": {
+     "accession": "0000200406-20-000010",
+     "derived": false,
+     "filed": "2020-02-18",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2018-12-30",
+     "period_start": null,
+     "tag": "us-gaap:Assets",
+     "value": 152954000000.0
+    },
+    "total_debt": {
+     "accession": "0000200406-20-000010",
+     "derived": true,
+     "filed": "2020-02-18",
+     "form": "10-K",
+     "note": "short_term_debt + long_term_debt",
+     "period_end": "2018-12-30",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 30484000000.0
+    },
+    "total_liabilities": {
+     "accession": "0000200406-20-000010",
+     "derived": false,
+     "filed": "2020-02-18",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2018-12-30",
+     "period_start": null,
+     "tag": "us-gaap:Liabilities",
+     "value": 93202000000.0
+    }
+   }
+  },
+  {
+   "fiscal_year": 2019,
+   "form": "10-K",
+   "label": "FY2019",
+   "period_end": "2019-12-29",
+   "values": {
+    "book_value_per_share": {
+     "accession": "0000200406-23-000016",
+     "derived": true,
+     "filed": "2023-02-16",
+     "form": "10-K",
+     "note": "equity / shares_diluted",
+     "period_end": "2019-12-29",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 22.155124240956674
+    },
+    "buybacks": {
+     "accession": "0000200406-22-000022",
+     "derived": false,
+     "filed": "2022-02-17",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2019-12-29",
+     "period_start": "2018-12-31",
+     "tag": "us-gaap:PaymentsForRepurchaseOfCommonStock",
+     "value": 6746000000.0
+    },
+    "capex": {
+     "accession": "0000200406-22-000022",
+     "derived": false,
+     "filed": "2022-02-17",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2019-12-29",
+     "period_start": "2018-12-31",
+     "tag": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+     "value": 3498000000.0
+    },
+    "cash": {
+     "accession": "0000200406-21-000008",
+     "derived": false,
+     "filed": "2021-02-22",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2019-12-29",
+     "period_start": null,
+     "tag": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+     "value": 17305000000.0
+    },
+    "cfo": {
+     "accession": "0000200406-22-000022",
+     "derived": false,
+     "filed": "2022-02-17",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2019-12-29",
+     "period_start": "2018-12-31",
+     "tag": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+     "value": 23416000000.0
+    },
+    "cost_of_revenue": {
+     "accession": "0000200406-22-000022",
+     "derived": false,
+     "filed": "2022-02-17",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2019-12-29",
+     "period_start": "2018-12-31",
+     "tag": "us-gaap:CostOfGoodsAndServicesSold",
+     "value": 27556000000.0
+    },
+    "current_assets": {
+     "accession": "0000200406-21-000008",
+     "derived": false,
+     "filed": "2021-02-22",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2019-12-29",
+     "period_start": null,
+     "tag": "us-gaap:AssetsCurrent",
+     "value": 45274000000.0
+    },
+    "current_liabilities": {
+     "accession": "0000200406-21-000008",
+     "derived": false,
+     "filed": "2021-02-22",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2019-12-29",
+     "period_start": null,
+     "tag": "us-gaap:LiabilitiesCurrent",
+     "value": 35964000000.0
+    },
+    "current_ratio": {
+     "accession": "0000200406-21-000008",
+     "derived": true,
+     "filed": "2021-02-22",
+     "form": "10-K",
+     "note": "current_assets / current_liabilities",
+     "period_end": "2019-12-29",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 1.2588699810922033
+    },
+    "d_and_a": {
+     "accession": "0000200406-22-000022",
+     "derived": false,
+     "filed": "2022-02-17",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2019-12-29",
+     "period_start": "2018-12-31",
+     "tag": "us-gaap:DepreciationDepletionAndAmortization",
+     "value": 7009000000.0
+    },
+    "debt_to_equity": {
+     "accession": "0000200406-21-000008",
+     "derived": true,
+     "filed": "2021-02-22",
+     "form": "10-K",
+     "note": "total_debt / equity",
+     "period_end": "2019-12-29",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 0.465672344504044
+    },
+    "delta_nwc": {
+     "accession": "0000200406-21-000008",
+     "derived": true,
+     "filed": "2021-02-22",
+     "form": "10-K",
+     "note": "nwc \u2212 nwc(2018-12-30)",
+     "period_end": "2019-12-29",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": -6693000000.0
+    },
+    "effective_tax_rate": {
+     "accession": "0000200406-22-000022",
+     "derived": true,
+     "filed": "2022-02-17",
+     "form": "10-K",
+     "note": "income_tax / pretax_income (clamped 0\u201350%)",
+     "period_end": "2019-12-29",
+     "period_start": "2018-12-31",
+     "tag": "valuelens:derived",
+     "value": 0.1274815327793167
+    },
+    "eps_diluted": {
+     "accession": "0000200406-22-000022",
+     "derived": false,
+     "filed": "2022-02-17",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2019-12-29",
+     "period_start": "2018-12-31",
+     "tag": "us-gaap:EarningsPerShareDiluted",
+     "value": 5.63
+    },
+    "equity": {
+     "accession": "0000200406-23-000016",
+     "derived": false,
+     "filed": "2023-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2019-12-29",
+     "period_start": null,
+     "tag": "us-gaap:StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest",
+     "value": 59471000000.0
+    },
+    "fcf": {
+     "accession": "0000200406-22-000022",
+     "derived": true,
+     "filed": "2022-02-17",
+     "form": "10-K",
+     "note": "cfo \u2212 capex",
+     "period_end": "2019-12-29",
+     "period_start": "2018-12-31",
+     "tag": "valuelens:derived",
+     "value": 19918000000.0
+    },
+    "fcff": {
+     "accession": "0000200406-22-000022",
+     "derived": true,
+     "filed": "2022-02-17",
+     "form": "10-K",
+     "note": "nopat + d_and_a \u2212 capex \u2212 delta_nwc",
+     "period_end": "2019-12-29",
+     "period_start": "2018-12-31",
+     "tag": "valuelens:derived",
+     "value": 25600460872.57618
+    },
+    "goodwill": {
+     "accession": "0000200406-22-000022",
+     "derived": false,
+     "filed": "2022-02-17",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2019-12-29",
+     "period_start": null,
+     "tag": "us-gaap:Goodwill",
+     "value": 33639000000.0
+    },
+    "income_tax": {
+     "accession": "0000200406-22-000022",
+     "derived": false,
+     "filed": "2022-02-17",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2019-12-29",
+     "period_start": "2018-12-31",
+     "tag": "us-gaap:IncomeTaxExpenseBenefit",
+     "value": 2209000000.0
+    },
+    "intangibles": {
+     "accession": "0000200406-21-000008",
+     "derived": false,
+     "filed": "2021-02-22",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2019-12-29",
+     "period_start": null,
+     "tag": "us-gaap:IntangibleAssetsNetExcludingGoodwill",
+     "value": 47643000000.0
+    },
+    "interest_expense": {
+     "accession": "0000200406-22-000022",
+     "derived": false,
+     "filed": "2022-02-17",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2019-12-29",
+     "period_start": "2018-12-31",
+     "tag": "us-gaap:InterestExpense",
+     "value": 318000000.0
+    },
+    "inventory": {
+     "accession": "0000200406-21-000008",
+     "derived": false,
+     "filed": "2021-02-22",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2019-12-29",
+     "period_start": null,
+     "tag": "us-gaap:InventoryNet",
+     "value": 9020000000.0
+    },
+    "invested_capital": {
+     "accession": "0000200406-23-000016",
+     "derived": true,
+     "filed": "2023-02-16",
+     "form": "10-K",
+     "note": "equity + total_debt \u2212 cash",
+     "period_end": "2019-12-29",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 69860000000.0
+    },
+    "liabilities_and_equity": {
+     "accession": "0000200406-21-000008",
+     "derived": false,
+     "filed": "2021-02-22",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2019-12-29",
+     "period_start": null,
+     "tag": "us-gaap:LiabilitiesAndStockholdersEquity",
+     "value": 157728000000.0
+    },
+    "long_term_debt": {
+     "accession": "0000200406-21-000008",
+     "derived": false,
+     "filed": "2021-02-22",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2019-12-29",
+     "period_start": null,
+     "tag": "us-gaap:LongTermDebtNoncurrent",
+     "value": 26494000000.0
+    },
+    "maintenance_capex": {
+     "accession": "0000200406-22-000022",
+     "derived": true,
+     "filed": "2022-02-17",
+     "form": "10-K",
+     "note": "min(capex, d_and_a) \u2014 conservative proxy; Buffett's 'average capex to maintain competitive position'",
+     "period_end": "2019-12-29",
+     "period_start": "2018-12-31",
+     "tag": "valuelens:derived",
+     "value": 3498000000.0
+    },
+    "net_income": {
+     "accession": "0000200406-22-000022",
+     "derived": false,
+     "filed": "2022-02-17",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2019-12-29",
+     "period_start": "2018-12-31",
+     "tag": "us-gaap:NetIncomeLoss",
+     "value": 15119000000.0
+    },
+    "net_margin": {
+     "accession": "0000200406-22-000022",
+     "derived": true,
+     "filed": "2022-02-17",
+     "form": "10-K",
+     "note": "net_income / revenue",
+     "period_end": "2019-12-29",
+     "period_start": "2018-12-31",
+     "tag": "valuelens:derived",
+     "value": 0.1842454819093579
+    },
+    "nopat": {
+     "accession": "0000200406-22-000022",
+     "derived": true,
+     "filed": "2022-02-17",
+     "form": "10-K",
+     "note": "operating_income \u00d7 (1 \u2212 0.127)",
+     "period_end": "2019-12-29",
+     "period_start": "2018-12-31",
+     "tag": "valuelens:derived",
+     "value": 15396460872.576178
+    },
+    "nwc": {
+     "accession": "0000200406-21-000008",
+     "derived": true,
+     "filed": "2021-02-22",
+     "form": "10-K",
+     "note": "(current_assets \u2212 cash \u2212 short_term_investments) \u2212 (current_liabilities \u2212 short_term_debt)",
+     "period_end": "2019-12-29",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": -8777000000.0
+    },
+    "operating_income": {
+     "accession": "0000200406-22-000022",
+     "derived": true,
+     "filed": "2022-02-17",
+     "form": "10-K",
+     "note": "pretax_income + interest_expense (EBIT proxy; OperatingIncomeLoss not tagged)",
+     "period_end": "2019-12-29",
+     "period_start": "2018-12-31",
+     "tag": "valuelens:derived",
+     "value": 17646000000.0
+    },
+    "operating_margin": {
+     "accession": "0000200406-22-000022",
+     "derived": true,
+     "filed": "2022-02-17",
+     "form": "10-K",
+     "note": "operating_income / revenue",
+     "period_end": "2019-12-29",
+     "period_start": "2018-12-31",
+     "tag": "valuelens:derived",
+     "value": 0.21504039776258546
+    },
+    "owner_earnings": {
+     "accession": "0000200406-22-000022",
+     "derived": true,
+     "filed": "2022-02-17",
+     "form": "10-K",
+     "note": "net_income + d_and_a \u2212 maintenance_capex \u2212 delta_nwc",
+     "period_end": "2019-12-29",
+     "period_start": "2018-12-31",
+     "tag": "valuelens:derived",
+     "value": 25323000000.0
+    },
+    "pretax_income": {
+     "accession": "0000200406-22-000022",
+     "derived": false,
+     "filed": "2022-02-17",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2019-12-29",
+     "period_start": "2018-12-31",
+     "tag": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+     "value": 17328000000.0
+    },
+    "receivables": {
+     "accession": "0000200406-21-000008",
+     "derived": false,
+     "filed": "2021-02-22",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2019-12-29",
+     "period_start": null,
+     "tag": "us-gaap:AccountsReceivableNetCurrent",
+     "value": 14481000000.0
+    },
+    "revenue": {
+     "accession": "0000200406-22-000022",
+     "derived": false,
+     "filed": "2022-02-17",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2019-12-29",
+     "period_start": "2018-12-31",
+     "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+     "value": 82059000000.0
+    },
+    "roe": {
+     "accession": "0000200406-22-000022",
+     "derived": true,
+     "filed": "2022-02-17",
+     "form": "10-K",
+     "note": "net_income / equity",
+     "period_end": "2019-12-29",
+     "period_start": "2018-12-31",
+     "tag": "valuelens:derived",
+     "value": 0.2542247481966
+    },
+    "roic": {
+     "accession": "0000200406-22-000022",
+     "derived": true,
+     "filed": "2022-02-17",
+     "form": "10-K",
+     "note": "nopat / invested_capital",
+     "period_end": "2019-12-29",
+     "period_start": "2018-12-31",
+     "tag": "valuelens:derived",
+     "value": 0.22039022147976206
+    },
+    "shares_diluted": {
+     "accession": "0000200406-22-000022",
+     "derived": false,
+     "filed": "2022-02-17",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2019-12-29",
+     "period_start": "2018-12-31",
+     "tag": "us-gaap:WeightedAverageNumberOfDilutedSharesOutstanding",
+     "value": 2684300000.0
+    },
+    "short_term_debt": {
+     "accession": "0000200406-21-000008",
+     "derived": false,
+     "filed": "2021-02-22",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2019-12-29",
+     "period_start": null,
+     "tag": "us-gaap:DebtCurrent",
+     "value": 1200000000.0
+    },
+    "short_term_investments": {
+     "accession": "0000200406-21-000008",
+     "derived": false,
+     "filed": "2021-02-22",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2019-12-29",
+     "period_start": null,
+     "tag": "us-gaap:MarketableSecuritiesCurrent",
+     "value": 1982000000.0
+    },
+    "total_assets": {
+     "accession": "0000200406-21-000008",
+     "derived": false,
+     "filed": "2021-02-22",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2019-12-29",
+     "period_start": null,
+     "tag": "us-gaap:Assets",
+     "value": 157728000000.0
+    },
+    "total_debt": {
+     "accession": "0000200406-21-000008",
+     "derived": true,
+     "filed": "2021-02-22",
+     "form": "10-K",
+     "note": "short_term_debt + long_term_debt",
+     "period_end": "2019-12-29",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 27694000000.0
+    },
+    "total_liabilities": {
+     "accession": "0000200406-21-000008",
+     "derived": false,
+     "filed": "2021-02-22",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2019-12-29",
+     "period_start": null,
+     "tag": "us-gaap:Liabilities",
+     "value": 98257000000.0
+    }
+   }
+  },
+  {
+   "fiscal_year": 2020,
+   "form": "10-K",
+   "label": "FY2020",
+   "period_end": "2021-01-03",
+   "values": {
+    "book_value_per_share": {
+     "accession": "0000200406-24-000013",
+     "derived": true,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "equity / shares_diluted",
+     "period_end": "2021-01-03",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 23.69341371176096
+    },
+    "buybacks": {
+     "accession": "0000200406-23-000016",
+     "derived": false,
+     "filed": "2023-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2021-01-03",
+     "period_start": "2019-12-30",
+     "tag": "us-gaap:PaymentsForRepurchaseOfCommonStock",
+     "value": 3221000000.0
+    },
+    "capex": {
+     "accession": "0000200406-23-000016",
+     "derived": false,
+     "filed": "2023-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2021-01-03",
+     "period_start": "2019-12-30",
+     "tag": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+     "value": 3347000000.0
+    },
+    "cash": {
+     "accession": "0000200406-22-000022",
+     "derived": false,
+     "filed": "2022-02-17",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2021-01-03",
+     "period_start": null,
+     "tag": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+     "value": 13985000000.0
+    },
+    "cfo": {
+     "accession": "0000200406-23-000016",
+     "derived": false,
+     "filed": "2023-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2021-01-03",
+     "period_start": "2019-12-30",
+     "tag": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+     "value": 23536000000.0
+    },
+    "cost_of_revenue": {
+     "accession": "0000200406-23-000016",
+     "derived": false,
+     "filed": "2023-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2021-01-03",
+     "period_start": "2019-12-30",
+     "tag": "us-gaap:CostOfGoodsAndServicesSold",
+     "value": 28427000000.0
+    },
+    "current_assets": {
+     "accession": "0000200406-22-000022",
+     "derived": false,
+     "filed": "2022-02-17",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2021-01-03",
+     "period_start": null,
+     "tag": "us-gaap:AssetsCurrent",
+     "value": 51237000000.0
+    },
+    "current_liabilities": {
+     "accession": "0000200406-22-000022",
+     "derived": false,
+     "filed": "2022-02-17",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2021-01-03",
+     "period_start": null,
+     "tag": "us-gaap:LiabilitiesCurrent",
+     "value": 42493000000.0
+    },
+    "current_ratio": {
+     "accession": "0000200406-22-000022",
+     "derived": true,
+     "filed": "2022-02-17",
+     "form": "10-K",
+     "note": "current_assets / current_liabilities",
+     "period_end": "2021-01-03",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 1.205775068834867
+    },
+    "d_and_a": {
+     "accession": "0000200406-23-000016",
+     "derived": false,
+     "filed": "2023-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2021-01-03",
+     "period_start": "2019-12-30",
+     "tag": "us-gaap:DepreciationDepletionAndAmortization",
+     "value": 7231000000.0
+    },
+    "debt_to_equity": {
+     "accession": "0000200406-22-000022",
+     "derived": true,
+     "filed": "2022-02-17",
+     "form": "10-K",
+     "note": "total_debt / equity",
+     "period_end": "2021-01-03",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 0.5568285976168652
+    },
+    "delta_nwc": {
+     "accession": "0000200406-22-000022",
+     "derived": true,
+     "filed": "2022-02-17",
+     "form": "10-K",
+     "note": "nwc \u2212 nwc(2019-12-29)",
+     "period_end": "2021-01-03",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": -5064000000.0
+    },
+    "effective_tax_rate": {
+     "accession": "0000200406-23-000016",
+     "derived": true,
+     "filed": "2023-02-16",
+     "form": "10-K",
+     "note": "income_tax / pretax_income (clamped 0\u201350%)",
+     "period_end": "2021-01-03",
+     "period_start": "2019-12-30",
+     "tag": "valuelens:derived",
+     "value": 0.10808025701642723
+    },
+    "eps_diluted": {
+     "accession": "0000200406-23-000016",
+     "derived": false,
+     "filed": "2023-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2021-01-03",
+     "period_start": "2019-12-30",
+     "tag": "us-gaap:EarningsPerShareDiluted",
+     "value": 5.51
+    },
+    "equity": {
+     "accession": "0000200406-24-000013",
+     "derived": false,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2021-01-03",
+     "period_start": null,
+     "tag": "us-gaap:StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest",
+     "value": 63278000000.0
+    },
+    "fcf": {
+     "accession": "0000200406-23-000016",
+     "derived": true,
+     "filed": "2023-02-16",
+     "form": "10-K",
+     "note": "cfo \u2212 capex",
+     "period_end": "2021-01-03",
+     "period_start": "2019-12-30",
+     "tag": "valuelens:derived",
+     "value": 20189000000.0
+    },
+    "fcff": {
+     "accession": "0000200406-23-000016",
+     "derived": true,
+     "filed": "2023-02-16",
+     "form": "10-K",
+     "note": "nopat + d_and_a \u2212 capex \u2212 delta_nwc",
+     "period_end": "2021-01-03",
+     "period_start": "2019-12-30",
+     "tag": "valuelens:derived",
+     "value": 23841275868.3397
+    },
+    "goodwill": {
+     "accession": "0000200406-23-000016",
+     "derived": false,
+     "filed": "2023-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2021-01-03",
+     "period_start": null,
+     "tag": "us-gaap:Goodwill",
+     "value": 36393000000.0
+    },
+    "income_tax": {
+     "accession": "0000200406-23-000016",
+     "derived": false,
+     "filed": "2023-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2021-01-03",
+     "period_start": "2019-12-30",
+     "tag": "us-gaap:IncomeTaxExpenseBenefit",
+     "value": 1783000000.0
+    },
+    "intangibles": {
+     "accession": "0000200406-22-000022",
+     "derived": false,
+     "filed": "2022-02-17",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2021-01-03",
+     "period_start": null,
+     "tag": "us-gaap:IntangibleAssetsNetExcludingGoodwill",
+     "value": 53402000000.0
+    },
+    "interest_expense": {
+     "accession": "0000200406-23-000016",
+     "derived": false,
+     "filed": "2023-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2021-01-03",
+     "period_start": "2019-12-30",
+     "tag": "us-gaap:InterestExpense",
+     "value": 201000000.0
+    },
+    "inventory": {
+     "accession": "0000200406-22-000022",
+     "derived": false,
+     "filed": "2022-02-17",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2021-01-03",
+     "period_start": null,
+     "tag": "us-gaap:InventoryNet",
+     "value": 9344000000.0
+    },
+    "invested_capital": {
+     "accession": "0000200406-24-000013",
+     "derived": true,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "equity + total_debt \u2212 cash",
+     "period_end": "2021-01-03",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 84528000000.0
+    },
+    "liabilities_and_equity": {
+     "accession": "0000200406-22-000022",
+     "derived": false,
+     "filed": "2022-02-17",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2021-01-03",
+     "period_start": null,
+     "tag": "us-gaap:LiabilitiesAndStockholdersEquity",
+     "value": 174894000000.0
+    },
+    "long_term_debt": {
+     "accession": "0000200406-22-000022",
+     "derived": false,
+     "filed": "2022-02-17",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2021-01-03",
+     "period_start": null,
+     "tag": "us-gaap:LongTermDebtNoncurrent",
+     "value": 32635000000.0
+    },
+    "maintenance_capex": {
+     "accession": "0000200406-23-000016",
+     "derived": true,
+     "filed": "2023-02-16",
+     "form": "10-K",
+     "note": "min(capex, d_and_a) \u2014 conservative proxy; Buffett's 'average capex to maintain competitive position'",
+     "period_end": "2021-01-03",
+     "period_start": "2019-12-30",
+     "tag": "valuelens:derived",
+     "value": 3347000000.0
+    },
+    "net_income": {
+     "accession": "0000200406-23-000016",
+     "derived": false,
+     "filed": "2023-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2021-01-03",
+     "period_start": "2019-12-30",
+     "tag": "us-gaap:NetIncomeLoss",
+     "value": 14714000000.0
+    },
+    "net_margin": {
+     "accession": "0000200406-23-000016",
+     "derived": true,
+     "filed": "2023-02-16",
+     "form": "10-K",
+     "note": "net_income / revenue",
+     "period_end": "2021-01-03",
+     "period_start": "2019-12-30",
+     "tag": "valuelens:derived",
+     "value": 0.17817010558946042
+    },
+    "nopat": {
+     "accession": "0000200406-23-000016",
+     "derived": true,
+     "filed": "2023-02-16",
+     "form": "10-K",
+     "note": "operating_income \u00d7 (1 \u2212 0.108)",
+     "period_end": "2021-01-03",
+     "period_start": "2019-12-30",
+     "tag": "valuelens:derived",
+     "value": 14893275868.339699
+    },
+    "nwc": {
+     "accession": "0000200406-22-000022",
+     "derived": true,
+     "filed": "2022-02-17",
+     "form": "10-K",
+     "note": "(current_assets \u2212 cash \u2212 short_term_investments) \u2212 (current_liabilities \u2212 short_term_debt)",
+     "period_end": "2021-01-03",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": -13841000000.0
+    },
+    "operating_income": {
+     "accession": "0000200406-23-000016",
+     "derived": true,
+     "filed": "2023-02-16",
+     "form": "10-K",
+     "note": "pretax_income + interest_expense (EBIT proxy; OperatingIncomeLoss not tagged)",
+     "period_end": "2021-01-03",
+     "period_start": "2019-12-30",
+     "tag": "valuelens:derived",
+     "value": 16698000000.0
+    },
+    "operating_margin": {
+     "accession": "0000200406-23-000016",
+     "derived": true,
+     "filed": "2023-02-16",
+     "form": "10-K",
+     "note": "operating_income / revenue",
+     "period_end": "2021-01-03",
+     "period_start": "2019-12-30",
+     "tag": "valuelens:derived",
+     "value": 0.20219412961348446
+    },
+    "owner_earnings": {
+     "accession": "0000200406-23-000016",
+     "derived": true,
+     "filed": "2023-02-16",
+     "form": "10-K",
+     "note": "net_income + d_and_a \u2212 maintenance_capex \u2212 delta_nwc",
+     "period_end": "2021-01-03",
+     "period_start": "2019-12-30",
+     "tag": "valuelens:derived",
+     "value": 23662000000.0
+    },
+    "pretax_income": {
+     "accession": "0000200406-23-000016",
+     "derived": false,
+     "filed": "2023-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2021-01-03",
+     "period_start": "2019-12-30",
+     "tag": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+     "value": 16497000000.0
+    },
+    "receivables": {
+     "accession": "0000200406-22-000022",
+     "derived": false,
+     "filed": "2022-02-17",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2021-01-03",
+     "period_start": null,
+     "tag": "us-gaap:AccountsReceivableNetCurrent",
+     "value": 13576000000.0
+    },
+    "revenue": {
+     "accession": "0000200406-23-000016",
+     "derived": false,
+     "filed": "2023-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2021-01-03",
+     "period_start": "2019-12-30",
+     "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+     "value": 82584000000.0
+    },
+    "roe": {
+     "accession": "0000200406-23-000016",
+     "derived": true,
+     "filed": "2023-02-16",
+     "form": "10-K",
+     "note": "net_income / equity",
+     "period_end": "2021-01-03",
+     "period_start": "2019-12-30",
+     "tag": "valuelens:derived",
+     "value": 0.23252947311861943
+    },
+    "roic": {
+     "accession": "0000200406-23-000016",
+     "derived": true,
+     "filed": "2023-02-16",
+     "form": "10-K",
+     "note": "nopat / invested_capital",
+     "period_end": "2021-01-03",
+     "period_start": "2019-12-30",
+     "tag": "valuelens:derived",
+     "value": 0.1761934018117038
+    },
+    "shares_diluted": {
+     "accession": "0000200406-23-000016",
+     "derived": false,
+     "filed": "2023-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2021-01-03",
+     "period_start": "2019-12-30",
+     "tag": "us-gaap:WeightedAverageNumberOfDilutedSharesOutstanding",
+     "value": 2670700000.0
+    },
+    "short_term_debt": {
+     "accession": "0000200406-22-000022",
+     "derived": false,
+     "filed": "2022-02-17",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2021-01-03",
+     "period_start": null,
+     "tag": "us-gaap:DebtCurrent",
+     "value": 2600000000.0
+    },
+    "short_term_investments": {
+     "accession": "0000200406-22-000022",
+     "derived": false,
+     "filed": "2022-02-17",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2021-01-03",
+     "period_start": null,
+     "tag": "us-gaap:MarketableSecuritiesCurrent",
+     "value": 11200000000.0
+    },
+    "total_assets": {
+     "accession": "0000200406-22-000022",
+     "derived": false,
+     "filed": "2022-02-17",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2021-01-03",
+     "period_start": null,
+     "tag": "us-gaap:Assets",
+     "value": 174894000000.0
+    },
+    "total_debt": {
+     "accession": "0000200406-22-000022",
+     "derived": true,
+     "filed": "2022-02-17",
+     "form": "10-K",
+     "note": "short_term_debt + long_term_debt",
+     "period_end": "2021-01-03",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 35235000000.0
+    },
+    "total_liabilities": {
+     "accession": "0000200406-22-000022",
+     "derived": false,
+     "filed": "2022-02-17",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2021-01-03",
+     "period_start": null,
+     "tag": "us-gaap:Liabilities",
+     "value": 111616000000.0
+    }
+   }
+  },
+  {
+   "fiscal_year": 2021,
+   "form": "10-K",
+   "label": "FY2021",
+   "period_end": "2022-01-02",
+   "values": {
+    "book_value_per_share": {
+     "accession": "0000200406-25-000038",
+     "derived": true,
+     "filed": "2025-02-13",
+     "form": "10-K",
+     "note": "equity / shares_diluted",
+     "period_end": "2022-01-02",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 27.682498130142108
+    },
+    "buybacks": {
+     "accession": "0000200406-24-000013",
+     "derived": false,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2022-01-02",
+     "period_start": "2021-01-04",
+     "tag": "us-gaap:PaymentsForRepurchaseOfCommonStock",
+     "value": 3456000000.0
+    },
+    "capex": {
+     "accession": "0000200406-24-000013",
+     "derived": false,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2022-01-02",
+     "period_start": "2021-01-04",
+     "tag": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+     "value": 3652000000.0
+    },
+    "cash": {
+     "accession": "0000200406-23-000016",
+     "derived": false,
+     "filed": "2023-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2022-01-02",
+     "period_start": null,
+     "tag": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+     "value": 14487000000.0
+    },
+    "cfo": {
+     "accession": "0000200406-24-000013",
+     "derived": false,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2022-01-02",
+     "period_start": "2021-01-04",
+     "tag": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+     "value": 23410000000.0
+    },
+    "cost_of_revenue": {
+     "accession": "0000200406-24-000013",
+     "derived": false,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2022-01-02",
+     "period_start": "2021-01-04",
+     "tag": "us-gaap:CostOfGoodsAndServicesSold",
+     "value": 23402000000.0
+    },
+    "current_assets": {
+     "accession": "0000200406-23-000016",
+     "derived": false,
+     "filed": "2023-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2022-01-02",
+     "period_start": null,
+     "tag": "us-gaap:AssetsCurrent",
+     "value": 60979000000.0
+    },
+    "current_liabilities": {
+     "accession": "0000200406-23-000016",
+     "derived": false,
+     "filed": "2023-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2022-01-02",
+     "period_start": null,
+     "tag": "us-gaap:LiabilitiesCurrent",
+     "value": 45226000000.0
+    },
+    "current_ratio": {
+     "accession": "0000200406-23-000016",
+     "derived": true,
+     "filed": "2023-02-16",
+     "form": "10-K",
+     "note": "current_assets / current_liabilities",
+     "period_end": "2022-01-02",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 1.3483173395834254
+    },
+    "d_and_a": {
+     "accession": "0000200406-24-000013",
+     "derived": false,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2022-01-02",
+     "period_start": "2021-01-04",
+     "tag": "us-gaap:DepreciationDepletionAndAmortization",
+     "value": 7390000000.0
+    },
+    "debt_to_equity": {
+     "accession": "0000200406-23-000016",
+     "derived": true,
+     "filed": "2023-02-16",
+     "form": "10-K",
+     "note": "total_debt / equity",
+     "period_end": "2022-01-02",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 0.4564121962092863
+    },
+    "delta_nwc": {
+     "accession": "0000200406-23-000016",
+     "derived": true,
+     "filed": "2023-02-16",
+     "form": "10-K",
+     "note": "nwc \u2212 nwc(2021-01-03)",
+     "period_end": "2022-01-02",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 1786000000.0
+    },
+    "effective_tax_rate": {
+     "accession": "0000200406-24-000013",
+     "derived": true,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "income_tax / pretax_income (clamped 0\u201350%)",
+     "period_end": "2022-01-02",
+     "period_start": "2021-01-04",
+     "tag": "valuelens:derived",
+     "value": 0.07180102200438002
+    },
+    "eps_diluted": {
+     "accession": "0000200406-24-000013",
+     "derived": false,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2022-01-02",
+     "period_start": "2021-01-04",
+     "tag": "us-gaap:EarningsPerShareDiluted",
+     "value": 7.81
+    },
+    "equity": {
+     "accession": "0000200406-25-000038",
+     "derived": false,
+     "filed": "2025-02-13",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2022-01-02",
+     "period_start": null,
+     "tag": "us-gaap:StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest",
+     "value": 74023000000.0
+    },
+    "fcf": {
+     "accession": "0000200406-24-000013",
+     "derived": true,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "cfo \u2212 capex",
+     "period_end": "2022-01-02",
+     "period_start": "2021-01-04",
+     "tag": "valuelens:derived",
+     "value": 19758000000.0
+    },
+    "fcff": {
+     "accession": "0000200406-24-000013",
+     "derived": true,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "nopat + d_and_a \u2212 capex \u2212 delta_nwc",
+     "period_end": "2022-01-02",
+     "period_start": "2021-01-04",
+     "tag": "valuelens:derived",
+     "value": 19922860412.973198
+    },
+    "goodwill": {
+     "accession": "0000200406-24-000013",
+     "derived": false,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2022-01-02",
+     "period_start": null,
+     "tag": "us-gaap:Goodwill",
+     "value": 25436000000.0
+    },
+    "income_tax": {
+     "accession": "0000200406-24-000013",
+     "derived": false,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2022-01-02",
+     "period_start": "2021-01-04",
+     "tag": "us-gaap:IncomeTaxExpenseBenefit",
+     "value": 1377000000.0
+    },
+    "intangibles": {
+     "accession": "0000200406-23-000016",
+     "derived": false,
+     "filed": "2023-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2022-01-02",
+     "period_start": null,
+     "tag": "us-gaap:IntangibleAssetsNetExcludingGoodwill",
+     "value": 46392000000.0
+    },
+    "interest_expense": {
+     "accession": "0000200406-24-000013",
+     "derived": false,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2022-01-02",
+     "period_start": "2021-01-04",
+     "tag": "us-gaap:InterestExpense",
+     "value": 183000000.0
+    },
+    "inventory": {
+     "accession": "0000200406-23-000016",
+     "derived": false,
+     "filed": "2023-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2022-01-02",
+     "period_start": null,
+     "tag": "us-gaap:InventoryNet",
+     "value": 10387000000.0
+    },
+    "invested_capital": {
+     "accession": "0000200406-25-000038",
+     "derived": true,
+     "filed": "2025-02-13",
+     "form": "10-K",
+     "note": "equity + total_debt \u2212 cash",
+     "period_end": "2022-01-02",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 93321000000.0
+    },
+    "liabilities_and_equity": {
+     "accession": "0000200406-23-000016",
+     "derived": false,
+     "filed": "2023-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2022-01-02",
+     "period_start": null,
+     "tag": "us-gaap:LiabilitiesAndStockholdersEquity",
+     "value": 182018000000.0
+    },
+    "long_term_debt": {
+     "accession": "0000200406-23-000016",
+     "derived": false,
+     "filed": "2023-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2022-01-02",
+     "period_start": null,
+     "tag": "us-gaap:LongTermDebtNoncurrent",
+     "value": 29985000000.0
+    },
+    "maintenance_capex": {
+     "accession": "0000200406-24-000013",
+     "derived": true,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "min(capex, d_and_a) \u2014 conservative proxy; Buffett's 'average capex to maintain competitive position'",
+     "period_end": "2022-01-02",
+     "period_start": "2021-01-04",
+     "tag": "valuelens:derived",
+     "value": 3652000000.0
+    },
+    "net_income": {
+     "accession": "0000200406-24-000013",
+     "derived": false,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2022-01-02",
+     "period_start": "2021-01-04",
+     "tag": "us-gaap:NetIncomeLoss",
+     "value": 20878000000.0
+    },
+    "net_margin": {
+     "accession": "0000200406-24-000013",
+     "derived": true,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "net_income / revenue",
+     "period_end": "2022-01-02",
+     "period_start": "2021-01-04",
+     "tag": "valuelens:derived",
+     "value": 0.2651511303022606
+    },
+    "nopat": {
+     "accession": "0000200406-24-000013",
+     "derived": true,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "operating_income \u00d7 (1 \u2212 0.072)",
+     "period_end": "2022-01-02",
+     "period_start": "2021-01-04",
+     "tag": "valuelens:derived",
+     "value": 17970860412.973198
+    },
+    "nwc": {
+     "accession": "0000200406-23-000016",
+     "derived": true,
+     "filed": "2023-02-16",
+     "form": "10-K",
+     "note": "(current_assets \u2212 cash \u2212 short_term_investments) \u2212 (current_liabilities \u2212 short_term_debt)",
+     "period_end": "2022-01-02",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": -12055000000.0
+    },
+    "operating_income": {
+     "accession": "0000200406-24-000013",
+     "derived": true,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "pretax_income + interest_expense (EBIT proxy; OperatingIncomeLoss not tagged)",
+     "period_end": "2022-01-02",
+     "period_start": "2021-01-04",
+     "tag": "valuelens:derived",
+     "value": 19361000000.0
+    },
+    "operating_margin": {
+     "accession": "0000200406-24-000013",
+     "derived": true,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "operating_income / revenue",
+     "period_end": "2022-01-02",
+     "period_start": "2021-01-04",
+     "tag": "valuelens:derived",
+     "value": 0.24588519177038354
+    },
+    "owner_earnings": {
+     "accession": "0000200406-24-000013",
+     "derived": true,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "net_income + d_and_a \u2212 maintenance_capex \u2212 delta_nwc",
+     "period_end": "2022-01-02",
+     "period_start": "2021-01-04",
+     "tag": "valuelens:derived",
+     "value": 22830000000.0
+    },
+    "pretax_income": {
+     "accession": "0000200406-24-000013",
+     "derived": false,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2022-01-02",
+     "period_start": "2021-01-04",
+     "tag": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+     "value": 19178000000.0
+    },
+    "receivables": {
+     "accession": "0000200406-23-000016",
+     "derived": false,
+     "filed": "2023-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2022-01-02",
+     "period_start": null,
+     "tag": "us-gaap:AccountsReceivableNetCurrent",
+     "value": 15283000000.0
+    },
+    "revenue": {
+     "accession": "0000200406-24-000013",
+     "derived": false,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2022-01-02",
+     "period_start": "2021-01-04",
+     "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+     "value": 78740000000.0
+    },
+    "roe": {
+     "accession": "0000200406-24-000013",
+     "derived": true,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "net_income / equity",
+     "period_end": "2022-01-02",
+     "period_start": "2021-01-04",
+     "tag": "valuelens:derived",
+     "value": 0.28204747173175904
+    },
+    "roic": {
+     "accession": "0000200406-24-000013",
+     "derived": true,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "nopat / invested_capital",
+     "period_end": "2022-01-02",
+     "period_start": "2021-01-04",
+     "tag": "valuelens:derived",
+     "value": 0.19257037979632877
+    },
+    "shares_diluted": {
+     "accession": "0000200406-24-000013",
+     "derived": false,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2022-01-02",
+     "period_start": "2021-01-04",
+     "tag": "us-gaap:WeightedAverageNumberOfDilutedSharesOutstanding",
+     "value": 2674000000.0
+    },
+    "short_term_debt": {
+     "accession": "0000200406-23-000016",
+     "derived": false,
+     "filed": "2023-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2022-01-02",
+     "period_start": null,
+     "tag": "us-gaap:DebtCurrent",
+     "value": 3800000000.0
+    },
+    "short_term_investments": {
+     "accession": "0000200406-23-000016",
+     "derived": false,
+     "filed": "2023-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2022-01-02",
+     "period_start": null,
+     "tag": "us-gaap:MarketableSecuritiesCurrent",
+     "value": 17121000000.0
+    },
+    "total_assets": {
+     "accession": "0000200406-23-000016",
+     "derived": false,
+     "filed": "2023-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2022-01-02",
+     "period_start": null,
+     "tag": "us-gaap:Assets",
+     "value": 182018000000.0
+    },
+    "total_debt": {
+     "accession": "0000200406-23-000016",
+     "derived": true,
+     "filed": "2023-02-16",
+     "form": "10-K",
+     "note": "short_term_debt + long_term_debt",
+     "period_end": "2022-01-02",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 33785000000.0
+    },
+    "total_liabilities": {
+     "accession": "0000200406-23-000016",
+     "derived": false,
+     "filed": "2023-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2022-01-02",
+     "period_start": null,
+     "tag": "us-gaap:Liabilities",
+     "value": 107995000000.0
+    }
+   }
+  },
+  {
+   "fiscal_year": 2022,
+   "form": "10-K",
+   "label": "FY2022",
+   "period_end": "2023-01-01",
+   "values": {
+    "book_value_per_share": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "equity / shares_diluted",
+     "period_end": "2023-01-01",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 28.83141259056271
+    },
+    "buybacks": {
+     "accession": "0000200406-25-000038",
+     "derived": false,
+     "filed": "2025-02-13",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-01-01",
+     "period_start": "2022-01-03",
+     "tag": "us-gaap:PaymentsForRepurchaseOfCommonStock",
+     "value": 6035000000.0
+    },
+    "capex": {
+     "accession": "0000200406-25-000038",
+     "derived": false,
+     "filed": "2025-02-13",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-01-01",
+     "period_start": "2022-01-03",
+     "tag": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+     "value": 4009000000.0
+    },
+    "cash": {
+     "accession": "0000200406-24-000013",
+     "derived": false,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-01-01",
+     "period_start": null,
+     "tag": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+     "value": 12889000000.0
+    },
+    "cfo": {
+     "accession": "0000200406-25-000038",
+     "derived": false,
+     "filed": "2025-02-13",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-01-01",
+     "period_start": "2022-01-03",
+     "tag": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+     "value": 21194000000.0
+    },
+    "cost_of_revenue": {
+     "accession": "0000200406-25-000038",
+     "derived": false,
+     "filed": "2025-02-13",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-01-01",
+     "period_start": "2022-01-03",
+     "tag": "us-gaap:CostOfGoodsAndServicesSold",
+     "value": 24596000000.0
+    },
+    "current_assets": {
+     "accession": "0000200406-24-000013",
+     "derived": false,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-01-01",
+     "period_start": null,
+     "tag": "us-gaap:AssetsCurrent",
+     "value": 55294000000.0
+    },
+    "current_liabilities": {
+     "accession": "0000200406-24-000013",
+     "derived": false,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-01-01",
+     "period_start": null,
+     "tag": "us-gaap:LiabilitiesCurrent",
+     "value": 55802000000.0
+    },
+    "current_ratio": {
+     "accession": "0000200406-24-000013",
+     "derived": true,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "current_assets / current_liabilities",
+     "period_end": "2023-01-01",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 0.9908963836421634
+    },
+    "d_and_a": {
+     "accession": "0000200406-25-000038",
+     "derived": false,
+     "filed": "2025-02-13",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-01-01",
+     "period_start": "2022-01-03",
+     "tag": "us-gaap:DepreciationDepletionAndAmortization",
+     "value": 6970000000.0
+    },
+    "debt_to_equity": {
+     "accession": "0000200406-24-000013",
+     "derived": true,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "total_debt / equity",
+     "period_end": "2023-01-01",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 0.516717879277121
+    },
+    "delta_nwc": {
+     "accession": "0000200406-24-000013",
+     "derived": true,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "nwc \u2212 nwc(2022-01-02)",
+     "period_end": "2023-01-01",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 2066000000.0
+    },
+    "effective_tax_rate": {
+     "accession": "0000200406-25-000038",
+     "derived": true,
+     "filed": "2025-02-13",
+     "form": "10-K",
+     "note": "income_tax / pretax_income (clamped 0\u201350%)",
+     "period_end": "2023-01-01",
+     "period_start": "2022-01-03",
+     "tag": "valuelens:derived",
+     "value": 0.15439847099540266
+    },
+    "eps_diluted": {
+     "accession": "0000200406-25-000038",
+     "derived": false,
+     "filed": "2025-02-13",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-01-01",
+     "period_start": "2022-01-03",
+     "tag": "us-gaap:EarningsPerShareDiluted",
+     "value": 6.73
+    },
+    "equity": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-01-01",
+     "period_start": null,
+     "tag": "us-gaap:StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest",
+     "value": 76804000000.0
+    },
+    "fcf": {
+     "accession": "0000200406-25-000038",
+     "derived": true,
+     "filed": "2025-02-13",
+     "form": "10-K",
+     "note": "cfo \u2212 capex",
+     "period_end": "2023-01-01",
+     "period_start": "2022-01-03",
+     "tag": "valuelens:derived",
+     "value": 17185000000.0
+    },
+    "fcff": {
+     "accession": "0000200406-25-000038",
+     "derived": true,
+     "filed": "2025-02-13",
+     "form": "10-K",
+     "note": "nopat + d_and_a \u2212 capex \u2212 delta_nwc",
+     "period_end": "2023-01-01",
+     "period_start": "2022-01-03",
+     "tag": "valuelens:derived",
+     "value": 17498386022.00527
+    },
+    "goodwill": {
+     "accession": "0000200406-25-000038",
+     "derived": false,
+     "filed": "2025-02-13",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-01-01",
+     "period_start": null,
+     "tag": "us-gaap:Goodwill",
+     "value": 36047000000.0
+    },
+    "income_tax": {
+     "accession": "0000200406-25-000038",
+     "derived": false,
+     "filed": "2025-02-13",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-01-01",
+     "period_start": "2022-01-03",
+     "tag": "us-gaap:IncomeTaxExpenseBenefit",
+     "value": 2989000000.0
+    },
+    "intangibles": {
+     "accession": "0000200406-24-000013",
+     "derived": false,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-01-01",
+     "period_start": null,
+     "tag": "us-gaap:IntangibleAssetsNetExcludingGoodwill",
+     "value": 38489000000.0
+    },
+    "interest_expense": {
+     "accession": "0000200406-24-000013",
+     "derived": false,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-01-01",
+     "period_start": "2022-01-03",
+     "tag": "us-gaap:InterestExpense",
+     "value": 276000000.0
+    },
+    "inventory": {
+     "accession": "0000200406-24-000013",
+     "derived": false,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-01-01",
+     "period_start": null,
+     "tag": "us-gaap:InventoryNet",
+     "value": 10268000000.0
+    },
+    "invested_capital": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "equity + total_debt \u2212 cash",
+     "period_end": "2023-01-01",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 103601000000.0
+    },
+    "liabilities_and_equity": {
+     "accession": "0000200406-24-000013",
+     "derived": false,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-01-01",
+     "period_start": null,
+     "tag": "us-gaap:LiabilitiesAndStockholdersEquity",
+     "value": 187378000000.0
+    },
+    "long_term_debt": {
+     "accession": "0000200406-24-000013",
+     "derived": false,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-01-01",
+     "period_start": null,
+     "tag": "us-gaap:LongTermDebtNoncurrent",
+     "value": 26886000000.0
+    },
+    "maintenance_capex": {
+     "accession": "0000200406-25-000038",
+     "derived": true,
+     "filed": "2025-02-13",
+     "form": "10-K",
+     "note": "min(capex, d_and_a) \u2014 conservative proxy; Buffett's 'average capex to maintain competitive position'",
+     "period_end": "2023-01-01",
+     "period_start": "2022-01-03",
+     "tag": "valuelens:derived",
+     "value": 4009000000.0
+    },
+    "net_income": {
+     "accession": "0000200406-25-000038",
+     "derived": false,
+     "filed": "2025-02-13",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-01-01",
+     "period_start": "2022-01-03",
+     "tag": "us-gaap:NetIncomeLoss",
+     "value": 17941000000.0
+    },
+    "net_margin": {
+     "accession": "0000200406-25-000038",
+     "derived": true,
+     "filed": "2025-02-13",
+     "form": "10-K",
+     "note": "net_income / revenue",
+     "period_end": "2023-01-01",
+     "period_start": "2022-01-03",
+     "tag": "valuelens:derived",
+     "value": 0.22429053631703963
+    },
+    "nopat": {
+     "accession": "0000200406-25-000038",
+     "derived": true,
+     "filed": "2025-02-13",
+     "form": "10-K",
+     "note": "operating_income \u00d7 (1 \u2212 0.154)",
+     "period_end": "2023-01-01",
+     "period_start": "2022-01-03",
+     "tag": "valuelens:derived",
+     "value": 16603386022.005268
+    },
+    "nwc": {
+     "accession": "0000200406-24-000013",
+     "derived": true,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "(current_assets \u2212 cash \u2212 short_term_investments) \u2212 (current_liabilities \u2212 short_term_debt)",
+     "period_end": "2023-01-01",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": -9989000000.0
+    },
+    "operating_income": {
+     "accession": "0000200406-25-000038",
+     "derived": true,
+     "filed": "2025-02-13",
+     "form": "10-K",
+     "note": "pretax_income + interest_expense (EBIT proxy; OperatingIncomeLoss not tagged)",
+     "period_end": "2023-01-01",
+     "period_start": "2022-01-03",
+     "tag": "valuelens:derived",
+     "value": 19635000000.0
+    },
+    "operating_margin": {
+     "accession": "0000200406-25-000038",
+     "derived": true,
+     "filed": "2025-02-13",
+     "form": "10-K",
+     "note": "operating_income / revenue",
+     "period_end": "2023-01-01",
+     "period_start": "2022-01-03",
+     "tag": "valuelens:derived",
+     "value": 0.24546818352294036
+    },
+    "owner_earnings": {
+     "accession": "0000200406-25-000038",
+     "derived": true,
+     "filed": "2025-02-13",
+     "form": "10-K",
+     "note": "net_income + d_and_a \u2212 maintenance_capex \u2212 delta_nwc",
+     "period_end": "2023-01-01",
+     "period_start": "2022-01-03",
+     "tag": "valuelens:derived",
+     "value": 18836000000.0
+    },
+    "pretax_income": {
+     "accession": "0000200406-25-000038",
+     "derived": false,
+     "filed": "2025-02-13",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-01-01",
+     "period_start": "2022-01-03",
+     "tag": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+     "value": 19359000000.0
+    },
+    "receivables": {
+     "accession": "0000200406-24-000013",
+     "derived": false,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-01-01",
+     "period_start": null,
+     "tag": "us-gaap:AccountsReceivableNetCurrent",
+     "value": 14039000000.0
+    },
+    "revenue": {
+     "accession": "0000200406-25-000038",
+     "derived": false,
+     "filed": "2025-02-13",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-01-01",
+     "period_start": "2022-01-03",
+     "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+     "value": 79990000000.0
+    },
+    "roe": {
+     "accession": "0000200406-25-000038",
+     "derived": true,
+     "filed": "2025-02-13",
+     "form": "10-K",
+     "note": "net_income / equity",
+     "period_end": "2023-01-01",
+     "period_start": "2022-01-03",
+     "tag": "valuelens:derived",
+     "value": 0.233594604447685
+    },
+    "roic": {
+     "accession": "0000200406-25-000038",
+     "derived": true,
+     "filed": "2025-02-13",
+     "form": "10-K",
+     "note": "nopat / invested_capital",
+     "period_end": "2023-01-01",
+     "period_start": "2022-01-03",
+     "tag": "valuelens:derived",
+     "value": 0.16026279690355563
+    },
+    "shares_diluted": {
+     "accession": "0000200406-25-000038",
+     "derived": false,
+     "filed": "2025-02-13",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-01-01",
+     "period_start": "2022-01-03",
+     "tag": "us-gaap:WeightedAverageNumberOfDilutedSharesOutstanding",
+     "value": 2663900000.0
+    },
+    "short_term_debt": {
+     "accession": "0000200406-24-000013",
+     "derived": false,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-01-01",
+     "period_start": null,
+     "tag": "us-gaap:DebtCurrent",
+     "value": 12800000000.0
+    },
+    "short_term_investments": {
+     "accession": "0000200406-24-000013",
+     "derived": false,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-01-01",
+     "period_start": null,
+     "tag": "us-gaap:MarketableSecuritiesCurrent",
+     "value": 9392000000.0
+    },
+    "total_assets": {
+     "accession": "0000200406-24-000013",
+     "derived": false,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-01-01",
+     "period_start": null,
+     "tag": "us-gaap:Assets",
+     "value": 187378000000.0
+    },
+    "total_debt": {
+     "accession": "0000200406-24-000013",
+     "derived": true,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "short_term_debt + long_term_debt",
+     "period_end": "2023-01-01",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 39686000000.0
+    },
+    "total_liabilities": {
+     "accession": "0000200406-24-000013",
+     "derived": false,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-01-01",
+     "period_start": null,
+     "tag": "us-gaap:Liabilities",
+     "value": 110574000000.0
+    }
+   }
+  },
+  {
+   "fiscal_year": 2023,
+   "form": "10-K",
+   "label": "FY2023",
+   "period_end": "2023-12-31",
+   "values": {
+    "book_value_per_share": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "equity / shares_diluted",
+     "period_end": "2023-12-31",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 26.86064677394157
+    },
+    "buybacks": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-12-31",
+     "period_start": "2023-01-02",
+     "tag": "us-gaap:PaymentsForRepurchaseOfCommonStock",
+     "value": 5054000000.0
+    },
+    "capex": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-12-31",
+     "period_start": "2023-01-02",
+     "tag": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+     "value": 4543000000.0
+    },
+    "cash": {
+     "accession": "0000200406-25-000038",
+     "derived": false,
+     "filed": "2025-02-13",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-12-31",
+     "period_start": null,
+     "tag": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+     "value": 21859000000.0
+    },
+    "cfo": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-12-31",
+     "period_start": "2023-01-02",
+     "tag": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+     "value": 22791000000.0
+    },
+    "cost_of_revenue": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-12-31",
+     "period_start": "2023-01-02",
+     "tag": "us-gaap:CostOfGoodsAndServicesSold",
+     "value": 26553000000.0
+    },
+    "current_assets": {
+     "accession": "0000200406-25-000038",
+     "derived": false,
+     "filed": "2025-02-13",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-12-31",
+     "period_start": null,
+     "tag": "us-gaap:AssetsCurrent",
+     "value": 53495000000.0
+    },
+    "current_liabilities": {
+     "accession": "0000200406-25-000038",
+     "derived": false,
+     "filed": "2025-02-13",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-12-31",
+     "period_start": null,
+     "tag": "us-gaap:LiabilitiesCurrent",
+     "value": 46282000000.0
+    },
+    "current_ratio": {
+     "accession": "0000200406-25-000038",
+     "derived": true,
+     "filed": "2025-02-13",
+     "form": "10-K",
+     "note": "current_assets / current_liabilities",
+     "period_end": "2023-12-31",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 1.1558489261483946
+    },
+    "d_and_a": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-12-31",
+     "period_start": "2023-01-02",
+     "tag": "us-gaap:DepreciationDepletionAndAmortization",
+     "value": 7486000000.0
+    },
+    "debt_to_equity": {
+     "accession": "0000200406-25-000038",
+     "derived": true,
+     "filed": "2025-02-13",
+     "form": "10-K",
+     "note": "total_debt / equity",
+     "period_end": "2023-12-31",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 0.42721086457091345
+    },
+    "delta_nwc": {
+     "accession": "0000200406-25-000038",
+     "derived": true,
+     "filed": "2025-02-13",
+     "form": "10-K",
+     "note": "nwc \u2212 nwc(2023-01-01)",
+     "period_end": "2023-12-31",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": -2225000000.0
+    },
+    "effective_tax_rate": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "income_tax / pretax_income (clamped 0\u201350%)",
+     "period_end": "2023-12-31",
+     "period_start": "2023-01-02",
+     "tag": "valuelens:derived",
+     "value": 0.11525693798964282
+    },
+    "eps_diluted": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-12-31",
+     "period_start": "2023-01-02",
+     "tag": "us-gaap:EarningsPerShareDiluted",
+     "value": 13.72
+    },
+    "equity": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-12-31",
+     "period_start": null,
+     "tag": "us-gaap:StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest",
+     "value": 68774000000.0
+    },
+    "fcf": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "cfo \u2212 capex",
+     "period_end": "2023-12-31",
+     "period_start": "2023-01-02",
+     "tag": "valuelens:derived",
+     "value": 18248000000.0
+    },
+    "fcff": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "nopat + d_and_a \u2212 capex \u2212 delta_nwc",
+     "period_end": "2023-12-31",
+     "period_start": "2023-01-02",
+     "tag": "valuelens:derived",
+     "value": 19177021643.871994
+    },
+    "goodwill": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-12-31",
+     "period_start": null,
+     "tag": "us-gaap:Goodwill",
+     "value": 36558000000.0
+    },
+    "income_tax": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-12-31",
+     "period_start": "2023-01-02",
+     "tag": "us-gaap:IncomeTaxExpenseBenefit",
+     "value": 1736000000.0
+    },
+    "intangibles": {
+     "accession": "0000200406-25-000038",
+     "derived": false,
+     "filed": "2025-02-13",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-12-31",
+     "period_start": null,
+     "tag": "us-gaap:IntangibleAssetsNetExcludingGoodwill",
+     "value": 34175000000.0
+    },
+    "interest_expense": {
+     "accession": "0000200406-24-000013",
+     "derived": false,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-12-31",
+     "period_start": "2023-01-02",
+     "tag": "us-gaap:InterestExpense",
+     "value": 772000000.0
+    },
+    "inventory": {
+     "accession": "0000200406-25-000038",
+     "derived": false,
+     "filed": "2025-02-13",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-12-31",
+     "period_start": null,
+     "tag": "us-gaap:InventoryNet",
+     "value": 11181000000.0
+    },
+    "invested_capital": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "equity + total_debt \u2212 cash",
+     "period_end": "2023-12-31",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 76296000000.0
+    },
+    "liabilities_and_equity": {
+     "accession": "0000200406-25-000038",
+     "derived": false,
+     "filed": "2025-02-13",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-12-31",
+     "period_start": null,
+     "tag": "us-gaap:LiabilitiesAndStockholdersEquity",
+     "value": 167558000000.0
+    },
+    "long_term_debt": {
+     "accession": "0000200406-25-000038",
+     "derived": false,
+     "filed": "2025-02-13",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-12-31",
+     "period_start": null,
+     "tag": "us-gaap:LongTermDebtNoncurrent",
+     "value": 25881000000.0
+    },
+    "maintenance_capex": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "min(capex, d_and_a) \u2014 conservative proxy; Buffett's 'average capex to maintain competitive position'",
+     "period_end": "2023-12-31",
+     "period_start": "2023-01-02",
+     "tag": "valuelens:derived",
+     "value": 4543000000.0
+    },
+    "net_income": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-12-31",
+     "period_start": "2023-01-02",
+     "tag": "us-gaap:NetIncomeLoss",
+     "value": 35153000000.0
+    },
+    "net_margin": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "net_income / revenue",
+     "period_end": "2023-12-31",
+     "period_start": "2023-01-02",
+     "tag": "valuelens:derived",
+     "value": 0.41279254101151963
+    },
+    "nopat": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "operating_income \u00d7 (1 \u2212 0.115)",
+     "period_end": "2023-12-31",
+     "period_start": "2023-01-02",
+     "tag": "valuelens:derived",
+     "value": 14009021643.871994
+    },
+    "nwc": {
+     "accession": "0000200406-25-000038",
+     "derived": true,
+     "filed": "2025-02-13",
+     "form": "10-K",
+     "note": "(current_assets \u2212 cash \u2212 short_term_investments) \u2212 (current_liabilities \u2212 short_term_debt)",
+     "period_end": "2023-12-31",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": -12214000000.0
+    },
+    "operating_income": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "pretax_income + interest_expense (EBIT proxy; OperatingIncomeLoss not tagged)",
+     "period_end": "2023-12-31",
+     "period_start": "2023-01-02",
+     "tag": "valuelens:derived",
+     "value": 15834000000.0
+    },
+    "operating_margin": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "operating_income / revenue",
+     "period_end": "2023-12-31",
+     "period_start": "2023-01-02",
+     "tag": "valuelens:derived",
+     "value": 0.18593454596695594
+    },
+    "owner_earnings": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "net_income + d_and_a \u2212 maintenance_capex \u2212 delta_nwc",
+     "period_end": "2023-12-31",
+     "period_start": "2023-01-02",
+     "tag": "valuelens:derived",
+     "value": 40321000000.0
+    },
+    "pretax_income": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-12-31",
+     "period_start": "2023-01-02",
+     "tag": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+     "value": 15062000000.0
+    },
+    "receivables": {
+     "accession": "0000200406-25-000038",
+     "derived": false,
+     "filed": "2025-02-13",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-12-31",
+     "period_start": null,
+     "tag": "us-gaap:AccountsReceivableNetCurrent",
+     "value": 14873000000.0
+    },
+    "revenue": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-12-31",
+     "period_start": "2023-01-02",
+     "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+     "value": 85159000000.0
+    },
+    "roe": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "net_income / equity",
+     "period_end": "2023-12-31",
+     "period_start": "2023-01-02",
+     "tag": "valuelens:derived",
+     "value": 0.511137930031698
+    },
+    "roic": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "nopat / invested_capital",
+     "period_end": "2023-12-31",
+     "period_start": "2023-01-02",
+     "tag": "valuelens:derived",
+     "value": 0.18361410354241367
+    },
+    "shares_diluted": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-12-31",
+     "period_start": "2023-01-02",
+     "tag": "us-gaap:WeightedAverageNumberOfDilutedSharesOutstanding",
+     "value": 2560400000.0
+    },
+    "short_term_debt": {
+     "accession": "0000200406-25-000038",
+     "derived": false,
+     "filed": "2025-02-13",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-12-31",
+     "period_start": null,
+     "tag": "us-gaap:DebtCurrent",
+     "value": 3500000000.0
+    },
+    "short_term_investments": {
+     "accession": "0000200406-25-000038",
+     "derived": false,
+     "filed": "2025-02-13",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-12-31",
+     "period_start": null,
+     "tag": "us-gaap:MarketableSecuritiesCurrent",
+     "value": 1068000000.0
+    },
+    "total_assets": {
+     "accession": "0000200406-25-000038",
+     "derived": false,
+     "filed": "2025-02-13",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-12-31",
+     "period_start": null,
+     "tag": "us-gaap:Assets",
+     "value": 167558000000.0
+    },
+    "total_debt": {
+     "accession": "0000200406-25-000038",
+     "derived": true,
+     "filed": "2025-02-13",
+     "form": "10-K",
+     "note": "short_term_debt + long_term_debt",
+     "period_end": "2023-12-31",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 29381000000.0
+    },
+    "total_liabilities": {
+     "accession": "0000200406-25-000038",
+     "derived": false,
+     "filed": "2025-02-13",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-12-31",
+     "period_start": null,
+     "tag": "us-gaap:Liabilities",
+     "value": 98784000000.0
+    }
+   }
+  },
+  {
+   "fiscal_year": 2024,
+   "form": "10-K",
+   "label": "FY2024",
+   "period_end": "2024-12-29",
+   "values": {
+    "book_value_per_share": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "equity / shares_diluted",
+     "period_end": "2024-12-29",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 29.427019017041246
+    },
+    "buybacks": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2024-12-29",
+     "period_start": "2024-01-01",
+     "tag": "us-gaap:PaymentsForRepurchaseOfCommonStock",
+     "value": 2432000000.0
+    },
+    "capex": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2024-12-29",
+     "period_start": "2024-01-01",
+     "tag": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+     "value": 4424000000.0
+    },
+    "cash": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2024-12-29",
+     "period_start": null,
+     "tag": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+     "value": 24105000000.0
+    },
+    "cfo": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2024-12-29",
+     "period_start": "2024-01-01",
+     "tag": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+     "value": 24266000000.0
+    },
+    "cost_of_revenue": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2024-12-29",
+     "period_start": "2024-01-01",
+     "tag": "us-gaap:CostOfGoodsAndServicesSold",
+     "value": 27471000000.0
+    },
+    "current_assets": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2024-12-29",
+     "period_start": null,
+     "tag": "us-gaap:AssetsCurrent",
+     "value": 55893000000.0
+    },
+    "current_liabilities": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2024-12-29",
+     "period_start": null,
+     "tag": "us-gaap:LiabilitiesCurrent",
+     "value": 50321000000.0
+    },
+    "current_ratio": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "current_assets / current_liabilities",
+     "period_end": "2024-12-29",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 1.1107291190556627
+    },
+    "d_and_a": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2024-12-29",
+     "period_start": "2024-01-01",
+     "tag": "us-gaap:DepreciationDepletionAndAmortization",
+     "value": 7339000000.0
+    },
+    "debt_to_equity": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "total_debt / equity",
+     "period_end": "2024-12-29",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 0.5126731011330256
+    },
+    "delta_nwc": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "nwc \u2212 nwc(2023-12-31)",
+     "period_end": "2024-12-29",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": -736000000.0
+    },
+    "effective_tax_rate": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "income_tax / pretax_income (clamped 0\u201350%)",
+     "period_end": "2024-12-29",
+     "period_start": "2024-01-01",
+     "tag": "valuelens:derived",
+     "value": 0.1570683765805717
+    },
+    "eps_diluted": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2024-12-29",
+     "period_start": "2024-01-01",
+     "tag": "us-gaap:EarningsPerShareDiluted",
+     "value": 5.79
+    },
+    "equity": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2024-12-29",
+     "period_start": null,
+     "tag": "us-gaap:StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest",
+     "value": 71490000000.0
+    },
+    "fcf": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "cfo \u2212 capex",
+     "period_end": "2024-12-29",
+     "period_start": "2024-01-01",
+     "tag": "valuelens:derived",
+     "value": 19842000000.0
+    },
+    "fcff": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "nopat + d_and_a \u2212 capex \u2212 delta_nwc",
+     "period_end": "2024-12-29",
+     "period_start": "2024-01-01",
+     "tag": "valuelens:derived",
+     "value": 18353413375.681667
+    },
+    "goodwill": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2024-12-29",
+     "period_start": null,
+     "tag": "us-gaap:Goodwill",
+     "value": 44200000000.0
+    },
+    "income_tax": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2024-12-29",
+     "period_start": "2024-01-01",
+     "tag": "us-gaap:IncomeTaxExpenseBenefit",
+     "value": 2621000000.0
+    },
+    "intangibles": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2024-12-29",
+     "period_start": null,
+     "tag": "us-gaap:IntangibleAssetsNetExcludingGoodwill",
+     "value": 37618000000.0
+    },
+    "interest_expense": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2024-12-29",
+     "period_start": "2024-01-01",
+     "tag": "us-gaap:InterestExpenseNonoperating",
+     "value": 755000000.0
+    },
+    "inventory": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2024-12-29",
+     "period_start": null,
+     "tag": "us-gaap:InventoryNet",
+     "value": 12444000000.0
+    },
+    "invested_capital": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "equity + total_debt \u2212 cash",
+     "period_end": "2024-12-29",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 84036000000.0
+    },
+    "liabilities_and_equity": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2024-12-29",
+     "period_start": null,
+     "tag": "us-gaap:LiabilitiesAndStockholdersEquity",
+     "value": 180104000000.0
+    },
+    "long_term_debt": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2024-12-29",
+     "period_start": null,
+     "tag": "us-gaap:LongTermDebtNoncurrent",
+     "value": 30651000000.0
+    },
+    "maintenance_capex": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "min(capex, d_and_a) \u2014 conservative proxy; Buffett's 'average capex to maintain competitive position'",
+     "period_end": "2024-12-29",
+     "period_start": "2024-01-01",
+     "tag": "valuelens:derived",
+     "value": 4424000000.0
+    },
+    "net_income": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2024-12-29",
+     "period_start": "2024-01-01",
+     "tag": "us-gaap:NetIncomeLoss",
+     "value": 14066000000.0
+    },
+    "net_margin": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "net_income / revenue",
+     "period_end": "2024-12-29",
+     "period_start": "2024-01-01",
+     "tag": "valuelens:derived",
+     "value": 0.1583634500850024
+    },
+    "nopat": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "operating_income \u00d7 (1 \u2212 0.157)",
+     "period_end": "2024-12-29",
+     "period_start": "2024-01-01",
+     "tag": "valuelens:derived",
+     "value": 14702413375.681667
+    },
+    "nwc": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "(current_assets \u2212 cash \u2212 short_term_investments) \u2212 (current_liabilities \u2212 short_term_debt)",
+     "period_end": "2024-12-29",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": -12950000000.0
+    },
+    "operating_income": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "pretax_income + interest_expense (EBIT proxy; OperatingIncomeLoss not tagged)",
+     "period_end": "2024-12-29",
+     "period_start": "2024-01-01",
+     "tag": "valuelens:derived",
+     "value": 17442000000.0
+    },
+    "operating_margin": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "operating_income / revenue",
+     "period_end": "2024-12-29",
+     "period_start": "2024-01-01",
+     "tag": "valuelens:derived",
+     "value": 0.19637247948120376
+    },
+    "owner_earnings": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "net_income + d_and_a \u2212 maintenance_capex \u2212 delta_nwc",
+     "period_end": "2024-12-29",
+     "period_start": "2024-01-01",
+     "tag": "valuelens:derived",
+     "value": 17717000000.0
+    },
+    "pretax_income": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2024-12-29",
+     "period_start": "2024-01-01",
+     "tag": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+     "value": 16687000000.0
+    },
+    "receivables": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2024-12-29",
+     "period_start": null,
+     "tag": "us-gaap:AccountsReceivableNetCurrent",
+     "value": 14842000000.0
+    },
+    "revenue": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2024-12-29",
+     "period_start": "2024-01-01",
+     "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+     "value": 88821000000.0
+    },
+    "roe": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "net_income / equity",
+     "period_end": "2024-12-29",
+     "period_start": "2024-01-01",
+     "tag": "valuelens:derived",
+     "value": 0.19675479087984332
+    },
+    "roic": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "nopat / invested_capital",
+     "period_end": "2024-12-29",
+     "period_start": "2024-01-01",
+     "tag": "valuelens:derived",
+     "value": 0.1749537504840981
+    },
+    "shares_diluted": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2024-12-29",
+     "period_start": "2024-01-01",
+     "tag": "us-gaap:WeightedAverageNumberOfDilutedSharesOutstanding",
+     "value": 2429400000.0
+    },
+    "short_term_debt": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2024-12-29",
+     "period_start": null,
+     "tag": "us-gaap:DebtCurrent",
+     "value": 6000000000.0
+    },
+    "short_term_investments": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2024-12-29",
+     "period_start": null,
+     "tag": "us-gaap:MarketableSecuritiesCurrent",
+     "value": 417000000.0
+    },
+    "total_assets": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2024-12-29",
+     "period_start": null,
+     "tag": "us-gaap:Assets",
+     "value": 180104000000.0
+    },
+    "total_debt": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "short_term_debt + long_term_debt",
+     "period_end": "2024-12-29",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 36651000000.0
+    },
+    "total_liabilities": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2024-12-29",
+     "period_start": null,
+     "tag": "us-gaap:Liabilities",
+     "value": 108614000000.0
+    }
+   }
+  },
+  {
+   "fiscal_year": 2025,
+   "form": "10-K",
+   "label": "FY2025",
+   "period_end": "2025-12-28",
+   "values": {
+    "book_value_per_share": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "equity / shares_diluted",
+     "period_end": "2025-12-28",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 33.565489421256274
+    },
+    "buybacks": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2025-12-28",
+     "period_start": "2024-12-30",
+     "tag": "us-gaap:PaymentsForRepurchaseOfCommonStock",
+     "value": 5953000000.0
+    },
+    "capex": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2025-12-28",
+     "period_start": "2024-12-30",
+     "tag": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+     "value": 4832000000.0
+    },
+    "cash": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2025-12-28",
+     "period_start": null,
+     "tag": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+     "value": 19709000000.0
+    },
+    "cfo": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2025-12-28",
+     "period_start": "2024-12-30",
+     "tag": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+     "value": 24530000000.0
+    },
+    "cost_of_revenue": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2025-12-28",
+     "period_start": "2024-12-30",
+     "tag": "us-gaap:CostOfGoodsAndServicesSold",
+     "value": 30256000000.0
+    },
+    "current_assets": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2025-12-28",
+     "period_start": null,
+     "tag": "us-gaap:AssetsCurrent",
+     "value": 55624000000.0
+    },
+    "current_liabilities": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2025-12-28",
+     "period_start": null,
+     "tag": "us-gaap:LiabilitiesCurrent",
+     "value": 54126000000.0
+    },
+    "current_ratio": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "current_assets / current_liabilities",
+     "period_end": "2025-12-28",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 1.027676163027011
+    },
+    "d_and_a": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2025-12-28",
+     "period_start": "2024-12-30",
+     "tag": "us-gaap:DepreciationDepletionAndAmortization",
+     "value": 7503000000.0
+    },
+    "debt_to_equity": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "total_debt / equity",
+     "period_end": "2025-12-28",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 0.5878789365250662
+    },
+    "delta_nwc": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "nwc \u2212 nwc(2024-12-29)",
+     "period_end": "2025-12-28",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 2846000000.0
+    },
+    "effective_tax_rate": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "income_tax / pretax_income (clamped 0\u201350%)",
+     "period_end": "2025-12-28",
+     "period_start": "2024-12-30",
+     "tag": "valuelens:derived",
+     "value": 0.177311930266106
+    },
+    "eps_diluted": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2025-12-28",
+     "period_start": "2024-12-30",
+     "tag": "us-gaap:EarningsPerShareDiluted",
+     "value": 11.03
+    },
+    "equity": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2025-12-28",
+     "period_start": null,
+     "tag": "us-gaap:StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest",
+     "value": 81544000000.0
+    },
+    "fcf": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "cfo \u2212 capex",
+     "period_end": "2025-12-28",
+     "period_start": "2024-12-30",
+     "tag": "valuelens:derived",
+     "value": 19698000000.0
+    },
+    "fcff": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "nopat + d_and_a \u2212 capex \u2212 delta_nwc",
+     "period_end": "2025-12-28",
+     "period_start": "2024-12-30",
+     "tag": "valuelens:derived",
+     "value": 27427830115.71161
+    },
+    "goodwill": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2025-12-28",
+     "period_start": null,
+     "tag": "us-gaap:Goodwill",
+     "value": 48772000000.0
+    },
+    "income_tax": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2025-12-28",
+     "period_start": "2024-12-30",
+     "tag": "us-gaap:IncomeTaxExpenseBenefit",
+     "value": 5777000000.0
+    },
+    "intangibles": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2025-12-28",
+     "period_start": null,
+     "tag": "us-gaap:IntangibleAssetsNetExcludingGoodwill",
+     "value": 50403000000.0
+    },
+    "interest_expense": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2025-12-28",
+     "period_start": "2024-12-30",
+     "tag": "us-gaap:InterestExpenseNonoperating",
+     "value": 971000000.0
+    },
+    "inventory": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2025-12-28",
+     "period_start": null,
+     "tag": "us-gaap:InventoryNet",
+     "value": 14191000000.0
+    },
+    "invested_capital": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "equity + total_debt \u2212 cash",
+     "period_end": "2025-12-28",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 109773000000.0
+    },
+    "liabilities_and_equity": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2025-12-28",
+     "period_start": null,
+     "tag": "us-gaap:LiabilitiesAndStockholdersEquity",
+     "value": 199210000000.0
+    },
+    "long_term_debt": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2025-12-28",
+     "period_start": null,
+     "tag": "us-gaap:LongTermDebtNoncurrent",
+     "value": 39438000000.0
+    },
+    "maintenance_capex": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "min(capex, d_and_a) \u2014 conservative proxy; Buffett's 'average capex to maintain competitive position'",
+     "period_end": "2025-12-28",
+     "period_start": "2024-12-30",
+     "tag": "valuelens:derived",
+     "value": 4832000000.0
+    },
+    "net_income": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2025-12-28",
+     "period_start": "2024-12-30",
+     "tag": "us-gaap:NetIncomeLoss",
+     "value": 26804000000.0
+    },
+    "net_margin": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "net_income / revenue",
+     "period_end": "2025-12-28",
+     "period_start": "2024-12-30",
+     "tag": "valuelens:derived",
+     "value": 0.2845646704107524
+    },
+    "nopat": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "operating_income \u00d7 (1 \u2212 0.177)",
+     "period_end": "2025-12-28",
+     "period_start": "2024-12-30",
+     "tag": "valuelens:derived",
+     "value": 27602830115.71161
+    },
+    "nwc": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "(current_assets \u2212 cash \u2212 short_term_investments) \u2212 (current_liabilities \u2212 short_term_debt)",
+     "period_end": "2025-12-28",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": -10104000000.0
+    },
+    "operating_income": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "pretax_income + interest_expense (EBIT proxy; OperatingIncomeLoss not tagged)",
+     "period_end": "2025-12-28",
+     "period_start": "2024-12-30",
+     "tag": "valuelens:derived",
+     "value": 33552000000.0
+    },
+    "operating_margin": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "operating_income / revenue",
+     "period_end": "2025-12-28",
+     "period_start": "2024-12-30",
+     "tag": "valuelens:derived",
+     "value": 0.3562048135211746
+    },
+    "owner_earnings": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "net_income + d_and_a \u2212 maintenance_capex \u2212 delta_nwc",
+     "period_end": "2025-12-28",
+     "period_start": "2024-12-30",
+     "tag": "valuelens:derived",
+     "value": 26629000000.0
+    },
+    "pretax_income": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2025-12-28",
+     "period_start": "2024-12-30",
+     "tag": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+     "value": 32581000000.0
+    },
+    "receivables": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2025-12-28",
+     "period_start": null,
+     "tag": "us-gaap:AccountsReceivableNetCurrent",
+     "value": 17178000000.0
+    },
+    "revenue": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2025-12-28",
+     "period_start": "2024-12-30",
+     "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+     "value": 94193000000.0
+    },
+    "roe": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "net_income / equity",
+     "period_end": "2025-12-28",
+     "period_start": "2024-12-30",
+     "tag": "valuelens:derived",
+     "value": 0.3287059746885117
+    },
+    "roic": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "nopat / invested_capital",
+     "period_end": "2025-12-28",
+     "period_start": "2024-12-30",
+     "tag": "valuelens:derived",
+     "value": 0.2514537282912156
+    },
+    "shares_diluted": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2025-12-28",
+     "period_start": "2024-12-30",
+     "tag": "us-gaap:WeightedAverageNumberOfDilutedSharesOutstanding",
+     "value": 2429400000.0
+    },
+    "short_term_debt": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2025-12-28",
+     "period_start": null,
+     "tag": "us-gaap:DebtCurrent",
+     "value": 8500000000.0
+    },
+    "short_term_investments": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2025-12-28",
+     "period_start": null,
+     "tag": "us-gaap:MarketableSecuritiesCurrent",
+     "value": 393000000.0
+    },
+    "total_assets": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2025-12-28",
+     "period_start": null,
+     "tag": "us-gaap:Assets",
+     "value": 199210000000.0
+    },
+    "total_debt": {
+     "accession": "0000200406-26-000016",
+     "derived": true,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "short_term_debt + long_term_debt",
+     "period_end": "2025-12-28",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 47938000000.0
+    },
+    "total_liabilities": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2025-12-28",
+     "period_start": null,
+     "tag": "us-gaap:Liabilities",
+     "value": 117666000000.0
+    }
+   }
+  }
+ ],
+ "assumptions": {
+  "aaa_yield_pct": 5.94,
+  "beta": 1.0,
+  "equity_risk_premium_pct": 5.0,
+  "exit_multiple": 15.0,
+  "hurdle_rate_pct": 10.0,
+  "max_growth_pct": 15.0,
+  "mos_bands_pct": [
+   25.0,
+   50.0
+  ],
+  "projection_years": 5,
+  "rate_source": "fixture",
+  "tax_rate_pct": 21.0,
+  "terminal_growth_pct": 2.5,
+  "treasury_10y_pct": 4.94
+ },
+ "company": {
+  "cik": 200406,
+  "name": "Johnson & Johnson",
+  "ticker": "JNJ"
+ },
+ "current_shares": {
+  "accession": "0000200406-26-000153",
+  "derived": false,
+  "filed": "2026-07-23",
+  "form": "10-Q",
+  "note": "",
+  "period_end": "2026-07-17",
+  "period_start": null,
+  "tag": "dei:EntityCommonStockSharesOutstanding",
+  "value": 2409898597.0
+ },
+ "growth": {
+  "book_value_per_share": {
+   "five_year_cagr": 0.07214387597278393,
+   "full_period_cagr": 0.032138615577658625,
+   "full_period_years": 9
+  },
+  "eps_diluted": {
+   "five_year_cagr": 0.14890675456717406,
+   "full_period_cagr": 0.07138795039781476,
+   "full_period_years": 9
+  },
+  "equity": {
+   "five_year_cagr": 0.052029343401531314,
+   "full_period_cagr": 0.01643287400087634,
+   "full_period_years": 9
+  },
+  "fcf": {
+   "five_year_cagr": -0.004912054981440983,
+   "full_period_cagr": 0.026687159133019334,
+   "full_period_years": 9
+  },
+  "net_income": {
+   "five_year_cagr": 0.12744086341536232,
+   "full_period_cagr": 0.0551058028340925,
+   "full_period_years": 9
+  },
+  "owner_earnings": {
+   "five_year_cagr": 0.02390739947816911,
+   "full_period_cagr": 0.05066334332147493,
+   "full_period_years": 9
+  },
+  "revenue": {
+   "five_year_cagr": 0.02665503872479502,
+   "full_period_cagr": 0.03047842885071317,
+   "full_period_years": 9
+  }
+ },
+ "model_a": {
+  "composite": {
+   "formula": "min(graham_revised, oe_value_hurdle)",
+   "inputs": {
+    "graham_revised": 145.4391307302464,
+    "oe_value_hurdle": 74.0819552417043
+   },
+   "key": "model_a_intrinsic",
+   "label": "Model A intrinsic value",
+   "notes": [
+    "Conservative blend: the lower of the two classic estimates."
+   ],
+   "sources": [],
+   "unit": "USD/share",
+   "value": 74.0819552417043
+  },
+  "intrinsic_value_per_share": 74.0819552417043,
+  "margin_of_safety": {
+   "bands": [
+    {
+     "buy_below": 55.561466431278234,
+     "discount_pct": 25.0
+    },
+    {
+     "buy_below": 37.04097762085215,
+     "discount_pct": 50.0
+    }
+   ],
+   "formula": "MoS = 1 \u2212 price / intrinsic_value",
+   "intrinsic_value": 74.0819552417043,
+   "margin_of_safety_pct": -102.47845715005882,
+   "market_price": 150.0,
+   "verdict": "above_intrinsic"
+  },
+  "metrics": [
+   {
+    "formula": "CAGR(EPS) over 9 yrs = (EPS_last / EPS_first)^(1/9) \u2212 1, clamped to [0, 15%]",
+    "inputs": {
+     "raw_cagr_pct": 7.138795039781476,
+     "years": 9
+    },
+    "key": "graham_g",
+    "label": "Expected growth (g)",
+    "notes": [],
+    "sources": [
+     {
+      "accession": "0000200406-19-000009",
+      "derived": false,
+      "filed": "2019-02-20",
+      "form": "10-K",
+      "note": "",
+      "period_end": "2017-01-01",
+      "period_start": "2016-01-04",
+      "tag": "us-gaap:EarningsPerShareDiluted",
+      "value": 5.93
+     },
+     {
+      "accession": "0000200406-26-000016",
+      "derived": false,
+      "filed": "2026-02-11",
+      "form": "10-K",
+      "note": "",
+      "period_end": "2025-12-28",
+      "period_start": "2024-12-30",
+      "tag": "us-gaap:EarningsPerShareDiluted",
+      "value": 11.03
+     }
+    ],
+    "unit": "%",
+    "value": 7.138795039781476
+   },
+   {
+    "formula": "V* = EPS \u00d7 (8.5 + 2g)",
+    "inputs": {
+     "eps_ttm": 8.62,
+     "g_pct": 7.138795039781476
+    },
+    "key": "graham_classic",
+    "label": "Graham intrinsic value (classic)",
+    "notes": [
+     "8.5 = P/E of a no-growth company per Graham (1962)."
+    ],
+    "sources": [
+     {
+      "accession": "0000200406-26-000153",
+      "derived": true,
+      "filed": "2026-07-23",
+      "form": "10-Q",
+      "note": "TTM = FY(2025-12-28) 11.03 + YTD(2025-12-29\u21922026-06-28) 4.41 \u2212 YTD(2024-12-30\u21922025-06-29) 6.82 (EPS TTM is an additive approximation)",
+      "period_end": "2026-06-28",
+      "period_start": "2025-06-28",
+      "tag": "us-gaap:EarningsPerShareDiluted",
+      "value": 8.62
+     }
+    ],
+    "unit": "USD/share",
+    "value": 196.34282648583263
+   },
+   {
+    "formula": "V* = EPS \u00d7 (8.5 + 2g) \u00d7 4.4 / Y",
+    "inputs": {
+     "aaa_yield_pct": 5.94,
+     "eps_ttm": 8.62,
+     "g_pct": 7.138795039781476
+    },
+    "key": "graham_revised",
+    "label": "Graham intrinsic value (revised 1974)",
+    "notes": [
+     "4.4 = average AAA yield when Graham published; Y = current AAA yield."
+    ],
+    "sources": [
+     {
+      "accession": "0000200406-26-000153",
+      "derived": true,
+      "filed": "2026-07-23",
+      "form": "10-Q",
+      "note": "TTM = FY(2025-12-28) 11.03 + YTD(2025-12-29\u21922026-06-28) 4.41 \u2212 YTD(2024-12-30\u21922025-06-29) 6.82 (EPS TTM is an additive approximation)",
+      "period_end": "2026-06-28",
+      "period_start": "2025-06-28",
+      "tag": "us-gaap:EarningsPerShareDiluted",
+      "value": 8.62
+     }
+    ],
+    "unit": "USD/share",
+    "value": 145.4391307302464
+   },
+   {
+    "formula": "NNWC = cash + short_term_investments + 0.75\u00d7receivables + 0.50\u00d7inventory \u2212 total_liabilities",
+    "inputs": {
+     "cash": 20422000000.0,
+     "inventory": 15144000000.0,
+     "nnwc_per_share": -30.489042191014647,
+     "receivables": 19046000000.0,
+     "shares_outstanding": 2409898597.0,
+     "short_term_investments": 336000000.0,
+     "total_liabilities": 116090000000.0
+    },
+    "key": "nnwc",
+    "label": "Net-net working capital",
+    "notes": [
+     "Negative NNWC is normal for most operating businesses; a positive NNWC per share above price is Graham's classic 'net-net' bargain.",
+     "Per share: -30.49"
+    ],
+    "sources": [
+     {
+      "accession": "0000200406-26-000153",
+      "derived": false,
+      "filed": "2026-07-23",
+      "form": "10-Q",
+      "note": "",
+      "period_end": "2026-06-28",
+      "period_start": null,
+      "tag": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+      "value": 20422000000.0
+     },
+     {
+      "accession": "0000200406-26-000153",
+      "derived": false,
+      "filed": "2026-07-23",
+      "form": "10-Q",
+      "note": "",
+      "period_end": "2026-06-28",
+      "period_start": null,
+      "tag": "us-gaap:MarketableSecuritiesCurrent",
+      "value": 336000000.0
+     },
+     {
+      "accession": "0000200406-26-000153",
+      "derived": false,
+      "filed": "2026-07-23",
+      "form": "10-Q",
+      "note": "",
+      "period_end": "2026-06-28",
+      "period_start": null,
+      "tag": "us-gaap:AccountsReceivableNetCurrent",
+      "value": 19046000000.0
+     },
+     {
+      "accession": "0000200406-26-000153",
+      "derived": false,
+      "filed": "2026-07-23",
+      "form": "10-Q",
+      "note": "",
+      "period_end": "2026-06-28",
+      "period_start": null,
+      "tag": "us-gaap:InventoryNet",
+      "value": 15144000000.0
+     },
+     {
+      "accession": "0000200406-26-000153",
+      "derived": false,
+      "filed": "2026-07-23",
+      "form": "10-Q",
+      "note": "",
+      "period_end": "2026-06-28",
+      "period_start": null,
+      "tag": "us-gaap:Liabilities",
+      "value": 116090000000.0
+     }
+    ],
+    "unit": "USD",
+    "value": -73475500000.0
+   },
+   {
+    "formula": "OE = net_income + d_and_a \u2212 maintenance_capex \u2212 delta_nwc",
+    "inputs": {
+     "d_and_a": 7751000000.0,
+     "delta_nwc": 5571000000.0,
+     "maintenance_capex": 5364000000.0,
+     "net_income": 21037000000.0
+    },
+    "key": "owner_earnings",
+    "label": "Owner earnings (TTM)",
+    "notes": [
+     "min(capex, d_and_a) \u2014 conservative proxy; Buffett's 'average capex to maintain competitive position'"
+    ],
+    "sources": [
+     {
+      "accession": "0000200406-26-000153",
+      "derived": true,
+      "filed": "2026-07-23",
+      "form": "10-Q",
+      "note": "TTM = FY(2025-12-28) 26,804,000,000 + YTD(2025-12-29\u21922026-06-28) 10,769,000,000 \u2212 YTD(2024-12-30\u21922025-06-29) 16,536,000,000",
+      "period_end": "2026-06-28",
+      "period_start": "2025-06-28",
+      "tag": "us-gaap:NetIncomeLoss",
+      "value": 21037000000.0
+     },
+     {
+      "accession": "0000200406-26-000153",
+      "derived": true,
+      "filed": "2026-07-23",
+      "form": "10-Q",
+      "note": "TTM = FY(2025-12-28) 7,503,000,000 + YTD(2025-12-29\u21922026-06-28) 3,963,000,000 \u2212 YTD(2024-12-30\u21922025-06-29) 3,715,000,000",
+      "period_end": "2026-06-28",
+      "period_start": "2025-06-28",
+      "tag": "us-gaap:DepreciationDepletionAndAmortization",
+      "value": 7751000000.0
+     },
+     {
+      "accession": "0000200406-26-000153",
+      "derived": true,
+      "filed": "2026-07-23",
+      "form": "10-Q",
+      "note": "TTM = FY(2025-12-28) 4,832,000,000 + YTD(2025-12-29\u21922026-06-28) 2,370,000,000 \u2212 YTD(2024-12-30\u21922025-06-29) 1,838,000,000",
+      "period_end": "2026-06-28",
+      "period_start": "2025-06-28",
+      "tag": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+      "value": 5364000000.0
+     }
+    ],
+    "unit": "USD",
+    "value": 17853000000.0
+   },
+   {
+    "formula": "owner_earnings / shares_outstanding",
+    "inputs": {
+     "owner_earnings": 17853000000.0,
+     "shares": 2409898597.0
+    },
+    "key": "owner_earnings_per_share",
+    "label": "Owner earnings / share",
+    "notes": [],
+    "sources": [
+     {
+      "accession": "0000200406-26-000153",
+      "derived": false,
+      "filed": "2026-07-23",
+      "form": "10-Q",
+      "note": "",
+      "period_end": "2026-07-17",
+      "period_start": null,
+      "tag": "dei:EntityCommonStockSharesOutstanding",
+      "value": 2409898597.0
+     }
+    ],
+    "unit": "USD/share",
+    "value": 7.408195524170431
+   },
+   {
+    "formula": "V = OE_per_share / r   (zero terminal growth)",
+    "inputs": {
+     "owner_earnings_per_share": 7.408195524170431,
+     "r_pct": 10.0
+    },
+    "key": "oe_value_hurdle",
+    "label": "OE value @ 10.0% hurdle",
+    "notes": [
+     "Buffett: discount owner earnings at the long bond rate with no growth inflation; the conservatism is the point."
+    ],
+    "sources": [],
+    "unit": "USD/share",
+    "value": 74.0819552417043
+   },
+   {
+    "formula": "V = OE_per_share / r   (zero terminal growth)",
+    "inputs": {
+     "owner_earnings_per_share": 7.408195524170431,
+     "r_pct": 4.94
+    },
+    "key": "oe_value_treasury",
+    "label": "OE value @ 4.94% 10-yr Treasury",
+    "notes": [
+     "Buffett: discount owner earnings at the long bond rate with no growth inflation; the conservatism is the point."
+    ],
+    "sources": [],
+    "unit": "USD/share",
+    "value": 149.963472149199
+   }
+  ],
+  "name": "Traditional Value (Graham / Buffett / Munger)"
+ },
+ "model_b": {
+  "composite": {
+   "formula": "mean(dcf_perpetuity, dcf_exit_multiple)",
+   "inputs": {
+    "dcf_exit_multiple": 147.22710799460646,
+    "dcf_perpetuity": 152.72203618428466
+   },
+   "key": "model_b_fair_value",
+   "label": "Model B fair value",
+   "notes": [],
+   "sources": [],
+   "unit": "USD/share",
+   "value": 149.97457208944556
+  },
+  "intrinsic_value_per_share": 149.97457208944556,
+  "margin_of_safety": {
+   "bands": [
+    {
+     "buy_below": 112.48092906708416,
+     "discount_pct": 25.0
+    },
+    {
+     "buy_below": 74.98728604472278,
+     "discount_pct": 50.0
+    }
+   ],
+   "formula": "MoS = 1 \u2212 price / intrinsic_value",
+   "intrinsic_value": 149.97457208944556,
+   "margin_of_safety_pct": -0.016954814539671403,
+   "market_price": 150.0,
+   "verdict": "above_intrinsic"
+  },
+  "metrics": [
+   {
+    "formula": "Ke = rf + \u03b2 \u00d7 ERP",
+    "inputs": {
+     "beta": 1.0,
+     "erp_pct": 5.0,
+     "rf_pct": 4.94
+    },
+    "key": "cost_of_equity",
+    "label": "Cost of equity (CAPM)",
+    "notes": [],
+    "sources": [],
+    "unit": "%",
+    "value": 9.940000000000001
+   },
+   {
+    "formula": "Kd = interest_expense / total_debt (clamped 2\u201312%)",
+    "inputs": {
+     "interest_expense": 971000000.0,
+     "raw_pct": 2.1180525259575953,
+     "total_debt": 45844000000.0
+    },
+    "key": "cost_of_debt",
+    "label": "Cost of debt (pre-tax)",
+    "notes": [],
+    "sources": [
+     {
+      "accession": "0000200406-26-000016",
+      "derived": false,
+      "filed": "2026-02-11",
+      "form": "10-K",
+      "note": "",
+      "period_end": "2025-12-28",
+      "period_start": "2024-12-30",
+      "tag": "us-gaap:InterestExpenseNonoperating",
+      "value": 971000000.0
+     },
+     {
+      "accession": "0000200406-26-000016",
+      "derived": true,
+      "filed": "2026-02-11",
+      "form": "10-K",
+      "note": "short_term_debt + long_term_debt",
+      "period_end": "2025-12-28",
+      "period_start": null,
+      "tag": "valuelens:derived",
+      "value": 45844000000.0
+     }
+    ],
+    "unit": "%",
+    "value": 2.1180525259575953
+   },
+   {
+    "formula": "WACC = E/(D+E)\u00b7Ke + D/(D+E)\u00b7Kd\u00b7(1\u2212t)",
+    "inputs": {
+     "debt_weight": 0.11254790031081907,
+     "equity_weight": 0.8874520996891809,
+     "kd_pct": 2.1180525259575953,
+     "ke_pct": 9.940000000000001,
+     "market_cap": 361484789550.0,
+     "tax_rate": 0.16506588347356724,
+     "total_debt": 45844000000.0
+    },
+    "key": "wacc",
+    "label": "WACC",
+    "notes": [],
+    "sources": [],
+    "unit": "%",
+    "value": 9.020307439846949
+   },
+   {
+    "formula": "median(5-yr CAGR of fcf, revenue, net_income), clamped to [0, 15%]",
+    "inputs": {
+     "fcf": -0.4912054981440983,
+     "net_income": 12.744086341536232,
+     "revenue": 2.665503872479502
+    },
+    "key": "fcff_growth",
+    "label": "Stage-1 growth (5 yrs)",
+    "notes": [],
+    "sources": [],
+    "unit": "%",
+    "value": 2.665503872479502
+   },
+   {
+    "formula": "\u03a3 FCFF_t/(1+WACC)^t + [FCFF_N(1+g)/(WACC\u2212g)]/(1+WACC)^N \u2212 debt + cash, \u00f7 shares",
+    "inputs": {
+     "cash_and_sti": 20758000000.0,
+     "fcff_ttm": 24829709477.69487,
+     "pv_stage1": 104053891282.27634,
+     "shares": 2409898597.0,
+     "stage1_growth_pct": 2.665503872479502,
+     "terminal_growth_pct": 2.5,
+     "terminal_value": 445194863167.29913,
+     "total_debt": 45844000000.0,
+     "wacc_pct": 9.020307439846949,
+     "years": 5
+    },
+    "key": "dcf_perpetuity",
+    "label": "DCF fair value (perpetuity growth)",
+    "notes": [],
+    "sources": [
+     {
+      "accession": "0000200406-26-000016",
+      "derived": true,
+      "filed": "2026-02-11",
+      "form": "10-K",
+      "note": "nopat + d_and_a \u2212 capex \u2212 delta_nwc",
+      "period_end": "2025-12-28",
+      "period_start": "2024-12-30",
+      "tag": "valuelens:derived",
+      "value": 24829709477.69487
+     }
+    ],
+    "unit": "USD/share",
+    "value": 152.72203618428466
+   },
+   {
+    "formula": "\u03a3 FCFF_t/(1+WACC)^t + [FCFF_N \u00d7 multiple]/(1+WACC)^N \u2212 debt + cash, \u00f7 shares",
+    "inputs": {
+     "cash_and_sti": 20758000000.0,
+     "exit_multiple": 15.0,
+     "fcff_ttm": 24829709477.69487,
+     "pv_stage1": 104053891282.27634,
+     "shares": 2409898597.0,
+     "stage1_growth_pct": 2.665503872479502,
+     "terminal_value": 424801079779.22705,
+     "total_debt": 45844000000.0,
+     "wacc_pct": 9.020307439846949,
+     "years": 5
+    },
+    "key": "dcf_exit_multiple",
+    "label": "DCF fair value (exit multiple)",
+    "notes": [],
+    "sources": [
+     {
+      "accession": "0000200406-26-000016",
+      "derived": true,
+      "filed": "2026-02-11",
+      "form": "10-K",
+      "note": "nopat + d_and_a \u2212 capex \u2212 delta_nwc",
+      "period_end": "2025-12-28",
+      "period_start": "2024-12-30",
+      "tag": "valuelens:derived",
+      "value": 24829709477.69487
+     }
+    ],
+    "unit": "USD/share",
+    "value": 147.22710799460646
+   },
+   {
+    "formula": "FCFF_t = FCFF_0 \u00d7 (1+g)^t",
+    "inputs": {
+     "year_1": 25491546345.348236,
+     "year_2": 26171024500.338398,
+     "year_3": 26868614171.86248,
+     "year_4": 27584798123.09505,
+     "year_5": 28320071985.281803
+    },
+    "key": "fcff_projection",
+    "label": "Projected FCFF",
+    "notes": [],
+    "sources": [],
+    "unit": "USD",
+    "value": null
+   },
+   {
+    "formula": "ROIC = NOPAT / (equity + total_debt \u2212 cash)",
+    "inputs": {
+     "invested_capital": 110393000000.0,
+     "nopat": 28013709477.694874
+    },
+    "key": "roic",
+    "label": "ROIC (TTM)",
+    "notes": [],
+    "sources": [
+     {
+      "accession": "0000200406-26-000016",
+      "derived": true,
+      "filed": "2026-02-11",
+      "form": "10-K",
+      "note": "pretax_income + interest_expense (EBIT proxy; OperatingIncomeLoss not tagged)",
+      "period_end": "2025-12-28",
+      "period_start": "2024-12-30",
+      "tag": "valuelens:derived",
+      "value": 33552000000.0
+     },
+     {
+      "accession": "0000200406-26-000153",
+      "derived": false,
+      "filed": "2026-07-23",
+      "form": "10-Q",
+      "note": "",
+      "period_end": "2026-06-28",
+      "period_start": null,
+      "tag": "us-gaap:StockholdersEquity",
+      "value": 84971000000.0
+     }
+    ],
+    "unit": "%",
+    "value": 25.376345853174453
+   },
+   {
+    "formula": "ROIC \u2212 WACC",
+    "inputs": {
+     "roic_pct": 25.376345853174453,
+     "wacc_pct": 9.020307439846949
+    },
+    "key": "roic_wacc_spread",
+    "label": "ROIC \u2212 WACC spread",
+    "notes": [
+     "Positive spread = value creation; the wider and more persistent, the stronger the moat."
+    ],
+    "sources": [],
+    "unit": "%",
+    "value": 16.356038413327507
+   },
+   {
+    "formula": "EVA = (ROIC \u2212 WACC) \u00d7 invested_capital",
+    "inputs": {
+     "invested_capital": 110393000000.0,
+     "roic_pct": 25.376345853174453,
+     "wacc_pct": 9.020307439846949
+    },
+    "key": "eva",
+    "label": "Economic value added (TTM)",
+    "notes": [],
+    "sources": [],
+    "unit": "USD",
+    "value": 18055921485.624634
+   },
+   {
+    "formula": "count(years with ROIC > current WACC) over 10 yrs of 10-K history",
+    "inputs": {
+     "FY2016": 21.818057199188463,
+     "FY2017": 12.096449142515375,
+     "FY2018": 22.39200592225593,
+     "FY2019": 22.039022147976205,
+     "FY2020": 17.61934018117038,
+     "FY2021": 19.257037979632877,
+     "FY2022": 16.02627969035556,
+     "FY2023": 18.361410354241368,
+     "FY2024": 17.49537504840981,
+     "FY2025": 25.14537282912156
+    },
+    "key": "moat_persistence",
+    "label": "Years ROIC > WACC",
+    "notes": [],
+    "sources": [],
+    "unit": "x",
+    "value": 10.0
+   }
+  ],
+  "name": "Modern Fundamental Fair Value (DCF / ROIC)"
+ },
+ "price": 150.0,
+ "ttm": {
+  "fiscal_year": null,
+  "form": "10-K+10-Q",
+  "label": "TTM",
+  "period_end": "2026-06-28",
+  "values": {
+   "book_value_per_share": {
+    "accession": "0000200406-26-000153",
+    "derived": true,
+    "filed": "2026-07-23",
+    "form": "10-Q",
+    "note": "equity / shares_diluted",
+    "period_end": "2026-06-28",
+    "period_start": null,
+    "tag": "valuelens:derived",
+    "value": 34.76860755350055
+   },
+   "buybacks": {
+    "accession": "0000200406-26-000153",
+    "derived": true,
+    "filed": "2026-07-23",
+    "form": "10-Q",
+    "note": "TTM = FY(2025-12-28) 5,953,000,000 + YTD(2025-12-29\u21922026-06-28) 4,249,000,000 \u2212 YTD(2024-12-30\u21922025-06-29) 2,127,000,000",
+    "period_end": "2026-06-28",
+    "period_start": "2025-06-28",
+    "tag": "us-gaap:PaymentsForRepurchaseOfCommonStock",
+    "value": 8075000000.0
+   },
+   "capex": {
+    "accession": "0000200406-26-000153",
+    "derived": true,
+    "filed": "2026-07-23",
+    "form": "10-Q",
+    "note": "TTM = FY(2025-12-28) 4,832,000,000 + YTD(2025-12-29\u21922026-06-28) 2,370,000,000 \u2212 YTD(2024-12-30\u21922025-06-29) 1,838,000,000",
+    "period_end": "2026-06-28",
+    "period_start": "2025-06-28",
+    "tag": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+    "value": 5364000000.0
+   },
+   "cash": {
+    "accession": "0000200406-26-000153",
+    "derived": false,
+    "filed": "2026-07-23",
+    "form": "10-Q",
+    "note": "",
+    "period_end": "2026-06-28",
+    "period_start": null,
+    "tag": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+    "value": 20422000000.0
+   },
+   "cfo": {
+    "accession": "0000200406-26-000153",
+    "derived": true,
+    "filed": "2026-07-23",
+    "form": "10-Q",
+    "note": "TTM = FY(2025-12-28) 24,530,000,000 + YTD(2025-12-29\u21922026-06-28) 11,130,000,000 \u2212 YTD(2024-12-30\u21922025-06-29) 8,052,000,000",
+    "period_end": "2026-06-28",
+    "period_start": "2025-06-28",
+    "tag": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+    "value": 27608000000.0
+   },
+   "cost_of_revenue": {
+    "accession": "0000200406-26-000153",
+    "derived": true,
+    "filed": "2026-07-23",
+    "form": "10-Q",
+    "note": "TTM = FY(2025-12-28) 30,256,000,000 + YTD(2025-12-29\u21922026-06-28) 16,157,000,000 \u2212 YTD(2024-12-30\u21922025-06-29) 14,985,000,000",
+    "period_end": "2026-06-28",
+    "period_start": "2025-06-28",
+    "tag": "us-gaap:CostOfGoodsAndServicesSold",
+    "value": 31428000000.0
+   },
+   "current_assets": {
+    "accession": "0000200406-26-000153",
+    "derived": false,
+    "filed": "2026-07-23",
+    "form": "10-Q",
+    "note": "",
+    "period_end": "2026-06-28",
+    "period_start": null,
+    "tag": "us-gaap:AssetsCurrent",
+    "value": 59774000000.0
+   },
+   "current_liabilities": {
+    "accession": "0000200406-26-000153",
+    "derived": false,
+    "filed": "2026-07-23",
+    "form": "10-Q",
+    "note": "",
+    "period_end": "2026-06-28",
+    "period_start": null,
+    "tag": "us-gaap:LiabilitiesCurrent",
+    "value": 54895000000.0
+   },
+   "current_ratio": {
+    "accession": "0000200406-26-000153",
+    "derived": true,
+    "filed": "2026-07-23",
+    "form": "10-Q",
+    "note": "current_assets / current_liabilities",
+    "period_end": "2026-06-28",
+    "period_start": null,
+    "tag": "valuelens:derived",
+    "value": 1.0888787685581565
+   },
+   "d_and_a": {
+    "accession": "0000200406-26-000153",
+    "derived": true,
+    "filed": "2026-07-23",
+    "form": "10-Q",
+    "note": "TTM = FY(2025-12-28) 7,503,000,000 + YTD(2025-12-29\u21922026-06-28) 3,963,000,000 \u2212 YTD(2024-12-30\u21922025-06-29) 3,715,000,000",
+    "period_end": "2026-06-28",
+    "period_start": "2025-06-28",
+    "tag": "us-gaap:DepreciationDepletionAndAmortization",
+    "value": 7751000000.0
+   },
+   "debt_to_equity": {
+    "accession": "0000200406-26-000016",
+    "derived": true,
+    "filed": "2026-02-11",
+    "form": "10-K",
+    "note": "total_debt / equity",
+    "period_end": "2025-12-28",
+    "period_start": null,
+    "tag": "valuelens:derived",
+    "value": 0.5395252497911052
+   },
+   "delta_nwc": {
+    "accession": "0000200406-26-000153",
+    "derived": true,
+    "filed": "2026-07-23",
+    "form": "10-Q",
+    "note": "nwc \u2212 nwc(2024-12-29)",
+    "period_end": "2026-06-28",
+    "period_start": null,
+    "tag": "valuelens:derived",
+    "value": 5571000000.0
+   },
+   "effective_tax_rate": {
+    "accession": "0000200406-26-000153",
+    "derived": true,
+    "filed": "2026-07-23",
+    "form": "10-Q",
+    "note": "income_tax / pretax_income (clamped 0\u201350%)",
+    "period_end": "2026-06-28",
+    "period_start": "2025-06-28",
+    "tag": "valuelens:derived",
+    "value": 0.16506588347356724
+   },
+   "eps_diluted": {
+    "accession": "0000200406-26-000153",
+    "derived": true,
+    "filed": "2026-07-23",
+    "form": "10-Q",
+    "note": "TTM = FY(2025-12-28) 11.03 + YTD(2025-12-29\u21922026-06-28) 4.41 \u2212 YTD(2024-12-30\u21922025-06-29) 6.82 (EPS TTM is an additive approximation)",
+    "period_end": "2026-06-28",
+    "period_start": "2025-06-28",
+    "tag": "us-gaap:EarningsPerShareDiluted",
+    "value": 8.62
+   },
+   "equity": {
+    "accession": "0000200406-26-000153",
+    "derived": false,
+    "filed": "2026-07-23",
+    "form": "10-Q",
+    "note": "",
+    "period_end": "2026-06-28",
+    "period_start": null,
+    "tag": "us-gaap:StockholdersEquity",
+    "value": 84971000000.0
+   },
+   "fcf": {
+    "accession": "0000200406-26-000153",
+    "derived": true,
+    "filed": "2026-07-23",
+    "form": "10-Q",
+    "note": "cfo \u2212 capex",
+    "period_end": "2026-06-28",
+    "period_start": "2025-06-28",
+    "tag": "valuelens:derived",
+    "value": 22244000000.0
+   },
+   "fcff": {
+    "accession": "0000200406-26-000016",
+    "derived": true,
+    "filed": "2026-02-11",
+    "form": "10-K",
+    "note": "nopat + d_and_a \u2212 capex \u2212 delta_nwc",
+    "period_end": "2025-12-28",
+    "period_start": "2024-12-30",
+    "tag": "valuelens:derived",
+    "value": 24829709477.69487
+   },
+   "goodwill": {
+    "accession": "0000200406-26-000153",
+    "derived": false,
+    "filed": "2026-07-23",
+    "form": "10-Q",
+    "note": "",
+    "period_end": "2026-06-28",
+    "period_start": null,
+    "tag": "us-gaap:Goodwill",
+    "value": 48479000000.0
+   },
+   "income_tax": {
+    "accession": "0000200406-26-000153",
+    "derived": true,
+    "filed": "2026-07-23",
+    "form": "10-Q",
+    "note": "TTM = FY(2025-12-28) 5,777,000,000 + YTD(2025-12-29\u21922026-06-28) 1,968,000,000 \u2212 YTD(2024-12-30\u21922025-06-29) 3,586,000,000",
+    "period_end": "2026-06-28",
+    "period_start": "2025-06-28",
+    "tag": "us-gaap:IncomeTaxExpenseBenefit",
+    "value": 4159000000.0
+   },
+   "intangibles": {
+    "accession": "0000200406-26-000153",
+    "derived": false,
+    "filed": "2026-07-23",
+    "form": "10-Q",
+    "note": "",
+    "period_end": "2026-06-28",
+    "period_start": null,
+    "tag": "us-gaap:IntangibleAssetsNetExcludingGoodwill",
+    "value": 48229000000.0
+   },
+   "interest_expense": {
+    "accession": "0000200406-26-000016",
+    "derived": false,
+    "filed": "2026-02-11",
+    "form": "10-K",
+    "note": "",
+    "period_end": "2025-12-28",
+    "period_start": "2024-12-30",
+    "tag": "us-gaap:InterestExpenseNonoperating",
+    "value": 971000000.0
+   },
+   "inventory": {
+    "accession": "0000200406-26-000153",
+    "derived": false,
+    "filed": "2026-07-23",
+    "form": "10-Q",
+    "note": "",
+    "period_end": "2026-06-28",
+    "period_start": null,
+    "tag": "us-gaap:InventoryNet",
+    "value": 15144000000.0
+   },
+   "invested_capital": {
+    "accession": "0000200406-26-000153",
+    "derived": true,
+    "filed": "2026-07-23",
+    "form": "10-Q",
+    "note": "equity + total_debt \u2212 cash",
+    "period_end": "2026-06-28",
+    "period_start": null,
+    "tag": "valuelens:derived",
+    "value": 110393000000.0
+   },
+   "liabilities_and_equity": {
+    "accession": "0000200406-26-000153",
+    "derived": false,
+    "filed": "2026-07-23",
+    "form": "10-Q",
+    "note": "",
+    "period_end": "2026-06-28",
+    "period_start": null,
+    "tag": "us-gaap:LiabilitiesAndStockholdersEquity",
+    "value": 201061000000.0
+   },
+   "long_term_debt": {
+    "accession": "0000200406-26-000153",
+    "derived": false,
+    "filed": "2026-07-23",
+    "form": "10-Q",
+    "note": "",
+    "period_end": "2026-06-28",
+    "period_start": null,
+    "tag": "us-gaap:LongTermDebtNoncurrent",
+    "value": 37344000000.0
+   },
+   "maintenance_capex": {
+    "accession": "0000200406-26-000153",
+    "derived": true,
+    "filed": "2026-07-23",
+    "form": "10-Q",
+    "note": "min(capex, d_and_a) \u2014 conservative proxy; Buffett's 'average capex to maintain competitive position'",
+    "period_end": "2026-06-28",
+    "period_start": "2025-06-28",
+    "tag": "valuelens:derived",
+    "value": 5364000000.0
+   },
+   "net_income": {
+    "accession": "0000200406-26-000153",
+    "derived": true,
+    "filed": "2026-07-23",
+    "form": "10-Q",
+    "note": "TTM = FY(2025-12-28) 26,804,000,000 + YTD(2025-12-29\u21922026-06-28) 10,769,000,000 \u2212 YTD(2024-12-30\u21922025-06-29) 16,536,000,000",
+    "period_end": "2026-06-28",
+    "period_start": "2025-06-28",
+    "tag": "us-gaap:NetIncomeLoss",
+    "value": 21037000000.0
+   },
+   "net_margin": {
+    "accession": "0000200406-26-000153",
+    "derived": true,
+    "filed": "2026-07-23",
+    "form": "10-Q",
+    "note": "net_income / revenue",
+    "period_end": "2026-06-28",
+    "period_start": "2025-06-28",
+    "tag": "valuelens:derived",
+    "value": 0.22333931396175938
+   },
+   "nopat": {
+    "accession": "0000200406-26-000016",
+    "derived": true,
+    "filed": "2026-02-11",
+    "form": "10-K",
+    "note": "operating_income \u00d7 (1 \u2212 0.165)",
+    "period_end": "2025-12-28",
+    "period_start": "2024-12-30",
+    "tag": "valuelens:derived",
+    "value": 28013709477.694874
+   },
+   "nwc": {
+    "accession": "0000200406-26-000153",
+    "derived": true,
+    "filed": "2026-07-23",
+    "form": "10-Q",
+    "note": "(current_assets \u2212 cash \u2212 short_term_investments) \u2212 (current_liabilities \u2212 short_term_debt)",
+    "period_end": "2026-06-28",
+    "period_start": null,
+    "tag": "valuelens:derived",
+    "value": -7379000000.0
+   },
+   "operating_income": {
+    "accession": "0000200406-26-000016",
+    "derived": true,
+    "filed": "2026-02-11",
+    "form": "10-K",
+    "note": "pretax_income + interest_expense (EBIT proxy; OperatingIncomeLoss not tagged)",
+    "period_end": "2025-12-28",
+    "period_start": "2024-12-30",
+    "tag": "valuelens:derived",
+    "value": 33552000000.0
+   },
+   "operating_margin": {
+    "accession": "0000200406-26-000016",
+    "derived": true,
+    "filed": "2026-02-11",
+    "form": "10-K",
+    "note": "operating_income / revenue",
+    "period_end": "2025-12-28",
+    "period_start": "2024-12-30",
+    "tag": "valuelens:derived",
+    "value": 0.3562048135211746
+   },
+   "owner_earnings": {
+    "accession": "0000200406-26-000153",
+    "derived": true,
+    "filed": "2026-07-23",
+    "form": "10-Q",
+    "note": "net_income + d_and_a \u2212 maintenance_capex \u2212 delta_nwc",
+    "period_end": "2026-06-28",
+    "period_start": "2025-06-28",
+    "tag": "valuelens:derived",
+    "value": 17853000000.0
+   },
+   "pretax_income": {
+    "accession": "0000200406-26-000153",
+    "derived": true,
+    "filed": "2026-07-23",
+    "form": "10-Q",
+    "note": "TTM = FY(2025-12-28) 32,581,000,000 + YTD(2025-12-29\u21922026-06-28) 12,737,000,000 \u2212 YTD(2024-12-30\u21922025-06-29) 20,122,000,000",
+    "period_end": "2026-06-28",
+    "period_start": "2025-06-28",
+    "tag": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+    "value": 25196000000.0
+   },
+   "receivables": {
+    "accession": "0000200406-26-000153",
+    "derived": false,
+    "filed": "2026-07-23",
+    "form": "10-Q",
+    "note": "",
+    "period_end": "2026-06-28",
+    "period_start": null,
+    "tag": "us-gaap:AccountsReceivableNetCurrent",
+    "value": 19046000000.0
+   },
+   "revenue": {
+    "accession": "0000200406-26-000016",
+    "derived": false,
+    "filed": "2026-02-11",
+    "form": "10-K",
+    "note": "",
+    "period_end": "2025-12-28",
+    "period_start": "2024-12-30",
+    "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+    "value": 94193000000.0
+   },
+   "roe": {
+    "accession": "0000200406-26-000153",
+    "derived": true,
+    "filed": "2026-07-23",
+    "form": "10-Q",
+    "note": "net_income / equity",
+    "period_end": "2026-06-28",
+    "period_start": "2025-06-28",
+    "tag": "valuelens:derived",
+    "value": 0.24757858563509905
+   },
+   "roic": {
+    "accession": "0000200406-26-000016",
+    "derived": true,
+    "filed": "2026-02-11",
+    "form": "10-K",
+    "note": "nopat / invested_capital",
+    "period_end": "2025-12-28",
+    "period_start": "2024-12-30",
+    "tag": "valuelens:derived",
+    "value": 0.25376345853174453
+   },
+   "shares_diluted": {
+    "accession": "0000200406-26-000153",
+    "derived": false,
+    "filed": "2026-07-23",
+    "form": "10-Q",
+    "note": "Weighted-average shares from latest 10-Q YTD period",
+    "period_end": "2026-06-28",
+    "period_start": "2025-12-29",
+    "tag": "us-gaap:WeightedAverageNumberOfDilutedSharesOutstanding",
+    "value": 2443900000.0
+   },
+   "short_term_debt": {
+    "accession": "0000200406-26-000016",
+    "derived": false,
+    "filed": "2026-02-11",
+    "form": "10-K",
+    "note": "",
+    "period_end": "2025-12-28",
+    "period_start": null,
+    "tag": "us-gaap:DebtCurrent",
+    "value": 8500000000.0
+   },
+   "short_term_investments": {
+    "accession": "0000200406-26-000153",
+    "derived": false,
+    "filed": "2026-07-23",
+    "form": "10-Q",
+    "note": "",
+    "period_end": "2026-06-28",
+    "period_start": null,
+    "tag": "us-gaap:MarketableSecuritiesCurrent",
+    "value": 336000000.0
+   },
+   "total_assets": {
+    "accession": "0000200406-26-000153",
+    "derived": false,
+    "filed": "2026-07-23",
+    "form": "10-Q",
+    "note": "",
+    "period_end": "2026-06-28",
+    "period_start": null,
+    "tag": "us-gaap:Assets",
+    "value": 201061000000.0
+   },
+   "total_debt": {
+    "accession": "0000200406-26-000016",
+    "derived": true,
+    "filed": "2026-02-11",
+    "form": "10-K",
+    "note": "short_term_debt + long_term_debt",
+    "period_end": "2025-12-28",
+    "period_start": null,
+    "tag": "valuelens:derived",
+    "value": 45844000000.0
+   },
+   "total_liabilities": {
+    "accession": "0000200406-26-000153",
+    "derived": false,
+    "filed": "2026-07-23",
+    "form": "10-Q",
+    "note": "",
+    "period_end": "2026-06-28",
+    "period_start": null,
+    "tag": "us-gaap:Liabilities",
+    "value": 116090000000.0
+   }
+  }
+ },
+ "warnings": [
+  "Latest 10-K missing concepts: dividends_paid"
+ ]
+}

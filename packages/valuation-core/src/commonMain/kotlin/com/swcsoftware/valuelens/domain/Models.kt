@@ -3,8 +3,8 @@ package com.swcsoftware.valuelens.domain
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-// Kotlin mirror of the valuation-engine JSON contract (docs/API.md). Keep in sync with
-// apps/ios/ValueLens/Domain/Models/ValuationReport.swift.
+// Shared output contract of the valuation core (docs/API.md), serialized identically to the Python
+// reference so the oracle test can diff them. iOS decodes the same JSON via ValuationReport.swift.
 
 @Serializable data class CompanyRef(val ticker: String, val cik: Long, val name: String)
 
@@ -41,6 +41,11 @@ import kotlinx.serialization.Serializable
 
 @Serializable data class MoSBand(@SerialName("discount_pct") val discountPct: Double,
                                  @SerialName("buy_below") val buyBelow: Double? = null)
+
+@Serializable data class DataCheck(
+    val key: String, val label: String, val status: String,   // "pass" | "warn" | "fail"
+    val message: String, val inputs: List<String> = emptyList(),
+)
 
 @Serializable data class MarginOfSafety(
     @SerialName("intrinsic_value") val intrinsicValue: Double? = null,
@@ -79,6 +84,9 @@ import kotlinx.serialization.Serializable
     @SerialName("model_a") val modelA: ModelResult, @SerialName("model_b") val modelB: ModelResult,
     val warnings: List<String>, val disclaimer: String,
     @SerialName("generated_at") val generatedAt: String,
+    @SerialName("data_checks") val dataChecks: List<DataCheck> = emptyList(),
+    /** Every model input with its provenance ("sec", "market", "derived", "assumed"). */
+    val provenance: Map<String, String> = emptyMap(),
 )
 
 // ---- Sprint 1 additions -------------------------------------------------------------------
