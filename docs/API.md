@@ -13,7 +13,23 @@ All endpoints accept `X-SEC-User-Agent: <Full Name> <email>`; the engine forward
 | GET | `/companies/{ticker}/financials` | Normalized annual + TTM statements with sources |
 | GET | `/companies/{ticker}/valuation` | Full report (below). Query overrides: `price`, `aaa_yield_pct`, `treasury_10y_pct`, `hurdle_rate_pct`, `equity_risk_premium_pct`, `beta`, `terminal_growth_pct`, `exit_multiple`, `tax_rate_pct` |
 
-Errors: `404 {"detail": "Unknown ticker: X"}`; `5xx` on upstream failure.
+### Errors (all non-2xx)
+
+```jsonc
+{"error": {"code": "unknown_ticker", "message": "…", "detail": {…}}, "detail": "…"}   // `detail` string kept for Sprint-0 clients
+```
+
+| code | HTTP | Meaning |
+|---|---|---|
+| `unknown_ticker` | 404 | Not in SEC's company list |
+| `no_annual_data` | 422 | Filer exists but has no 10-K income statement facts (20-F, fund, SPAC, new listing) |
+| `upstream_unavailable` | 503 | SEC / provider unreachable or 5xx |
+| `rate_limited` | 429 | Per-identity limit hit; `Retry-After` header set |
+| `invalid_identity` | 400 | `REQUIRE_IDENTITY=true` and header isn't `Full Name email` |
+| `engine_error` | 500 | Unhandled failure (logged server-side) |
+
+`/health` additionally returns `rates`, `price_providers`, `cache` stats, `require_identity`,
+`client_rate_limit_per_minute` and `lan_addresses` (for physical devices on the same Wi-Fi).
 
 ## ValuationReport
 
@@ -53,4 +69,5 @@ ModelResult = {"name", "intrinsic_value_per_share", "composite": Metric, "metric
 `fcff_projection` (inputs only), `roic`, `roic_wacc_spread`, `eva`, `moat_persistence`
 
 Contract changes must update: this file, `apps/ios/.../ValuationReport.swift`,
-`apps/android/.../Models.kt`, and the bundled `SampleData/*.json`.
+`apps/android/.../Models.kt`, the bundled `SampleData/*.json` (iOS) and `assets/*.json` (Android),
+and the test fixtures under `services/valuation-engine/tests/fixtures`.

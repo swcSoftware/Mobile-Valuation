@@ -26,3 +26,25 @@
 Android screens, hosted engine.
 
 **Verification**: manual, in-simulator. Automated: 3 engine formula tests (`pytest`).
+
+## Sprint 1 — 2026-09-19 — Any ticker, anywhere
+
+**Goal**: all Sprint 1 sub-goals (engine hardening, iOS polish, full Android port), automated
+tests green, merged to `staging`.
+
+**Delivered**
+- Engine: SQLite cache, error taxonomy, per-identity rate limiting + access log, Polygon provider,
+  Dockerfile/fly.toml/LAN script, FRED verified live, 26 fixture-based tests.
+- iOS: typed errors + explanatory empty states, deep links, foreground refresh, LAN engine picker,
+  haptics/a11y, any-ticker case study, 10 XCTests.
+- Android: complete Compose port at parity with iOS, verified live on the Pixel 10 emulator
+  (onboarding with JNJ, detail, Model B toggle, PDF export, deep link), 7 JVM tests.
+- Docs updated; bundled samples refreshed with FRED rates.
+
+**Owner decisions**: hosting deferred (LAN mode); FRED key added locally; no Polygon key yet.
+
+**Verification**: 43 automated tests (26 + 10 + 7), all passing; manual runs on iPhone 16 Pro
+simulator and Pixel 10 emulator.
+
+**Deferred**: hosted deploy + Release URL (#18), physical-device LAN check (#19), Android
+share-card visual check (#22), see ISSUES #18–30.

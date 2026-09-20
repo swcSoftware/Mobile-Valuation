@@ -30,6 +30,10 @@ xcodegen generate
 open ValueLens.xcodeproj   # or build via xcodebuild, see docs/RUNBOOK.md
 ```
 
+## Tests
+
+43 automated tests across the three codebases — see `docs/RUNBOOK.md` §3b.
+
 ## Branches
 
 - `main` — production-ready. Protected; only merged on explicit owner approval.

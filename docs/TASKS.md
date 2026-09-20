@@ -32,32 +32,41 @@ Status: `[x]` done · `[ ]` todo · `[~]` in progress. Move finished sprints to 
 ### Repo
 - [x] `main` / `staging` / `dev` branches; docs folder
 
-## Sprint 1 — Any ticker, anywhere
+## Sprint 1 — Any ticker, anywhere (2026-09-19) ✅ (hosting deferred by owner decision: LAN mode)
 
 ### Engine
-- [ ] Containerize (Dockerfile) and deploy to a hosted URL (Fly.io / Railway / Cloud Run) — see PATH_TO_ANY_TICKER.md
-- [ ] Persistent cache (SQLite or Redis) instead of local `.cache/`
-- [ ] Proper error taxonomy (`no_annual_data`, `no_share_count`, `upstream_unavailable`) surfaced to clients
-- [ ] `FRED_API_KEY` set in hosted env; verify `rate_source: FRED` end to end
-- [ ] Licensed / official price provider behind `PriceProvider` (see ISSUES #3)
-- [ ] Rate-limit per client identity, request logging
+- [~] Containerize and deploy — **Dockerfile + fly.toml + `scripts/serve-lan.sh` written; owner chose LAN-only for now.** Deploy is a one-command step when wanted (PATH_TO_ANY_TICKER.md).
+- [x] Persistent cache: SQLite (`CACHE_DB`), WAL mode, TTL on read, stats in `/health`
+- [x] Error taxonomy (`unknown_ticker`, `no_annual_data`, `upstream_unavailable`, `rate_limited`, `invalid_identity`) with stable wire format; both clients map to typed errors
+- [x] `FRED_API_KEY` set locally; verified `rate_source: FRED` end to end (AAA 5.94 / 10Y 4.94 on 2026-09-17)
+- [x] Licensed price provider: Polygon.io behind `POLYGON_API_KEY` (respx-tested; no key yet → Yahoo/Stooq)
+- [x] Per-identity sliding-window rate limit, optional `REQUIRE_IDENTITY`, access log with latency + identity
+- [x] `/health` reports rates source, providers, cache stats, LAN addresses
+- [x] 26 offline tests on recorded companyfacts fixtures (AAPL, KO, JNJ)
 
 ### iOS
-- [ ] Settings → engine URL defaults to hosted URL in Release builds
-- [ ] Watchlist auto-refresh on foreground + last-updated stamp
-- [ ] Empty/error states for `insufficient_data` (per-share values unavailable) with explanation
-- [ ] Deep link `valuelens://ticker/AAPL`
-- [ ] Haptics on verdict change; MoS gauge accessibility label
-- [ ] Case study: choose *any* ticker from search, not just three presets
+- [x] Engine URL default per build config (Info.plist `ENGINE_BASE_URL`); Release placeholder until hosted (ISSUES #18)
+- [x] Settings: LAN address picker from `/health`, reset to default
+- [x] Watchlist: concurrent refresh, foreground auto-refresh (>15 min), last-updated stamp
+- [x] Typed error states with titles/icons; `InsufficientDataCard` explains missing per-share values
+- [x] Deep link `valuelens://ticker/AAPL` (AppRouter) — verified in simulator
+- [x] Haptics on verdict change; MoS gauge + watchlist rows VoiceOver labels
+- [x] Case study: any ticker via live search
+- [x] `ValueLensTests` target: 10 unit tests
 
 ### Android
-- [ ] Generate Gradle wrapper, build in Android Studio
-- [ ] EncryptedSharedPreferences identity + onboarding
-- [ ] Port screens: watchlist, search, company detail (Model A/B toggle, MoS gauge, metric disclosure), settings
-- [ ] PDF (android.graphics.pdf) + share card (Bitmap) + system share sheet
-- [ ] Bundled sample JSON fallback
+- [x] Gradle wrapper generated; builds headless (`./gradlew assembleDebug`) with Android Studio's JDK 21
+- [x] EncryptedSharedPreferences identity + onboarding (identity → case study, presets + any ticker)
+- [x] Screens ported: watchlist, search, company detail (Model A/B toggle, MoS gauge, metric disclosure, chart, table, growth, assumptions), settings
+- [x] PDF (PdfDocument) + share cards (Bitmap) + system share sheet via FileProvider
+- [x] Bundled sample JSON fallback (assets/)
+- [x] Deep link, foreground refresh, typed errors, haptics
+- [x] 7 JVM unit tests; verified live (JNJ, KO) on Pixel 10 emulator
 
 ## Sprint 2 — Data quality & model depth
+- [ ] Host the engine (Fly.io/Railway) and set the Release `ENGINE_BASE_URL` (carried from Sprint 1)
+- [ ] Verify LAN mode on a physical iPhone + Android phone (ATS for private IPs, ISSUES #19)
+- [ ] Android: share-card PNG visual check; light theme; Compose UI tests
 - [ ] Multi-class shares via dimensioned facts (`frames` API or full XBRL instance) — BRK, GOOG, META
 - [ ] Sector tag maps: banks/insurers (no operating income, different working capital), REITs (FFO)
 - [ ] ΔNWC smoothing (3-yr average) for owner earnings — KO 2025 swing

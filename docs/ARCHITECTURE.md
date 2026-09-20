@@ -12,7 +12,9 @@
 
 | Module | Responsibility |
 |---|---|
-| `edgar/client.py` | HTTP with SEC-compliant `User-Agent`, 8 req/s limiter, on-disk JSON cache (24h) |
+| `edgar/client.py` | HTTP with SEC-compliant `User-Agent`, 8 req/s limiter, SQLite JSON cache (24h, `cache.py`) |
+| `errors.py` | Error taxonomy → stable wire codes (API.md) |
+| `middleware.py` | Access log, identity validation, per-identity sliding-window rate limit |
 | `edgar/tickers.py` | `company_tickers.json` → ticker/CIK/name; search |
 | `edgar/companyfacts.py` | Parse `companyfacts` into flat `Fact` records (tag, unit, value, start/end, form, accession, filed) |
 | `normalize/tags.py` | Canonical concept → ordered XBRL tag fallbacks (revenue, net_income, cfo, capex, …) |
@@ -20,7 +22,7 @@
 | `valuation/model_a.py` | Graham classic/revised, NNWC, owner earnings, MoS |
 | `valuation/model_b.py` | CAPM/WACC, 5-yr FCFF DCF (perpetuity + exit), ROIC, EVA, moat persistence |
 | `valuation/engine.py` | Orchestration + payload assembly |
-| `providers/prices.py` | `PriceProvider` protocol; Yahoo chart, Stooq, manual override |
+| `providers/prices.py` | `PriceProvider` protocol; Polygon (keyed) → Yahoo chart → Stooq; manual override wins |
 | `providers/rates.py` | FRED DAAA / DGS10 with cached defaults |
 | `main.py` | FastAPI routes (see API.md) |
 
@@ -61,6 +63,19 @@ pattern lets the sample data stand in for the network transparently.
 **Gotcha**: `JSONDecoder.convertFromSnakeCase` turns `treasury_10y_pct` into `treasury10YPct`
 (capital Y). Property is named accordingly.
 
-## apps/android (Kotlin, Compose) — scaffold only
-`domain/Models.kt` mirrors the contract with kotlinx.serialization; `data/EngineApi.kt` mirrors
-`APIClient`. Emulator reaches the host engine at `http://10.0.2.2:8000`.
+## apps/android (Kotlin 2.1, Jetpack Compose, minSdk 26)
+
+```
+ValueLensApplication.kt   AppState: identity (EncryptedSharedPreferences), prefs, watchlist, engine health,
+                          deep-link pending ticker — the counterpart of iOS AppSettings + WatchlistStore + AppRouter
+domain/Models.kt          kotlinx.serialization mirror of API.md + Verdict, ValuationModel, RateOverrides, EngineException
+data/                     EngineApi (OkHttp, X-SEC-User-Agent), Remote/Sample repositories, stores
+ui/theme, ui/Fmt.kt       Same tokens and number formatting as iOS
+ui/components             Card, Pill, ModelToggle, MetricRow (disclosure), MarginOfSafetyView
+ui/screens                Onboarding (Identity, CaseStudy), Watchlist, Search, CompanyDetail, Settings
+ui/ValueLensApp.kt        NavHost + bottom NavigationBar; deep-link navigation
+export/Exporter.kt        PdfDocument dossier, Bitmap share cards, FileProvider share intent
+assets/                   AAPL/KO/MSFT sample JSON (offline fallback)
+```
+Emulator reaches the host engine at `http://10.0.2.2:8000` (default). Physical device: LAN address
+from Settings.

@@ -11,6 +11,12 @@ engine is unreachable.
 What stops this working on a physical iPhone away from the Mac is that the engine lives at
 `http://127.0.0.1:8000`.
 
+## Sprint 1 status (2026-09-19)
+- LAN mode works: `scripts/serve-lan.sh` + one-tap LAN address in both apps' Settings.
+- Hosting artifacts are ready (`Dockerfile`, `fly.toml`); deploy was deferred by owner decision.
+- Rate limiting, identity requirement, persistent cache, error taxonomy, FRED: done.
+- Prices: Polygon provider implemented; still keyless (Yahoo fallback in use).
+
 ## What is needed
 
 ### 1. Host the engine (the only hard requirement)
