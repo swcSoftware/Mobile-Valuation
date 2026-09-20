@@ -80,3 +80,89 @@ import kotlinx.serialization.Serializable
     val warnings: List<String>, val disclaimer: String,
     @SerialName("generated_at") val generatedAt: String,
 )
+
+// ---- Sprint 1 additions -------------------------------------------------------------------
+
+@Serializable data class EngineHealth(
+    val status: String, val version: String,
+    @SerialName("lan_addresses") val lanAddresses: List<String> = emptyList(),
+    @SerialName("price_providers") val priceProviders: List<String> = emptyList(),
+    @SerialName("require_identity") val requireIdentity: Boolean = false,
+)
+
+enum class ValuationModel(val label: String, val subtitle: String) {
+    A("Model A", "Graham · Buffett · Munger"),
+    B("Model B", "DCF · WACC · ROIC");
+}
+
+fun ValuationReport.result(model: ValuationModel): ModelResult = if (model == ValuationModel.A) modelA else modelB
+fun ModelResult.metric(key: String): Metric? = metrics.firstOrNull { it.key == key }
+val ValuationReport.price: Double? get() = quote?.price
+
+/** Verdict strings from the engine, with display titles and a rank (lower is better). */
+enum class Verdict(val wire: String, val title: String, val rank: Int) {
+    DEEP_VALUE("deep_value", "Deep value", 0),
+    WITHIN_MARGIN("within_margin", "Within margin of safety", 1),
+    THIN_MARGIN("below_intrinsic_thin_margin", "Below intrinsic, thin margin", 2),
+    ABOVE_INTRINSIC("above_intrinsic", "Priced above intrinsic value", 3),
+    INSUFFICIENT("insufficient_data", "Insufficient data", 4);
+
+    companion object {
+        fun from(wire: String): Verdict = entries.firstOrNull { it.wire == wire } ?: INSUFFICIENT
+    }
+}
+
+val MarginOfSafety.verdictEnum: Verdict get() = Verdict.from(verdict)
+
+/** SEC EDGAR fair-access identity, sent as `User-Agent: Full Name email`. */
+@Serializable data class SecIdentity(val fullName: String, val email: String) {
+    val userAgent: String get() = "${fullName.trim()} ${email.trim()}"
+    val isValid: Boolean get() = fullName.trim().split(Regex("\\s+")).size >= 2 && Regex(".+@.+\\..+").matches(email.trim())
+}
+
+/** User overrides for engine assumptions; null = use engine live/default value. */
+@Serializable data class RateOverrides(
+    val aaaYieldPct: Double? = null, val treasury10yPct: Double? = null, val hurdleRatePct: Double? = null,
+    val equityRiskPremiumPct: Double? = null, val beta: Double? = null, val terminalGrowthPct: Double? = null,
+    val exitMultiple: Double? = null,
+) {
+    fun queryParams(): Map<String, String> = buildMap {
+        aaaYieldPct?.let { put("aaa_yield_pct", it.toString()) }
+        treasury10yPct?.let { put("treasury_10y_pct", it.toString()) }
+        hurdleRatePct?.let { put("hurdle_rate_pct", it.toString()) }
+        equityRiskPremiumPct?.let { put("equity_risk_premium_pct", it.toString()) }
+        beta?.let { put("beta", it.toString()) }
+        terminalGrowthPct?.let { put("terminal_growth_pct", it.toString()) }
+        exitMultiple?.let { put("exit_multiple", it.toString()) }
+    }
+    companion object { val NONE = RateOverrides() }
+}
+
+/** Mirrors the engine error taxonomy (docs/API.md). */
+sealed class EngineException(val title: String, message: String) : Exception(message) {
+    class UnknownTicker(m: String) : EngineException("Unknown ticker", m)
+    class NoAnnualData(m: String) : EngineException("No annual filings", m)
+    class RateLimited(m: String) : EngineException("Slow down", m)
+    class InvalidIdentity(m: String) : EngineException("Identity needed", m)
+    class UpstreamUnavailable(m: String) : EngineException("Data source unavailable", m)
+    class Server(val status: Int, m: String) : EngineException("Engine error", m)
+    class Offline : EngineException("Engine offline", "The valuation engine is unreachable. Check the engine URL in Settings, or open one of the bundled sample companies.")
+
+    companion object {
+        @Serializable data class Envelope(val error: Body? = null, val detail: String? = null) {
+            @Serializable data class Body(val code: String, val message: String)
+        }
+        fun from(status: Int, body: String, json: kotlinx.serialization.json.Json): EngineException {
+            val env = runCatching { json.decodeFromString<Envelope>(body) }.getOrNull()
+            val msg = env?.error?.message ?: env?.detail ?: body
+            return when (env?.error?.code) {
+                "unknown_ticker" -> UnknownTicker(msg)
+                "no_annual_data" -> NoAnnualData(msg)
+                "rate_limited" -> RateLimited(msg)
+                "invalid_identity" -> InvalidIdentity(msg)
+                "upstream_unavailable" -> UpstreamUnavailable(msg)
+                else -> if (status == 404) UnknownTicker(msg) else Server(status, msg)
+            }
+        }
+    }
+}
