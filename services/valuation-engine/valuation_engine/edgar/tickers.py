@@ -3,7 +3,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from .client import EdgarClient, EdgarNotFound
+from ..errors import UnknownTicker
+from .client import EdgarClient
 
 TICKERS_URL = "https://www.sec.gov/files/company_tickers.json"
 
@@ -37,7 +38,7 @@ async def resolve_ticker(client: EdgarClient, ticker: str) -> CompanyRef:
     for ref in await load_master_list(client):
         if ref.ticker == wanted:
             return ref
-    raise EdgarNotFound(f"Unknown ticker: {ticker}")
+    raise UnknownTicker(f"'{ticker.strip().upper()}' is not a ticker in SEC's company list.", {"ticker": ticker})
 
 
 async def search_companies(client: EdgarClient, query: str, limit: int = 15) -> list[CompanyRef]:

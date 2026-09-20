@@ -58,6 +58,11 @@ def _parse_date(s: str | None) -> date | None:
 
 async def fetch_companyfacts(client: EdgarClient, ref: CompanyRef) -> CompanyFacts:
     raw = await client.get_json(COMPANYFACTS_URL.format(cik=ref.cik_padded))
+    return parse_companyfacts(raw, ref)
+
+
+def parse_companyfacts(raw: dict, ref: CompanyRef) -> CompanyFacts:
+    """Pure function so tests can feed recorded fixtures without the network."""
     facts: dict[str, list[Fact]] = {}
     for taxonomy, tags in raw.get("facts", {}).items():
         for tag, body in tags.items():

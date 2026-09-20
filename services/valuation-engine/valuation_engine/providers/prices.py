@@ -14,6 +14,8 @@ from typing import Protocol
 
 import httpx
 
+from ..config import settings
+
 
 @dataclass
 class Quote:
@@ -58,6 +60,29 @@ class StooqProvider:
         return Quote(ticker=ticker.upper(), price=price, currency="USD", as_of=as_of, source=self.name)
 
 
+class PolygonProvider:
+    """Licensed provider (https://polygon.io). Previous-day close; needs POLYGON_API_KEY."""
+    name = "polygon"
+    URL = "https://api.polygon.io/v2/aggs/ticker/{symbol}/prev?adjusted=true&apiKey={key}"
+
+    def __init__(self, api_key: str) -> None:
+        self._key = api_key
+
+    async def quote(self, ticker: str) -> Quote | None:
+        symbol = ticker.upper().replace("-", ".")  # Polygon uses BRK.B
+        try:
+            async with httpx.AsyncClient(timeout=10.0) as client:
+                resp = await client.get(self.URL.format(symbol=symbol, key=self._key))
+            resp.raise_for_status()
+            body = resp.json()
+            row = body["results"][0]
+            ts = row.get("t")
+            as_of = datetime.fromtimestamp(ts / 1000, tz=timezone.utc).isoformat() if ts else datetime.now(timezone.utc).isoformat()
+            return Quote(ticker=ticker.upper(), price=float(row["c"]), currency="USD", as_of=as_of, source=self.name)
+        except (httpx.HTTPError, KeyError, IndexError, TypeError, ValueError):
+            return None
+
+
 class YahooChartProvider:
     """Unofficial Yahoo Finance chart endpoint. No key; may change without notice."""
     name = "yahoo"
@@ -89,10 +114,17 @@ class ManualProvider:
                      as_of=datetime.now(timezone.utc).isoformat(), source=self.name)
 
 
+def configured_providers() -> list[str]:
+    out = ["polygon"] if settings.polygon_api_key else []
+    return out + ["yahoo", "stooq"]
+
+
 async def get_quote(ticker: str, override: float | None = None) -> Quote | None:
     providers: list[PriceProvider] = []
     if override is not None:
         providers.append(ManualProvider(override))
+    if settings.polygon_api_key:
+        providers.append(PolygonProvider(settings.polygon_api_key))
     providers.append(YahooChartProvider())
     providers.append(StooqProvider())
     for p in providers:

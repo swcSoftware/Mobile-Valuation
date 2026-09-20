@@ -7,6 +7,7 @@ from ..config import settings
 from ..edgar.client import EdgarClient
 from ..edgar.companyfacts import fetch_companyfacts
 from ..edgar.tickers import resolve_ticker
+from ..errors import NoAnnualData
 from ..normalize.statements import NormalizedFinancials, growth_summary, normalize
 from ..providers.prices import get_quote
 from ..providers.rates import get_rates
@@ -21,7 +22,13 @@ async def load_financials(ticker: str, user_agent: str | None) -> NormalizedFina
     client = EdgarClient(user_agent)
     ref = await resolve_ticker(client, ticker)
     cf = await fetch_companyfacts(client, ref)
-    return normalize(cf)
+    fin = normalize(cf)
+    if not fin.annual:
+        raise NoAnnualData(
+            f"{ref.ticker} has no 10-K income statement data on EDGAR (foreign filer, fund, SPAC or new listing).",
+            {"ticker": ref.ticker, "cik": ref.cik, "warnings": fin.warnings},
+        )
+    return fin
 
 
 def financials_payload(fin: NormalizedFinancials) -> dict:

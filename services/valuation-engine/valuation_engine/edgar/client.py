@@ -9,15 +9,14 @@ We also cache JSON responses on disk so repeat lookups for the same company are 
 from __future__ import annotations
 
 import asyncio
-import hashlib
-import json
 import time
-from pathlib import Path
 from typing import Any
 
 import httpx
 
+from ..cache import SQLiteCache
 from ..config import settings
+from ..errors import NoAnnualData, UpstreamUnavailable
 
 
 class SECRateLimiter:
@@ -38,36 +37,20 @@ class SECRateLimiter:
 
 
 _limiter = SECRateLimiter(settings.sec_max_requests_per_second)
+_cache = SQLiteCache(settings.cache_db, settings.cache_ttl_seconds)
+
+
+def cache() -> SQLiteCache:
+    return _cache
 
 
 class EdgarClient:
     def __init__(self, user_agent: str | None = None) -> None:
         self.user_agent = (user_agent or settings.sec_user_agent).strip()
-        self.cache_dir = Path(settings.cache_dir)
-        self.cache_dir.mkdir(parents=True, exist_ok=True)
 
-    # -- caching -----------------------------------------------------------
-    def _cache_path(self, url: str) -> Path:
-        return self.cache_dir / (hashlib.sha1(url.encode()).hexdigest() + ".json")
-
-    def _read_cache(self, url: str) -> Any | None:
-        path = self._cache_path(url)
-        if not path.exists():
-            return None
-        if time.time() - path.stat().st_mtime > settings.cache_ttl_seconds:
-            return None
-        try:
-            return json.loads(path.read_text())
-        except json.JSONDecodeError:
-            return None
-
-    def _write_cache(self, url: str, payload: Any) -> None:
-        self._cache_path(url).write_text(json.dumps(payload))
-
-    # -- fetching ----------------------------------------------------------
     async def get_json(self, url: str, *, use_cache: bool = True) -> Any:
         if use_cache:
-            cached = self._read_cache(url)
+            cached = _cache.get(url)
             if cached is not None:
                 return cached
 
@@ -77,20 +60,18 @@ class EdgarClient:
             "Accept-Encoding": "gzip, deflate",
             "Accept": "application/json",
         }
-        async with httpx.AsyncClient(timeout=30.0, follow_redirects=True) as client:
-            resp = await client.get(url, headers=headers)
+        try:
+            async with httpx.AsyncClient(timeout=30.0, follow_redirects=True) as client:
+                resp = await client.get(url, headers=headers)
+        except httpx.HTTPError as e:
+            raise UpstreamUnavailable(f"SEC EDGAR unreachable: {e.__class__.__name__}", {"url": url}) from e
         if resp.status_code == 404:
-            raise EdgarNotFound(url)
+            raise NoAnnualData("SEC has no XBRL company facts for this filer.", {"url": url})
+        if resp.status_code >= 500 or resp.status_code == 403:
+            raise UpstreamUnavailable(f"SEC EDGAR returned {resp.status_code}", {"url": url})
         resp.raise_for_status()
         payload = resp.json()
         if use_cache:
-            self._write_cache(url, payload)
+            _cache.set(url, payload)
         return payload
 
-
-class EdgarError(Exception):
-    pass
-
-
-class EdgarNotFound(EdgarError):
-    pass
