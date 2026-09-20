@@ -29,9 +29,20 @@ struct SettingsView: View {
                         Label(settings.engineReachable ? "Connected" : "Offline (sample data)", systemImage: settings.engineReachable ? "checkmark.circle.fill" : "wifi.slash")
                             .foregroundStyle(settings.engineReachable ? Theme.value : Theme.warning).font(.caption)
                     }
-                    Button("Test connection") { Task { settings.engineReachable = await settings.repository.health() } }
+                    Button("Test connection") { Task { await settings.checkEngine() } }
+                    if !settings.engineLANAddresses.isEmpty {
+                        ForEach(settings.engineLANAddresses, id: \.self) { ip in
+                            Button {
+                                settings.engineURL = "http://\(ip):8000"
+                                Task { await settings.checkEngine() }
+                            } label: {
+                                Label("Use LAN address http://\(ip):8000", systemImage: "iphone.radiowaves.left.and.right")
+                            }
+                        }
+                    }
+                    Button("Reset to default (\(AppSettings.builtInEngineURL))") { settings.resetEngineURL(); Task { await settings.checkEngine() } }
                 } header: { Text("Valuation engine") } footer: {
-                    Text("The Python service that ingests EDGAR and runs the models. Run it locally with uvicorn or point this at a hosted instance.")
+                    Text("The Python service that ingests EDGAR and runs the models. Simulator: 127.0.0.1. Physical iPhone on the same Wi-Fi: run `scripts/serve-lan.sh` on your Mac and pick the LAN address above. Hosted: paste its https URL.")
                 }
 
                 Section {

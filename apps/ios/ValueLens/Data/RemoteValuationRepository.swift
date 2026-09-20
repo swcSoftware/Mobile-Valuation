@@ -1,7 +1,6 @@
 import Foundation
 
 private struct SearchResponse: Decodable { let results: [CompanyRef] }
-private struct HealthResponse: Decodable { let status: String }
 
 /// Talks to the FastAPI engine; falls back to bundled sample data for the case-study tickers
 /// when the engine is unreachable so the alpha stays tappable offline.
@@ -31,9 +30,10 @@ struct RemoteValuationRepository: ValuationRepository {
         }
     }
 
-    func health() async -> Bool {
-        let r: HealthResponse? = try? await client.get("health")
-        return r?.status == "ok"
+    func health() async -> Bool { await healthDetails()?.status == "ok" }
+
+    func healthDetails() async -> EngineHealth? {
+        try? await client.get("health")
     }
 }
 
@@ -60,4 +60,5 @@ struct SampleValuationRepository: ValuationRepository {
     }
 
     func health() async -> Bool { false }
+    func healthDetails() async -> EngineHealth? { nil }
 }

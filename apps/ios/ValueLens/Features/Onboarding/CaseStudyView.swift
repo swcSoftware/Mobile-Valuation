@@ -12,6 +12,9 @@ struct CaseStudyView: View {
     @State private var loading = false
     @State private var error: String?
     @State private var page = 0
+    @State private var query = ""
+    @State private var results: [CompanyRef] = []
+    @State private var searchTask: Task<Void, Never>?
 
     var body: some View {
         Group {
@@ -51,6 +54,41 @@ struct CaseStudyView: View {
                     }
                     .buttonStyle(.plain)
                     .disabled(loading)
+                }
+                if settings.engineReachable {
+                    Text("…or any other SEC filer").font(.caption).foregroundStyle(Theme.textTertiary).padding(.top, 4)
+                    TextField("Ticker or company name", text: $query)
+                        .textFieldStyle(.roundedBorder)
+                        .textInputAutocapitalization(.characters)
+                        .autocorrectionDisabled()
+                        .onChange(of: query) { _, q in
+                            searchTask?.cancel()
+                            guard q.count >= 1 else { results = []; return }
+                            searchTask = Task {
+                                try? await Task.sleep(for: .milliseconds(300))
+                                guard !Task.isCancelled else { return }
+                                results = (try? await settings.repository.search(query: q)) ?? []
+                            }
+                        }
+                    ForEach(results.prefix(6)) { c in
+                        Button {
+                            selected = c.ticker
+                            Task { await load(c.ticker) }
+                        } label: {
+                            Card(padding: 12) {
+                                HStack {
+                                    VStack(alignment: .leading, spacing: 2) {
+                                        Text(c.ticker).font(.vlHeadline).foregroundStyle(Theme.textPrimary)
+                                        Text(c.name).font(.caption).foregroundStyle(Theme.textSecondary).lineLimit(1)
+                                    }
+                                    Spacer()
+                                    if loading && selected == c.ticker { ProgressView() } else { Image(systemName: "chevron.right").foregroundStyle(Theme.textTertiary) }
+                                }
+                            }
+                        }
+                        .buttonStyle(.plain)
+                        .disabled(loading)
+                    }
                 }
                 if let error {
                     Text(error).font(.caption).foregroundStyle(Theme.danger)

@@ -1,8 +1,10 @@
 import SwiftUI
+import UIKit
 
 struct CompanyDetailView: View {
     @Environment(AppSettings.self) private var settings
     @Environment(WatchlistStore.self) private var watchlist
+    @Environment(AppRouter.self) private var router
     @State private var vm: CompanyViewModel
     @State private var showPriceSheet = false
     @State private var exportItem: ExportItem?
@@ -24,11 +26,12 @@ struct CompanyDetailView: View {
                 .frame(maxWidth: .infinity).padding(.top, 120)
             } else if let e = vm.error {
                 ContentUnavailableView {
-                    Label("Couldn't value \(vm.company.ticker)", systemImage: "exclamationmark.triangle")
+                    Label(vm.errorTitle ?? "Couldn't value \(vm.company.ticker)", systemImage: vm.errorIcon)
                 } description: {
                     Text(e)
                 } actions: {
                     Button("Retry") { Task { await vm.load(using: settings.repository, overrides: settings.overrides) } }
+                    if vm.needsIdentity { Button("Open Settings") { router.tab = .settings } }
                 }
             }
         }
@@ -52,6 +55,11 @@ struct CompanyDetailView: View {
             }
         }
         .task { if vm.report == nil { await vm.load(using: settings.repository, overrides: settings.overrides) } }
+        .onChange(of: vm.model) { old, new in
+            guard let r = vm.report else { return }
+            let before = r.result(for: old).marginOfSafety.verdict, after = r.result(for: new).marginOfSafety.verdict
+            Haptics.verdictChanged(before != after, improved: Verdict.rank(after) < Verdict.rank(before))
+        }
         .sheet(isPresented: $showPriceSheet) { priceSheet }
         .sheet(item: $exportItem) { item in ShareSheet(items: [item.url]) }
     }
@@ -70,6 +78,9 @@ struct CompanyDetailView: View {
             header(r)
             ModelToggle(model: $vm.model)
             Card { MarginOfSafetyView(mos: result.marginOfSafety) }
+            if result.marginOfSafety.verdict == .insufficientData {
+                InsufficientDataCard(report: r, result: result)
+            }
 
             SectionHeader(title: result.name, subtitle: "Tap any metric for the formula and SEC line items")
             Card {
@@ -224,6 +235,61 @@ struct AssumptionsGrid: View {
             ForEach(rows, id: \.0) { k, v in
                 HStack { Text(k).foregroundStyle(Theme.textSecondary); Spacer(); Text(v).font(.body.monospacedDigit()).foregroundStyle(Theme.textPrimary) }
             }
+        }
+    }
+}
+
+
+/// Explains *why* a per-share value is missing instead of showing a bare dash (ISSUES #1).
+struct InsufficientDataCard: View {
+    let report: ValuationReport
+    let result: ModelResult
+
+    private var reason: String {
+        let w = report.warnings.joined(separator: " ").lowercased()
+        if report.price == nil && result.intrinsicValuePerShare != nil {
+            return "No market quote was available, so the margin of safety can't be computed. Tap the price to enter one manually."
+        }
+        if w.contains("multi-class") || w.contains("no usable share count") {
+            return "This company reports per-share data by share class (e.g. Class A / Class B), which SEC's company-facts feed doesn't expose. Total-company figures below are still valid; per-share values will arrive with the Sprint 2 XBRL upgrade."
+        }
+        if w.contains("missing concepts") && w.contains("eps") {
+            return "The latest 10-K doesn't tag diluted EPS in a way the engine recognizes yet, so the Graham formulas can't run. Owner-earnings totals are still shown."
+        }
+        return "The filings don't carry enough of the line items this model needs. See the data notes at the bottom for the specifics."
+    }
+
+    var body: some View {
+        Card {
+            VStack(alignment: .leading, spacing: 8) {
+                Label("Why is the intrinsic value missing?", systemImage: "questionmark.circle")
+                    .font(.vlHeadline).foregroundStyle(Theme.textPrimary)
+                Text(reason).font(.caption).foregroundStyle(Theme.textSecondary).fixedSize(horizontal: false, vertical: true)
+            }
+        }
+    }
+}
+
+enum Haptics {
+    /// Notification haptic when flipping models changes the verdict; a light tap otherwise.
+    static func verdictChanged(_ changed: Bool, improved: Bool) {
+        if changed {
+            UINotificationFeedbackGenerator().notificationOccurred(improved ? .success : .warning)
+        } else {
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        }
+    }
+}
+
+extension Verdict {
+    /// Lower is better; used to decide success vs warning haptic.
+    static func rank(_ v: Verdict) -> Int {
+        switch v {
+        case .deepValue: 0
+        case .withinMargin: 1
+        case .thinMargin: 2
+        case .aboveIntrinsic: 3
+        case .insufficientData: 4
         }
     }
 }

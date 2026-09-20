@@ -5,6 +5,7 @@ struct WatchlistEntry: Codable, Identifiable, Hashable {
     let company: CompanyRef
     var lastReport: ValuationReport?
     var addedAt: Date
+    var updatedAt: Date?
     var id: String { company.ticker }
 }
 
@@ -28,8 +29,9 @@ final class WatchlistStore {
     func add(_ report: ValuationReport) {
         if let i = entries.firstIndex(where: { $0.company.ticker == report.company.ticker }) {
             entries[i].lastReport = report
+            entries[i].updatedAt = .now
         } else {
-            entries.append(WatchlistEntry(company: report.company, lastReport: report, addedAt: .now))
+            entries.append(WatchlistEntry(company: report.company, lastReport: report, addedAt: .now, updatedAt: .now))
         }
         persist()
     }
@@ -37,6 +39,7 @@ final class WatchlistStore {
     func update(_ report: ValuationReport) {
         guard let i = entries.firstIndex(where: { $0.company.ticker == report.company.ticker }) else { return }
         entries[i].lastReport = report
+        entries[i].updatedAt = .now
         persist()
     }
 
@@ -48,6 +51,22 @@ final class WatchlistStore {
     func remove(at offsets: IndexSet) {
         entries.remove(atOffsets: offsets)
         persist()
+    }
+
+    /// Most recent successful refresh across the list (nil if nothing has ever loaded).
+    var lastUpdated: Date? { entries.compactMap(\.updatedAt).max() }
+
+    /// Refresh every entry concurrently; failures leave the previous report in place.
+    func refreshAll(using repo: ValuationRepository, overrides: RateOverrides) async {
+        let tickers = entries.map(\.company.ticker)
+        await withTaskGroup(of: ValuationReport?.self) { group in
+            for t in tickers {
+                group.addTask { try? await repo.valuation(ticker: t, priceOverride: nil, overrides: overrides) }
+            }
+            for await report in group {
+                if let report { update(report) }
+            }
+        }
     }
 
     private func persist() {

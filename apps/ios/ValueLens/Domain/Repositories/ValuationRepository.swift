@@ -6,6 +6,15 @@ protocol ValuationRepository: Sendable {
     func search(query: String) async throws -> [CompanyRef]
     func valuation(ticker: String, priceOverride: Double?, overrides: RateOverrides) async throws -> ValuationReport
     func health() async -> Bool
+    func healthDetails() async -> EngineHealth?
+}
+
+struct EngineHealth: Decodable, Sendable {
+    let status: String
+    let version: String
+    let lanAddresses: [String]?
+    let priceProviders: [String]?
+    let requireIdentity: Bool?
 }
 
 /// User-editable assumptions sent as query parameters. `nil` means "use the engine's live/default value".
@@ -34,18 +43,61 @@ struct RateOverrides: Codable, Equatable, Sendable {
     }
 }
 
-enum RepositoryError: LocalizedError {
+/// Mirrors the engine's error taxonomy (docs/API.md). Each case carries a user-facing message.
+enum RepositoryError: LocalizedError, Equatable {
     case unknownTicker(String)
+    case noAnnualData(String)
+    case rateLimited(String)
+    case invalidIdentity(String)
+    case upstreamUnavailable(String)
     case server(Int, String)
     case offline
     case decoding(String)
 
+    /// Engine wire format: {"error": {"code", "message", "detail"}, "detail": "…"}
+    struct Envelope: Decodable {
+        struct Body: Decodable { let code: String; let message: String }
+        let error: Body?
+        let detail: String?
+    }
+
+    static func from(status: Int, body: Data) -> RepositoryError {
+        let env = try? JSONDecoder().decode(Envelope.self, from: body)
+        let message = env?.error?.message ?? env?.detail ?? String(data: body, encoding: .utf8) ?? ""
+        switch env?.error?.code {
+        case "unknown_ticker": return .unknownTicker(message)
+        case "no_annual_data": return .noAnnualData(message)
+        case "rate_limited": return .rateLimited(message)
+        case "invalid_identity": return .invalidIdentity(message)
+        case "upstream_unavailable": return .upstreamUnavailable(message)
+        default: return status == 404 ? .unknownTicker(message) : .server(status, message)
+        }
+    }
+
     var errorDescription: String? {
         switch self {
-        case .unknownTicker(let t): "'\(t)' is not a ticker in SEC's company list."
+        case .unknownTicker(let m): m.isEmpty ? "Not a ticker in SEC's company list." : m
+        case .noAnnualData(let m): m.isEmpty ? "No 10-K data on EDGAR for this company." : m
+        case .rateLimited(let m): m.isEmpty ? "Too many requests. Try again in a minute." : m
+        case .invalidIdentity(let m): m.isEmpty ? "Set your name and email in Settings so SEC EDGAR can identify you." : m
+        case .upstreamUnavailable(let m): m.isEmpty ? "SEC EDGAR or a data provider is unavailable right now." : m
         case .server(let code, let msg): "Engine error \(code): \(msg)"
-        case .offline: "The valuation engine is unreachable. Start it with `uvicorn valuation_engine.main:app` or use bundled sample companies."
+        case .offline: "The valuation engine is unreachable. Check the engine URL in Settings, or open one of the bundled sample companies."
         case .decoding(let m): "Could not read engine response: \(m)"
+        }
+    }
+
+    /// Short title for empty/error states.
+    var title: String {
+        switch self {
+        case .unknownTicker: "Unknown ticker"
+        case .noAnnualData: "No annual filings"
+        case .rateLimited: "Slow down"
+        case .invalidIdentity: "Identity needed"
+        case .upstreamUnavailable: "Data source unavailable"
+        case .server: "Engine error"
+        case .offline: "Engine offline"
+        case .decoding: "Unexpected response"
         }
     }
 }

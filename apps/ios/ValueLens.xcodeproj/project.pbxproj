@@ -22,6 +22,7 @@
 		4F05C103A7A445E2C8966C1F /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB47EAD56F25075486E3A65 /* Theme.swift */; };
 		5A07A1A0BC124BC2AA287000 /* ValuationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A4A835F0EC58DE68BE74F9 /* ValuationRepository.swift */; };
 		6119CA8B0347CFBDE3FAF17D /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C043C8119525143FFB7C42 /* Formatters.swift */; };
+		6B4B634737935EF98ADE30CF /* ValueLensTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5856ECA7F48C2ED9D111CF0B /* ValueLensTests.swift */; };
 		80EA9A94EF2BD9D704067699 /* MSFT.json in Resources */ = {isa = PBXBuildFile; fileRef = F423BFE4865CBAE084D7C598 /* MSFT.json */; };
 		88FF4BBF0BA4DA663435FFAA /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C00A5297374505B57523778 /* SearchView.swift */; };
 		8983B812D72FA8135CB756F4 /* WatchlistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7748DEB7230EEA4CC058323D /* WatchlistView.swift */; };
@@ -37,6 +38,16 @@
 		F7B895159BD986E7CFCFD3A0 /* HistoryViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7BFE79DA868AD4461872CE /* HistoryViews.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		A0BCA93E0C0884C88B89B28D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CEB1D16AE2B5D31315DD9FD4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5189EB9D6760E402628D94BC;
+			remoteInfo = ValueLens;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		04CDD9F59AAA2D8AAF8AA34A /* CaseStudyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaseStudyView.swift; sourceTree = "<group>"; };
 		15EC3465FADA4B4DF8DBC951 /* AAPL.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = AAPL.json; sourceTree = "<group>"; };
@@ -46,11 +57,13 @@
 		421C7C372FD71F9BFB46598A /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		5295BB2379D69947D0EDD444 /* ShareCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareCardView.swift; sourceTree = "<group>"; };
 		56C043C8119525143FFB7C42 /* Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
+		5856ECA7F48C2ED9D111CF0B /* ValueLensTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueLensTests.swift; sourceTree = "<group>"; };
 		6824CE7A8843FFD85FD18DCC /* KO.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = KO.json; sourceTree = "<group>"; };
 		7748DEB7230EEA4CC058323D /* WatchlistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistView.swift; sourceTree = "<group>"; };
 		78A4A835F0EC58DE68BE74F9 /* ValuationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValuationRepository.swift; sourceTree = "<group>"; };
 		7AE70A4B292870DAFC649FAF /* ValuationReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValuationReport.swift; sourceTree = "<group>"; };
 		7C00A5297374505B57523778 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		803AB71A36B0E9BDE5AE5933 /* ValueLensTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = ValueLensTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8111CC9E464DFABF1A2F9270 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		86E311EF4DF9987D997F058F /* OnboardingFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFlow.swift; sourceTree = "<group>"; };
 		8E07C164CFA68A7243EAB4A4 /* RemoteValuationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteValuationRepository.swift; sourceTree = "<group>"; };
@@ -139,6 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				64BAC03B6AE889A83DC301F6 /* ValueLens */,
+				78AEB3D327D59A466138D5F9 /* ValueLensTests */,
 				80E80B4FD36B076824222FE5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -187,10 +201,19 @@
 			path = ValueLens;
 			sourceTree = "<group>";
 		};
+		78AEB3D327D59A466138D5F9 /* ValueLensTests */ = {
+			isa = PBXGroup;
+			children = (
+				5856ECA7F48C2ED9D111CF0B /* ValueLensTests.swift */,
+			);
+			path = ValueLensTests;
+			sourceTree = "<group>";
+		};
 		80E80B4FD36B076824222FE5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				EF10E1CC7D9B0394D1E0E983 /* ValueLens.app */,
+				803AB71A36B0E9BDE5AE5933 /* ValueLensTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -264,6 +287,24 @@
 			productReference = EF10E1CC7D9B0394D1E0E983 /* ValueLens.app */;
 			productType = "com.apple.product-type.application";
 		};
+		D8A0A6B5A191E64F42DAFEF6 /* ValueLensTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8E0BE734E44D938EEA230499 /* Build configuration list for PBXNativeTarget "ValueLensTests" */;
+			buildPhases = (
+				F170925CA0941A6B10786FDF /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E9C72B9C02521D3ABDA23615 /* PBXTargetDependency */,
+			);
+			name = ValueLensTests;
+			packageProductDependencies = (
+			);
+			productName = ValueLensTests;
+			productReference = 803AB71A36B0E9BDE5AE5933 /* ValueLensTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -274,6 +315,10 @@
 				LastUpgradeCheck = 2600;
 				TargetAttributes = {
 					5189EB9D6760E402628D94BC = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+					D8A0A6B5A191E64F42DAFEF6 = {
 						DevelopmentTeam = "";
 						ProvisioningStyle = Automatic;
 					};
@@ -294,6 +339,7 @@
 			projectRoot = "";
 			targets = (
 				5189EB9D6760E402628D94BC /* ValueLens */,
+				D8A0A6B5A191E64F42DAFEF6 /* ValueLensTests */,
 			);
 		};
 /* End PBXProject section */
@@ -344,9 +390,42 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F170925CA0941A6B10786FDF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6B4B634737935EF98ADE30CF /* ValueLensTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		E9C72B9C02521D3ABDA23615 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5189EB9D6760E402628D94BC /* ValueLens */;
+			targetProxy = A0BCA93E0C0884C88B89B28D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		01525BA99A91CD3EF93EE9FA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.swcsoftware.valuelens.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ValueLens.app/ValueLens";
+			};
+			name = Release;
+		};
 		0A0C985C8C7EBC6B20A96709 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -407,6 +486,23 @@
 			};
 			name = Release;
 		};
+		6A2957036358811DBB038A6B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.swcsoftware.valuelens.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ValueLens.app/ValueLens";
+			};
+			name = Debug;
+		};
 		AD51EB408CA4F0F929DAFF11 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -414,6 +510,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_PREVIEWS = YES;
+				ENGINE_BASE_URL = "http://127.0.0.1:8000";
 				INFOPLIST_FILE = ValueLens/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -500,6 +597,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_PREVIEWS = YES;
+				ENGINE_BASE_URL = "https://valuelens-engine.fly.dev";
 				INFOPLIST_FILE = ValueLens/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -529,6 +627,15 @@
 			buildConfigurations = (
 				D2360680A306AD3119FB6155 /* Debug */,
 				0A0C985C8C7EBC6B20A96709 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		8E0BE734E44D938EEA230499 /* Build configuration list for PBXNativeTarget "ValueLensTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6A2957036358811DBB038A6B /* Debug */,
+				01525BA99A91CD3EF93EE9FA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

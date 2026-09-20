@@ -31,6 +31,10 @@ targets:
         NSAppTransportSecurity:
           NSAllowsLocalNetworking: true
         ITSAppUsesNonExemptEncryption: false
+        ENGINE_BASE_URL: $(ENGINE_BASE_URL)
+        CFBundleURLTypes:
+          - CFBundleURLName: com.swcsoftware.valuelens
+            CFBundleURLSchemes: [valuelens]
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.swcsoftware.valuelens
@@ -39,3 +43,31 @@ targets:
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
         ENABLE_PREVIEWS: true
         SWIFT_STRICT_CONCURRENCY: minimal
+      configs:
+        Debug:
+          ENGINE_BASE_URL: http://127.0.0.1:8000
+        Release:
+          # Placeholder until the engine is hosted (docs/PATH_TO_ANY_TICKER.md). Users can override in Settings.
+          ENGINE_BASE_URL: https://valuelens-engine.fly.dev
+  ValueLensTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: ValueLensTests
+    dependencies:
+      - target: ValueLens
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.swcsoftware.valuelens.tests
+        GENERATE_INFOPLIST_FILE: true
+schemes:
+  ValueLens:
+    build:
+      targets:
+        ValueLens: all
+        ValueLensTests: [test]
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets: [ValueLensTests]

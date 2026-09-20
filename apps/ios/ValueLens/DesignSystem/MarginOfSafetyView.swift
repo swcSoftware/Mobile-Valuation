@@ -19,6 +19,8 @@ struct MarginOfSafetyView: View {
                 }
             }
             scale
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel(accessibilityDescription)
             HStack {
                 Pill(text: mos.verdict.title, color: Theme.verdictColor(mos.verdict))
                 Spacer()
@@ -40,6 +42,16 @@ struct MarginOfSafetyView: View {
                 }
             }
         }
+    }
+
+    /// Spoken summary of the gauge for VoiceOver.
+    var accessibilityDescription: String {
+        guard let iv = mos.intrinsicValue else { return "Intrinsic value unavailable." }
+        var s = "Intrinsic value \(Fmt.money(iv))."
+        if let p = mos.marketPrice { s += " Market price \(Fmt.money(p))." }
+        if let m = mos.marginOfSafetyPct { s += m >= 0 ? " Margin of safety \(Int(m)) percent." : " Priced \(Int(-m)) percent above intrinsic value." }
+        s += " " + mos.verdict.title + "."
+        return s
     }
 
     private var maxScale: Double { max(mos.intrinsicValue ?? 0, mos.marketPrice ?? 0) * 1.15 }

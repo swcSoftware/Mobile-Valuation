@@ -19,9 +19,7 @@ struct APIClient: Sendable {
         }
         guard let http = resp as? HTTPURLResponse else { throw RepositoryError.offline }
         guard (200..<300).contains(http.statusCode) else {
-            let detail = (try? JSONDecoder().decode([String: String].self, from: data))?["detail"] ?? String(data: data, encoding: .utf8) ?? ""
-            if http.statusCode == 404 { throw RepositoryError.unknownTicker(detail) }
-            throw RepositoryError.server(http.statusCode, detail)
+            throw RepositoryError.from(status: http.statusCode, body: data)
         }
         do {
             return try JSONDecoder.engine.decode(T.self, from: data)
