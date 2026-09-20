@@ -49,7 +49,6 @@ fun WatchlistScreen(state: AppState, onOpen: (CompanyRef) -> Unit, onSearch: () 
         Row(Modifier.fillMaxWidth().padding(20.dp, 28.dp, 20.dp, 8.dp), verticalAlignment = Alignment.CenterVertically) {
             Text("Watchlist", style = MaterialTheme.typography.displaySmall, color = VL.textPrimary, modifier = Modifier.weight(1f))
             if (refreshing) CircularProgressIndicator(Modifier.width(20.dp).height(20.dp), strokeWidth = 2.dp)
-            else if (!state.engineReachable) Text("offline", color = VL.warning, fontSize = 12.sp)
             else if (state.watchlist.isNotEmpty()) TextButton({ scope.launch { refreshing = true; state.refreshWatchlist(); refreshing = false } }) { Text("Refresh", color = VL.value) }
         }
         if (state.watchlist.isEmpty()) {
@@ -60,7 +59,7 @@ fun WatchlistScreen(state: AppState, onOpen: (CompanyRef) -> Unit, onSearch: () 
             }
         } else {
             LazyColumn(Modifier.fillMaxSize(), contentPadding = androidx.compose.foundation.layout.PaddingValues(16.dp, 4.dp, 16.dp, 24.dp)) {
-                items(state.watchlist, key = { it.company.ticker }) { e -> WatchlistRow(e, onOpen = { onOpen(e.company) }, onRemove = { state.removeFromWatchlist(e.company.ticker) }) }
+                items(state.watchlist, key = { it.company.ticker }) { e -> WatchlistRow(e, state.expertMode, onOpen = { onOpen(e.company) }, onRemove = { state.removeFromWatchlist(e.company.ticker) }) }
                 item { Text(Fmt.relative(state.watchlistStore.lastUpdated), style = MaterialTheme.typography.bodySmall, color = VL.textTertiary, modifier = Modifier.fillMaxWidth().padding(12.dp), textAlign = androidx.compose.ui.text.style.TextAlign.Center) }
             }
         }
@@ -68,7 +67,7 @@ fun WatchlistScreen(state: AppState, onOpen: (CompanyRef) -> Unit, onSearch: () 
 }
 
 @Composable
-private fun WatchlistRow(e: WatchlistEntry, onOpen: () -> Unit, onRemove: () -> Unit) {
+private fun WatchlistRow(e: WatchlistEntry, expert: Boolean, onOpen: () -> Unit, onRemove: () -> Unit) {
     val mos = e.lastReport?.modelA?.marginOfSafety
     Card(Modifier.padding(bottom = 10.dp).clickable(onClick = onOpen), padding = 14) {
         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -77,7 +76,8 @@ private fun WatchlistRow(e: WatchlistEntry, onOpen: () -> Unit, onRemove: () -> 
                 Text(e.company.name, style = MaterialTheme.typography.bodySmall, color = VL.textSecondary, maxLines = 1)
             }
             Column(horizontalAlignment = Alignment.End) {
-                Row { Text(Fmt.money(mos?.marketPrice), color = VL.price); Text(" vs ", color = VL.textTertiary, fontSize = 11.sp, modifier = Modifier.align(Alignment.CenterVertically)); Text(Fmt.money(mos?.intrinsicValue), color = VL.value) }
+                if (expert) Row { Text(Fmt.money(mos?.marketPrice), color = VL.price); Text(" vs ", color = VL.textTertiary, fontSize = 11.sp, modifier = Modifier.align(Alignment.CenterVertically)); Text(Fmt.money(mos?.intrinsicValue), color = VL.value) }
+                else Text(Fmt.money(mos?.marketPrice), color = VL.price)
                 mos?.verdictEnum?.let { Text(it.title, fontSize = 11.sp, color = VL.verdictColor(it)) }
             }
             TextButton(onRemove) { Text("✕", color = VL.textTertiary) }

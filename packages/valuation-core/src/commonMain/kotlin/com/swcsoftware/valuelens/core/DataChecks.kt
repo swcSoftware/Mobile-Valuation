@@ -83,6 +83,14 @@ object DataChecks {
         t?.get("d_and_a")?.value?.let { if (it < 0) bad += "D&A < 0" }
         add("signs", "Values have the expected sign", if (bad.isEmpty()) "pass" else "fail", if (bad.isEmpty()) "Revenue, shares and D&A are positive." else bad.joinToString("; "), "revenue", "shares_diluted", "d_and_a")
 
+        // 7b. Tag coverage: stale tags dropped, debt missing while liabilities exist (the KO case)
+        val dropped = fin.warnings.firstOrNull { it.startsWith("Dropped stale TTM values") }?.substringAfter(": ")
+        if (dropped != null) add("tag_coverage", "All line items resolved to current tags", "warn", "Some SEC tags this filer used in the past are no longer reported and were ignored: $dropped. If a key figure is missing, this is why.", *dropped.split(", ").toTypedArray())
+        else add("tag_coverage", "All line items resolved to current tags", "pass", "Every line item came from a tag the filer still reports.")
+        if (liab != null && liab > 0 && t?.get("total_debt") == null)
+            add("debt_coverage", "Debt captured", "warn", "No debt tags were found although total liabilities are ${PyFmt.commas(liab, 0)}. Leverage, WACC and invested capital may be understated.", "long_term_debt", "short_term_debt")
+        else add("debt_coverage", "Debt captured", "pass", if (t?.get("total_debt") != null) "Total debt ${PyFmt.commas(t["total_debt"]!!.value, 0)} from short- and long-term debt tags." else "No liabilities reported.")
+
         // 8. Provenance of every assumption-prone input
         prov["beta"] = a.betaSource
         if (a.betaSource == "assumed") add("beta", "Beta is measured, not assumed", "warn", "Beta ${PyFmt.fixed(a.beta, 2)} is an assumption (not enough price history to measure it). Cost of equity and the DCF depend on it.", "beta")

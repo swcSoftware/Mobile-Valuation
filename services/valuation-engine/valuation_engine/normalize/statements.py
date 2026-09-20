@@ -149,11 +149,22 @@ def _annual_instant(cf: CompanyFacts, concept: Concept, ends: list[date]) -> dic
 
 # --------------------------------------------------------------------------- TTM
 def _ttm_flow(cf: CompanyFacts, concept: Concept, fy_value: SourcedValue | None) -> SourcedValue | None:
-    """FY + YTD(current) − YTD(prior year). Falls back to FY when no newer 10-Q exists."""
-    for tag, facts in _concept_facts(cf, concept):
+    """
+    FY + YTD(current) − YTD(prior year). Falls back to FY when no newer 10-Q exists.
+    Every candidate tag is evaluated and the freshest result wins (companies switch tags over time;
+    PG's cash moved from CashAndCashEquivalentsAtCarryingValue to the restricted-cash variant).
+    """
+    candidates = [c for c in (_ttm_flow_for_tag(tag, facts, concept, fy_value) for tag, facts in _concept_facts(cf, concept)) if c is not None]
+    if not candidates:
+        return fy_value
+    return max(candidates, key=lambda sv: sv.period_end)
+
+
+def _ttm_flow_for_tag(tag: str, facts: list[Fact], concept: Concept, fy_value: SourcedValue | None) -> SourcedValue | None:
+    if True:
         q = [f for f in facts if f.form in QUARTERLY_FORMS and f.start is not None]
         if not q:
-            continue
+            return None
         latest_end = max(f.end for f in q)
         if fy_value is not None and latest_end <= fy_value.period_end:
             return fy_value  # the 10-K is the freshest data we have
@@ -178,10 +189,10 @@ def _ttm_flow(cf: CompanyFacts, concept: Concept, fy_value: SourcedValue | None)
                 and _near(f.end, cur.start - timedelta(days=1), 8)
             ]
             if not annual:
-                continue
+                return None
             fy_value = _to_sv(_latest_filed(annual))
         if not prior:
-            continue
+            return None
         p = _latest_filed(prior)
         ttm = fy_value.value + cur.value - p.value
         fmt = ",.2f" if concept.unit == "USD/shares" else ",.0f"
@@ -196,16 +207,20 @@ def _ttm_flow(cf: CompanyFacts, concept: Concept, fy_value: SourcedValue | None)
             form=cur.form, period_end=cur.end, period_start=cur.end - timedelta(days=365),
             filed=cur.filed, derived=True, note=note,
         )
-    return fy_value
+    return None
 
 
 def _ttm_instant(cf: CompanyFacts, concept: Concept) -> SourcedValue | None:
+    """Latest balance-sheet value across all candidate tags (freshest period end wins; earlier tag on ties)."""
+    best: SourcedValue | None = None
     for tag, facts in _concept_facts(cf, concept):
         inst = [f for f in facts if f.start is None and f.form in (ANNUAL_FORMS | QUARTERLY_FORMS)]
-        if inst:
-            latest_end = max(f.end for f in inst)
-            return _to_sv(_latest_filed([f for f in inst if f.end == latest_end]))
-    return None
+        if not inst:
+            continue
+        latest_end = max(f.end for f in inst)
+        if best is None or latest_end > best.period_end:
+            best = _to_sv(_latest_filed([f for f in inst if f.end == latest_end]))
+    return best
 
 
 # --------------------------------------------------------------------------- derived

@@ -27,7 +27,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.swcsoftware.valuelens.AppState
-import com.swcsoftware.valuelens.data.AppPrefs
 import com.swcsoftware.valuelens.domain.RateOverrides
 import com.swcsoftware.valuelens.domain.SecIdentity
 import com.swcsoftware.valuelens.ui.components.Card
@@ -37,11 +36,10 @@ import com.swcsoftware.valuelens.ui.theme.VL
 import kotlinx.coroutines.launch
 
 @Composable
-fun SettingsScreen(state: AppState, onReplayOnboarding: () -> Unit) {
+fun SettingsScreen(state: AppState, onReplayOnboarding: () -> Unit, onGlossary: () -> Unit) {
     val scope = rememberCoroutineScope()
     var name by remember { mutableStateOf(state.identity?.fullName ?: "") }
     var email by remember { mutableStateOf(state.identity?.email ?: "") }
-    var url by remember { mutableStateOf(state.engineUrl) }
     Column(Modifier.fillMaxSize().background(VL.background).verticalScroll(rememberScrollState()).padding(20.dp, 28.dp, 20.dp, 40.dp)) {
         Text("Settings", style = MaterialTheme.typography.displaySmall, color = VL.textPrimary)
 
@@ -53,17 +51,20 @@ fun SettingsScreen(state: AppState, onReplayOnboarding: () -> Unit) {
             PrimaryButton("Save identity", enabled = SecIdentity(name, email).isValid) { state.saveIdentity(SecIdentity(name.trim(), email.trim())) }
         }
 
-        SectionHeader("Valuation engine", "Emulator: 10.0.2.2. Physical phone on the same Wi-Fi: run scripts/serve-lan.sh on your Mac and pick the LAN address below.")
+        SectionHeader("Presentation", "Off: plain-language values and health facts. On: every formula, XBRL tag and assumption, with expand-all.")
         Card(Modifier.padding(top = 8.dp)) {
-            OutlinedTextField(url, { url = it }, label = { Text("Engine URL") }, singleLine = true, modifier = Modifier.fillMaxWidth(), keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Uri))
-            Row(Modifier.padding(top = 6.dp), verticalAlignment = Alignment.CenterVertically) {
-                Text(if (state.engineReachable) "Connected" else "Offline (sample data)", color = if (state.engineReachable) VL.value else VL.warning, style = MaterialTheme.typography.bodySmall, modifier = Modifier.weight(1f))
-                TextButton({ state.updateEngineUrl(url); scope.launch { state.checkEngine() } }) { Text("Save & test", color = VL.value) }
+            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                Column(Modifier.weight(1f)) { Text("Expert Mode", color = VL.textPrimary); Text(if (state.expertMode) "Showing the full math" else "Showing the basics", style = MaterialTheme.typography.bodySmall, color = VL.textSecondary) }
+                androidx.compose.material3.Switch(checked = state.expertMode, onCheckedChange = { state.updateExpertMode(it) })
             }
-            state.engineLanAddresses.forEach { ip ->
-                TextButton({ url = "http://$ip:8000"; state.updateEngineUrl(url); scope.launch { state.checkEngine() } }) { Text("Use LAN address http://$ip:8000", color = VL.value) }
-            }
-            TextButton({ url = AppPrefs.DEFAULT_ENGINE_URL; state.updateEngineUrl(url); scope.launch { state.checkEngine() } }) { Text("Reset to default", color = VL.textSecondary) }
+            TextButton(onGlossary) { Text("Glossary — what these terms mean", color = VL.value) }
+        }
+
+        SectionHeader("Data sources", "SEC EDGAR filings are fetched directly from this device using your identity. Interest rates come from a daily published FRED snapshot.")
+        Card(Modifier.padding(top = 8.dp)) {
+            val r = state.rates
+            Text(if (r != null) "FRED rates as of ${r.as_of}: AAA ${r.aaa_yield_pct}% · 10-yr ${r.treasury_10y_pct}%" else "Rates not loaded yet", color = VL.textPrimary, style = MaterialTheme.typography.bodySmall)
+            TextButton({ scope.launch { state.refreshRates() } }) { Text("Refresh rates", color = VL.value) }
         }
 
         SectionHeader("Valuation assumptions", "Blank = engine live/default value. Every report shows which values were used.")

@@ -5622,15 +5622,15 @@
     "value": 26764000000.0
    },
    "dividends_paid": {
-    "accession": "0000320193-25-000079",
-    "derived": false,
-    "filed": "2025-10-31",
-    "form": "10-K",
-    "note": "",
-    "period_end": "2025-09-27",
-    "period_start": "2024-09-29",
+    "accession": "0000320193-26-000020",
+    "derived": true,
+    "filed": "2026-07-31",
+    "form": "10-Q",
+    "note": "TTM = FY(2025-09-27) 15,421,000,000 + YTD(2025-09-28\u21922026-06-27) 11,778,000,000 \u2212 YTD(2024-09-29\u21922025-06-28) 11,559,000,000",
+    "period_end": "2026-06-27",
+    "period_start": "2025-06-27",
     "tag": "us-gaap:PaymentsOfDividends",
-    "value": 15421000000.0
+    "value": 15640000000.0
    },
    "effective_tax_rate": {
     "accession": "0000320193-26-000020",

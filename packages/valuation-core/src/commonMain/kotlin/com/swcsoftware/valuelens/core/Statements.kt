@@ -68,11 +68,17 @@ object Statements {
         return result
     }
 
-    private fun ttmFlow(cf: CompanyFacts, c: Concept, fyValueIn: SourcedValueCore?): SourcedValueCore? {
+    /** Every candidate tag is evaluated; the freshest result wins (companies switch tags over time). */
+    private fun ttmFlow(cf: CompanyFacts, c: Concept, fyValue: SourcedValueCore?): SourcedValueCore? {
+        val candidates = conceptFacts(cf, c).mapNotNull { (tag, facts) -> ttmFlowForTag(tag, facts, c, fyValue) }
+        return candidates.maxByOrNull { it.periodEnd } ?: fyValue
+    }
+
+    private fun ttmFlowForTag(tag: String, facts: List<Fact>, c: Concept, fyValueIn: SourcedValueCore?): SourcedValueCore? {
         var fyValue = fyValueIn
-        for ((tag, facts) in conceptFacts(cf, c)) {
+        run {
             val q = facts.filter { it.form in QUARTERLY_FORMS && it.start != null }
-            if (q.isEmpty()) continue
+            if (q.isEmpty()) return null
             val latestEnd = q.maxOf { it.end }
             if (fyValue != null && latestEnd <= fyValue.periodEnd) return fyValue
             val cur = q.filter { it.end == latestEnd }.maxWith(compareBy<Fact> { it.durationDays ?: 0 }.thenBy { it.filed })
@@ -82,10 +88,10 @@ object Statements {
             val prior = facts.filter { it.start != null && it.start.near(priorStart, 10) && it.end.near(priorEnd, 10) }
             if (fyValue == null || !fyValue.periodEnd.near(curStart - 1, 8)) {
                 val annual = facts.filter { it.form in ANNUAL_FORMS && it.start != null && (it.durationDays ?: 0) in MIN_ANNUAL_DAYS..MAX_ANNUAL_DAYS && it.end.near(curStart - 1, 8) }
-                if (annual.isEmpty()) continue
+                if (annual.isEmpty()) return null
                 fyValue = toSv(latestFiled(annual))
             }
-            if (prior.isEmpty()) continue
+            if (prior.isEmpty()) return null
             val p = latestFiled(prior)
             val ttm = fyValue.value + cur.value - p.value
             val dec = if (c.unit == "USD/shares") 2 else 0
@@ -93,18 +99,18 @@ object Statements {
             if (c.unit == "USD/shares") note += " (EPS TTM is an additive approximation)"
             return SourcedValueCore(ttm, tag, c.taxonomy, cur.accession, cur.form, cur.end, cur.end - 365, cur.filed, derived = true, note = note)
         }
-        return fyValue
     }
 
+    /** Latest balance-sheet value across all candidate tags (freshest period end wins; earlier tag on ties). */
     private fun ttmInstant(cf: CompanyFacts, c: Concept): SourcedValueCore? {
+        var best: SourcedValueCore? = null
         for ((_, facts) in conceptFacts(cf, c)) {
             val inst = facts.filter { it.start == null && (it.form in ANNUAL_FORMS || it.form in QUARTERLY_FORMS) }
-            if (inst.isNotEmpty()) {
-                val latestEnd = inst.maxOf { it.end }
-                return toSv(latestFiled(inst.filter { it.end == latestEnd }))
-            }
+            if (inst.isEmpty()) continue
+            val latestEnd = inst.maxOf { it.end }
+            if (best == null || latestEnd > best.periodEnd) best = toSv(latestFiled(inst.filter { it.end == latestEnd }))
         }
-        return null
+        return best
     }
 
     private fun derive(period: PeriodCore, prev: PeriodCore?) {

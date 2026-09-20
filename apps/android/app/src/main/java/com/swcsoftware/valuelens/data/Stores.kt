@@ -32,14 +32,13 @@ class SecureIdentityStore(context: Context) {
 class AppPrefs(context: Context) {
     private val prefs = context.getSharedPreferences("valuelens", Context.MODE_PRIVATE)
     private val json = Json { ignoreUnknownKeys = true; explicitNulls = false }
-    companion object { const val DEFAULT_ENGINE_URL = "http://10.0.2.2:8000" }
 
     var onboarded: Boolean
         get() = prefs.getBoolean("onboarded", false)
         set(v) = prefs.edit().putBoolean("onboarded", v).apply()
-    var engineUrl: String
-        get() = prefs.getString("engineUrl", DEFAULT_ENGINE_URL) ?: DEFAULT_ENGINE_URL
-        set(v) = prefs.edit().putString("engineUrl", v).apply()
+    var expertMode: Boolean
+        get() = prefs.getBoolean("expertMode", false)
+        set(v) = prefs.edit().putBoolean("expertMode", v).apply()
     var overrides: RateOverrides
         get() = prefs.getString("overrides", null)?.let { runCatching { json.decodeFromString<RateOverrides>(it) }.getOrNull() } ?: RateOverrides.NONE
         set(v) = prefs.edit().putString("overrides", json.encodeToString(RateOverrides.serializer(), v)).apply()

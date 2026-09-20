@@ -88,25 +88,26 @@ fun PrimaryButton(title: String, enabled: Boolean = true, onClick: () -> Unit) {
 }
 
 @Composable
-fun ModelToggle(model: ValuationModel, onChange: (ValuationModel) -> Unit) {
+fun ModelToggle(model: ValuationModel, labels: List<String>? = null, onChange: (ValuationModel) -> Unit) {
     Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
         SingleChoiceSegmentedButtonRow(Modifier.fillMaxWidth()) {
             ValuationModel.entries.forEachIndexed { i, m ->
                 SegmentedButton(selected = model == m, onClick = { onChange(m) },
                     shape = SegmentedButtonDefaults.itemShape(i, ValuationModel.entries.size),
                     colors = SegmentedButtonDefaults.colors(activeContainerColor = Color(0xFF3A3F48), activeContentColor = VL.textPrimary, inactiveContainerColor = VL.raised, inactiveContentColor = VL.textSecondary)) {
-                    Text(m.label)
+                    Text(labels?.getOrNull(i)?.substringBefore(" · ") ?: m.label, fontSize = 13.sp)
                 }
             }
         }
-        Text(model.subtitle, style = MaterialTheme.typography.bodySmall, color = VL.textSecondary, modifier = Modifier.padding(top = 6.dp))
+        if (labels == null) Text(model.subtitle, style = MaterialTheme.typography.bodySmall, color = VL.textSecondary, modifier = Modifier.padding(top = 6.dp))
+        else labels.getOrNull(ValuationModel.entries.indexOf(model))?.substringAfter(" · ", "")?.takeIf { it.isNotEmpty() }?.let { Text(it, style = MaterialTheme.typography.bodySmall, color = VL.textSecondary, modifier = Modifier.padding(top = 6.dp)) }
     }
 }
 
 /** Tap-to-expand metric: value + exact formula + inputs + SEC sources (blueprint §7.2). */
 @Composable
-fun MetricRow(metric: Metric, emphasize: Boolean = false) {
-    var expanded by remember { mutableStateOf(false) }
+fun MetricRow(metric: Metric, emphasize: Boolean = false, expandAll: Boolean? = null, expandVersion: Int = 0) {
+    var expanded by remember(expandVersion) { mutableStateOf(expandAll ?: false) }
     val valueColor = when { metric.value == null -> VL.textTertiary; metric.unit == "USD/share" -> VL.value; else -> VL.textPrimary }
     Column(Modifier.fillMaxWidth().clickable { expanded = !expanded }.padding(vertical = 10.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -193,3 +194,43 @@ private fun abs(v: Double) = kotlin.math.abs(v)
 
 @Composable
 fun ThinDivider() = HorizontalDivider(color = VL.border, thickness = 1.dp)
+
+
+/** Data-verification gate results. Basic: one line; expert or tapped: the full list. */
+@Composable
+fun DataChecksCard(checks: List<com.swcsoftware.valuelens.domain.DataCheck>, summary: String, expert: Boolean) {
+    var open by remember { mutableStateOf(expert) }
+    val worst = when { checks.any { it.status == "fail" } -> VL.danger; checks.any { it.status == "warn" } -> VL.warning; else -> VL.value }
+    Card(Modifier.clickable { open = !open }) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Box(Modifier.size(10.dp).clip(CircleShape).background(worst))
+            Spacer(Modifier.width(8.dp))
+            Text("Data checks", style = MaterialTheme.typography.titleMedium, color = VL.textPrimary, modifier = Modifier.weight(1f))
+            Text(if (open) "▲" else "▼", color = VL.textTertiary, fontSize = 10.sp)
+        }
+        Text(summary, style = MaterialTheme.typography.bodySmall, color = VL.textSecondary, modifier = Modifier.padding(top = 4.dp))
+        AnimatedVisibility(open) {
+            Column(Modifier.padding(top = 8.dp)) {
+                checks.forEach { c ->
+                    val color = when (c.status) { "pass" -> VL.value; "warn" -> VL.warning; else -> VL.danger }
+                    Row(Modifier.padding(vertical = 5.dp), verticalAlignment = Alignment.Top) {
+                        Text(when (c.status) { "pass" -> "✓"; "warn" -> "!"; else -> "✕" }, color = color, fontWeight = FontWeight.Bold, modifier = Modifier.width(18.dp))
+                        Column { Text(c.label, color = VL.textPrimary, fontSize = 14.sp); Text(c.message, style = MaterialTheme.typography.bodySmall, color = VL.textSecondary) }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/** A value with a tap-to-reveal plain-English explanation (basic mode's ⓘ). */
+@Composable
+fun FactTile(label: String, value: String, tone: String, plain: String, modifier: Modifier = Modifier) {
+    var open by remember { mutableStateOf(false) }
+    val color = when (tone) { "good" -> VL.value; "bad" -> VL.danger; else -> VL.textPrimary }
+    Column(modifier.clip(RoundedCornerShape(12.dp)).background(VL.raised).clickable { open = !open }.padding(12.dp)) {
+        Row { Text(label, style = MaterialTheme.typography.bodySmall, color = VL.textSecondary, modifier = Modifier.weight(1f)); Text("ⓘ", color = VL.textTertiary, fontSize = 12.sp) }
+        Text(value, color = color, fontWeight = FontWeight.SemiBold, fontSize = 15.sp)
+        AnimatedVisibility(open) { Text(plain, style = MaterialTheme.typography.bodySmall, color = VL.textSecondary, modifier = Modifier.padding(top = 6.dp)) }
+    }
+}

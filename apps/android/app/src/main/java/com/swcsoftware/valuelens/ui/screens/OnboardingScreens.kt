@@ -106,15 +106,13 @@ fun CaseStudyScreen(state: AppState, onFinished: () -> Unit) {
         Text("Pick a company you know.", style = MaterialTheme.typography.headlineSmall, color = VL.textPrimary)
         Text("We'll pull its 10-K and 10-Q filings straight from SEC EDGAR and value it together, one step at a time.", color = VL.textSecondary, modifier = Modifier.padding(vertical = 10.dp))
         presets.forEach { (t, n) -> CompanyChoice(t, n, loading == t, enabled = loading == null) { load(t) } }
-        if (state.engineReachable) {
+        run {
             Text("…or any other SEC filer", style = MaterialTheme.typography.bodySmall, color = VL.textTertiary, modifier = Modifier.padding(top = 8.dp))
             OutlinedTextField(query, { q ->
                 query = q; searchJob?.cancel()
                 searchJob = scope.launch { delay(300); results = runCatching { state.repository.search(q) }.getOrDefault(emptyList()) }
             }, label = { Text("Ticker or company name") }, singleLine = true, modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp))
             results.take(6).forEach { c -> CompanyChoice(c.ticker, c.name, loading == c.ticker, enabled = loading == null) { load(c.ticker) } }
-        } else {
-            Text("Engine offline — using bundled sample filings for these three companies.", style = MaterialTheme.typography.bodySmall, color = VL.warning, modifier = Modifier.padding(top = 8.dp))
         }
         error?.let { Text(it, style = MaterialTheme.typography.bodySmall, color = VL.danger, modifier = Modifier.padding(top = 8.dp)) }
     }

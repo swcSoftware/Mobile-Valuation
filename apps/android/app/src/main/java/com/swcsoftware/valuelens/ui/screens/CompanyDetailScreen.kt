@@ -59,7 +59,10 @@ import com.swcsoftware.valuelens.domain.Verdict
 import com.swcsoftware.valuelens.domain.price
 import com.swcsoftware.valuelens.domain.result
 import com.swcsoftware.valuelens.domain.verdictEnum
+import com.swcsoftware.valuelens.core.Explain
 import com.swcsoftware.valuelens.export.Exporter
+import com.swcsoftware.valuelens.ui.components.DataChecksCard
+import com.swcsoftware.valuelens.ui.components.FactTile
 import com.swcsoftware.valuelens.ui.Fmt
 import com.swcsoftware.valuelens.ui.components.Card
 import com.swcsoftware.valuelens.ui.components.MarginOfSafetyView
@@ -83,6 +86,9 @@ fun CompanyDetailScreen(state: AppState, company: CompanyRef, onBack: () -> Unit
     var showPrice by remember { mutableStateOf(false) }
     var showExport by remember { mutableStateOf(false) }
     var series by remember { mutableStateOf("earnings") }
+    var showMath by remember { mutableStateOf(false) }
+    var expandAll by remember { mutableStateOf<Boolean?>(null) }
+    var expandVersion by remember { mutableStateOf(0) }
 
     fun load() {
         loading = true; error = null
@@ -115,65 +121,92 @@ fun CompanyDetailScreen(state: AppState, company: CompanyRef, onBack: () -> Unit
         val r = report
         when {
             r != null -> Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp, 8.dp, 16.dp, 32.dp)) {
+                val expert = state.expertMode || showMath
                 val res = r.result(model)
+                val failed = r.dataChecks.any { it.status == "fail" }
                 Text(r.company.name, style = MaterialTheme.typography.headlineSmall, color = VL.textPrimary)
                 Row(verticalAlignment = Alignment.Bottom) {
                     Text(Fmt.money(r.price), fontSize = 38.sp, fontWeight = FontWeight.ExtraBold, color = VL.price, modifier = Modifier.clickable { showPrice = true })
                     Column(Modifier.padding(start = 12.dp, bottom = 8.dp)) {
-                        Text(r.quote?.let { "${it.source} · ${it.asOf.take(10)}" } ?: "no quote", fontSize = 11.sp, color = VL.textTertiary)
-                        Text("CIK ${r.company.cik}", fontSize = 11.sp, color = VL.textTertiary)
+                        Text(r.quote?.let { "${it.source} · ${it.asOf.take(10)}" } ?: "no quote — tap to enter", fontSize = 11.sp, color = VL.textTertiary)
+                        if (expert) Text("CIK ${r.company.cik}", fontSize = 11.sp, color = VL.textTertiary)
                     }
                 }
                 Spacer(Modifier.height(10.dp))
-                ModelToggle(model) { new ->
+                ModelToggle(model, labels = ValuationModel.entries.map { Explain.modelName(it == ValuationModel.A, expert) }) { new ->
                     val before = r.result(model).marginOfSafety.verdictEnum; val after = r.result(new).marginOfSafety.verdictEnum
                     haptics.performHapticFeedback(if (before != after) HapticFeedbackType.LongPress else HapticFeedbackType.TextHandleMove)
                     model = new
                 }
-                Spacer(Modifier.height(12.dp))
-                Card { MarginOfSafetyView(res.marginOfSafety) }
-                if (res.marginOfSafety.verdictEnum == Verdict.INSUFFICIENT) { Spacer(Modifier.height(12.dp)); InsufficientDataCard(r, res) }
+                if (!expert) Text(Explain.modelBlurb(model == ValuationModel.A), style = MaterialTheme.typography.bodySmall, color = VL.textSecondary, modifier = Modifier.padding(vertical = 6.dp))
+                Spacer(Modifier.height(8.dp))
 
-                SectionHeader(res.name, "Tap any metric for the formula and SEC line items")
-                Card(Modifier.padding(top = 8.dp)) {
-                    MetricRow(res.composite, emphasize = true); ThinDivider()
-                    res.metrics.filter { it.key != "fcff_projection" }.forEach { MetricRow(it) }
+                if (failed) {
+                    Card { Text("Value withheld", style = MaterialTheme.typography.titleMedium, color = VL.danger); Text("Some of the numbers pulled from SEC didn't pass verification, so ValueLens won't show a fair value it can't stand behind. Details in the data checks below.", style = MaterialTheme.typography.bodySmall, color = VL.textSecondary, modifier = Modifier.padding(top = 4.dp)) }
+                } else {
+                    Card { if (!expert) Text(Explain.verdictSentence(r, res), color = VL.textPrimary, modifier = Modifier.padding(bottom = 12.dp)); MarginOfSafetyView(res.marginOfSafety, compact = !expert) }
+                    if (res.marginOfSafety.verdictEnum == Verdict.INSUFFICIENT) { Spacer(Modifier.height(12.dp)); InsufficientDataCard(r, res) }
                 }
+                Spacer(Modifier.height(12.dp))
+                DataChecksCard(r.dataChecks, Explain.checksSummary(r), expert)
 
-                SectionHeader("Balance sheet & quality", "Trailing twelve months")
-                Card(Modifier.padding(top = 8.dp)) { SnapshotGrid(r) }
+                if (!expert) {
+                    SectionHeader("How healthy is the business?", "Tap a tile for a plain-English explanation")
+                    val facts = Explain.healthFacts(r)
+                    facts.chunked(2).forEach { row -> Row(Modifier.fillMaxWidth().padding(top = 8.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) { row.forEach { f -> FactTile(f.label, f.value, f.tone, f.plain, Modifier.weight(1f)) }; if (row.size == 1) Spacer(Modifier.weight(1f)) } }
+                    Spacer(Modifier.height(16.dp))
+                    TextButton({ showMath = true }, Modifier.fillMaxWidth()) { Text("Show me the math", color = VL.value) }
+                    Text("Turn on Expert Mode in Settings to always see formulas and SEC line items.", style = MaterialTheme.typography.bodySmall, color = VL.textTertiary, modifier = Modifier.fillMaxWidth(), textAlign = androidx.compose.ui.text.style.TextAlign.Center)
+                } else {
+                    Row(Modifier.fillMaxWidth().padding(top = 8.dp), verticalAlignment = Alignment.CenterVertically) {
+                        SectionHeader(res.name, "Tap any metric for the formula and SEC line items")
+                    }
+                    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+                        TextButton({ expandAll = true; expandVersion++ }) { Text("Expand all", color = VL.value, fontSize = 12.sp) }
+                        TextButton({ expandAll = false; expandVersion++ }) { Text("Collapse all", color = VL.textSecondary, fontSize = 12.sp) }
+                    }
+                    Card {
+                        MetricRow(res.composite, emphasize = true, expandAll = expandAll, expandVersion = expandVersion); ThinDivider()
+                        res.metrics.filter { it.key != "fcff_projection" }.forEach { MetricRow(it, expandAll = expandAll, expandVersion = expandVersion) }
+                    }
+                    r.provenance["beta_detail"]?.let { Text(it, style = MaterialTheme.typography.bodySmall, color = VL.textTertiary, modifier = Modifier.padding(top = 6.dp)) }
 
-                SectionHeader("10-K history", "${r.history.size} fiscal years from annual filings")
-                Card(Modifier.padding(top = 8.dp)) {
-                    SingleChoiceSegmentedButtonRow(Modifier.fillMaxWidth()) {
-                        listOf("earnings" to "Earnings", "cash" to "Cash flow", "roic" to "ROIC", "book" to "Book value").forEachIndexed { i, (k, l) ->
-                            SegmentedButton(series == k, { series = k }, SegmentedButtonDefaults.itemShape(i, 4),
-                                colors = SegmentedButtonDefaults.colors(activeContainerColor = Color(0xFF3A3F48), activeContentColor = VL.textPrimary, inactiveContainerColor = VL.raised, inactiveContentColor = VL.textSecondary)) { Text(l, fontSize = 12.sp) }
+                    SectionHeader("Balance sheet & quality", "Trailing twelve months")
+                    Card(Modifier.padding(top = 8.dp)) { SnapshotGrid(r) }
+
+                    SectionHeader("10-K history", "${r.history.size} fiscal years from annual filings")
+                    Card(Modifier.padding(top = 8.dp)) {
+                        SingleChoiceSegmentedButtonRow(Modifier.fillMaxWidth()) {
+                            listOf("earnings" to "Earnings", "cash" to "Cash flow", "roic" to "ROIC", "book" to "Book value").forEachIndexed { i, (k, l) ->
+                                SegmentedButton(series == k, { series = k }, SegmentedButtonDefaults.itemShape(i, 4),
+                                    colors = SegmentedButtonDefaults.colors(activeContainerColor = Color(0xFF3A3F48), activeContentColor = VL.textPrimary, inactiveContainerColor = VL.raised, inactiveContentColor = VL.textSecondary)) { Text(l, fontSize = 12.sp) }
+                            }
+                        }
+                        HistoryChart(r.history, series)
+                    }
+                    Card(Modifier.padding(top = 12.dp), padding = 0) { HistoryTable(r.history) }
+
+                    SectionHeader("Growth (CAGR)")
+                    Card(Modifier.padding(top = 8.dp)) {
+                        Row { Spacer(Modifier.weight(1f)); Text("5-yr", color = VL.textSecondary, fontSize = 12.sp, modifier = Modifier.width(70.dp), textAlign = androidx.compose.ui.text.style.TextAlign.End); Text("Full", color = VL.textSecondary, fontSize = 12.sp, modifier = Modifier.width(70.dp), textAlign = androidx.compose.ui.text.style.TextAlign.End) }
+                        listOf("revenue" to "Revenue", "net_income" to "Net income", "eps_diluted" to "EPS", "equity" to "Book value", "fcf" to "Free cash flow", "owner_earnings" to "Owner earnings").forEach { (k, l) ->
+                            val g = r.growth[k]
+                            fun c(v: Double?) = if (v == null) VL.textTertiary else if (v < 0) VL.danger else VL.textPrimary
+                            Row(Modifier.padding(vertical = 3.dp)) { Text(l, color = VL.textPrimary, modifier = Modifier.weight(1f)); Text(Fmt.pct(g?.fiveYearCagr, 1, true), color = c(g?.fiveYearCagr), modifier = Modifier.width(70.dp), textAlign = androidx.compose.ui.text.style.TextAlign.End); Text(Fmt.pct(g?.fullPeriodCagr, 1, true), color = c(g?.fullPeriodCagr), modifier = Modifier.width(70.dp), textAlign = androidx.compose.ui.text.style.TextAlign.End) }
                         }
                     }
-                    HistoryChart(r.history, series)
-                }
-                Card(Modifier.padding(top = 12.dp), padding = 0) { HistoryTable(r.history) }
 
-                SectionHeader("Growth (CAGR)")
-                Card(Modifier.padding(top = 8.dp)) {
-                    Row { Spacer(Modifier.weight(1f)); Text("5-yr", color = VL.textSecondary, fontSize = 12.sp, modifier = Modifier.width(70.dp), textAlign = androidx.compose.ui.text.style.TextAlign.End); Text("Full", color = VL.textSecondary, fontSize = 12.sp, modifier = Modifier.width(70.dp), textAlign = androidx.compose.ui.text.style.TextAlign.End) }
-                    listOf("revenue" to "Revenue", "net_income" to "Net income", "eps_diluted" to "EPS", "equity" to "Book value", "fcf" to "Free cash flow", "owner_earnings" to "Owner earnings").forEach { (k, l) ->
-                        val g = r.growth[k]
-                        fun c(v: Double?) = if (v == null) VL.textTertiary else if (v < 0) VL.danger else VL.textPrimary
-                        Row(Modifier.padding(vertical = 3.dp)) { Text(l, color = VL.textPrimary, modifier = Modifier.weight(1f)); Text(Fmt.pct(g?.fiveYearCagr, 1, true), color = c(g?.fiveYearCagr), modifier = Modifier.width(70.dp), textAlign = androidx.compose.ui.text.style.TextAlign.End); Text(Fmt.pct(g?.fullPeriodCagr, 1, true), color = c(g?.fullPeriodCagr), modifier = Modifier.width(70.dp), textAlign = androidx.compose.ui.text.style.TextAlign.End) }
+                    SectionHeader("Assumptions", "Rates: ${r.assumptions.rateSource} · beta: ${r.provenance["beta"] ?: "?"}")
+                    Card(Modifier.padding(top = 8.dp)) {
+                        val a = r.assumptions
+                        listOf("AAA corporate yield (Y)" to Fmt.pct(a.aaaYieldPct, 2), "10-yr Treasury (rf)" to Fmt.pct(a.treasury10yPct, 2), "Hurdle rate" to Fmt.pct(a.hurdleRatePct), "Equity risk premium" to Fmt.pct(a.equityRiskPremiumPct), "Beta (${r.provenance["beta"] ?: "?"})" to Fmt.number(a.beta), "Terminal growth" to Fmt.pct(a.terminalGrowthPct), "Exit multiple" to "${Fmt.number(a.exitMultiple, 0)}×", "Projection years" to "${a.projectionYears}", "Growth cap" to Fmt.pct(a.maxGrowthPct, 0))
+                            .forEach { (k, v) -> Row(Modifier.padding(vertical = 3.dp)) { Text(k, color = VL.textSecondary, modifier = Modifier.weight(1f)); Text(v, color = VL.textPrimary) } }
                     }
-                }
-
-                SectionHeader("Assumptions", "Rates: ${r.assumptions.rateSource}")
-                Card(Modifier.padding(top = 8.dp)) {
-                    val a = r.assumptions
-                    listOf("AAA corporate yield (Y)" to Fmt.pct(a.aaaYieldPct, 2), "10-yr Treasury (rf)" to Fmt.pct(a.treasury10yPct, 2), "Hurdle rate" to Fmt.pct(a.hurdleRatePct), "Equity risk premium" to Fmt.pct(a.equityRiskPremiumPct), "Beta" to Fmt.number(a.beta), "Terminal growth" to Fmt.pct(a.terminalGrowthPct), "Exit multiple" to "${Fmt.number(a.exitMultiple, 0)}×", "Projection years" to "${a.projectionYears}", "Growth cap" to Fmt.pct(a.maxGrowthPct, 0))
-                        .forEach { (k, v) -> Row(Modifier.padding(vertical = 3.dp)) { Text(k, color = VL.textSecondary, modifier = Modifier.weight(1f)); Text(v, color = VL.textPrimary) } }
-                }
-                if (r.warnings.isNotEmpty()) {
-                    SectionHeader("Data notes")
-                    Card(Modifier.padding(top = 8.dp)) { r.warnings.forEach { Text("ⓘ $it", style = MaterialTheme.typography.bodySmall, color = VL.textSecondary, modifier = Modifier.padding(vertical = 3.dp)) } }
+                    if (r.warnings.isNotEmpty()) {
+                        SectionHeader("Data notes")
+                        Card(Modifier.padding(top = 8.dp)) { r.warnings.forEach { Text("ⓘ $it", style = MaterialTheme.typography.bodySmall, color = VL.textSecondary, modifier = Modifier.padding(vertical = 3.dp)) } }
+                    }
+                    if (!state.expertMode) TextButton({ showMath = false }, Modifier.fillMaxWidth()) { Text("Hide the math", color = VL.textSecondary) }
                 }
                 Text(r.disclaimer, style = MaterialTheme.typography.bodySmall, color = VL.textTertiary, modifier = Modifier.fillMaxWidth().padding(top = 20.dp), textAlign = androidx.compose.ui.text.style.TextAlign.Center)
             }

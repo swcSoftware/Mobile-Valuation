@@ -37,7 +37,7 @@ class Edgar(private val fetcher: Fetcher, cache: KeyValueCache, private val user
         fun normalizeTicker(raw: String) = raw.trim().uppercase().replace(".", "-").replace(" ", "-")
     }
 
-    private fun headers() = mapOf("User-Agent" to userAgent, "Accept" to "application/json", "Accept-Encoding" to "gzip, deflate")
+    private fun headers() = mapOf("User-Agent" to userAgent, "Accept" to "application/json")  // hosts negotiate gzip themselves
 
     private fun getText(url: String, ttlMillis: Long, headers: Map<String, String> = headers()): String {
         ttl.get(url, ttlMillis)?.let { return it }
@@ -50,6 +50,8 @@ class Edgar(private val fetcher: Fetcher, cache: KeyValueCache, private val user
                 else -> throw EngineException.UpstreamUnavailable(e.message ?: "fetch failed")
             }
         }
+        val head = text.trimStart().firstOrNull()
+        if (head != '{' && head != '[') throw EngineException.UpstreamUnavailable("SEC returned a non-JSON body (encoding or block page); not cached.")
         ttl.put(url, text)
         return text
     }

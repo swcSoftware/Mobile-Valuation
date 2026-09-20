@@ -4985,7 +4985,7 @@
    "formula": "min(graham_revised, oe_value_hurdle)",
    "inputs": {
     "graham_revised": 145.4391307302464,
-    "oe_value_hurdle": 74.0819552417043
+    "oe_value_hurdle": 60.83658465236245
    },
    "key": "model_a_intrinsic",
    "label": "Model A intrinsic value",
@@ -4994,23 +4994,23 @@
    ],
    "sources": [],
    "unit": "USD/share",
-   "value": 74.0819552417043
+   "value": 60.83658465236245
   },
-  "intrinsic_value_per_share": 74.0819552417043,
+  "intrinsic_value_per_share": 60.83658465236245,
   "margin_of_safety": {
    "bands": [
     {
-     "buy_below": 55.561466431278234,
+     "buy_below": 45.62743848927184,
      "discount_pct": 25.0
     },
     {
-     "buy_below": 37.04097762085215,
+     "buy_below": 30.418292326181223,
      "discount_pct": 50.0
     }
    ],
    "formula": "MoS = 1 \u2212 price / intrinsic_value",
-   "intrinsic_value": 74.0819552417043,
-   "margin_of_safety_pct": -102.47845715005882,
+   "intrinsic_value": 60.83658465236245,
+   "margin_of_safety_pct": -146.56216462042156,
    "market_price": 150.0,
    "verdict": "above_intrinsic"
   },
@@ -5187,7 +5187,7 @@
     "formula": "OE = net_income + d_and_a \u2212 maintenance_capex \u2212 delta_nwc",
     "inputs": {
      "d_and_a": 7751000000.0,
-     "delta_nwc": 5571000000.0,
+     "delta_nwc": 8763000000.0,
      "maintenance_capex": 5364000000.0,
      "net_income": 21037000000.0
     },
@@ -5232,12 +5232,12 @@
      }
     ],
     "unit": "USD",
-    "value": 17853000000.0
+    "value": 14661000000.0
    },
    {
     "formula": "owner_earnings / shares_outstanding",
     "inputs": {
-     "owner_earnings": 17853000000.0,
+     "owner_earnings": 14661000000.0,
      "shares": 2409898597.0
     },
     "key": "owner_earnings_per_share",
@@ -5257,12 +5257,12 @@
      }
     ],
     "unit": "USD/share",
-    "value": 7.408195524170431
+    "value": 6.083658465236245
    },
    {
     "formula": "V = OE_per_share / r   (zero terminal growth)",
     "inputs": {
-     "owner_earnings_per_share": 7.408195524170431,
+     "owner_earnings_per_share": 6.083658465236245,
      "r_pct": 10.0
     },
     "key": "oe_value_hurdle",
@@ -5272,12 +5272,12 @@
     ],
     "sources": [],
     "unit": "USD/share",
-    "value": 74.0819552417043
+    "value": 60.83658465236245
    },
    {
     "formula": "V = OE_per_share / r   (zero terminal growth)",
     "inputs": {
-     "owner_earnings_per_share": 7.408195524170431,
+     "owner_earnings_per_share": 6.083658465236245,
      "r_pct": 4.94
     },
     "key": "oe_value_treasury",
@@ -5287,7 +5287,7 @@
     ],
     "sources": [],
     "unit": "USD/share",
-    "value": 149.963472149199
+    "value": 123.15098107765677
    }
   ],
   "name": "Traditional Value (Graham / Buffett / Munger)"
@@ -5296,31 +5296,31 @@
   "composite": {
    "formula": "mean(dcf_perpetuity, dcf_exit_multiple)",
    "inputs": {
-    "dcf_exit_multiple": 147.22710799460646,
-    "dcf_perpetuity": 152.72203618428466
+    "dcf_exit_multiple": 125.98217526309288,
+    "dcf_perpetuity": 131.7873645249403
    },
    "key": "model_b_fair_value",
    "label": "Model B fair value",
    "notes": [],
    "sources": [],
    "unit": "USD/share",
-   "value": 149.97457208944556
+   "value": 128.88476989401659
   },
-  "intrinsic_value_per_share": 149.97457208944556,
+  "intrinsic_value_per_share": 128.88476989401659,
   "margin_of_safety": {
    "bands": [
     {
-     "buy_below": 112.48092906708416,
+     "buy_below": 96.66357742051244,
      "discount_pct": 25.0
     },
     {
-     "buy_below": 74.98728604472278,
+     "buy_below": 64.44238494700829,
      "discount_pct": 50.0
     }
    ],
    "formula": "MoS = 1 \u2212 price / intrinsic_value",
-   "intrinsic_value": 149.97457208944556,
-   "margin_of_safety_pct": -0.016954814539671403,
+   "intrinsic_value": 128.88476989401659,
+   "margin_of_safety_pct": -16.38302968096752,
    "market_price": 150.0,
    "verdict": "above_intrinsic"
   },
@@ -5342,57 +5342,57 @@
    {
     "formula": "Kd = interest_expense / total_debt (clamped 2\u201312%)",
     "inputs": {
-     "interest_expense": 971000000.0,
-     "raw_pct": 2.1180525259575953,
-     "total_debt": 45844000000.0
+     "interest_expense": 1012000000.0,
+     "raw_pct": 2.0637898686679175,
+     "total_debt": 49036000000.0
     },
     "key": "cost_of_debt",
     "label": "Cost of debt (pre-tax)",
     "notes": [],
     "sources": [
      {
-      "accession": "0000200406-26-000016",
-      "derived": false,
-      "filed": "2026-02-11",
-      "form": "10-K",
-      "note": "",
-      "period_end": "2025-12-28",
-      "period_start": "2024-12-30",
+      "accession": "0000200406-26-000153",
+      "derived": true,
+      "filed": "2026-07-23",
+      "form": "10-Q",
+      "note": "TTM = FY(2025-12-28) 971,000,000 + YTD(2025-12-29\u21922026-06-28) 553,000,000 \u2212 YTD(2024-12-30\u21922025-06-29) 512,000,000",
+      "period_end": "2026-06-28",
+      "period_start": "2025-06-28",
       "tag": "us-gaap:InterestExpenseNonoperating",
-      "value": 971000000.0
+      "value": 1012000000.0
      },
      {
-      "accession": "0000200406-26-000016",
+      "accession": "0000200406-26-000153",
       "derived": true,
-      "filed": "2026-02-11",
-      "form": "10-K",
+      "filed": "2026-07-23",
+      "form": "10-Q",
       "note": "short_term_debt + long_term_debt",
-      "period_end": "2025-12-28",
+      "period_end": "2026-06-28",
       "period_start": null,
       "tag": "valuelens:derived",
-      "value": 45844000000.0
+      "value": 49036000000.0
      }
     ],
     "unit": "%",
-    "value": 2.1180525259575953
+    "value": 2.0637898686679175
    },
    {
     "formula": "WACC = E/(D+E)\u00b7Ke + D/(D+E)\u00b7Kd\u00b7(1\u2212t)",
     "inputs": {
-     "debt_weight": 0.11254790031081907,
-     "equity_weight": 0.8874520996891809,
-     "kd_pct": 2.1180525259575953,
+     "debt_weight": 0.11944827460200426,
+     "equity_weight": 0.8805517253979958,
+     "kd_pct": 2.0637898686679175,
      "ke_pct": 9.940000000000001,
      "market_cap": 361484789550.0,
      "tax_rate": 0.16506588347356724,
-     "total_debt": 45844000000.0
+     "total_debt": 49036000000.0
     },
     "key": "wacc",
     "label": "WACC",
     "notes": [],
     "sources": [],
     "unit": "%",
-    "value": 9.020307439846949
+    "value": 8.95850888514271
    },
    {
     "formula": "median(5-yr CAGR of fcf, revenue, net_income), clamped to [0, 15%]",
@@ -5412,14 +5412,14 @@
     "formula": "\u03a3 FCFF_t/(1+WACC)^t + [FCFF_N(1+g)/(WACC\u2212g)]/(1+WACC)^N \u2212 debt + cash, \u00f7 shares",
     "inputs": {
      "cash_and_sti": 20758000000.0,
-     "fcff_ttm": 24829709477.69487,
-     "pv_stage1": 104053891282.27634,
+     "fcff_ttm": 21637709477.69487,
+     "pv_stage1": 90825402960.08862,
      "shares": 2409898597.0,
      "stage1_growth_pct": 2.665503872479502,
      "terminal_growth_pct": 2.5,
-     "terminal_value": 445194863167.29913,
-     "total_debt": 45844000000.0,
-     "wacc_pct": 9.020307439846949,
+     "terminal_value": 391674776451.45123,
+     "total_debt": 49036000000.0,
+     "wacc_pct": 8.95850888514271,
      "years": 5
     },
     "key": "dcf_perpetuity",
@@ -5435,24 +5435,24 @@
       "period_end": "2025-12-28",
       "period_start": "2024-12-30",
       "tag": "valuelens:derived",
-      "value": 24829709477.69487
+      "value": 21637709477.69487
      }
     ],
     "unit": "USD/share",
-    "value": 152.72203618428466
+    "value": 131.7873645249403
    },
    {
     "formula": "\u03a3 FCFF_t/(1+WACC)^t + [FCFF_N \u00d7 multiple]/(1+WACC)^N \u2212 debt + cash, \u00f7 shares",
     "inputs": {
      "cash_and_sti": 20758000000.0,
      "exit_multiple": 15.0,
-     "fcff_ttm": 24829709477.69487,
-     "pv_stage1": 104053891282.27634,
+     "fcff_ttm": 21637709477.69487,
+     "pv_stage1": 90825402960.08862,
      "shares": 2409898597.0,
      "stage1_growth_pct": 2.665503872479502,
-     "terminal_value": 424801079779.22705,
-     "total_debt": 45844000000.0,
-     "wacc_pct": 9.020307439846949,
+     "terminal_value": 370190491287.5095,
+     "total_debt": 49036000000.0,
+     "wacc_pct": 8.95850888514271,
      "years": 5
     },
     "key": "dcf_exit_multiple",
@@ -5468,20 +5468,20 @@
       "period_end": "2025-12-28",
       "period_start": "2024-12-30",
       "tag": "valuelens:derived",
-      "value": 24829709477.69487
+      "value": 21637709477.69487
      }
     ],
     "unit": "USD/share",
-    "value": 147.22710799460646
+    "value": 125.98217526309288
    },
    {
     "formula": "FCFF_t = FCFF_0 \u00d7 (1+g)^t",
     "inputs": {
-     "year_1": 25491546345.348236,
-     "year_2": 26171024500.338398,
-     "year_3": 26868614171.86248,
-     "year_4": 27584798123.09505,
-     "year_5": 28320071985.281803
+     "year_1": 22214463461.73869,
+     "year_2": 22806590845.56188,
+     "year_3": 23414501407.73089,
+     "year_4": 24038615849.475723,
+     "year_5": 24679366085.83397
     },
     "key": "fcff_projection",
     "label": "Projected FCFF",
@@ -5493,7 +5493,7 @@
    {
     "formula": "ROIC = NOPAT / (equity + total_debt \u2212 cash)",
     "inputs": {
-     "invested_capital": 110393000000.0,
+     "invested_capital": 113585000000.0,
      "nopat": 28013709477.694874
     },
     "key": "roic",
@@ -5524,13 +5524,13 @@
      }
     ],
     "unit": "%",
-    "value": 25.376345853174453
+    "value": 24.663212112246224
    },
    {
     "formula": "ROIC \u2212 WACC",
     "inputs": {
-     "roic_pct": 25.376345853174453,
-     "wacc_pct": 9.020307439846949
+     "roic_pct": 24.663212112246224,
+     "wacc_pct": 8.95850888514271
     },
     "key": "roic_wacc_spread",
     "label": "ROIC \u2212 WACC spread",
@@ -5539,21 +5539,21 @@
     ],
     "sources": [],
     "unit": "%",
-    "value": 16.356038413327507
+    "value": 15.704703227103517
    },
    {
     "formula": "EVA = (ROIC \u2212 WACC) \u00d7 invested_capital",
     "inputs": {
-     "invested_capital": 110393000000.0,
-     "roic_pct": 25.376345853174453,
-     "wacc_pct": 9.020307439846949
+     "invested_capital": 113585000000.0,
+     "roic_pct": 24.663212112246224,
+     "wacc_pct": 8.95850888514271
     },
     "key": "eva",
     "label": "Economic value added (TTM)",
     "notes": [],
     "sources": [],
     "unit": "USD",
-    "value": 18055921485.624634
+    "value": 17838187160.50553
    },
    {
     "formula": "count(years with ROIC > current WACC) over 10 yrs of 10-K history",
@@ -5697,15 +5697,15 @@
     "value": 7751000000.0
    },
    "debt_to_equity": {
-    "accession": "0000200406-26-000016",
+    "accession": "0000200406-26-000153",
     "derived": true,
-    "filed": "2026-02-11",
-    "form": "10-K",
+    "filed": "2026-07-23",
+    "form": "10-Q",
     "note": "total_debt / equity",
-    "period_end": "2025-12-28",
+    "period_end": "2026-06-28",
     "period_start": null,
     "tag": "valuelens:derived",
-    "value": 0.5395252497911052
+    "value": 0.5770910075202128
    },
    "delta_nwc": {
     "accession": "0000200406-26-000153",
@@ -5716,7 +5716,7 @@
     "period_end": "2026-06-28",
     "period_start": null,
     "tag": "valuelens:derived",
-    "value": 5571000000.0
+    "value": 8763000000.0
    },
    "effective_tax_rate": {
     "accession": "0000200406-26-000153",
@@ -5771,7 +5771,7 @@
     "period_end": "2025-12-28",
     "period_start": "2024-12-30",
     "tag": "valuelens:derived",
-    "value": 24829709477.69487
+    "value": 21637709477.69487
    },
    "goodwill": {
     "accession": "0000200406-26-000153",
@@ -5807,15 +5807,15 @@
     "value": 48229000000.0
    },
    "interest_expense": {
-    "accession": "0000200406-26-000016",
-    "derived": false,
-    "filed": "2026-02-11",
-    "form": "10-K",
-    "note": "",
-    "period_end": "2025-12-28",
-    "period_start": "2024-12-30",
+    "accession": "0000200406-26-000153",
+    "derived": true,
+    "filed": "2026-07-23",
+    "form": "10-Q",
+    "note": "TTM = FY(2025-12-28) 971,000,000 + YTD(2025-12-29\u21922026-06-28) 553,000,000 \u2212 YTD(2024-12-30\u21922025-06-29) 512,000,000",
+    "period_end": "2026-06-28",
+    "period_start": "2025-06-28",
     "tag": "us-gaap:InterestExpenseNonoperating",
-    "value": 971000000.0
+    "value": 1012000000.0
    },
    "inventory": {
     "accession": "0000200406-26-000153",
@@ -5837,7 +5837,7 @@
     "period_end": "2026-06-28",
     "period_start": null,
     "tag": "valuelens:derived",
-    "value": 110393000000.0
+    "value": 113585000000.0
    },
    "liabilities_and_equity": {
     "accession": "0000200406-26-000153",
@@ -5892,7 +5892,7 @@
     "period_end": "2026-06-28",
     "period_start": "2025-06-28",
     "tag": "valuelens:derived",
-    "value": 0.22333931396175938
+    "value": 0.21481889940671303
    },
    "nopat": {
     "accession": "0000200406-26-000016",
@@ -5914,7 +5914,7 @@
     "period_end": "2026-06-28",
     "period_start": null,
     "tag": "valuelens:derived",
-    "value": -7379000000.0
+    "value": -4187000000.0
    },
    "operating_income": {
     "accession": "0000200406-26-000016",
@@ -5936,7 +5936,7 @@
     "period_end": "2025-12-28",
     "period_start": "2024-12-30",
     "tag": "valuelens:derived",
-    "value": 0.3562048135211746
+    "value": 0.34261556842202
    },
    "owner_earnings": {
     "accession": "0000200406-26-000153",
@@ -5947,7 +5947,7 @@
     "period_end": "2026-06-28",
     "period_start": "2025-06-28",
     "tag": "valuelens:derived",
-    "value": 17853000000.0
+    "value": 14661000000.0
    },
    "pretax_income": {
     "accession": "0000200406-26-000153",
@@ -5972,15 +5972,15 @@
     "value": 19046000000.0
    },
    "revenue": {
-    "accession": "0000200406-26-000016",
-    "derived": false,
-    "filed": "2026-02-11",
-    "form": "10-K",
-    "note": "",
-    "period_end": "2025-12-28",
-    "period_start": "2024-12-30",
+    "accession": "0000200406-26-000153",
+    "derived": true,
+    "filed": "2026-07-23",
+    "form": "10-Q",
+    "note": "TTM = FY(2025-12-28) 94,193,000,000 + YTD(2025-12-29\u21922026-06-28) 49,372,000,000 \u2212 YTD(2024-12-30\u21922025-06-29) 45,636,000,000",
+    "period_end": "2026-06-28",
+    "period_start": "2025-06-28",
     "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
-    "value": 94193000000.0
+    "value": 97929000000.0
    },
    "roe": {
     "accession": "0000200406-26-000153",
@@ -6002,7 +6002,7 @@
     "period_end": "2025-12-28",
     "period_start": "2024-12-30",
     "tag": "valuelens:derived",
-    "value": 0.25376345853174453
+    "value": 0.24663212112246224
    },
    "shares_diluted": {
     "accession": "0000200406-26-000153",
@@ -6016,15 +6016,15 @@
     "value": 2443900000.0
    },
    "short_term_debt": {
-    "accession": "0000200406-26-000016",
+    "accession": "0000200406-26-000153",
     "derived": false,
-    "filed": "2026-02-11",
-    "form": "10-K",
+    "filed": "2026-07-23",
+    "form": "10-Q",
     "note": "",
-    "period_end": "2025-12-28",
+    "period_end": "2026-06-28",
     "period_start": null,
-    "tag": "us-gaap:DebtCurrent",
-    "value": 8500000000.0
+    "tag": "us-gaap:ShortTermBorrowings",
+    "value": 11692000000.0
    },
    "short_term_investments": {
     "accession": "0000200406-26-000153",
@@ -6049,15 +6049,15 @@
     "value": 201061000000.0
    },
    "total_debt": {
-    "accession": "0000200406-26-000016",
+    "accession": "0000200406-26-000153",
     "derived": true,
-    "filed": "2026-02-11",
-    "form": "10-K",
+    "filed": "2026-07-23",
+    "form": "10-Q",
     "note": "short_term_debt + long_term_debt",
-    "period_end": "2025-12-28",
+    "period_end": "2026-06-28",
     "period_start": null,
     "tag": "valuelens:derived",
-    "value": 45844000000.0
+    "value": 49036000000.0
    },
    "total_liabilities": {
     "accession": "0000200406-26-000153",

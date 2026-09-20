@@ -19,9 +19,9 @@ class MainActivity : ComponentActivity() {
         // Health check + watchlist refresh whenever the app comes to the foreground.
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                state.checkEngine()
+                state.refreshRates()
                 val stale = state.watchlistStore.lastUpdated?.let { System.currentTimeMillis() - it > 15 * 60 * 1000 } ?: true
-                if (state.engineReachable && stale) state.refreshWatchlist()
+                if (state.identity != null && stale) state.refreshWatchlist()
             }
         }
         setContent { ValueLensApp(state) }
