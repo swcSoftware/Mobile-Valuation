@@ -48,3 +48,26 @@ simulator and Pixel 10 emulator.
 
 **Deferred**: hosted deploy + Release URL (#18), physical-device LAN check (#19), Android
 share-card visual check (#22), see ISSUES #18–30.
+
+## Sprint 2 — 2026-09-19 — On-device engine, consumer clarity, verified data
+
+**Goal**: no hosted server; a non-expert can read a valuation; nothing reaches a formula unverified.
+
+**Delivered**
+- `packages/valuation-core` (Kotlin Multiplatform): normalization + Model A/B ported and proven
+  identical to the Python reference (oracle diff, 0 differences); EDGAR client, quotes, **measured
+  beta**, rates loader and a 13-check **data verification gate** — all running inside both apps.
+- Android and iOS now call SEC EDGAR directly from the device with the user's identity. The HTTP
+  engine client, engine URL and LAN settings are gone. Verified live: PG on Pixel 10 (β 0.38
+  measured), JNJ on iPhone 16 Pro (13 checks passed).
+- **Expert Mode** (default off) with a plain-language basic view, health tiles, explainers and a
+  glossary; expert view with expand-all and provenance-labeled assumptions.
+- GitHub Pages pipeline: `publish_rates.py`, `publish_tickers.py`, scheduled workflow. Verified
+  locally with the FRED key; awaiting owner setup (secret + Pages).
+- Found and fixed a silent data error: freshest-tag selection (KO's debt, PG's cash) — ISSUES #35.
+
+**Verification**: 60 automated tests (12 core, 7 Android, 26 engine, 15 iOS), all green; manual
+runs on both simulators.
+
+**Owner actions to finish Track B**: add `FRED_API_KEY` secret, enable Pages on `gh-pages`, run
+the workflow once. Until then the apps use the bundled 2026-09-17 snapshot and say so.

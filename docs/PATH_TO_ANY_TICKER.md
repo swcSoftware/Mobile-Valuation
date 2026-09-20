@@ -19,7 +19,12 @@ engine is unreachable.
 What stops this working on a physical iPhone away from the Mac is that the engine lives at
 `http://127.0.0.1:8000`.
 
-## Sprint 1 status (2026-09-19)
+## Sprint 2 status (2026-09-19) — done on-device
+- Both apps value any SEC filer directly from the phone; no engine, no LAN, no hosting.
+- Remaining for a physical phone: nothing technical — build to device (Xcode / Android Studio) and go.
+- Remaining for coverage: multi-class filers and banks (Sprint 3).
+
+## Sprint 1 status
 - LAN mode works: `scripts/serve-lan.sh` + one-tap LAN address in both apps' Settings.
 - Hosting artifacts are ready (`Dockerfile`, `fly.toml`); deploy was deferred by owner decision.
 - Rate limiting, identity requirement, persistent cache, error taxonomy, FRED: done.

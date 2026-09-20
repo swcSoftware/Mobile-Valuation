@@ -1,4 +1,8 @@
-# Valuation Engine API (v0.1)
+# Valuation Report Contract (v0.2)
+
+> Since Sprint 2 the report is produced **on-device** by `packages/valuation-core`; the HTTP
+> endpoints below are the Python reference engine's and remain for development. The JSON shape is
+> the contract shared by the core, iOS and Android.
 
 Base URL (dev): `http://127.0.0.1:8000`. Interactive docs: `/docs`.
 
@@ -45,7 +49,11 @@ All endpoints accept `X-SEC-User-Agent: <Full Name> <email>`; the engine forward
                 "owner_earnings", "equity", "roic", "book_value_per_share", "cfo", "capex"} ],
   "growth": { "<concept>": {"full_period_years", "full_period_cagr", "five_year_cagr"} },
   "model_a": ModelResult, "model_b": ModelResult,
-  "warnings": ["..."], "disclaimer": "...", "generated_at": "ISO-8601"
+  "warnings": ["..."], "disclaimer": "...", "generated_at": "ISO-8601",
+  "data_checks": [ {"key", "label", "status": "pass"|"warn"|"fail", "message", "inputs": [str]} ],   // core only
+  "provenance": { "beta": "measured"|"assumed"|"override", "rates": "fred"|"assumed"|"override",
+                  "price": "market"|"manual"|"none", "tax_rate": "sec"|"assumed", "cost_of_debt": "sec"|"assumed",
+                  "beta_detail": "β 0.38 · 59 monthly returns 2021-10→2026-09 · R² 0.10" }          // core only
 }
 
 SourcedValue = {"value", "tag": "us-gaap:NetIncomeLoss", "accession", "form", "period_end",
@@ -68,6 +76,6 @@ ModelResult = {"name", "intrinsic_value_per_share", "composite": Metric, "metric
 `cost_of_equity`, `cost_of_debt`, `wacc`, `fcff_growth`, `dcf_perpetuity`, `dcf_exit_multiple`,
 `fcff_projection` (inputs only), `roic`, `roic_wacc_spread`, `eva`, `moat_persistence`
 
-Contract changes must update: this file, `apps/ios/.../ValuationReport.swift`,
-`apps/android/.../Models.kt`, the bundled `SampleData/*.json` (iOS) and `assets/*.json` (Android),
+Contract changes must update: this file, `packages/valuation-core/.../domain/Models.kt`,
+`apps/ios/.../ValuationReport.swift`, the bundled `SampleData/*.json` (iOS) and `assets/*.json` (Android),
 and the test fixtures under `services/valuation-engine/tests/fixtures`.

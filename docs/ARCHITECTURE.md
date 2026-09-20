@@ -1,17 +1,41 @@
 # Architecture
 
-> **Target (Sprint 2+): on-device.** The diagram below is the Sprint 0–1 shape. From Sprint 2 the
-> Python engine is a reference implementation only; a shared Kotlin Multiplatform core
-> (`packages/valuation-core`) runs inside both apps, and rates come from a static
-> `rates.json` on GitHub Pages. See PLAN.md.
+```
+ ┌──────────────────────────── on the phone ────────────────────────────┐
+ │  iOS (SwiftUI)                 Android (Compose)                     │
+ │      │ Swift adapters               │ Kotlin                         │
+ │      ▼                              ▼                                │
+ │  packages/valuation-core (Kotlin Multiplatform, ValuationCore.xcframework / Gradle module)
+ │   Edgar → CompanyFactsParser → Statements → ModelA/ModelB → DataChecks → Report → Explain
+ │      │ Fetcher/KeyValueCache ports (URLSession + files / OkHttp + files)
+ └──────┼───────────────────────────────────────────────────────────────┘
+        ▼ direct HTTPS with the user's SEC identity
+   SEC EDGAR companyfacts · Yahoo chart (price, 5y monthly for beta) · GitHub Pages rates.json / tickers.json
+                                                                       ▲
+   GitHub Actions (cron) ── FRED (repo secret) ──▶ scripts/publish_rates.py ──┘
+```
 
-```
-┌─────────────┐   X-SEC-User-Agent    ┌──────────────────────────────┐   User-Agent   ┌───────────┐
-│ iOS/Android │ ───── JSON/HTTP ────▶ │ valuation-engine (FastAPI)   │ ─────────────▶ │ SEC EDGAR │
-│  (native)   │ ◀──── report ──────── │ edgar → normalize → valuation│ ◀── XBRL ───── │ companyfacts│
-└─────────────┘                       │ providers: prices, rates     │                └───────────┘
-                                      └──────────────────────────────┘ ──▶ Yahoo/Stooq, FRED
-```
+**No server.** The Python engine below is the *reference implementation*: the core must reproduce
+its normalization and models exactly (`OracleTest`). It still runs for development and doc work.
+
+## packages/valuation-core (Kotlin 2.1 Multiplatform)
+
+| File | Responsibility |
+|---|---|
+| `Ports.kt` | `Fetcher` (blocking GET → `FetchResult`), `KeyValueCache`, `Clock` — implemented by each host |
+| `Day.kt` | Epoch-day dates (no platform date API); Python-compatible number formatting for notes |
+| `Concepts.kt`, `CompanyFacts.kt` | Tag map and companyfacts parser |
+| `Statements.kt` | Annual/TTM normalization, splits, derived items, CAGR (mirror of `statements.py`) |
+| `Models.kt` | Model A / Model B (mirror of `model_a.py` / `model_b.py`) |
+| `Edgar.kt` | Tickers (mirror first), resolve, search, companyfacts with TTL cache and typed errors |
+| `Market.kt` | Quote; 5-year monthly regression beta vs ^GSPC; `RatesSnapshot` + loader |
+| `DataChecks.kt` | The verification gate and provenance map (docs/DATA_VERIFICATION.md) |
+| `Report.kt`, `ValuationCore.kt` | Report assembly; blocking facade (+ JSON entry points for Swift) |
+| `Explain.kt` | Plain-language copy: verdict sentences, health facts, glossary, model names |
+| `domain/Models.kt` | Serializable contract shared with Android; iOS decodes the same JSON |
+
+Tests (`src/desktopTest`): `OracleTest` (diff vs Python), `CoreFacadeTest` (fake network: beta,
+checks, overrides, caching, errors), `SampleDump` (env-gated regeneration of bundled samples).
 
 ## services/valuation-engine (Python 3.11+)
 
@@ -51,10 +75,14 @@ cached. Introduce a task queue when batch screening or scheduled refreshes exist
 
 ## apps/ios (Swift 5.10, SwiftUI, iOS 17)
 
+`Data/CoreValuationRepository.swift` adapts the core's ports (URLSession, file cache) and maps
+Kotlin exceptions to `RepositoryError`. The report keeps the core's raw JSON so `explain()` round-trips.
+Settings: Expert Mode, glossary, data sources.
+
 ```
 App/            ValueLensApp, RootView (onboarding gate), MainTabView
 Domain/         Codable models mirroring API.md; ValuationRepository protocol; RateOverrides
-Data/           APIClient, RemoteValuationRepository (+ Sample fallback), KeychainStore,
+Data/           CoreValuationRepository (+ Sample fallback), KeychainStore,
                 AppSettings (@Observable), WatchlistStore (JSON in Application Support)
 DesignSystem/   Theme (dark, amber=price, mint=value), Fmt, Card/Pill/SectionHeader,
                 MetricRow (formula/inputs/sources disclosure), MarginOfSafetyView
@@ -70,11 +98,13 @@ pattern lets the sample data stand in for the network transparently.
 
 ## apps/android (Kotlin 2.1, Jetpack Compose, minSdk 26)
 
+`data/ValuationRepository.kt` — `CoreValuationRepository` (OkHttp fetcher, file cache) over the core module.
+
 ```
 ValueLensApplication.kt   AppState: identity (EncryptedSharedPreferences), prefs, watchlist, engine health,
                           deep-link pending ticker — the counterpart of iOS AppSettings + WatchlistStore + AppRouter
 domain/Models.kt          kotlinx.serialization mirror of API.md + Verdict, ValuationModel, RateOverrides, EngineException
-data/                     EngineApi (OkHttp, X-SEC-User-Agent), Remote/Sample repositories, stores
+data/                     CoreValuationRepository (OkHttp fetcher + file cache), Sample fallback, stores
 ui/theme, ui/Fmt.kt       Same tokens and number formatting as iOS
 ui/components             Card, Pill, ModelToggle, MetricRow (disclosure), MarginOfSafetyView
 ui/screens                Onboarding (Identity, CaseStudy), Watchlist, Search, CompanyDetail, Settings

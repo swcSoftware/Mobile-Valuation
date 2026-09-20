@@ -1,5 +1,16 @@
 # Runbook — running the alpha locally
 
+Since Sprint 2 the apps need **no server**: they call SEC EDGAR, the quote feed and the published
+rates file directly. The Python engine (§1) is only for development and regenerating oracle files.
+
+## 0. Shared core (needed by both apps)
+```bash
+cd apps/android
+export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"   # or any JDK 17+
+./gradlew :valuation-core:desktopTest                                   # 12 tests incl. Python oracle diff
+./gradlew :valuation-core:assembleValuationCoreReleaseXCFramework       # iOS framework (Xcode pre-build does this if missing)
+```
+
 ## 1. Engine
 ```bash
 cd services/valuation-engine
@@ -8,8 +19,7 @@ pip install -e ".[dev]"
 cp .env.example .env   # then put FRED_API_KEY / POLYGON_API_KEY in .env (git-ignored — never in .env.example)
 uvicorn valuation_engine.main:app --reload --port 8000
 ```
-For a physical phone on the same Wi-Fi: `scripts/serve-lan.sh` (binds 0.0.0.0 and prints the URLs;
-`/health` also lists them and the apps' Settings offer them as one-tap options).
+(`scripts/serve-lan.sh`, Dockerfile and fly.toml remain for reference; the apps no longer use an engine.)
 Sanity: `curl -H "X-SEC-User-Agent: Your Name you@example.com" localhost:8000/companies/KO/valuation | head -c 400`
 
 Tests: `pytest -q` (26 tests, offline; fixtures regenerated with `tests/fixtures/make_fixture.py`)
@@ -31,8 +41,7 @@ xcrun simctl launch booted com.swcsoftware.valuelens
 Do **not** pass `CODE_SIGNING_ALLOWED=NO` — Keychain writes fail on unsigned builds and the
 identity won't persist (ISSUES #13).
 
-The simulator reaches the engine at `http://127.0.0.1:8000` (default in Settings). A physical
-device needs your Mac's LAN IP or a hosted engine (PATH_TO_ANY_TICKER.md).
+The first build runs Gradle to produce `ValuationCore.xcframework` (needs JAVA_HOME or Android Studio).
 
 Exports land in the app's Documents folder (visible in Files → On My iPhone → ValueLens).
 
@@ -46,14 +55,22 @@ export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"  
 ~/Library/Android/sdk/platform-tools/adb shell am start -n com.swcsoftware.valuelens/.MainActivity
 # deep link: adb shell am start -a android.intent.action.VIEW -d "valuelens://ticker/KO"
 ```
-Or open `apps/android` in Android Studio. Emulator reaches the engine at `http://10.0.2.2:8000`.
+Or open `apps/android` in Android Studio.
 Exports land in `Android/data/com.swcsoftware.valuelens/files/Documents/ValueLens/`.
 
-## 3b. All automated tests
+## 3b. All automated tests (60)
 ```bash
-(cd services/valuation-engine && .venv/bin/python -m pytest -q)
-(cd apps/ios && xcodebuild -project ValueLens.xcodeproj -scheme ValueLens -destination 'platform=iOS Simulator,name=iPhone 16 Pro' test)
-(cd apps/android && ./gradlew testDebugUnitTest)
+(cd services/valuation-engine && .venv/bin/python -m pytest -q)                      # 26
+(cd apps/android && ./gradlew :valuation-core:desktopTest testDebugUnitTest)          # 12 + 7
+(cd apps/ios && xcodebuild -project ValueLens.xcodeproj -scheme ValueLens -destination 'platform=iOS Simulator,name=iPhone 16 Pro' test)  # 15
+```
+
+## 3c. Published data files (GitHub Pages)
+Owner setup once: repo secret `FRED_API_KEY`; Settings → Pages → branch `gh-pages`; Actions → "Publish data files" → Run.
+Local dry run:
+```bash
+FRED_API_KEY=… services/valuation-engine/.venv/bin/python scripts/publish_rates.py /tmp/site
+SEC_USER_AGENT="Name email" services/valuation-engine/.venv/bin/python scripts/publish_tickers.py /tmp/site
 ```
 
 ## 4. Git flow
@@ -61,11 +78,11 @@ Exports land in `Android/data/com.swcsoftware.valuelens/files/Documents/ValueLen
 - When the simulator build is green and the docs are current: `git checkout staging && git merge --ff-only dev && git push`.
 - `main` is owner-only.
 
-## 5. Refreshing bundled sample data
+## 5. Refreshing bundled sample data (through the core, with checks and beta)
 ```bash
-for t in AAPL KO MSFT; do
-  curl -s -H "X-SEC-User-Agent: Dev dev@example.com" "localhost:8000/companies/$t/valuation" \
-    > apps/ios/ValueLens/Resources/SampleData/$t.json
-done
-cp apps/ios/ValueLens/Resources/SampleData/*.json apps/android/app/src/main/assets/
+cd apps/android
+VL_DUMP_DIR=/tmp/samples SEC_USER_AGENT="Name email" ./gradlew :valuation-core:desktopTest --tests '*SampleDump*'
+cp /tmp/samples/*.json ../ios/ValueLens/Resources/SampleData/
+cp /tmp/site/rates.json ../ios/ValueLens/Resources/SampleData/rates.json     # from §3c
+cp ../ios/ValueLens/Resources/SampleData/*.json app/src/main/assets/
 ```

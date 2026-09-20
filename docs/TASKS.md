@@ -63,54 +63,53 @@ Status: `[x]` done · `[ ]` todo · `[~]` in progress. Move finished sprints to 
 - [x] Deep link, foreground refresh, typed errors, haptics
 - [x] 7 JVM unit tests; verified live (JNJ, KO) on Pixel 10 emulator
 
-## Sprint 2 — On-device engine, consumer clarity, verified data
+## Sprint 2 — On-device engine, consumer clarity, verified data (2026-09-19) ✅ (owner actions pending: Pages + secret)
 
 ### A. On-device core (no hosted engine)
-- [ ] Create `packages/valuation-core` (Kotlin Multiplatform, targets android + iosArm64/iosSimulatorArm64)
-- [ ] Port `normalize/tags.py` + `statements.py` (concept map, annual/TTM, splits, derived items, fiscal-year rule)
-- [ ] Port `valuation/model_a.py`, `model_b.py`, `types.py` (Metric with formula/inputs/sources)
-- [ ] EDGAR client in core: User-Agent, 10 req/s limiter, on-device cache (24 h), `no_annual_data` etc. as core errors
-- [ ] Cross-implementation test: Python vs KMP on AAPL/KO/JNJ fixtures, diff within 1e-6
-- [ ] Android: depend on the core module; delete `EngineApi`/`RemoteValuationRepository`
-- [ ] iOS: XCFramework via `./gradlew :valuation-core:assembleXCFramework`, Swift wrapper conforming to `ValuationRepository`; delete `APIClient`/remote repo
-- [ ] Remove engine URL / LAN / "engine offline" UI from both Settings screens
-- [ ] Python engine: mark as reference/oracle in README; keep `pytest` green
+- [x] `packages/valuation-core` (KMP: android, jvm, iosArm64, iosSimulatorArm64 → `ValuationCore.xcframework`)
+- [x] Ported normalization (tags, statements, splits, fiscal-year rule, derived items) and Model A/B
+- [x] EDGAR client in core (identity User-Agent, TTL cache, tickers mirror fallback, non-JSON guard, typed errors)
+- [x] Oracle test vs Python on AAPL/KO/JNJ fixtures — 0 diffs
+- [x] Android depends on the core; `EngineApi`/remote repository deleted
+- [x] iOS embeds the XCFramework (xcodegen pre-build script builds it); `APIClient`/remote repository deleted
+- [x] Engine URL / LAN / "engine offline" UI removed from both Settings screens
+- [x] Python engine kept as reference/oracle (`pytest` green)
 
 ### B. Rates & tickers via GitHub Pages
-- [ ] `scripts/publish_rates.py` (FRED DAAA/DGS10 → `rates.json` with 30-day history)
-- [ ] `.github/workflows/rates.yml` cron weekdays 11:00 UTC, `FRED_API_KEY` repo secret, commit to `gh-pages`
-- [ ] Enable GitHub Pages on `gh-pages` (owner action) and document the URL
-- [ ] `scripts/publish_tickers.py` weekly mirror of SEC `company_tickers.json`
-- [ ] Apps: fetch `rates.json` on launch (12 h TTL), cache, "as of" label, stale (>7 d) amber note, override wins
-- [ ] Apps: search uses cached `tickers.json`; instant + offline
+- [x] `scripts/publish_rates.py` — verified locally with the FRED key (as_of 2026-09-17)
+- [x] `.github/workflows/publish-data.yml` — weekday cron + Sunday tickers + manual dispatch → `gh-pages`
+- [ ] **Owner**: add `FRED_API_KEY` repository secret; enable Pages on `gh-pages`; run the workflow once
+- [x] `scripts/publish_tickers.py` (10,438 filers)
+- [x] Apps read `rates.json` (12 h TTL, stale > 7 d flagged) with a bundled snapshot as fallback; "as of" shown in Settings
+- [x] Core searches the `tickers.json` mirror first, SEC second
 
 ### C. Expert Mode & consumer clarity
-- [ ] Settings → **Expert Mode** toggle (persisted), default off
-- [ ] Basic company screen: price, plain-language fair-value sentence per model, MoS bar, verdict, 4 health facts
-- [ ] ⓘ explainers (≤ 60 words, no formulas) on every basic-mode number
-- [ ] Expert mode: full detail + **Expand all / Collapse all** for metric disclosures
-- [ ] Case study: general-audience copy with "Show me the math" expert variant
-- [ ] Glossary screen (Settings → Glossary)
-- [ ] Basic-mode model names: "Classic value" / "Cash-flow value"; expert keeps Model A/B labels
-- [ ] Watchlist row in basic mode: verdict sentence instead of "$269.99 vs $74.08"
-- [ ] Web preview mirrors basic/expert toggle for tester feedback
+- [x] Settings → Expert Mode toggle (persisted, default off) — both apps
+- [x] Basic company screen: plain-language verdict sentence, compact gauge, checks summary, 4 health tiles with ⓘ explainers, "Show me the math"
+- [x] Expert view: full metrics with Expand all / Collapse all, beta detail line, provenance-labeled assumptions
+- [~] Case study copy — unchanged this sprint (already plain); expert variant is the existing metric rows
+- [x] Glossary screen (10 terms, plain + expert), copy shared from the core (`Explain.kt`)
+- [x] Basic-mode model names "Classic value" / "Cash-flow value" with blurbs
+- [x] Watchlist row in basic mode shows price + verdict only
+- [x] Web preview mirrors basic/expert toggle
 
 ### D. Data verification gate
-- [ ] `DataCheck` framework in core: pass/warn/fail, message, affected inputs
-- [ ] Checks: balance-sheet identity, EPS ≈ NI/shares, share-count/market-cap plausibility, TTM period alignment, freshness (filing ≤ 130 d, price ≤ 5 d), sign/non-negativity, provenance for every input
-- [ ] "Data checks" card (basic: one-line summary; expert: full list) shown above valuation; **fail blocks the fair-value number** with an explanation
-- [ ] **Beta derived, not assumed** (#31): 5-yr monthly regression vs S&P 500 from keyless price history; show method, window, R²; "assumed β 1.0" amber flag only when < 36 months of data
-- [ ] Tax rate, cost of debt, growth: label "derived from <filing>" vs "assumed", never a bare default
-- [ ] Price freshness + source shown next to price; stale price blocks MoS verdict (shows "enter price")
-- [ ] `docs/DATA_VERIFICATION.md`: every input → source → check → how to reconcile with Yahoo/Morningstar
-- [ ] Multi-class shares via dimensioned XBRL (`frames` API or instance doc) — BRK, GOOG, META (#1)
+- [x] `DataChecks` in core: 13 checks (see DATA_VERIFICATION.md); fail withholds the value in both apps
+- [x] **Beta derived** from 5-yr monthly regression vs ^GSPC with R²/window; assumed 1.0 only with an amber flag (#31)
+- [x] Tax rate, cost of debt, rates, price: provenance labels, never bare defaults
+- [x] Freshest-tag selection for TTM (fixed PG cash, KO debt) + `tag_coverage` / `debt_coverage` checks
+- [x] `docs/DATA_VERIFICATION.md`
+- [ ] Multi-class shares via dimensioned XBRL (#1) — carried to Sprint 3
 
 ### Carried over
-- [ ] Physical iPhone + Android test (#19 becomes moot once on-device; verify EDGAR direct from device)
-- [ ] Android share-card PNG visual check (#22)
-- [ ] Android light theme (#23), concurrent watchlist refresh (#24), chart axes (#25)
+- [ ] Physical iPhone + Android test of the on-device path (#19 is moot; verify SEC/Yahoo reachability from a phone network)
+- [ ] Android share-card PNG visual check (#22), light theme (#23), concurrent watchlist refresh (#24), chart axes (#25)
 
 ## Sprint 3 — Polish & beta
+- [ ] Multi-class shares (BRK, GOOG, META) via `frames` API / instance docs (#1)
+- [ ] Sector-aware tag maps: banks, insurers, REITs
+- [ ] Case study: general-audience copy pass with expert variant
+- [ ] Licensed quote/beta source behind the `Market` class
 - [ ] TestFlight + Play internal testing
 - [ ] Crash reporting, engine error telemetry (no user analytics)
 - [ ] Dynamic Type / VoiceOver pass

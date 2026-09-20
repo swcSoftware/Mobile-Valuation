@@ -1,8 +1,10 @@
 # ValueLens — Fundamental Equity Valuation Platform
 
-Native iOS (SwiftUI) + Android (Compose) clients backed by a Python valuation engine that
-ingests SEC EDGAR 10-K / 10-Q XBRL disclosures and produces Graham / Buffett / Munger style
-intrinsic value estimates (Model A) alongside a modern DCF / ROIC fair-value view (Model B).
+Native iOS (SwiftUI) + Android (Compose) clients sharing one Kotlin Multiplatform valuation core
+that runs **entirely on the device**: it ingests SEC EDGAR 10-K / 10-Q XBRL disclosures, verifies
+them (13 data checks, measured beta, no silent defaults) and produces Graham / Buffett / Munger
+style intrinsic value estimates (Model A) alongside a modern DCF / ROIC fair-value view (Model B).
+No server. The Python engine is the reference implementation the core is tested against.
 
 **No technical analysis. Ever.** See [`docs/PLAN.md`](docs/PLAN.md) for the roadmap.
 
@@ -12,27 +14,26 @@ intrinsic value estimates (Model A) alongside a modern DCF / ROIC fair-value vie
 |---|---|
 | `apps/ios` | SwiftUI app (iOS 17+), MVVM + Repository. Project generated with `xcodegen`. |
 | `apps/android` | Kotlin / Jetpack Compose scaffold (built out in a later sprint). |
-| `services/valuation-engine` | FastAPI service: EDGAR ingestion, normalization, valuation models. |
+| `packages/valuation-core` | Kotlin Multiplatform core used by both apps (EDGAR, normalization, models, data checks, beta). |
+| `services/valuation-engine` | Python reference implementation + oracle fixtures (development only). |
+| `scripts` + `.github/workflows` | Publishes `rates.json` (FRED) and `tickers.json` to GitHub Pages daily. |
 | `docs` | Plan, architecture, API contract, task board, issues, sprint log. |
 
 ## Quick start
 
 ```bash
-# 1. Backend
-cd services/valuation-engine
-python3 -m venv .venv && source .venv/bin/activate
-pip install -e ".[dev]"
-uvicorn valuation_engine.main:app --reload --port 8000
+# iOS (first build compiles the shared core via Gradle; needs a JDK 17+ — Android Studio's works)
+cd apps/ios && xcodegen generate && open ValueLens.xcodeproj
 
-# 2. iOS
-cd apps/ios
-xcodegen generate
-open ValueLens.xcodeproj   # or build via xcodebuild, see docs/RUNBOOK.md
+# Android
+cd apps/android && ./gradlew assembleDebug
+
+# Everything else: docs/RUNBOOK.md
 ```
 
 ## Tests
 
-43 automated tests across the three codebases — see `docs/RUNBOOK.md` §3b.
+60 automated tests across the core, both apps and the reference engine — see `docs/RUNBOOK.md` §3b.
 
 ## Branches
 
