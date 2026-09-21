@@ -127,6 +127,17 @@
      "tag": "valuelens:derived",
      "value": 0.3854412224147235
     },
+    "dividends_per_share": {
+     "accession": "0000200406-19-000009",
+     "derived": false,
+     "filed": "2019-02-20",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-01-01",
+     "period_start": "2016-01-04",
+     "tag": "us-gaap:CommonStockDividendsPerShareCashPaid",
+     "value": 3.15
+    },
     "effective_tax_rate": {
      "accession": "0000200406-19-000009",
      "derived": true,
@@ -181,6 +192,17 @@
      "period_start": "2016-01-04",
      "tag": "valuelens:derived",
      "value": 17674374791.698227
+    },
+    "gain_on_sale": {
+     "accession": "0000200406-19-000009",
+     "derived": false,
+     "filed": "2019-02-20",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-01-01",
+     "period_start": "2016-01-04",
+     "tag": "us-gaap:GainLossOnDispositionOfAssets1",
+     "value": 600000000.0
     },
     "goodwill": {
      "accession": "0000200406-19-000009",
@@ -619,6 +641,17 @@
      "tag": "valuelens:derived",
      "value": -3383000000.0
     },
+    "dividends_per_share": {
+     "accession": "0000200406-20-000010",
+     "derived": false,
+     "filed": "2020-02-18",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-12-31",
+     "period_start": "2017-01-02",
+     "tag": "us-gaap:CommonStockDividendsPerShareCashPaid",
+     "value": 3.32
+    },
     "effective_tax_rate": {
      "accession": "0000200406-20-000010",
      "derived": true,
@@ -673,6 +706,17 @@
      "period_start": "2017-01-02",
      "tag": "valuelens:derived",
      "value": 15049500000.0
+    },
+    "gain_on_sale": {
+     "accession": "0000200406-20-000010",
+     "derived": false,
+     "filed": "2020-02-18",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-12-31",
+     "period_start": "2017-01-02",
+     "tag": "us-gaap:GainLossOnDispositionOfAssets1",
+     "value": 1300000000.0
     },
     "goodwill": {
      "accession": "0000200406-20-000010",
@@ -1111,6 +1155,17 @@
      "tag": "valuelens:derived",
      "value": -239000000.0
     },
+    "dividends_per_share": {
+     "accession": "0000200406-21-000008",
+     "derived": false,
+     "filed": "2021-02-22",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2018-12-30",
+     "period_start": "2018-01-01",
+     "tag": "us-gaap:CommonStockDividendsPerShareCashPaid",
+     "value": 3.54
+    },
     "effective_tax_rate": {
      "accession": "0000200406-21-000008",
      "derived": true,
@@ -1165,6 +1220,17 @@
      "period_start": "2018-01-01",
      "tag": "valuelens:derived",
      "value": 19649129951.66398
+    },
+    "gain_on_sale": {
+     "accession": "0000200406-21-000008",
+     "derived": false,
+     "filed": "2021-02-22",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2018-12-30",
+     "period_start": "2018-01-01",
+     "tag": "us-gaap:GainLossOnDispositionOfAssets1",
+     "value": 1200000000.0
     },
     "goodwill": {
      "accession": "0000200406-21-000008",
@@ -1603,6 +1669,17 @@
      "tag": "valuelens:derived",
      "value": -6693000000.0
     },
+    "dividends_per_share": {
+     "accession": "0000200406-22-000022",
+     "derived": false,
+     "filed": "2022-02-17",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2019-12-29",
+     "period_start": "2018-12-31",
+     "tag": "us-gaap:CommonStockDividendsPerShareCashPaid",
+     "value": 3.75
+    },
     "effective_tax_rate": {
      "accession": "0000200406-22-000022",
      "derived": true,
@@ -1657,6 +1734,17 @@
      "period_start": "2018-12-31",
      "tag": "valuelens:derived",
      "value": 25600460872.57618
+    },
+    "gain_on_sale": {
+     "accession": "0000200406-22-000022",
+     "derived": false,
+     "filed": "2022-02-17",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2019-12-29",
+     "period_start": "2018-12-31",
+     "tag": "us-gaap:GainLossOnSalesOfAssetsAndAssetImpairmentCharges",
+     "value": 2154000000.0
     },
     "goodwill": {
      "accession": "0000200406-22-000022",
@@ -2095,6 +2183,17 @@
      "tag": "valuelens:derived",
      "value": -5064000000.0
     },
+    "dividends_per_share": {
+     "accession": "0000200406-23-000016",
+     "derived": false,
+     "filed": "2023-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2021-01-03",
+     "period_start": "2019-12-30",
+     "tag": "us-gaap:CommonStockDividendsPerShareCashPaid",
+     "value": 3.98
+    },
     "effective_tax_rate": {
      "accession": "0000200406-23-000016",
      "derived": true,
@@ -2149,6 +2248,17 @@
      "period_start": "2019-12-30",
      "tag": "valuelens:derived",
      "value": 23841275868.3397
+    },
+    "gain_on_sale": {
+     "accession": "0000200406-23-000016",
+     "derived": false,
+     "filed": "2023-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2021-01-03",
+     "period_start": "2019-12-30",
+     "tag": "us-gaap:GainLossOnSalesOfAssetsAndAssetImpairmentCharges",
+     "value": 111000000.0
     },
     "goodwill": {
      "accession": "0000200406-23-000016",
@@ -2587,6 +2697,17 @@
      "tag": "valuelens:derived",
      "value": 1786000000.0
     },
+    "dividends_per_share": {
+     "accession": "0000200406-24-000013",
+     "derived": false,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2022-01-02",
+     "period_start": "2021-01-04",
+     "tag": "us-gaap:CommonStockDividendsPerShareCashPaid",
+     "value": 4.19
+    },
     "effective_tax_rate": {
      "accession": "0000200406-24-000013",
      "derived": true,
@@ -2641,6 +2762,17 @@
      "period_start": "2021-01-04",
      "tag": "valuelens:derived",
      "value": 19922860412.973198
+    },
+    "gain_on_sale": {
+     "accession": "0000200406-24-000013",
+     "derived": false,
+     "filed": "2024-02-16",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2022-01-02",
+     "period_start": "2021-01-04",
+     "tag": "us-gaap:GainLossOnSalesOfAssetsAndAssetImpairmentCharges",
+     "value": 617000000.0
     },
     "goodwill": {
      "accession": "0000200406-24-000013",
@@ -3079,6 +3211,17 @@
      "tag": "valuelens:derived",
      "value": 2066000000.0
     },
+    "dividends_per_share": {
+     "accession": "0000200406-25-000038",
+     "derived": false,
+     "filed": "2025-02-13",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-01-01",
+     "period_start": "2022-01-03",
+     "tag": "us-gaap:CommonStockDividendsPerShareCashPaid",
+     "value": 4.45
+    },
     "effective_tax_rate": {
      "accession": "0000200406-25-000038",
      "derived": true,
@@ -3133,6 +3276,17 @@
      "period_start": "2022-01-03",
      "tag": "valuelens:derived",
      "value": 17498386022.00527
+    },
+    "gain_on_sale": {
+     "accession": "0000200406-25-000038",
+     "derived": false,
+     "filed": "2025-02-13",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-01-01",
+     "period_start": "2022-01-03",
+     "tag": "us-gaap:GainLossOnSalesOfAssetsAndAssetImpairmentCharges",
+     "value": 380000000.0
     },
     "goodwill": {
      "accession": "0000200406-25-000038",
@@ -3571,6 +3725,17 @@
      "tag": "valuelens:derived",
      "value": -2225000000.0
     },
+    "dividends_per_share": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-12-31",
+     "period_start": "2023-01-02",
+     "tag": "us-gaap:CommonStockDividendsPerShareCashPaid",
+     "value": 4.7
+    },
     "effective_tax_rate": {
      "accession": "0000200406-26-000016",
      "derived": true,
@@ -3625,6 +3790,17 @@
      "period_start": "2023-01-02",
      "tag": "valuelens:derived",
      "value": 19177021643.871994
+    },
+    "gain_on_sale": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-12-31",
+     "period_start": "2023-01-02",
+     "tag": "us-gaap:GainLossOnSalesOfAssetsAndAssetImpairmentCharges",
+     "value": 117000000.0
     },
     "goodwill": {
      "accession": "0000200406-26-000016",
@@ -4063,6 +4239,17 @@
      "tag": "valuelens:derived",
      "value": -736000000.0
     },
+    "dividends_per_share": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2024-12-29",
+     "period_start": "2024-01-01",
+     "tag": "us-gaap:CommonStockDividendsPerShareCashPaid",
+     "value": 4.91
+    },
     "effective_tax_rate": {
      "accession": "0000200406-26-000016",
      "derived": true,
@@ -4117,6 +4304,17 @@
      "period_start": "2024-01-01",
      "tag": "valuelens:derived",
      "value": 18353413375.681667
+    },
+    "gain_on_sale": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2024-12-29",
+     "period_start": "2024-01-01",
+     "tag": "us-gaap:GainLossOnSalesOfAssetsAndAssetImpairmentCharges",
+     "value": 226000000.0
     },
     "goodwill": {
      "accession": "0000200406-26-000016",
@@ -4555,6 +4753,17 @@
      "tag": "valuelens:derived",
      "value": 2846000000.0
     },
+    "dividends_per_share": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2025-12-28",
+     "period_start": "2024-12-30",
+     "tag": "us-gaap:CommonStockDividendsPerShareCashPaid",
+     "value": 5.14
+    },
     "effective_tax_rate": {
      "accession": "0000200406-26-000016",
      "derived": true,
@@ -4609,6 +4818,17 @@
      "period_start": "2024-12-30",
      "tag": "valuelens:derived",
      "value": 27427830115.71161
+    },
+    "gain_on_sale": {
+     "accession": "0000200406-26-000016",
+     "derived": false,
+     "filed": "2026-02-11",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2025-12-28",
+     "period_start": "2024-12-30",
+     "tag": "us-gaap:GainLossOnSalesOfAssetsAndAssetImpairmentCharges",
+     "value": 263000000.0
     },
     "goodwill": {
      "accession": "0000200406-26-000016",
@@ -5718,6 +5938,17 @@
     "tag": "valuelens:derived",
     "value": 8763000000.0
    },
+   "dividends_per_share": {
+    "accession": "0000200406-26-000153",
+    "derived": true,
+    "filed": "2026-07-23",
+    "form": "10-Q",
+    "note": "TTM = FY(2025-12-28) 5.14 + YTD(2025-12-29\u21922026-06-28) 2.64 \u2212 YTD(2024-12-30\u21922025-06-29) 2.54 (EPS TTM is an additive approximation)",
+    "period_end": "2026-06-28",
+    "period_start": "2025-06-28",
+    "tag": "us-gaap:CommonStockDividendsPerShareCashPaid",
+    "value": 5.239999999999999
+   },
    "effective_tax_rate": {
     "accession": "0000200406-26-000153",
     "derived": true,
@@ -5772,6 +6003,17 @@
     "period_start": "2024-12-30",
     "tag": "valuelens:derived",
     "value": 21637709477.69487
+   },
+   "gain_on_sale": {
+    "accession": "0000200406-26-000153",
+    "derived": true,
+    "filed": "2026-07-23",
+    "form": "10-Q",
+    "note": "TTM = FY(2025-12-28) 263,000,000 + YTD(2025-12-29\u21922026-06-28) 43,000,000 \u2212 YTD(2024-12-30\u21922025-06-29) 74,000,000",
+    "period_end": "2026-06-28",
+    "period_start": "2025-06-28",
+    "tag": "us-gaap:GainLossOnSalesOfAssetsAndAssetImpairmentCharges",
+    "value": 232000000.0
    },
    "goodwill": {
     "accession": "0000200406-26-000153",

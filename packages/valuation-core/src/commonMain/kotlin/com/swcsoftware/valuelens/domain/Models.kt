@@ -42,6 +42,8 @@ import kotlinx.serialization.Serializable
 @Serializable data class MoSBand(@SerialName("discount_pct") val discountPct: Double,
                                  @SerialName("buy_below") val buyBelow: Double? = null)
 
+@Serializable data class SectorInfo(val sic: String? = null, @SerialName("sic_description") val sicDescription: String? = null, val mode: String = "general", val note: String = "")
+
 @Serializable data class DataCheck(
     val key: String, val label: String, val status: String,   // "pass" | "warn" | "fail"
     val message: String, val inputs: List<String> = emptyList(),
@@ -87,6 +89,7 @@ import kotlinx.serialization.Serializable
     @SerialName("data_checks") val dataChecks: List<DataCheck> = emptyList(),
     /** Every model input with its provenance ("sec", "market", "derived", "assumed"). */
     val provenance: Map<String, String> = emptyMap(),
+    val sector: SectorInfo? = null,
 )
 
 // ---- Sprint 1 additions -------------------------------------------------------------------

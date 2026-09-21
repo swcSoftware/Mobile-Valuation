@@ -55,9 +55,11 @@ object Explain {
         isModelA -> "Classic value" else -> "Cash-flow value"
     }
 
-    fun modelBlurb(isModelA: Boolean) = if (isModelA)
-        "The classic approach: what the business earns for its owners, priced the way Graham and Buffett would."
-    else "The modern approach: project the cash the business will generate and discount it back to today."
+    fun modelBlurb(isModelA: Boolean, sectorMode: String = "general") = when (sectorMode) {
+        "financial" -> if (isModelA) "Banks are valued on what they own, not what they sell: book value, and whether the return on it beats what investors demand — Graham's rule for financials." else "The modern approach for banks: how much more the bank earns on its equity than investors require, and what that excess is worth today."
+        "reit" -> if (isModelA) "REITs are valued on funds from operations — earnings with depreciation added back, because buildings don't wear out like machines. Graham's formula, applied to FFO." else "The modern approach for REITs: a fair multiple of funds from operations, cross-checked against the dividend stream."
+        else -> if (isModelA) "The classic approach: what the business earns for its owners, priced the way Graham and Buffett would." else "The modern approach: project the cash the business will generate and discount it back to today."
+    }
 
     /** One sentence a first-time investor can act on. */
     fun verdictSentence(r: ValuationReport, res: ModelResult): String {
@@ -86,11 +88,20 @@ object Explain {
             val pct = g * 100
             out += Fact("Growing?", "${if (pct >= 0) "+" else ""}${pct.roundToInt()}% / yr", if (pct >= 5) "good" else if (pct >= 0) "neutral" else "bad", "Revenue has ${if (pct >= 0) "grown" else "shrunk"} about ${abs(pct).roundToInt()}% a year over the last five years.")
         }
-        r.snapshot["roic"]?.value?.let { roic ->
+        val mode = r.sector?.mode ?: "general"
+        if (mode == "financial" || mode == "reit") {
+            r.snapshot["roe"]?.value?.let { roe ->
+                val pct = roe * 100
+                out += Fact("Profitable?", "${pct.roundToInt()}% return on equity", if (pct >= 12) "good" else if (pct >= 7) "neutral" else "bad", "For every \$100 of shareholders' money the company earns about \$${pct.roundToInt()} a year.")
+            }
+        } else r.snapshot["roic"]?.value?.let { roic ->
             val pct = roic * 100
             out += Fact("Profitable?", "${pct.roundToInt()}% return on capital", if (pct >= 15) "good" else if (pct >= 8) "neutral" else "bad", "For every \$100 invested in the business it earns about \$${pct.roundToInt()} a year after tax.")
         }
-        r.snapshot["debt_to_equity"]?.value?.let { de ->
+        if (mode == "financial") {
+            val eq = r.snapshot["equity"]?.value; val ta = r.snapshot["total_assets"]?.value
+            if (eq != null && ta != null && ta > 0) { val lev = ta / eq; out += Fact("Leverage", "${fixed(lev, 1)}× assets / equity", if (lev <= 10) "good" else if (lev <= 15) "neutral" else "bad", "The balance sheet holds ${fixed(lev, 1)} dollars of assets for every dollar of equity — normal for a bank is 8–12×.") }
+        } else r.snapshot["debt_to_equity"]?.value?.let { de ->
             out += Fact("Debt load", "${fixed(de, 1)}× equity", if (de <= 0.5) "good" else if (de <= 1.5) "neutral" else "bad", "The company owes ${fixed(de, 1)} dollars of debt for every dollar of shareholders' equity.")
         }
         val cash = r.snapshot["cash"]?.value; val fcf = r.snapshot["fcf"]?.value

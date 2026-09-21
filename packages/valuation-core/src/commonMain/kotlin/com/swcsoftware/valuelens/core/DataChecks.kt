@@ -2,6 +2,7 @@ package com.swcsoftware.valuelens.core
 
 import com.swcsoftware.valuelens.domain.DataCheck
 import com.swcsoftware.valuelens.domain.Quote
+import com.swcsoftware.valuelens.domain.SectorInfo
 import kotlin.math.abs
 
 /**
@@ -18,7 +19,8 @@ object DataChecks {
     private fun pct(a: Double, b: Double) = if (b == 0.0) Double.POSITIVE_INFINITY else abs(a - b) / abs(b)
 
     fun run(fin: NormalizedFinancials, quote: Quote?, priceIsManual: Boolean, a: AssumptionsCore,
-            rates: RatesSnapshot?, ratesOverridden: Boolean, nowMillis: Long, predecessor: Predecessor? = null): Result {
+            rates: RatesSnapshot?, ratesOverridden: Boolean, nowMillis: Long, predecessor: Predecessor? = null, sector: SectorInfo? = null): Result {
+        val mode = sector?.let { runCatching { SectorMode.valueOf(it.mode.uppercase()) }.getOrNull() } ?: SectorMode.GENERAL
         val out = mutableListOf<DataCheck>()
         val prov = LinkedHashMap<String, String>()
         val t = fin.ttm?.values
@@ -33,6 +35,14 @@ object DataChecks {
             prov["filer"] = "sec"
             add("filer_identity", "Filings belong to this ticker", "pass", "Ticker ${fin.ticker} resolves to CIK ${fin.cik} with 10-K history.", "cik")
         }
+
+        // 0b. Sector mode is always stated
+        prov["sector"] = mode.name.lowercase()
+        add("sector_mode", "Valuation models fit the industry", "pass", when (mode) {
+            SectorMode.GENERAL -> "Operating company (SIC ${sector?.sic ?: "unknown"}): earnings, owner earnings and discounted cash flow apply."
+            SectorMode.FINANCIAL -> "Bank / insurer (SIC ${sector?.sic}): valued on book value, ROE and residual income; owner earnings, net-net working capital and FCFF are not applicable and are hidden."
+            SectorMode.REIT -> "REIT (SIC ${sector?.sic}): valued on funds from operations and dividends; GAAP earnings understate real-estate cash flow."
+        }, "sic")
 
         // 1. Balance sheet identity
         val assets = t?.get("total_assets")?.value; val lae = t?.get("liabilities_and_equity")?.value
@@ -92,11 +102,14 @@ object DataChecks {
         t?.get("d_and_a")?.value?.let { if (it < 0) bad += "D&A < 0" }
         add("signs", "Values have the expected sign", if (bad.isEmpty()) "pass" else "fail", if (bad.isEmpty()) "Revenue, shares and D&A are positive." else bad.joinToString("; "), "revenue", "shares_diluted", "d_and_a")
 
+        // Financials: deposits and policy reserves are liabilities without "debt" tags; don't warn about that.
+        val skipDebtCoverage = mode == SectorMode.FINANCIAL
         // 7b. Tag coverage: stale tags dropped, debt missing while liabilities exist (the KO case)
         val dropped = fin.warnings.firstOrNull { it.startsWith("Dropped stale TTM values") }?.substringAfter(": ")
         if (dropped != null) add("tag_coverage", "All line items resolved to current tags", "warn", "Some SEC tags this filer used in the past are no longer reported and were ignored: $dropped. If a key figure is missing, this is why.", *dropped.split(", ").toTypedArray())
         else add("tag_coverage", "All line items resolved to current tags", "pass", "Every line item came from a tag the filer still reports.")
-        if (liab != null && liab > 0 && t?.get("total_debt") == null)
+        if (skipDebtCoverage) add("debt_coverage", "Debt captured", "pass", "Bank/insurer: liabilities are mostly deposits or reserves; debt coverage check not applicable.")
+        else if (liab != null && liab > 0 && t?.get("total_debt") == null)
             add("debt_coverage", "Debt captured", "warn", "No debt tags were found although total liabilities are ${PyFmt.commas(liab, 0)}. Leverage, WACC and invested capital may be understated.", "long_term_debt", "short_term_debt")
         else add("debt_coverage", "Debt captured", "pass", if (t?.get("total_debt") != null) "Total debt ${PyFmt.commas(t["total_debt"]!!.value, 0)} from short- and long-term debt tags." else "No liabilities reported.")
 
@@ -109,8 +122,9 @@ object DataChecks {
         if (prov["tax_rate"] == "assumed") add("tax_rate", "Tax rate from filings", "warn", "Effective tax rate not derivable from the latest filing; using ${PyFmt.fixed(a.taxRatePct, 0)}% statutory assumption.", "tax_rate")
         else add("tax_rate", "Tax rate from filings", "pass", "Effective tax rate derived from income tax ÷ pre-tax income.", "tax_rate")
 
-        prov["cost_of_debt"] = if (t?.containsKey("interest_expense") == true && (t["total_debt"]?.value ?: 0.0) > 0) "sec" else "assumed"
-        if (prov["cost_of_debt"] == "assumed") add("cost_of_debt", "Cost of debt from filings", "warn", "Interest expense not tagged; cost of debt assumed as risk-free + 1.5%.", "cost_of_debt")
+        prov["cost_of_debt"] = if (mode == SectorMode.FINANCIAL) "n/a" else if (t?.containsKey("interest_expense") == true && (t["total_debt"]?.value ?: 0.0) > 0) "sec" else "assumed"
+        if (mode == SectorMode.FINANCIAL) add("cost_of_debt", "Cost of debt from filings", "pass", "Not used for banks/insurers (equity-based models).", "cost_of_debt")
+        else if (prov["cost_of_debt"] == "assumed") add("cost_of_debt", "Cost of debt from filings", "warn", "Interest expense not tagged; cost of debt assumed as risk-free + 1.5%.", "cost_of_debt")
         else add("cost_of_debt", "Cost of debt from filings", "pass", "Cost of debt derived from interest expense ÷ total debt.", "cost_of_debt")
 
         prov["rates"] = when { ratesOverridden -> "override"; rates != null -> "fred"; else -> "assumed" }

@@ -138,7 +138,8 @@ fun CompanyDetailScreen(state: AppState, company: CompanyRef, onBack: () -> Unit
                     haptics.performHapticFeedback(if (before != after) HapticFeedbackType.LongPress else HapticFeedbackType.TextHandleMove)
                     model = new
                 }
-                if (!expert) Text(Explain.modelBlurb(model == ValuationModel.A), style = MaterialTheme.typography.bodySmall, color = VL.textSecondary, modifier = Modifier.padding(vertical = 6.dp))
+                if (!expert) Text(Explain.modelBlurb(model == ValuationModel.A, r.sector?.mode ?: "general"), style = MaterialTheme.typography.bodySmall, color = VL.textSecondary, modifier = Modifier.padding(vertical = 6.dp))
+                r.sector?.takeIf { it.mode != "general" }?.let { Text("Industry mode: ${it.note}", style = MaterialTheme.typography.bodySmall, color = VL.info, modifier = Modifier.padding(bottom = 6.dp)) }
                 Spacer(Modifier.height(8.dp))
 
                 if (failed) {

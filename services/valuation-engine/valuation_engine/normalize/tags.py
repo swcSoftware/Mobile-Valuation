@@ -90,6 +90,14 @@ CONCEPTS: list[Concept] = [
     Concept("buybacks", "Share repurchases", Kind.FLOW, (
         "PaymentsForRepurchaseOfCommonStock",
     ), statement="cashflow"),
+    Concept("dividends_per_share", "Dividends per share", Kind.FLOW, (
+        "CommonStockDividendsPerShareCashPaid", "CommonStockDividendsPerShareDeclared",
+    ), unit="USD/shares", statement="cashflow"),
+    Concept("gain_on_sale", "Gains on sale of property (REIT FFO add-back)", Kind.FLOW, (
+        "GainLossOnSaleOfProperties", "GainsLossesOnSalesOfInvestmentRealEstate",
+        "GainLossOnSaleOfPropertiesNetOfApplicableIncomeTaxes", "GainLossOnDispositionOfAssets1",
+        "GainLossOnSalesOfAssetsAndAssetImpairmentCharges",
+    ), statement="cashflow"),
 
     # ---- Balance sheet ----------------------------------------------------
     Concept("cash", "Cash & equivalents", Kind.INSTANT, (

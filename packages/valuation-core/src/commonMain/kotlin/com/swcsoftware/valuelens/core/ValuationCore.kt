@@ -38,12 +38,13 @@ class ValuationCore(
             // No companyfacts at all (ETFs, trusts): explain from the filing profile instead of a bare 404.
             throw com.swcsoftware.valuelens.domain.EngineException.NoAnnualData(FilerIdentity.noAnnualDataReason(resolved.ticker, ed.profile(resolved.cik)))
         }
+        if (resolved.name.isNotBlank() && fin.annual.isNotEmpty())  // companyfacts entityName can be a co-registrant (BAC → "BofA Finance LLC")
+            fin = NormalizedFinancials(fin.ticker, fin.cik, resolved.name, fin.annual, fin.ttm, fin.currentShares, fin.warnings)
         var predecessor: Predecessor? = null
-        var profile: FilerProfile? = null
+        var profile: FilerProfile? = ed.profile(resolved.cik)  // SIC for sector mode (cached 24 h); null → general
         if (fin.annual.isEmpty()) {
             // Successor-issuer fallback (holding-company reorganizations). Never reached for ordinary filers.
             val today = Day(floorDiv(clock.nowMillis(), Edgar.DAY))
-            profile = ed.profile(resolved.cik)
             predecessor = ed.findPredecessor(resolved, profile, today)
             if (predecessor != null) {
                 val pf = Statements.normalize(ed.companyFacts(predecessor.ref))
@@ -51,6 +52,7 @@ class ValuationCore(
                     ref = predecessor.ref
                     val note = "Filings come from predecessor ${predecessor.ref.name} (CIK ${predecessor.ref.cik}); ${resolved.ticker} is now ${predecessor.successorName} (CIK ${resolved.cik}, first filing ${predecessor.successorFirstFiling ?: "n/a"}" + (if (predecessor.viaSuccessorNotice) ", successor notice 8-K12B" else "") + ")."
                     fin = NormalizedFinancials(resolved.ticker, predecessor.ref.cik, predecessor.ref.name, pf.annual, pf.ttm, pf.currentShares, listOf(note) + pf.warnings)
+                    profile = ed.profile(predecessor.ref.cik) ?: profile
                 }
             }
         }
@@ -71,8 +73,9 @@ class ValuationCore(
             rateSource = when { ratesOverridden -> "user override"; rates != null -> "FRED (published ${rates.as_of})"; else -> "defaults" },
             betaSource = when { overrides.beta != null -> "override"; measuredBeta != null -> "measured"; else -> "assumed" },
         )
-        val checks = DataChecks.run(fin, quote, priceOverride != null, a, rates, ratesOverridden, clock.nowMillis(), predecessor)
-        val report = Report.build(fin, a, quote, Market.isoFromMillis(clock.nowMillis()), checks.checks, checks.provenance)
+        val sector = Sector.info(profile)
+        val checks = DataChecks.run(fin, quote, priceOverride != null, a, rates, ratesOverridden, clock.nowMillis(), predecessor, sector)
+        val report = Report.build(fin, a, quote, Market.isoFromMillis(clock.nowMillis()), checks.checks, checks.provenance, sector)
         return if (measuredBeta != null) report.withBeta(measuredBeta) else report
     }
 
@@ -89,9 +92,11 @@ class ValuationCore(
     @Throws(Exception::class)
     fun explainJson(reportJson: String): String {
         val r = json.decodeFromString<ValuationReport>(reportJson)
+        val mode = r.sector?.mode ?: "general"
         return json.encodeToString(ExplainSummary(
             verdictA = Explain.verdictSentence(r, r.modelA), verdictB = Explain.verdictSentence(r, r.modelB),
             facts = Explain.healthFacts(r), checksSummary = Explain.checksSummary(r),
+            blurbA = Explain.modelBlurb(true, mode), blurbB = Explain.modelBlurb(false, mode), sectorNote = r.sector?.note ?: "",
         ))
     }
     @Throws(Exception::class)
@@ -114,7 +119,8 @@ class ValuationCore(
 }
 
 @Serializable
-data class ExplainSummary(val verdictA: String, val verdictB: String, val facts: List<Explain.Fact>, val checksSummary: String)
+data class ExplainSummary(val verdictA: String, val verdictB: String, val facts: List<Explain.Fact>, val checksSummary: String,
+                          val blurbA: String = "", val blurbB: String = "", val sectorNote: String = "")
 
 private fun ValuationReport.withBeta(b: BetaResult): ValuationReport =
     copy(warnings = warnings, provenance = provenance + mapOf("beta_detail" to "β ${PyFmt.fixed(b.beta, 2)} · ${b.months} monthly returns ${b.window} · R² ${PyFmt.fixed(b.r2, 2)}"))

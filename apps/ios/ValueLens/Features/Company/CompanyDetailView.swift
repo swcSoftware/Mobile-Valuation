@@ -82,7 +82,11 @@ struct CompanyDetailView: View {
         let result = r.result(for: vm.model)
         VStack(alignment: .leading, spacing: 16) {
             header(r, expert: expert)
-            ModelToggle(model: $vm.model, expert: expert)
+            ModelToggle(model: $vm.model, expert: expert, blurbOverride: expert ? nil : (vm.model == .traditional ? explain?.blurbA : explain?.blurbB))
+            if let sector = r.sector, sector.mode != "general" {
+                Label("Industry mode: \(sector.note)", systemImage: "building.columns")
+                    .font(.caption).foregroundStyle(Theme.info).fixedSize(horizontal: false, vertical: true)
+            }
 
             if r.checksFailed {
                 Card {

@@ -13,6 +13,7 @@ import kotlin.test.assertTrue
 
 /** Fake network: serves the recorded SEC fixtures, a synthetic Yahoo chart, and a rates.json. */
 class FakeFetcher(private val fixtures: File, private val betaFactor: Double = 1.5, var ratesJson: String? = null, var offline: Boolean = false) : Fetcher {
+    companion object { val TICKERS = mapOf(320193L to "AAPL", 21344L to "KO", 200406L to "JNJ", 19617L to "JPM", 726728L to "O") }
     val calls = mutableListOf<String>()
     override fun get(url: String, headers: Map<String, String>): FetchResult {
         calls += url
@@ -24,8 +25,13 @@ class FakeFetcher(private val fixtures: File, private val betaFactor: Double = 1
             url.endsWith("company_tickers.json") -> File(fixtures, "company_tickers.json").readText()
             "companyfacts/CIK" in url -> {
                 val cik = url.substringAfter("CIK").substringBefore(".json").toLong()
-                val t = mapOf(320193L to "AAPL", 21344L to "KO", 200406L to "JNJ")[cik] ?: throw FetchException(404, "no facts")
+                val t = TICKERS[cik] ?: throw FetchException(404, "no facts")
                 File(fixtures, "companyfacts_$t.json").readText()
+            }
+            "submissions/CIK" in url -> {
+                val cik = url.substringAfter("CIK").substringBefore(".json").toLong()
+                val t = TICKERS[cik] ?: throw FetchException(404, "no submissions")
+                File(fixtures, "submissions_$t.json").readText()
             }
             "finance/chart" in url && "range=1d" in url -> """{"chart":{"result":[{"meta":{"regularMarketPrice":300.0,"currency":"USD","regularMarketTime":1789761602}}]}}"""
             "finance/chart" in url && "range=5y" in url -> syntheticChart(if ("%5EGSPC" in url || "^GSPC" in url) 1.0 else betaFactor)
@@ -87,6 +93,8 @@ class CoreFacadeTest {
         assertEquals("pass", byKey["signs"]!!.status)
         assertTrue(r.dataChecks.none { it.status == "fail" }, r.dataChecks.filter { it.status == "fail" }.joinToString())
         assertNotNull(r.modelA.intrinsicValuePerShare); assertNotNull(r.modelB.intrinsicValuePerShare)
+        assertEquals("general", r.sector?.mode); assertEquals("general", r.provenance["sector"])
+        assertTrue(r.modelA.metrics.any { it.key == "owner_earnings" })  // general path untouched
     }
 
     @Test fun assumedBetaAndDefaultRatesAreFlagged() {

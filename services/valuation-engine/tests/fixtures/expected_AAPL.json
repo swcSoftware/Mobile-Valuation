@@ -138,6 +138,17 @@
      "tag": "us-gaap:PaymentsOfDividendsCommonStock",
      "value": 11965000000.0
     },
+    "dividends_per_share": {
+     "accession": "0000320193-18-000145",
+     "derived": false,
+     "filed": "2018-11-05",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2016-09-24",
+     "period_start": "2015-09-27",
+     "tag": "us-gaap:CommonStockDividendsPerShareDeclared",
+     "value": 2.18
+    },
     "effective_tax_rate": {
      "accession": "0000320193-18-000145",
      "derived": true,
@@ -640,6 +651,17 @@
      "period_start": "2016-09-25",
      "tag": "us-gaap:PaymentsOfDividendsCommonStock",
      "value": 12563000000.0
+    },
+    "dividends_per_share": {
+     "accession": "0000320193-19-000119",
+     "derived": false,
+     "filed": "2019-10-31",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2017-09-30",
+     "period_start": "2016-09-25",
+     "tag": "us-gaap:CommonStockDividendsPerShareDeclared",
+     "value": 2.4
     },
     "effective_tax_rate": {
      "accession": "0000320193-19-000119",
@@ -1144,6 +1166,17 @@
      "tag": "us-gaap:PaymentsOfDividends",
      "value": 13712000000.0
     },
+    "dividends_per_share": {
+     "accession": "0000320193-20-000096",
+     "derived": false,
+     "filed": "2020-10-30",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2018-09-29",
+     "period_start": "2017-10-01",
+     "tag": "us-gaap:CommonStockDividendsPerShareDeclared",
+     "value": 0.68
+    },
     "effective_tax_rate": {
      "accession": "0000320193-20-000096",
      "derived": true,
@@ -1624,6 +1657,17 @@
      "period_start": "2018-09-30",
      "tag": "us-gaap:PaymentsOfDividends",
      "value": 14119000000.0
+    },
+    "dividends_per_share": {
+     "accession": "0000320193-21-000105",
+     "derived": false,
+     "filed": "2021-10-29",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2019-09-28",
+     "period_start": "2018-09-30",
+     "tag": "us-gaap:CommonStockDividendsPerShareDeclared",
+     "value": 0.75
     },
     "effective_tax_rate": {
      "accession": "0000320193-21-000105",
@@ -2106,6 +2150,17 @@
      "tag": "us-gaap:PaymentsOfDividends",
      "value": 14081000000.0
     },
+    "dividends_per_share": {
+     "accession": "0000320193-22-000108",
+     "derived": false,
+     "filed": "2022-10-28",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2020-09-26",
+     "period_start": "2019-09-29",
+     "tag": "us-gaap:CommonStockDividendsPerShareDeclared",
+     "value": 0.795
+    },
     "effective_tax_rate": {
      "accession": "0000320193-22-000108",
      "derived": true,
@@ -2586,6 +2641,17 @@
      "period_start": "2020-09-27",
      "tag": "us-gaap:PaymentsOfDividends",
      "value": 14467000000.0
+    },
+    "dividends_per_share": {
+     "accession": "0000320193-23-000106",
+     "derived": false,
+     "filed": "2023-11-03",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2021-09-25",
+     "period_start": "2020-09-27",
+     "tag": "us-gaap:CommonStockDividendsPerShareDeclared",
+     "value": 0.85
     },
     "effective_tax_rate": {
      "accession": "0000320193-23-000106",
@@ -3068,6 +3134,17 @@
      "tag": "us-gaap:PaymentsOfDividends",
      "value": 14841000000.0
     },
+    "dividends_per_share": {
+     "accession": "0000320193-24-000123",
+     "derived": false,
+     "filed": "2024-11-01",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2022-09-24",
+     "period_start": "2021-09-26",
+     "tag": "us-gaap:CommonStockDividendsPerShareDeclared",
+     "value": 0.9
+    },
     "effective_tax_rate": {
      "accession": "0000320193-24-000123",
      "derived": true,
@@ -3548,6 +3625,17 @@
      "period_start": "2022-09-25",
      "tag": "us-gaap:PaymentsOfDividends",
      "value": 15025000000.0
+    },
+    "dividends_per_share": {
+     "accession": "0000320193-25-000079",
+     "derived": false,
+     "filed": "2025-10-31",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2023-09-30",
+     "period_start": "2022-09-25",
+     "tag": "us-gaap:CommonStockDividendsPerShareDeclared",
+     "value": 0.94
     },
     "effective_tax_rate": {
      "accession": "0000320193-25-000079",
@@ -4030,6 +4118,17 @@
      "tag": "us-gaap:PaymentsOfDividends",
      "value": 15234000000.0
     },
+    "dividends_per_share": {
+     "accession": "0000320193-25-000079",
+     "derived": false,
+     "filed": "2025-10-31",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2024-09-28",
+     "period_start": "2023-10-01",
+     "tag": "us-gaap:CommonStockDividendsPerShareDeclared",
+     "value": 0.98
+    },
     "effective_tax_rate": {
      "accession": "0000320193-25-000079",
      "derived": true,
@@ -4499,6 +4598,17 @@
      "period_start": "2024-09-29",
      "tag": "us-gaap:PaymentsOfDividends",
      "value": 15421000000.0
+    },
+    "dividends_per_share": {
+     "accession": "0000320193-25-000079",
+     "derived": false,
+     "filed": "2025-10-31",
+     "form": "10-K",
+     "note": "",
+     "period_end": "2025-09-27",
+     "period_start": "2024-09-29",
+     "tag": "us-gaap:CommonStockDividendsPerShareDeclared",
+     "value": 1.02
     },
     "effective_tax_rate": {
      "accession": "0000320193-25-000079",
@@ -5632,6 +5742,17 @@
     "tag": "us-gaap:PaymentsOfDividends",
     "value": 15640000000.0
    },
+   "dividends_per_share": {
+    "accession": "0000320193-26-000020",
+    "derived": true,
+    "filed": "2026-07-31",
+    "form": "10-Q",
+    "note": "TTM = FY(2025-09-27) 1.02 + YTD(2025-09-28\u21922026-06-27) 0.79 \u2212 YTD(2024-09-29\u21922025-06-28) 0.76 (EPS TTM is an additive approximation)",
+    "period_end": "2026-06-27",
+    "period_start": "2025-06-27",
+    "tag": "us-gaap:CommonStockDividendsPerShareDeclared",
+    "value": 1.05
+   },
    "effective_tax_rate": {
     "accession": "0000320193-26-000020",
     "derived": true,
@@ -5967,6 +6088,6 @@
  "warnings": [
   "Share-count discontinuity (4\u00d7) between FY2017 and FY2018 (stock split, as restated in later filings); earlier per-share data adjusted.",
   "Dropped stale TTM values (tag no longer reported): interest_expense, goodwill",
-  "Latest 10-K missing concepts: interest_expense, goodwill, intangibles"
+  "Latest 10-K missing concepts: interest_expense, gain_on_sale, goodwill, intangibles"
  ]
 }

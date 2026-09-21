@@ -88,7 +88,8 @@ class FilerIdentityTest {
         assertEquals(320193, r.company.cik)
         assertEquals("sec", r.provenance["filer"])
         assertEquals("pass", r.dataChecks.first { it.key == "filer_identity" }.status)
-        assertFalse(sc.calls.any { it.contains("submissions/") || it.contains("efts.sec.gov") }, "no identity lookups for a normal filer")
+        assertFalse(sc.calls.any { it.contains("efts.sec.gov") }, "no predecessor search for a normal filer")
+        assertEquals(1, sc.calls.count { it.contains("submissions/") }, "one profile fetch (sector) and nothing more")
     }
 
     @Test fun profileParsingAndTokens() {

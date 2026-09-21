@@ -28,6 +28,9 @@ struct ExplainSummary: Codable, Sendable {
     let verdictB: String
     let facts: [Fact]
     let checksSummary: String
+    var blurbA: String? = nil
+    var blurbB: String? = nil
+    var sectorNote: String? = nil
 }
 
 struct GlossaryEntry: Codable, Sendable, Identifiable {

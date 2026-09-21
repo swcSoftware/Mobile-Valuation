@@ -27,6 +27,8 @@ object Concepts {
         Concept("d_and_a", "Depreciation & amortization", Kind.FLOW, listOf("DepreciationDepletionAndAmortization", "DepreciationAndAmortization", "DepreciationAmortizationAndAccretionNet", "Depreciation"), statement = "cashflow"),
         Concept("dividends_paid", "Dividends paid", Kind.FLOW, listOf("PaymentsOfDividendsCommonStock", "PaymentsOfDividends"), statement = "cashflow"),
         Concept("buybacks", "Share repurchases", Kind.FLOW, listOf("PaymentsForRepurchaseOfCommonStock"), statement = "cashflow"),
+        Concept("dividends_per_share", "Dividends per share", Kind.FLOW, listOf("CommonStockDividendsPerShareCashPaid", "CommonStockDividendsPerShareDeclared"), unit = "USD/shares", statement = "cashflow"),
+        Concept("gain_on_sale", "Gains on sale of property (REIT FFO add-back)", Kind.FLOW, listOf("GainLossOnSaleOfProperties", "GainsLossesOnSalesOfInvestmentRealEstate", "GainLossOnSaleOfPropertiesNetOfApplicableIncomeTaxes", "GainLossOnDispositionOfAssets1", "GainLossOnSalesOfAssetsAndAssetImpairmentCharges"), statement = "cashflow"),
         Concept("cash", "Cash & equivalents", Kind.INSTANT, listOf("CashAndCashEquivalentsAtCarryingValue", "CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents", "Cash"), statement = "balance"),
         Concept("short_term_investments", "Short-term investments", Kind.INSTANT, listOf("ShortTermInvestments", "MarketableSecuritiesCurrent", "AvailableForSaleSecuritiesDebtSecuritiesCurrent", "AvailableForSaleSecuritiesCurrent"), statement = "balance"),
         Concept("receivables", "Accounts receivable", Kind.INSTANT, listOf("AccountsReceivableNetCurrent", "ReceivablesNetCurrent"), statement = "balance"),

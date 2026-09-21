@@ -253,6 +253,8 @@ private struct MoSStep: View {
 struct ModelToggle: View {
     @Binding var model: ValuationModel
     var expert = true
+    /// Sector-specific blurb from the core's explain summary (basic mode).
+    var blurbOverride: String? = nil
     var body: some View {
         VStack(spacing: 6) {
             Picker("Model", selection: $model) {
@@ -261,7 +263,7 @@ struct ModelToggle: View {
                 }
             }
             .pickerStyle(.segmented)
-            Text(expert ? model.subtitle : model.friendlyBlurb).font(.caption).foregroundStyle(Theme.textSecondary)
+            Text(expert ? model.subtitle : (blurbOverride?.isEmpty == false ? blurbOverride! : model.friendlyBlurb)).font(.caption).foregroundStyle(Theme.textSecondary)
                 .multilineTextAlignment(.center).fixedSize(horizontal: false, vertical: true)
         }
     }
