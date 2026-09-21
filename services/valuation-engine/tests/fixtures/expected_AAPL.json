@@ -198,7 +198,7 @@
      "derived": true,
      "filed": "2018-11-05",
      "form": "10-K",
-     "note": "nopat + d_and_a \u2212 capex \u2212 delta_nwc",
+     "note": "nopat + d_and_a \u2212 capex \u2212 delta_nwc_normalized",
      "period_end": "2016-09-24",
      "period_start": "2015-09-27",
      "tag": "valuelens:derived",
@@ -374,7 +374,7 @@
      "derived": true,
      "filed": "2018-11-05",
      "form": "10-K",
-     "note": "net_income + d_and_a \u2212 maintenance_capex \u2212 delta_nwc",
+     "note": "net_income + d_and_a \u2212 maintenance_capex \u2212 delta_nwc_normalized",
      "period_end": "2016-09-24",
      "period_start": "2015-09-27",
      "tag": "valuelens:derived",
@@ -641,6 +641,17 @@
      "tag": "valuelens:derived",
      "value": -4062000000.0
     },
+    "delta_nwc_normalized": {
+     "accession": "0000320193-18-000145",
+     "derived": true,
+     "filed": "2018-11-05",
+     "form": "10-K",
+     "note": "raw one-year \u0394NWC (insufficient history to normalize)",
+     "period_end": "2017-09-30",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": -4062000000.0
+    },
     "dividends_paid": {
      "accession": "0000320193-17-000070",
      "derived": false,
@@ -712,7 +723,7 @@
      "derived": true,
      "filed": "2019-10-31",
      "form": "10-K",
-     "note": "nopat + d_and_a \u2212 capex \u2212 delta_nwc",
+     "note": "nopat + d_and_a \u2212 capex \u2212 delta_nwc_normalized",
      "period_end": "2017-09-30",
      "period_start": "2016-09-25",
      "tag": "valuelens:derived",
@@ -888,7 +899,7 @@
      "derived": true,
      "filed": "2019-10-31",
      "form": "10-K",
-     "note": "net_income + d_and_a \u2212 maintenance_capex \u2212 delta_nwc",
+     "note": "net_income + d_and_a \u2212 maintenance_capex \u2212 delta_nwc_normalized",
      "period_end": "2017-09-30",
      "period_start": "2016-09-25",
      "tag": "valuelens:derived",
@@ -1155,6 +1166,17 @@
      "tag": "valuelens:derived",
      "value": -2253000000.0
     },
+    "delta_nwc_normalized": {
+     "accession": "0000320193-19-000119",
+     "derived": true,
+     "filed": "2019-10-31",
+     "form": "10-K",
+     "note": "avg(NWC/revenue over 3 yrs = -16.6% [2016: -16.6%, 2017: -17.4%, 2018: -15.9%]) \u00d7 \u0394revenue 36,361,000,000",
+     "period_end": "2018-09-29",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": -6040492512.766408
+    },
     "dividends_paid": {
      "accession": "0000320193-20-000096",
      "derived": false,
@@ -1226,11 +1248,11 @@
      "derived": true,
      "filed": "2020-10-30",
      "form": "10-K",
-     "note": "nopat + d_and_a \u2212 capex \u2212 delta_nwc",
+     "note": "nopat + d_and_a \u2212 capex \u2212 delta_nwc_normalized",
      "period_end": "2018-09-29",
      "period_start": "2017-10-01",
      "tag": "valuelens:derived",
-     "value": 57736760723.15268
+     "value": 61524253235.91909
     },
     "income_tax": {
      "accession": "0000320193-20-000096",
@@ -1380,11 +1402,11 @@
      "derived": true,
      "filed": "2020-10-30",
      "form": "10-K",
-     "note": "net_income + d_and_a \u2212 maintenance_capex \u2212 delta_nwc",
+     "note": "net_income + d_and_a \u2212 maintenance_capex \u2212 delta_nwc_normalized",
      "period_end": "2018-09-29",
      "period_start": "2017-10-01",
      "tag": "valuelens:derived",
-     "value": 61784000000.0
+     "value": 65571492512.76641
     },
     "pretax_income": {
      "accession": "0000320193-20-000096",
@@ -1647,6 +1669,17 @@
      "tag": "valuelens:derived",
      "value": 8911000000.0
     },
+    "delta_nwc_normalized": {
+     "accession": "0000320193-20-000096",
+     "derived": true,
+     "filed": "2020-10-30",
+     "form": "10-K",
+     "note": "avg(NWC/revenue over 4 yrs = -15.6% [2016: -16.6%, 2017: -17.4%, 2018: -15.9%, 2019: -12.8%]) \u00d7 \u0394revenue -5,421,000,000",
+     "period_end": "2019-09-28",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 848343537.9170816
+    },
     "dividends_paid": {
      "accession": "0000320193-21-000105",
      "derived": false,
@@ -1718,11 +1751,11 @@
      "derived": true,
      "filed": "2021-10-29",
      "form": "10-K",
-     "note": "nopat + d_and_a \u2212 capex \u2212 delta_nwc",
+     "note": "nopat + d_and_a \u2212 capex \u2212 delta_nwc_normalized",
      "period_end": "2019-09-28",
      "period_start": "2018-09-30",
      "tag": "valuelens:derived",
-     "value": 46878105131.05253
+     "value": 54940761593.135445
     },
     "income_tax": {
      "accession": "0000320193-21-000105",
@@ -1872,11 +1905,11 @@
      "derived": true,
      "filed": "2021-10-29",
      "form": "10-K",
-     "note": "net_income + d_and_a \u2212 maintenance_capex \u2212 delta_nwc",
+     "note": "net_income + d_and_a \u2212 maintenance_capex \u2212 delta_nwc_normalized",
      "period_end": "2019-09-28",
      "period_start": "2018-09-30",
      "tag": "valuelens:derived",
-     "value": 48397000000.0
+     "value": 56459656462.08292
     },
     "pretax_income": {
      "accession": "0000320193-21-000105",
@@ -2139,6 +2172,17 @@
      "tag": "valuelens:derived",
      "value": -10653000000.0
     },
+    "delta_nwc_normalized": {
+     "accession": "0000320193-21-000105",
+     "derived": true,
+     "filed": "2021-10-29",
+     "form": "10-K",
+     "note": "avg(NWC/revenue over 5 yrs = -15.7% [2016: -16.6%, 2017: -17.4%, 2018: -15.9%, 2019: -12.8%, 2020: -16.0%]) \u00d7 \u0394revenue 14,341,000,000",
+     "period_end": "2020-09-26",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": -2253547375.478236
+    },
     "dividends_paid": {
      "accession": "0000320193-22-000108",
      "derived": false,
@@ -2210,11 +2254,11 @@
      "derived": true,
      "filed": "2022-10-28",
      "form": "10-K",
-     "note": "nopat + d_and_a \u2212 capex \u2212 delta_nwc",
+     "note": "nopat + d_and_a \u2212 capex \u2212 delta_nwc_normalized",
      "period_end": "2020-09-26",
      "period_start": "2019-09-29",
      "tag": "valuelens:derived",
-     "value": 71123858162.79382
+     "value": 62724405538.27205
     },
     "income_tax": {
      "accession": "0000320193-22-000108",
@@ -2364,11 +2408,11 @@
      "derived": true,
      "filed": "2022-10-28",
      "form": "10-K",
-     "note": "net_income + d_and_a \u2212 maintenance_capex \u2212 delta_nwc",
+     "note": "net_income + d_and_a \u2212 maintenance_capex \u2212 delta_nwc_normalized",
      "period_end": "2020-09-26",
      "period_start": "2019-09-29",
      "tag": "valuelens:derived",
-     "value": 71811000000.0
+     "value": 63411547375.47823
     },
     "pretax_income": {
      "accession": "0000320193-22-000108",
@@ -2631,6 +2675,17 @@
      "tag": "valuelens:derived",
      "value": 178000000.0
     },
+    "delta_nwc_normalized": {
+     "accession": "0000320193-22-000108",
+     "derived": true,
+     "filed": "2022-10-28",
+     "form": "10-K",
+     "note": "avg(NWC/revenue over 5 yrs = -14.8% [2017: -17.4%, 2018: -15.9%, 2019: -12.8%, 2020: -16.0%, 2021: -11.9%]) \u00d7 \u0394revenue 91,302,000,000",
+     "period_end": "2021-09-25",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": -13496246545.219847
+    },
     "dividends_paid": {
      "accession": "0000320193-23-000106",
      "derived": false,
@@ -2702,11 +2757,11 @@
      "derived": true,
      "filed": "2023-11-03",
      "form": "10-K",
-     "note": "nopat + d_and_a \u2212 capex \u2212 delta_nwc",
+     "note": "nopat + d_and_a \u2212 capex \u2212 delta_nwc_normalized",
      "period_end": "2021-09-25",
      "period_start": "2020-09-27",
      "tag": "valuelens:derived",
-     "value": 94477319832.97774
+     "value": 108151566378.19759
     },
     "income_tax": {
      "accession": "0000320193-23-000106",
@@ -2856,11 +2911,11 @@
      "derived": true,
      "filed": "2023-11-03",
      "form": "10-K",
-     "note": "net_income + d_and_a \u2212 maintenance_capex \u2212 delta_nwc",
+     "note": "net_income + d_and_a \u2212 maintenance_capex \u2212 delta_nwc_normalized",
      "period_end": "2021-09-25",
      "period_start": "2020-09-27",
      "tag": "valuelens:derived",
-     "value": 94701000000.0
+     "value": 108375246545.21985
     },
     "pretax_income": {
      "accession": "0000320193-23-000106",
@@ -3123,6 +3178,17 @@
      "tag": "valuelens:derived",
      "value": -12082000000.0
     },
+    "delta_nwc_normalized": {
+     "accession": "0000320193-23-000106",
+     "derived": true,
+     "filed": "2023-11-03",
+     "form": "10-K",
+     "note": "avg(NWC/revenue over 5 yrs = -14.1% [2018: -15.9%, 2019: -12.8%, 2020: -16.0%, 2021: -11.9%, 2022: -14.1%]) \u00d7 \u0394revenue 28,511,000,000",
+     "period_end": "2022-09-24",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": -4029341395.465395
+    },
     "dividends_paid": {
      "accession": "0000320193-24-000123",
      "derived": false,
@@ -3194,11 +3260,11 @@
      "derived": true,
      "filed": "2024-11-01",
      "form": "10-K",
-     "note": "nopat + d_and_a \u2212 capex \u2212 delta_nwc",
+     "note": "nopat + d_and_a \u2212 capex \u2212 delta_nwc_normalized",
      "period_end": "2022-09-24",
      "period_start": "2021-09-26",
      "tag": "valuelens:derived",
-     "value": 112560877097.97401
+     "value": 104508218493.4394
     },
     "income_tax": {
      "accession": "0000320193-24-000123",
@@ -3348,11 +3414,11 @@
      "derived": true,
      "filed": "2024-11-01",
      "form": "10-K",
-     "note": "net_income + d_and_a \u2212 maintenance_capex \u2212 delta_nwc",
+     "note": "net_income + d_and_a \u2212 maintenance_capex \u2212 delta_nwc_normalized",
      "period_end": "2022-09-24",
      "period_start": "2021-09-26",
      "tag": "valuelens:derived",
-     "value": 112281000000.0
+     "value": 104228341395.4654
     },
     "pretax_income": {
      "accession": "0000320193-24-000123",
@@ -3615,6 +3681,17 @@
      "tag": "valuelens:derived",
      "value": 2278000000.0
     },
+    "delta_nwc_normalized": {
+     "accession": "0000320193-24-000123",
+     "derived": true,
+     "filed": "2024-11-01",
+     "form": "10-K",
+     "note": "avg(NWC/revenue over 5 yrs = -13.8% [2019: -12.8%, 2020: -16.0%, 2021: -11.9%, 2022: -14.1%, 2023: -14.0%]) \u00d7 \u0394revenue -11,043,000,000",
+     "period_end": "2023-09-30",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": 1518652089.7046802
+    },
     "dividends_paid": {
      "accession": "0000320193-25-000079",
      "derived": false,
@@ -3686,11 +3763,11 @@
      "derived": true,
      "filed": "2025-10-31",
      "form": "10-K",
-     "note": "nopat + d_and_a \u2212 capex \u2212 delta_nwc",
+     "note": "nopat + d_and_a \u2212 capex \u2212 delta_nwc_normalized",
      "period_end": "2023-09-30",
      "period_start": "2022-09-25",
      "tag": "valuelens:derived",
-     "value": 95758836665.61159
+     "value": 96518184575.9069
     },
     "income_tax": {
      "accession": "0000320193-25-000079",
@@ -3840,11 +3917,11 @@
      "derived": true,
      "filed": "2025-10-31",
      "form": "10-K",
-     "note": "net_income + d_and_a \u2212 maintenance_capex \u2212 delta_nwc",
+     "note": "net_income + d_and_a \u2212 maintenance_capex \u2212 delta_nwc_normalized",
      "period_end": "2023-09-30",
      "period_start": "2022-09-25",
      "tag": "valuelens:derived",
-     "value": 95277000000.0
+     "value": 96036347910.29532
     },
     "pretax_income": {
      "accession": "0000320193-25-000079",
@@ -4107,6 +4184,17 @@
      "tag": "valuelens:derived",
      "value": -24189000000.0
     },
+    "delta_nwc_normalized": {
+     "accession": "0000320193-25-000079",
+     "derived": true,
+     "filed": "2025-10-31",
+     "form": "10-K",
+     "note": "avg(NWC/revenue over 5 yrs = -15.2% [2020: -16.0%, 2021: -11.9%, 2022: -14.1%, 2023: -14.0%, 2024: -19.9%]) \u00d7 \u0394revenue 7,750,000,000",
+     "period_end": "2024-09-28",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": -1175873900.5786414
+    },
     "dividends_paid": {
      "accession": "0000320193-25-000079",
      "derived": false,
@@ -4178,11 +4266,11 @@
      "derived": true,
      "filed": "2025-10-31",
      "form": "10-K",
-     "note": "nopat + d_and_a \u2212 capex \u2212 delta_nwc",
+     "note": "nopat + d_and_a \u2212 capex \u2212 delta_nwc_normalized",
      "period_end": "2024-09-28",
      "period_start": "2023-10-01",
      "tag": "valuelens:derived",
-     "value": 119718805288.09167
+     "value": 96705679188.67032
     },
     "income_tax": {
      "accession": "0000320193-25-000079",
@@ -4321,11 +4409,11 @@
      "derived": true,
      "filed": "2025-10-31",
      "form": "10-K",
-     "note": "net_income + d_and_a \u2212 maintenance_capex \u2212 delta_nwc",
+     "note": "net_income + d_and_a \u2212 maintenance_capex \u2212 delta_nwc_normalized",
      "period_end": "2024-09-28",
      "period_start": "2023-10-01",
      "tag": "valuelens:derived",
-     "value": 119923000000.0
+     "value": 96909873900.57864
     },
     "pretax_income": {
      "accession": "0000320193-25-000079",
@@ -4588,6 +4676,17 @@
      "tag": "valuelens:derived",
      "value": 17643000000.0
     },
+    "delta_nwc_normalized": {
+     "accession": "0000320193-25-000079",
+     "derived": true,
+     "filed": "2025-10-31",
+     "form": "10-K",
+     "note": "avg(NWC/revenue over 5 yrs = -14.9% [2021: -11.9%, 2022: -14.1%, 2023: -14.0%, 2024: -19.9%, 2025: -14.4%]) \u00d7 \u0394revenue 25,126,000,000",
+     "period_end": "2025-09-27",
+     "period_start": null,
+     "tag": "valuelens:derived",
+     "value": -3734332330.573755
+    },
     "dividends_paid": {
      "accession": "0000320193-25-000079",
      "derived": false,
@@ -4659,11 +4758,11 @@
      "derived": true,
      "filed": "2025-10-31",
      "form": "10-K",
-     "note": "nopat + d_and_a \u2212 capex \u2212 delta_nwc",
+     "note": "nopat + d_and_a \u2212 capex \u2212 delta_nwc_normalized",
      "period_end": "2025-09-27",
      "period_start": "2024-09-29",
      "tag": "valuelens:derived",
-     "value": 93620891892.50276
+     "value": 114998224223.07652
     },
     "income_tax": {
      "accession": "0000320193-25-000079",
@@ -4802,11 +4901,11 @@
      "derived": true,
      "filed": "2025-10-31",
      "form": "10-K",
-     "note": "net_income + d_and_a \u2212 maintenance_capex \u2212 delta_nwc",
+     "note": "net_income + d_and_a \u2212 maintenance_capex \u2212 delta_nwc_normalized",
      "period_end": "2025-09-27",
      "period_start": "2024-09-29",
      "tag": "valuelens:derived",
-     "value": 94367000000.0
+     "value": 115744332330.57376
     },
     "pretax_income": {
      "accession": "0000320193-25-000079",
@@ -4992,8 +5091,8 @@
    "full_period_years": 9
   },
   "owner_earnings": {
-   "five_year_cagr": 0.05615056289563447,
-   "full_period_cagr": 0.08393454223590635,
+   "five_year_cagr": 0.1278887805150175,
+   "full_period_cagr": 0.108807981959818,
    "full_period_years": 9
   },
   "revenue": {
@@ -5007,7 +5106,7 @@
    "formula": "min(graham_revised, oe_value_hurdle)",
    "inputs": {
     "graham_revised": 248.68148148148146,
-    "oe_value_hurdle": 72.1006593039143
+    "oe_value_hurdle": 97.24144296173478
    },
    "key": "model_a_intrinsic",
    "label": "Model A intrinsic value",
@@ -5016,23 +5115,23 @@
    ],
    "sources": [],
    "unit": "USD/share",
-   "value": 72.1006593039143
+   "value": 97.24144296173478
   },
-  "intrinsic_value_per_share": 72.1006593039143,
+  "intrinsic_value_per_share": 97.24144296173478,
   "margin_of_safety": {
    "bands": [
     {
-     "buy_below": 54.07549447793572,
+     "buy_below": 72.93108222130108,
      "discount_pct": 25.0
     },
     {
-     "buy_below": 36.05032965195715,
+     "buy_below": 48.62072148086739,
      "discount_pct": 50.0
     }
    ],
    "formula": "MoS = 1 \u2212 price / intrinsic_value",
-   "intrinsic_value": 72.1006593039143,
-   "margin_of_safety_pct": -316.0849607982894,
+   "intrinsic_value": 97.24144296173478,
+   "margin_of_safety_pct": -208.5104363558778,
    "market_price": 300.0,
    "verdict": "above_intrinsic"
   },
@@ -5208,17 +5307,19 @@
     "value": -184252500000.0
    },
    {
-    "formula": "OE = net_income + d_and_a \u2212 maintenance_capex \u2212 delta_nwc",
+    "formula": "OE = net_income + d_and_a \u2212 maintenance_capex \u2212 delta_nwc_normalized",
     "inputs": {
      "d_and_a": 13100000000.0,
-     "delta_nwc": 26764000000.0,
+     "delta_nwc_normalized": -9926912204.329033,
+     "delta_nwc_raw": 9121000000.0,
      "maintenance_capex": 10041000000.0,
      "net_income": 128930000000.0
     },
     "key": "owner_earnings",
     "label": "Owner earnings (TTM)",
     "notes": [
-     "min(capex, d_and_a) \u2014 conservative proxy; Buffett's 'average capex to maintain competitive position'"
+     "min(capex, d_and_a) \u2014 conservative proxy; Buffett's 'average capex to maintain competitive position'",
+     "Working capital: avg(NWC/revenue over 5 yrs = -14.7% [2022: -14.1%, 2023: -14.0%, 2024: -19.9%, 2025: -14.4%, TTM: -10.9%]) \u00d7 \u0394revenue 50,662,000,000 \u00d7 1.34 (annualized)"
     ],
     "sources": [
      {
@@ -5256,12 +5357,12 @@
      }
     ],
     "unit": "USD",
-    "value": 105225000000.0
+    "value": 141915912204.32904
    },
    {
     "formula": "owner_earnings / shares_outstanding",
     "inputs": {
-     "owner_earnings": 105225000000.0,
+     "owner_earnings": 141915912204.32904,
      "shares": 14594180000.0
     },
     "key": "owner_earnings_per_share",
@@ -5281,12 +5382,12 @@
      }
     ],
     "unit": "USD/share",
-    "value": 7.21006593039143
+    "value": 9.724144296173478
    },
    {
     "formula": "V = OE_per_share / r   (zero terminal growth)",
     "inputs": {
-     "owner_earnings_per_share": 7.21006593039143,
+     "owner_earnings_per_share": 9.724144296173478,
      "r_pct": 10.0
     },
     "key": "oe_value_hurdle",
@@ -5296,12 +5397,12 @@
     ],
     "sources": [],
     "unit": "USD/share",
-    "value": 72.1006593039143
+    "value": 97.24144296173478
    },
    {
     "formula": "V = OE_per_share / r   (zero terminal growth)",
     "inputs": {
-     "owner_earnings_per_share": 7.21006593039143,
+     "owner_earnings_per_share": 9.724144296173478,
      "r_pct": 4.94
     },
     "key": "oe_value_treasury",
@@ -5311,7 +5412,7 @@
     ],
     "sources": [],
     "unit": "USD/share",
-    "value": 145.95275162735686
+    "value": 196.8450262383295
    }
   ],
   "name": "Traditional Value (Graham / Buffett / Munger)"
@@ -5320,31 +5421,31 @@
   "composite": {
    "formula": "mean(dcf_perpetuity, dcf_exit_multiple)",
    "inputs": {
-    "dcf_exit_multiple": 134.8881651680505,
-    "dcf_perpetuity": 127.68190857488952
+    "dcf_exit_multiple": 182.793118398233,
+    "dcf_perpetuity": 173.0532640936714
    },
    "key": "model_b_fair_value",
    "label": "Model B fair value",
    "notes": [],
    "sources": [],
    "unit": "USD/share",
-   "value": 131.28503687147003
+   "value": 177.92319124595218
   },
-  "intrinsic_value_per_share": 131.28503687147003,
+  "intrinsic_value_per_share": 177.92319124595218,
   "margin_of_safety": {
    "bands": [
     {
-     "buy_below": 98.46377765360252,
+     "buy_below": 133.44239343446412,
      "discount_pct": 25.0
     },
     {
-     "buy_below": 65.64251843573501,
+     "buy_below": 88.96159562297609,
      "discount_pct": 50.0
     }
    ],
    "formula": "MoS = 1 \u2212 price / intrinsic_value",
-   "intrinsic_value": 131.28503687147003,
-   "margin_of_safety_pct": -128.51042826282205,
+   "intrinsic_value": 177.92319124595218,
+   "margin_of_safety_pct": -68.61208361831532,
    "market_price": 300.0,
    "verdict": "above_intrinsic"
   },
@@ -5426,12 +5527,12 @@
     "formula": "\u03a3 FCFF_t/(1+WACC)^t + [FCFF_N(1+g)/(WACC\u2212g)]/(1+WACC)^N \u2212 debt + cash, \u00f7 shares",
     "inputs": {
      "cash_and_sti": 62399000000.0,
-     "fcff_ttm": 104359159621.82343,
-     "pv_stage1": 505255313549.5522,
+     "fcff_ttm": 141050071826.15247,
+     "pv_stage1": 682894520471.0754,
      "shares": 14594180000.0,
      "stage1_growth_pct": 8.677354924090741,
      "terminal_growth_pct": 2.5,
-     "terminal_value": 2204844400109.7295,
+     "terminal_value": 2980030331098.3438,
      "total_debt": 82347000000.0,
      "wacc_pct": 9.854815641021355,
      "years": 5
@@ -5445,26 +5546,26 @@
       "derived": true,
       "filed": "2026-07-31",
       "form": "10-Q",
-      "note": "nopat + d_and_a \u2212 capex \u2212 delta_nwc",
+      "note": "nopat + d_and_a \u2212 capex \u2212 delta_nwc_normalized",
       "period_end": "2026-06-27",
       "period_start": "2025-06-27",
       "tag": "valuelens:derived",
-      "value": 104359159621.82343
+      "value": 141050071826.15247
      }
     ],
     "unit": "USD/share",
-    "value": 127.68190857488952
+    "value": 173.0532640936714
    },
    {
     "formula": "\u03a3 FCFF_t/(1+WACC)^t + [FCFF_N \u00d7 multiple]/(1+WACC)^N \u2212 debt + cash, \u00f7 shares",
     "inputs": {
      "cash_and_sti": 62399000000.0,
      "exit_multiple": 15.0,
-     "fcff_ttm": 104359159621.82343,
-     "pv_stage1": 505255313549.5522,
+     "fcff_ttm": 141050071826.15247,
+     "pv_stage1": 682894520471.0754,
      "shares": 14594180000.0,
      "stage1_growth_pct": 8.677354924090741,
-     "terminal_value": 2373105962918.837,
+     "terminal_value": 3207449808275.144,
      "total_debt": 82347000000.0,
      "wacc_pct": 9.854815641021355,
      "years": 5
@@ -5478,24 +5579,24 @@
       "derived": true,
       "filed": "2026-07-31",
       "form": "10-Q",
-      "note": "nopat + d_and_a \u2212 capex \u2212 delta_nwc",
+      "note": "nopat + d_and_a \u2212 capex \u2212 delta_nwc_normalized",
       "period_end": "2026-06-27",
       "period_start": "2025-06-27",
       "tag": "valuelens:derived",
-      "value": 104359159621.82343
+      "value": 141050071826.15247
      }
     ],
     "unit": "USD/share",
-    "value": 134.8881651680505
+    "value": 182.793118398233
    },
    {
     "formula": "FCFF_t = FCFF_0 \u00d7 (1+g)^t",
     "inputs": {
-     "year_1": 113414774298.00743,
-     "year_2": 123256176800.202,
-     "year_3": 133951552727.0203,
-     "year_4": 145575004383.4744,
-     "year_5": 158207064194.58914
+     "year_1": 153289487179.19263,
+     "year_2": 166590960043.04974,
+     "year_3": 181046648917.43536,
+     "year_4": 196756709222.1737,
+     "year_5": 213829987218.34293
     },
     "key": "fcff_projection",
     "label": "Projected FCFF",
@@ -5726,11 +5827,22 @@
     "derived": true,
     "filed": "2026-07-31",
     "form": "10-Q",
-    "note": "nwc \u2212 nwc(2024-09-28)",
+    "note": "nwc \u2212 nwc(2025-09-27)",
     "period_end": "2026-06-27",
     "period_start": null,
     "tag": "valuelens:derived",
-    "value": 26764000000.0
+    "value": 9121000000.0
+   },
+   "delta_nwc_normalized": {
+    "accession": "0000320193-26-000020",
+    "derived": true,
+    "filed": "2026-07-31",
+    "form": "10-Q",
+    "note": "avg(NWC/revenue over 5 yrs = -14.7% [2022: -14.1%, 2023: -14.0%, 2024: -19.9%, 2025: -14.4%, TTM: -10.9%]) \u00d7 \u0394revenue 50,662,000,000 \u00d7 1.34 (annualized)",
+    "period_end": "2026-06-27",
+    "period_start": null,
+    "tag": "valuelens:derived",
+    "value": -9926912204.329033
    },
    "dividends_paid": {
     "accession": "0000320193-26-000020",
@@ -5803,11 +5915,11 @@
     "derived": true,
     "filed": "2026-07-31",
     "form": "10-Q",
-    "note": "nopat + d_and_a \u2212 capex \u2212 delta_nwc",
+    "note": "nopat + d_and_a \u2212 capex \u2212 delta_nwc_normalized",
     "period_end": "2026-06-27",
     "period_start": "2025-06-27",
     "tag": "valuelens:derived",
-    "value": 104359159621.82343
+    "value": 141050071826.15247
    },
    "income_tax": {
     "accession": "0000320193-26-000020",
@@ -5957,11 +6069,11 @@
     "derived": true,
     "filed": "2026-07-31",
     "form": "10-Q",
-    "note": "net_income + d_and_a \u2212 maintenance_capex \u2212 delta_nwc",
+    "note": "net_income + d_and_a \u2212 maintenance_capex \u2212 delta_nwc_normalized",
     "period_end": "2026-06-27",
     "period_start": "2025-06-27",
     "tag": "valuelens:derived",
-    "value": 105225000000.0
+    "value": 141915912204.32904
    },
    "pretax_income": {
     "accession": "0000320193-26-000020",

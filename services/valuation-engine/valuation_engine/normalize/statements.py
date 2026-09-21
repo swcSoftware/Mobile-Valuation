@@ -224,9 +224,17 @@ def _ttm_instant(cf: CompanyFacts, concept: Concept) -> SourcedValue | None:
 
 
 # --------------------------------------------------------------------------- derived
-def _derive(period: Period, prev: Period | None) -> None:
-    """Add computed line items that the models need. All flagged derived=True."""
+NWC_RATIO_WINDOW = 5      # years of NWC ÷ revenue averaged (a level: longer window is appropriate)
+NWC_DELTA_WINDOW = 3      # fallback: plain average of yearly ΔNWC when revenue history is thin
+
+
+def _derive(period: Period, history: list[Period]) -> None:
+    """
+    Add computed line items that the models need. All flagged derived=True.
+    `history` = earlier periods, oldest → newest (empty for the first year); the last one is `prev`.
+    """
     v = period.values
+    prev = history[-1] if history else None
 
     def mk(value: float, note: str, base: SourcedValue) -> SourcedValue:
         return SourcedValue(
@@ -267,6 +275,7 @@ def _derive(period: Period, prev: Period | None) -> None:
         v["nwc"] = mk(ca - cl, "(current_assets − cash − short_term_investments) − (current_liabilities − short_term_debt)", v["current_assets"])
         if prev is not None and "nwc" in prev.values:
             v["delta_nwc"] = mk(v["nwc"].value - prev.values["nwc"].value, f"nwc − nwc({prev.period_end})", v["nwc"])
+        _normalize_delta_nwc(period, history, mk)
     # effective tax rate
     if "income_tax" in v and "pretax_income" in v and v["pretax_income"].value > 0:
         rate = v["income_tax"].value / v["pretax_income"].value
@@ -278,19 +287,19 @@ def _derive(period: Period, prev: Period | None) -> None:
             "min(capex, d_and_a) — conservative proxy; Buffett's 'average capex to maintain competitive position'",
             v["capex"],
         )
-    # owner earnings
+    # owner earnings — uses the normalized working-capital change so one-off swings don't whipsaw the value
     if all(k in v for k in ("net_income", "d_and_a", "maintenance_capex")):
-        dwc = v["delta_nwc"].value if "delta_nwc" in v else 0.0
+        dwc = v["delta_nwc_normalized"].value if "delta_nwc_normalized" in v else (v["delta_nwc"].value if "delta_nwc" in v else 0.0)
         oe = v["net_income"].value + v["d_and_a"].value - v["maintenance_capex"].value - dwc
-        v["owner_earnings"] = mk(oe, "net_income + d_and_a − maintenance_capex − delta_nwc", v["net_income"])
+        v["owner_earnings"] = mk(oe, "net_income + d_and_a − maintenance_capex − delta_nwc_normalized", v["net_income"])
     # NOPAT & FCFF
     if "operating_income" in v:
         t = v["effective_tax_rate"].value if "effective_tax_rate" in v else 0.21
         v["nopat"] = mk(v["operating_income"].value * (1 - t), f"operating_income × (1 − {t:.3f})", v["operating_income"])
         if "d_and_a" in v and "capex" in v:
-            dwc = v["delta_nwc"].value if "delta_nwc" in v else 0.0
+            dwc = v["delta_nwc_normalized"].value if "delta_nwc_normalized" in v else (v["delta_nwc"].value if "delta_nwc" in v else 0.0)
             v["fcff"] = mk(v["nopat"].value + v["d_and_a"].value - abs(v["capex"].value) - dwc,
-                           "nopat + d_and_a − capex − delta_nwc", v["nopat"])
+                           "nopat + d_and_a − capex − delta_nwc_normalized", v["nopat"])
     # invested capital = equity + total_debt − cash
     if "equity" in v:
         ic = v["equity"].value + (v["total_debt"].value if "total_debt" in v else 0.0) - (v["cash"].value if "cash" in v else 0.0)
@@ -309,6 +318,42 @@ def _derive(period: Period, prev: Period | None) -> None:
         v["operating_margin"] = mk(v["operating_income"].value / v["revenue"].value, "operating_income / revenue", v["operating_income"])
     if "net_income" in v and "revenue" in v and v["revenue"].value > 0:
         v["net_margin"] = mk(v["net_income"].value / v["revenue"].value, "net_income / revenue", v["net_income"])
+
+
+def _normalize_delta_nwc(period: Period, history: list[Period], mk) -> None:
+    """
+    Normalized change in working capital (Damodaran): average NWC ÷ revenue over the last
+    NWC_RATIO_WINDOW years × this period's change in revenue. Falls back to a plain
+    NWC_DELTA_WINDOW-year average of ΔNWC, then to the raw one-year change. Always labeled.
+    """
+    v = period.values
+    if "nwc" not in v:
+        return
+    prev = history[-1] if history else None
+    # Ratio window: this period plus earlier annual periods that have both NWC and revenue
+    pool = [p for p in history + [period] if "nwc" in p.values and p.get("revenue")]
+    ratios = [(p.fiscal_year or p.label, p.values["nwc"].value / p.values["revenue"].value) for p in pool[-NWC_RATIO_WINDOW:]]
+    rev = period.get("revenue")
+    prev_rev = prev.get("revenue") if prev else None
+    if len(ratios) >= 3 and rev is not None and prev_rev is not None:
+        avg = sum(r for _, r in ratios) / len(ratios)
+        d_rev = rev - prev_rev
+        scale = 1.0
+        if period.fiscal_year is None and prev is not None:  # TTM: annualize the partial-year revenue change
+            days = (period.period_end - prev.period_end).days
+            if 0 < days < 365:
+                scale = 365.0 / days
+        value = avg * d_rev * scale
+        detail = ", ".join(f"{fy}: {r*100:.1f}%" for fy, r in ratios)
+        note = (f"avg(NWC/revenue over {len(ratios)} yrs = {avg*100:.1f}% [{detail}]) × Δrevenue {d_rev:,.0f}"
+                + (f" × {scale:.2f} (annualized)" if scale != 1.0 else ""))
+        v["delta_nwc_normalized"] = mk(value, note, v["nwc"])
+        return
+    deltas = [p.values["delta_nwc"].value for p in history + [period] if "delta_nwc" in p.values][-NWC_DELTA_WINDOW:]
+    if len(deltas) >= 3:
+        v["delta_nwc_normalized"] = mk(sum(deltas) / len(deltas), f"mean of last {len(deltas)} yearly ΔNWC (revenue history too short for the ratio method)", v["nwc"])
+    elif "delta_nwc" in v:
+        v["delta_nwc_normalized"] = mk(v["delta_nwc"].value, "raw one-year ΔNWC (insufficient history to normalize)", v["nwc"])
 
 
 # --------------------------------------------------------------------------- splits
@@ -380,7 +425,7 @@ def normalize(cf: CompanyFacts, max_years: int = 10) -> NormalizedFinancials:
         periods.append(p)
     _adjust_for_splits(periods, warnings)
     for i, p in enumerate(periods):
-        _derive(p, periods[i - 1] if i > 0 else None)
+        _derive(p, periods[:i])
 
     # TTM
     ttm: Period | None = None
@@ -402,8 +447,8 @@ def normalize(cf: CompanyFacts, max_years: int = 10) -> NormalizedFinancials:
             del ttm.values[k]
         if stale:
             warnings.append("Dropped stale TTM values (tag no longer reported): " + ", ".join(stale))
-        # Δ working capital for TTM is measured against the prior fiscal year end
-        _derive(ttm, periods[-2] if len(periods) > 1 else None)
+        # Δ working capital for TTM is measured against the latest fiscal year end (annualized in the normalization)
+        _derive(ttm, periods)
         if ttm.period_end == latest.period_end:
             ttm.form = "10-K"
 

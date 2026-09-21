@@ -114,6 +114,15 @@ object DataChecks {
 
         // Financials: deposits and policy reserves are liabilities without "debt" tags; don't warn about that.
         val skipDebtCoverage = mode == SectorMode.FINANCIAL
+        // 7a. Working-capital one-off: raw one-year ΔNWC far from the normalized figure relative to earnings
+        val rawD = t?.get("delta_nwc")?.value; val normD = t?.get("delta_nwc_normalized")?.value; val niV = t?.get("net_income")?.value
+        if (rawD != null && normD != null && niV != null && niV != 0.0 && mode == SectorMode.GENERAL) {
+            val gap = abs(rawD - normD) / abs(niV)
+            add("working_capital", "Working capital change is representative", if (gap <= 0.3) "pass" else "warn",
+                if (gap <= 0.3) "This year's working-capital change (${PyFmt.commas(rawD, 0)}) is close to the normalized figure (${PyFmt.commas(normD, 0)})."
+                else "This year's working-capital change (${PyFmt.commas(rawD, 0)}) differs from the 5-year normalized figure (${PyFmt.commas(normD, 0)}) by ${PyFmt.fixed(gap * 100, 0)}% of net income — a one-off (acquisition payment, tax timing, a big customer paying late). Owner earnings use the normalized figure.", "delta_nwc")
+        }
+
         // 7b. Tag coverage: stale tags dropped, debt missing while liabilities exist (the KO case)
         val dropped = fin.warnings.firstOrNull { it.startsWith("Dropped stale TTM values") }?.substringAfter(": ")
         if (dropped != null) add("tag_coverage", "All line items resolved to current tags", "warn", "Some SEC tags this filer used in the past are no longer reported and were ignored: $dropped. If a key figure is missing, this is why.", *dropped.split(", ").toTypedArray())

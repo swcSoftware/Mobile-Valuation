@@ -138,9 +138,11 @@ Coverage probe on day 1 (14 tickers): tech/consumer/healthcare correct; **XOM fa
 - [x] `share_classes` data check (warns when a ratio had to be assumed 1:1); TTM EPS derived for per-class-only filers
 - [x] Expert-mode "Share classes" card in both apps
 
-### D. Model quality
-- [ ] ΔNWC smoothing (3-yr average) for owner earnings (#2)
-- [ ] Classic Graham value → expert-only row (revised is the composite input)
+### D. Model quality ✅
+- [x] ΔNWC normalized (Damodaran): 5-yr average NWC ÷ revenue × Δrevenue (TTM annualized); fallbacks 3-yr mean → raw, all labeled; feeds owner earnings and FCFF. Python reference + Kotlin (oracle regenerated). KO OE no longer whipsaws (#2)
+- [x] `working_capital` check flags one-offs (raw vs normalized > 30% of net income)
+- [x] Classic (1962) Graham row removed from the guided case study; remains in the expert metric list. Revised is the composite input.
+- [x] **Headline values changed for most companies** (AAPL Model A $72 → $97, KO $16 → $33, JNJ $61 → $101): the old figures carried single-year working-capital swings
 
 ### Deferred to Sprint 4 (release readiness)
 - [ ] TestFlight + Play internal testing; crash reporting; Dynamic Type / VoiceOver pass; store assets

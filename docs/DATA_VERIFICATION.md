@@ -18,6 +18,7 @@ data, or explicitly labeled *assumed* — and an assumed input is always visible
 | AAA yield, 10-yr Treasury | FRED `DAAA` / `DGS10` via `rates.json` on GitHub Pages (published by CI; key never in the app) | `fred` / `override` / `assumed` | Publish job stalls → stale file | "as of" date shown; > 7 days → warning; Settings → Refresh rates |
 | Effective tax rate | income tax ÷ pre-tax income from the latest filing, clamped 0–50% | `sec` / `assumed` (21%) | Negative pre-tax income | Check "Tax rate from filings" |
 | Cost of debt | interest expense ÷ total debt, clamped 2–12% | `sec` / `assumed` (rf + 1.5%) | Interest not tagged (AAPL) | Check "Cost of debt from filings" |
+| Change in working capital (owner earnings, FCFF) | Normalized: average NWC ÷ revenue over 5 fiscal years × this period's Δrevenue (TTM annualized); raw one-year change kept alongside | `sec` (derived, note lists the 5 ratios) | One-off acquisition payments, tax timing, big receivables (KO 2025, JNJ talc) | `working_capital` check warns when raw and normalized differ by > 30% of net income |
 | Growth (g, stage-1) | CAGR of EPS / revenue / FCF from the 10-K history, clamped 0–15% | `sec` | Split-adjusted EPS history; < 2 years of data | Expert Mode → Growth (CAGR) card |
 | Sector (bank / insurer / broker / REIT / mREIT) | SIC code from the SEC submissions profile; mortgage REIT by D&A ÷ revenue < 5% | `sector` | Conglomerates with a financial SIC (BRK); stale SIC after a pivot | `sector_mode` check names the mode; expert mode shows the SIC |
 | Cost of equity | CAPM = rf + β × ERP, **floored at rf + 4%** | shown on the metric with the unfloored CAPM value | Very low measured beta (KO 0.29, PGR 0.23) would imply 6% | Note on the metric says when the floor applied |
@@ -37,6 +38,7 @@ data, or explicitly labeled *assumed* — and an assumed input is always visible
 | `filing_freshness` | latest period ≤ 130 days old | ≤ 400 days | older |
 | `price` | quote ≤ 5 days old or manual | older or missing | — |
 | `signs` | revenue, shares, D&A positive | — | any violated |
+| `working_capital` | raw one-year ΔNWC within 30% of net income of the normalized figure | further apart (one-off) | — |
 | `tag_coverage` | every line item from a current tag | stale tags dropped (lists them) | — |
 | `debt_coverage` | debt tags found | liabilities > 0 but no debt tag | — |
 | `beta` | measured | assumed | — |

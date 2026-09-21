@@ -33,7 +33,7 @@ cd apps/android && ./gradlew assembleDebug
 
 ## Tests
 
-60 automated tests across the core, both apps and the reference engine — see `docs/RUNBOOK.md` §3b.
+87 automated tests across the core, both apps and the reference engine — see `docs/RUNBOOK.md` §3b.
 
 ## Branches
 

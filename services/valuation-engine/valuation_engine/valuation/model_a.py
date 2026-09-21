@@ -93,7 +93,7 @@ def nnwc(fin: NormalizedFinancials) -> Metric:
 
 def owner_earnings(fin: NormalizedFinancials, a: Assumptions) -> list[Metric]:
     ttm = fin.ttm
-    formula = "OE = net_income + d_and_a − maintenance_capex − delta_nwc"
+    formula = "OE = net_income + d_and_a − maintenance_capex − delta_nwc_normalized"
     if ttm is None or "owner_earnings" not in ttm.values:
         return [Metric("owner_earnings", "Owner earnings (TTM)", None, "USD", formula, notes=["Missing inputs."])]
     v = ttm.values
@@ -102,11 +102,14 @@ def owner_earnings(fin: NormalizedFinancials, a: Assumptions) -> list[Metric]:
         "net_income": v["net_income"].value,
         "d_and_a": v["d_and_a"].value,
         "maintenance_capex": v["maintenance_capex"].value,
-        "delta_nwc": v["delta_nwc"].value if "delta_nwc" in v else 0.0,
+        "delta_nwc_normalized": v["delta_nwc_normalized"].value if "delta_nwc_normalized" in v else (v["delta_nwc"].value if "delta_nwc" in v else 0.0),
+        "delta_nwc_raw": v["delta_nwc"].value if "delta_nwc" in v else None,
     }
     srcs = [v["net_income"], v["d_and_a"], v["capex"]]
-    metrics = [Metric("owner_earnings", "Owner earnings (TTM)", oe.value, "USD", formula, inputs=inputs, sources=srcs,
-                      notes=[v["maintenance_capex"].note])]
+    notes = [v["maintenance_capex"].note]
+    if "delta_nwc_normalized" in v:
+        notes.append("Working capital: " + v["delta_nwc_normalized"].note)
+    metrics = [Metric("owner_earnings", "Owner earnings (TTM)", oe.value, "USD", formula, inputs=inputs, sources=srcs, notes=notes)]
     shares = fin.current_shares.value if fin.current_shares else None
     if shares:
         oe_ps = oe.value / shares

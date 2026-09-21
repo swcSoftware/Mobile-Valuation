@@ -86,8 +86,9 @@ class OracleTest {
 
     @Test fun headlineNumbers() {
         val (aapl, _) = load("AAPL")
-        assertEquals(72.1006593039143, ModelA.run(aapl, assumptions, 300.0).intrinsicValuePerShare!!, 1e-6)
-        assertEquals(131.28503687147003, ModelB.run(aapl, assumptions, 300.0).intrinsicValuePerShare!!, 1e-6)
+        // Frozen from the Python reference after Sprint 3 working-capital normalization.
+        assertEquals(97.24144296173478, ModelA.run(aapl, assumptions, 300.0).intrinsicValuePerShare!!, 1e-6)
+        assertEquals(177.92319124595218, ModelB.run(aapl, assumptions, 300.0).intrinsicValuePerShare!!, 1e-6)
         assertEquals(10, aapl.annual.size)
     }
 

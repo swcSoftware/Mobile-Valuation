@@ -66,13 +66,16 @@ object ModelA {
     }
 
     fun ownerEarnings(fin: NormalizedFinancials, a: AssumptionsCore): List<Metric> {
-        val formula = "OE = net_income + d_and_a − maintenance_capex − delta_nwc"
+        val formula = "OE = net_income + d_and_a − maintenance_capex − delta_nwc_normalized"
         val v = fin.ttm?.values
         val oe = v?.get("owner_earnings") ?: return listOf(metric("owner_earnings", "Owner earnings (TTM)", null, "USD", formula, notes = listOf("Missing inputs.")))
         val inputs = linkedMapOf<String, Double?>("net_income" to v["net_income"]!!.value, "d_and_a" to v["d_and_a"]!!.value,
-            "maintenance_capex" to v["maintenance_capex"]!!.value, "delta_nwc" to (v["delta_nwc"]?.value ?: 0.0))
+            "maintenance_capex" to v["maintenance_capex"]!!.value,
+            "delta_nwc_normalized" to (v["delta_nwc_normalized"]?.value ?: v["delta_nwc"]?.value ?: 0.0), "delta_nwc_raw" to v["delta_nwc"]?.value)
+        val notes = mutableListOf(v["maintenance_capex"]!!.note)
+        v["delta_nwc_normalized"]?.let { notes += "Working capital: " + it.note }
         val out = mutableListOf(metric("owner_earnings", "Owner earnings (TTM)", oe.value, "USD", formula, inputs,
-            listOf(v["net_income"]!!, v["d_and_a"]!!, v["capex"]!!), listOf(v["maintenance_capex"]!!.note)))
+            listOf(v["net_income"]!!, v["d_and_a"]!!, v["capex"]!!), notes))
         val shares = fin.currentShares?.value
         if (shares != null && shares != 0.0) {
             val oePs = oe.value / shares

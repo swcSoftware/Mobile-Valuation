@@ -113,8 +113,38 @@ object Statements {
         return best
     }
 
-    private fun derive(period: PeriodCore, prev: PeriodCore?) {
+    private const val NWC_RATIO_WINDOW = 5
+    private const val NWC_DELTA_WINDOW = 3
+
+    /**
+     * Normalized ΔNWC (Damodaran): avg(NWC ÷ revenue over 5 yrs) × Δrevenue; fallback 3-yr mean of ΔNWC; then raw.
+     * Mirror of statements.py `_normalize_delta_nwc` — keep identical (oracle-tested).
+     */
+    private fun normalizeDeltaNwc(period: PeriodCore, history: List<PeriodCore>, mk: (Double, String, SourcedValueCore) -> SourcedValueCore) {
         val v = period.values
+        val nwc = v["nwc"] ?: return
+        val prev = history.lastOrNull()
+        val pool = (history + period).filter { "nwc" in it.values && (it.get("revenue") ?: 0.0) != 0.0 }
+        val ratios = pool.takeLast(NWC_RATIO_WINDOW).map { (it.fiscalYear?.toString() ?: it.label) to it.values["nwc"]!!.value / it.values["revenue"]!!.value }
+        val rev = period.get("revenue"); val prevRev = prev?.get("revenue")
+        if (ratios.size >= 3 && rev != null && prevRev != null) {
+            val avg = ratios.sumOf { it.second } / ratios.size
+            val dRev = rev - prevRev
+            var scale = 1.0
+            if (period.fiscalYear == null && prev != null) { val days = prev.periodEnd.daysUntil(period.periodEnd); if (days in 1..364) scale = 365.0 / days }
+            val detail = ratios.joinToString(", ") { "${it.first}: ${PyFmt.fixed(it.second * 100, 1)}%" }
+            val note = "avg(NWC/revenue over ${ratios.size} yrs = ${PyFmt.fixed(avg * 100, 1)}% [$detail]) × Δrevenue ${PyFmt.commas(dRev, 0)}" + (if (scale != 1.0) " × ${PyFmt.fixed(scale, 2)} (annualized)" else "")
+            v["delta_nwc_normalized"] = mk(avg * dRev * scale, note, nwc)
+            return
+        }
+        val deltas = (history + period).mapNotNull { it.values["delta_nwc"]?.value }.takeLast(NWC_DELTA_WINDOW)
+        if (deltas.size >= 3) v["delta_nwc_normalized"] = mk(deltas.sum() / deltas.size, "mean of last ${deltas.size} yearly ΔNWC (revenue history too short for the ratio method)", nwc)
+        else v["delta_nwc"]?.let { v["delta_nwc_normalized"] = mk(it.value, "raw one-year ΔNWC (insufficient history to normalize)", nwc) }
+    }
+
+    private fun derive(period: PeriodCore, history: List<PeriodCore>) {
+        val v = period.values
+        val prev = history.lastOrNull()
         fun mk(value: Double, note: String, base: SourcedValueCore) =
             SourcedValueCore(value, "derived", "valuelens", base.accession, base.form, base.periodEnd, base.periodStart, base.filed, derived = true, note = note)
 
@@ -135,6 +165,7 @@ object Statements {
             cl -= v["short_term_debt"]?.value ?: 0.0
             v["nwc"] = mk(ca - cl, "(current_assets − cash − short_term_investments) − (current_liabilities − short_term_debt)", v["current_assets"]!!)
             prev?.values?.get("nwc")?.let { pn -> v["delta_nwc"] = mk(v["nwc"]!!.value - pn.value, "nwc − nwc(${prev.periodEnd})", v["nwc"]!!) }
+            normalizeDeltaNwc(period, history, ::mk)
         }
         if ("income_tax" in v && "pretax_income" in v && v["pretax_income"]!!.value > 0) {
             val rate = v["income_tax"]!!.value / v["pretax_income"]!!.value
@@ -143,15 +174,15 @@ object Statements {
         if ("capex" in v && "d_and_a" in v)
             v["maintenance_capex"] = mk(minOf(abs(v["capex"]!!.value), abs(v["d_and_a"]!!.value)), "min(capex, d_and_a) — conservative proxy; Buffett's 'average capex to maintain competitive position'", v["capex"]!!)
         if (listOf("net_income", "d_and_a", "maintenance_capex").all { it in v }) {
-            val dwc = v["delta_nwc"]?.value ?: 0.0
-            v["owner_earnings"] = mk(v["net_income"]!!.value + v["d_and_a"]!!.value - v["maintenance_capex"]!!.value - dwc, "net_income + d_and_a − maintenance_capex − delta_nwc", v["net_income"]!!)
+            val dwc = v["delta_nwc_normalized"]?.value ?: v["delta_nwc"]?.value ?: 0.0
+            v["owner_earnings"] = mk(v["net_income"]!!.value + v["d_and_a"]!!.value - v["maintenance_capex"]!!.value - dwc, "net_income + d_and_a − maintenance_capex − delta_nwc_normalized", v["net_income"]!!)
         }
         if ("operating_income" in v) {
             val t = v["effective_tax_rate"]?.value ?: 0.21
             v["nopat"] = mk(v["operating_income"]!!.value * (1 - t), "operating_income × (1 − ${PyFmt.fixed(t, 3)})", v["operating_income"]!!)
             if ("d_and_a" in v && "capex" in v) {
-                val dwc = v["delta_nwc"]?.value ?: 0.0
-                v["fcff"] = mk(v["nopat"]!!.value + v["d_and_a"]!!.value - abs(v["capex"]!!.value) - dwc, "nopat + d_and_a − capex − delta_nwc", v["nopat"]!!)
+                val dwc = v["delta_nwc_normalized"]?.value ?: v["delta_nwc"]?.value ?: 0.0
+                v["fcff"] = mk(v["nopat"]!!.value + v["d_and_a"]!!.value - abs(v["capex"]!!.value) - dwc, "nopat + d_and_a − capex − delta_nwc_normalized", v["nopat"]!!)
             }
         }
         if ("equity" in v) {
@@ -208,7 +239,7 @@ object Statements {
             }
         }
         adjustForSplits(periods, warnings)
-        periods.forEachIndexed { i, p -> derive(p, if (i > 0) periods[i - 1] else null) }
+        periods.forEachIndexed { i, p -> derive(p, periods.subList(0, i)) }
 
         var ttm: PeriodCore? = null
         val latest = periods.lastOrNull()
@@ -219,7 +250,7 @@ object Statements {
             val stale = t.values.filter { (_, sv) -> sv.periodEnd.daysUntil(t.periodEnd) > 540 }.keys.toList()
             stale.forEach { t.values.remove(it) }
             if (stale.isNotEmpty()) warnings += "Dropped stale TTM values (tag no longer reported): " + stale.joinToString(", ")
-            derive(t, if (periods.size > 1) periods[periods.size - 2] else null)
+            derive(t, periods)
             if (t.periodEnd == latest.periodEnd) t.form = "10-K"
             ttm = t
         }

@@ -90,3 +90,10 @@ Breaking-scenario review logged ISSUES #53–60.
 filing's inline-XBRL instance (only when needed) and values the company once, in the searched
 class's share terms. Berkshire gets its first real valuation (BRK-A ≡ BRK-B × 1,500); Visa uses all
 five classes as-converted; GOOG/GOOGL agree. Tests: 85. Scenario review logged #61–66.
+
+**Track D shipped**: working-capital normalization (Damodaran revenue-ratio method, 5-year window,
+owner-approved) in both the Python reference and the core; `working_capital` one-off check; classic
+Graham removed from the case study. Headline values moved for most companies — the old ones
+carried single-year working-capital swings. Bundled samples and web preview regenerated. Tests: 87.
+
+**Sprint 3 closed** with all four tracks delivered. Open issues carried: #53, #55, #56, #59–69.

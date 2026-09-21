@@ -6,7 +6,7 @@ instruction for alpha). Severity: **P1** blocks core flow · **P2** wrong number
 | # | Sev | Area | Description | Repro / notes | Status |
 |---|---|---|---|---|---|
 | 1 | P2 | engine | ~~Multi-class filers (BRK-B, GOOG) have no undimensioned per-share facts in `companyfacts`~~ | Fixed Sprint 3 Track C: per-class facts read from the filing's XBRL instance. | fixed |
-| 2 | P2 | engine | Owner earnings swing wildly when ΔNWC has a one-off (KO FY2025 OE $3.2B vs $15.3B prior). | Use 3-yr average ΔNWC or exclude acquisition-related current liabilities. | open |
+| 2 | P2 | engine | ~~Owner earnings swing wildly when ΔNWC has a one-off (KO FY2025 OE $3.2B vs $15.3B prior).~~ | Fixed Sprint 3 Track D: normalized ΔNWC via 5-yr NWC/revenue ratio × Δrevenue. KO OE now $10.5B → $14.2B across years. | fixed |
 | 3 | P2 | engine | Yahoo chart quote endpoint is unofficial and may break or rate-limit; Stooq currently returns 404 from this network. | Manual price override works as fallback. Replace with licensed provider before beta. | open |
 | 4 | P3 | engine | `Latest 10-K missing concepts` warning lists optional concepts (goodwill, dividends) alongside important ones. | Split into required vs optional. | open |
 | 5 | P3 | engine | Graham `g` for AAPL clamps at 15% because split-adjusted EPS CAGR is 17.9%; the note explains it but the clamp is a policy choice worth a Settings toggle. | | open |
@@ -73,3 +73,7 @@ instruction for alpha). Severity: **P1** blocks core flow · **P2** wrong number
 | 64 | P3 | core | Filers with one EPS for several classes are treated as 1:1 (flagged "assumed"). Correct for NWS/FOX/LEN/META, wrong for any filer with unequal economics but a single EPS line. | Read conversion terms from the equity footnote. | accepted |
 | 65 | P3 | core | Historical per-share series (EPS CAGR, book/share) for multi-class filers still come from undimensioned facts and may be missing; Graham g then falls back to net-income CAGR (labeled). | Per-class history from the instance. | open |
 | 66 | P3 | core | Model B differs slightly between GOOG and GOOGL (0.4%) because each class's own price sets the WACC weights. | Use the searched class's price for MoS but a blended market cap for WACC. | open |
+| 67 | P3 | core/engine | TTM working-capital normalization annualizes the partial-year revenue change (×365/days since FY end); one quarter after year-end that multiplier is ~4, so a seasonal quarter can over/understate the year's Δrevenue. | Use TTM revenue − prior-year TTM revenue once two years of quarterly history are kept. | open |
+| 68 | P3 | core/engine | The 5-year NWC/revenue ratio lags structural shifts (a move to subscriptions, supply-chain financing, concentrate vs bottling). | Show the ratio series (done in the note); consider weighting recent years. | accepted |
+| 69 | P3 | core/engine | Revenue restatements or a segment sale change the ratio base mid-window; companies with zero/negative revenue fall to the plain-average or raw fallback (labeled). | | accepted |
+| 70 | P3 | both | Bundled samples and the web preview now show the Sprint 3 values; testers who saw Sprint 2 numbers will notice AAPL/KO/JNJ moved. Explain in release notes. | | accepted |

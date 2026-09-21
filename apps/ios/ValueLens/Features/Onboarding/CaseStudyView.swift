@@ -115,8 +115,8 @@ struct CaseStudyView: View {
                 CaseStudyPage(step: 1, title: "Raw 10-K numbers", blurb: "Everything starts from audited statements. These are the trailing-twelve-month figures, each traceable to an XBRL tag in a specific SEC filing.") {
                     RawNumbersStep(report: r)
                 }.tag(0)
-                CaseStudyPage(step: 2, title: "Traditional value", blurb: "Graham's formula turns earnings and growth into a price. Buffett's owner earnings ask what cash the business really throws off. Tap any row to see the math.") {
-                    ModelStep(result: r.modelA, keys: ["graham_g", "graham_classic", "graham_revised", "owner_earnings", "owner_earnings_per_share", "oe_value_hurdle"])
+                CaseStudyPage(step: 2, title: "Traditional value", blurb: "Graham's formula turns earnings and growth into a price, adjusted for today's bond yields. Buffett's owner earnings ask what cash the business really throws off. Tap any row to see the math.") {
+                    ModelStep(result: r.modelA, keys: ["graham_g", "graham_revised", "owner_earnings", "owner_earnings_per_share", "oe_value_hurdle"])
                 }.tag(1)
                 CaseStudyPage(step: 3, title: "Flip to modern fair value", blurb: "Same filings, different lens: discount projected free cash flow at the company's cost of capital, and check whether returns on capital beat that cost.") {
                     ToggleStep(report: r)

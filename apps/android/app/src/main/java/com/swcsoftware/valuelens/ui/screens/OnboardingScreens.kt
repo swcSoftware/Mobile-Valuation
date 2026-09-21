@@ -135,7 +135,7 @@ private fun CaseStudyWalkthrough(r: ValuationReport, onFinish: () -> Unit) {
     val titles = listOf("Raw 10-K numbers", "Traditional value", "Flip to modern fair value", "Margin of safety")
     val blurbs = listOf(
         "Everything starts from audited statements. These are the trailing-twelve-month figures, each traceable to an XBRL tag in a specific SEC filing.",
-        "Graham's formula turns earnings and growth into a price. Buffett's owner earnings ask what cash the business really throws off. Tap any row to see the math.",
+        "Graham's formula turns earnings and growth into a price, adjusted for today's bond yields. Buffett's owner earnings ask what cash the business really throws off. Tap any row to see the math.",
         "Same filings, different lens: discount projected free cash flow at the company's cost of capital, and check whether returns on capital beat that cost.",
         "Graham's central idea: only buy well below what the business is worth. The bar shows the market price against intrinsic value with 25% and 50% discount lines.",
     )
@@ -157,7 +157,7 @@ private fun CaseStudyWalkthrough(r: ValuationReport, onFinish: () -> Unit) {
                         }
                     }
                 }
-                1 -> Card { listOf("graham_g", "graham_classic", "graham_revised", "owner_earnings", "owner_earnings_per_share", "oe_value_hurdle").mapNotNull { r.modelA.metric(it) }.forEach { MetricRow(it) } }
+                1 -> Card { listOf("graham_g", "graham_revised", "owner_earnings", "owner_earnings_per_share", "oe_value_hurdle").mapNotNull { r.modelA.metric(it) }.forEach { MetricRow(it) } }
                 2 -> Column {
                     ModelToggle(model) { model = it }
                     Spacer(Modifier.height(12.dp))

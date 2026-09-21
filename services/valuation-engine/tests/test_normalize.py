@@ -58,3 +58,19 @@ def test_growth_summary(aapl):
     g = growth_summary(aapl)
     assert g["revenue"]["full_period_years"] == 9
     assert 0 < g["revenue"]["full_period_cagr"] < 0.2
+
+
+def test_working_capital_normalization_dampens_one_offs(ko):
+    """KO FY2025 absorbed ~$10B of working capital (fairlife payment); owner earnings must not collapse."""
+    fy25 = next(p for p in ko.annual if p.fiscal_year == 2025)
+    assert "delta_nwc_normalized" in fy25.values
+    raw, norm = fy25.get("delta_nwc"), fy25.get("delta_nwc_normalized")
+    assert raw > 5e9 and abs(norm) < 2e9
+    assert "avg(NWC/revenue over 5 yrs" in fy25.values["delta_nwc_normalized"].note
+    oe = [p.get("owner_earnings") for p in ko.annual[-3:]]
+    assert max(oe) / min(oe) < 1.6, oe   # no 5× whipsaw
+
+
+def test_ttm_normalization_is_annualized(aapl):
+    sv = aapl.ttm.values["delta_nwc_normalized"]
+    assert "annualized" in sv.note or aapl.ttm.form == "10-K"
