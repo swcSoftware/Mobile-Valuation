@@ -144,7 +144,20 @@ Coverage probe on day 1 (14 tickers): tech/consumer/healthcare correct; **XOM fa
 - [x] Classic (1962) Graham row removed from the guided case study; remains in the expert metric list. Revised is the composite input.
 - [x] **Headline values changed for most companies** (AAPL Model A $72 → $97, KO $16 → $33, JNJ $61 → $101): the old figures carried single-year working-capital swings
 
-### Deferred to Sprint 4 (release readiness)
+## Sprint 4 — Release readiness + concept-map feedback loop (planned)
+
+### A. Concept-map feedback loop (owner-approved design, 2026-09-21)
+The tag map (`Concepts.kt` / `tags.py`) is hand-curated; gaps are found by users, not by us.
+Users decide *where we look*; a human review decides *what changes*. Nothing alters a valuation
+until a reviewed map change passes the oracle and tests.
+- [ ] Gap detection is already in the core (`tag_coverage`, "missing concepts", unmapped custom elements) — define a `GapReport` (CIK, period, concept, filer's actual tag list for that statement, app version). No user data.
+- [ ] **Opt-in** reporting toggle in Settings (off by default) stating exactly what is sent; POST to a tiny endpoint or create/append a GitHub Issue via API; deduplicate per CIK + concept with a hit counter; failures never affect the user
+- [ ] Weekly review script: lists open reports by hit count with the candidate tags; outcomes = map the tag (+ oracle regen + test asserting the CIK resolves) / add a rule or check / close as not worth it
+- [ ] Scheduled probe over S&P 500 + all reported CIKs asserting no company *lost* a concept since last week (catches tag renames at year-end before users do)
+- [ ] Optional: publish a versioned, signed `concepts.json` to GitHub Pages (bundled copy as fallback) so reviewed map fixes ship between app releases — CI-only, after tests
+- [ ] In-app "this number looks wrong" button filing the same report (catches wrong-but-resolved tags that no automated check can see)
+
+### B. Release readiness
 - [ ] TestFlight + Play internal testing; crash reporting; Dynamic Type / VoiceOver pass; store assets
 - [ ] Licensed quote/beta source behind `Market`; physical-device checks (#19/#20/#22)
 

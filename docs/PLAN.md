@@ -108,9 +108,13 @@ valuation without a finance degree; no number reaches a formula without passing 
 card visual check (#22), multi-class share handling via dimensioned XBRL (#1) — required for BRK,
 GOOG, META once the fetch is on-device.
 
-### Sprint 3 — Polish & beta
-TestFlight / Play internal track, crash reporting, accessibility audit, App Store assets,
-sector-aware tag maps (banks/insurers/REITs), ΔNWC smoothing, 10-Q trajectory panel.
+### Sprint 3 — Every ticker gives an honest answer ✅ (2026-09-21)
+Successor-issuer resolution, sector modes, multi-class shares, normalized working capital. See TASKS.md / SPRINTS.md.
+
+### Sprint 4 — Release readiness + concept-map feedback loop
+Opt-in gap reporting → weekly human review → reviewed map changes (never automatic); scheduled
+concept-coverage probe; TestFlight / Play internal track; crash reporting; accessibility; store
+assets; licensed quote/beta source.
 
 ### Later
 Filing drill-down, notes per company, side-by-side comparison, Apple Watch complication,
