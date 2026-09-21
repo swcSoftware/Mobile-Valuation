@@ -105,12 +105,34 @@ Status: `[x]` done · `[ ]` todo · `[~]` in progress. Move finished sprints to 
 - [ ] Physical iPhone + Android test of the on-device path (#19 is moot; verify SEC/Yahoo reachability from a phone network)
 - [ ] Android share-card PNG visual check (#22), light theme (#23), concurrent watchlist refresh (#24), chart axes (#25)
 
-## Sprint 3 — Polish & beta
-- [ ] Multi-class shares (BRK, GOOG, META) via `frames` API / instance docs (#1)
-- [ ] Sector-aware tag maps: banks, insurers, REITs
-- [ ] Case study: general-audience copy pass with expert variant
-- [ ] Licensed quote/beta source behind the `Market` class
-- [ ] TestFlight + Play internal testing
-- [ ] Crash reporting, engine error telemetry (no user analytics)
-- [ ] Dynamic Type / VoiceOver pass
-- [ ] App Store screenshots, privacy nutrition labels (identity stored on device only)
+## Sprint 3 — Every ticker gives an honest answer (started 2026-09-21)
+
+Coverage probe on day 1 (14 tickers): tech/consumer/healthcare correct; **XOM failed**
+(holding-company reorg); **banks and REITs got confident but wrong verdicts**; BRK-B honest but empty.
+
+### A. Filer identity resolution ✅
+- [x] Successor-issuer fallback: when the resolved CIK has no 10-K data, find the predecessor via
+      submissions (SIC, first filing, 8-K12B) + entity search; accept only on evidence (same SIC,
+      recent 10-K that predates the successor). Core + Python reference, 5 + 3 tests.
+- [x] `filer_identity` data check (warn) and warning line make the substitution visible; header shows the predecessor CIK
+- [x] Regression guard: ordinary tickers make zero identity lookups; oracle unchanged
+- [ ] Post-reorg 10-Qs are filed by the successor and not merged into the predecessor's TTM (ISSUES #46)
+
+### B. Sector modes (banks, insurers, REITs)
+- [ ] Sector detection from SIC (submissions API): banks 6020–6199, insurers 6311–6411, REITs 6798
+- [ ] Financials mode: hide Model B / owner earnings / NNWC; value on book value + sustainable ROE (justified P/B) + Graham EPS; checks adapted (no classified balance sheet expected)
+- [ ] REIT mode: FFO / AFFO from net income + depreciation − gains on sale; FFO multiple + dividend coverage; hide NNWC
+- [ ] Unmapped sectors keep the general model but the checks say so
+- [ ] Basic-mode copy per sector ("banks are valued on their book value…")
+
+### C. Multi-class shares (#1)
+- [ ] Per-class `dei` share counts via companyconcept/frames or the filing's instance; BRK-B, GOOG/GOOGL, META per-share values
+
+### D. Model quality
+- [ ] ΔNWC smoothing (3-yr average) for owner earnings (#2)
+- [ ] Classic Graham value → expert-only row (revised is the composite input)
+
+### Deferred to Sprint 4 (release readiness)
+- [ ] TestFlight + Play internal testing; crash reporting; Dynamic Type / VoiceOver pass; store assets
+- [ ] Licensed quote/beta source behind `Market`; physical-device checks (#19/#20/#22)
+

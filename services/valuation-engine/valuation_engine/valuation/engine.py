@@ -1,11 +1,12 @@
 """Orchestrates: EDGAR -> normalize -> Model A + Model B -> serializable report."""
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 
 from ..config import settings
 from ..edgar.client import EdgarClient
 from ..edgar.companyfacts import fetch_companyfacts
+from ..edgar.identity import find_predecessor
 from ..edgar.tickers import resolve_ticker
 from ..errors import NoAnnualData
 from ..normalize.statements import NormalizedFinancials, growth_summary, normalize
@@ -24,6 +25,16 @@ async def load_financials(ticker: str, user_agent: str | None) -> NormalizedFina
     cf = await fetch_companyfacts(client, ref)
     fin = normalize(cf)
     if not fin.annual:
+        # Successor-issuer fallback (holding-company reorganizations); never reached for ordinary filers.
+        pred = await find_predecessor(client, ref, date.today())
+        if pred is not None:
+            pf = normalize(await fetch_companyfacts(client, pred.ref))
+            if pf.annual:
+                note = (f"Filings come from predecessor {pred.ref.name} (CIK {pred.ref.cik}); {ref.ticker} is now "
+                        f"{pred.successor_name} (CIK {ref.cik}, first filing {pred.successor_first_filing or 'n/a'}"
+                        + (", successor notice 8-K12B" if pred.via_successor_notice else "") + ").")
+                pf.ticker, pf.warnings = ref.ticker, [note] + pf.warnings
+                return pf
         raise NoAnnualData(
             f"{ref.ticker} has no 10-K income statement data on EDGAR (foreign filer, fund, SPAC or new listing).",
             {"ticker": ref.ticker, "cik": ref.cik, "warnings": fin.warnings},

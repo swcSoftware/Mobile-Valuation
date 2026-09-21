@@ -71,3 +71,9 @@ runs on both simulators.
 
 **Owner actions to finish Track B**: add `FRED_API_KEY` secret, enable Pages on `gh-pages`, run
 the workflow once. Until then the apps use the bundled 2026-09-17 snapshot and say so.
+
+## Sprint 3 — 2026-09-21 — Every ticker gives an honest answer (in progress)
+
+**Day 1**: coverage probe across 14 diverse tickers exposed three gaps (reorganized filers, banks,
+REITs). Track A shipped: successor-issuer resolution (XOM → Exxon Mobil Corp) in the core and the
+Python reference, with evidence rules, a visible data check, and a no-regression guard. Tests: 70.

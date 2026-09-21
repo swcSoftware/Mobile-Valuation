@@ -78,6 +78,30 @@ class Edgar(private val fetcher: Fetcher, cache: KeyValueCache, private val user
         return (exact + prefix + name).take(limit)
     }
 
+    /** Filer profile from the submissions API (SIC, first filing, latest 10-K, successor notice). Cached 24 h. */
+    fun profile(cik: Long): FilerProfile? = runCatching { FilerIdentity.parseProfile(getText(FilerIdentity.submissionsUrl(cik), DAY)) }.getOrNull()
+
+    /**
+     * Find the filer whose 10-K history a successor holding company inherited (see FilerIdentity).
+     * Returns null when no candidate passes the evidence test.
+     */
+    fun findPredecessor(successor: CompanyRef, today: Day): Predecessor? {
+        val sp = profile(successor.cik) ?: return null
+        val token = FilerIdentity.searchToken(sp.name.ifBlank { successor.name }) ?: return null
+        // "ExxonMobil Holdings" vs "EXXON MOBIL CORP": retry with shorter prefixes so spacing differences still match.
+        val seen = HashSet<Long>()
+        for (prefix in FilerIdentity.searchPrefixes(token)) {
+            val hits = runCatching { FilerIdentity.parseCandidates(getText(FilerIdentity.entitySearchUrl(prefix), DAY, mapOf("User-Agent" to userAgent)), successor.cik) }.getOrDefault(emptyList())
+            for ((cik, name) in hits.take(8)) {
+                if (!seen.add(cik)) continue
+                val cp = profile(cik) ?: continue
+                if (FilerIdentity.isPlausiblePredecessor(sp, cp, today))
+                    return Predecessor(CompanyRef(successor.ticker, cik, cp.name.ifBlank { name }), sp.name, sp.firstFiling, sp.hasSuccessorNotice)
+            }
+        }
+        return null
+    }
+
     fun companyFacts(ref: CompanyRef): CompanyFacts {
         val url = "https://data.sec.gov/api/xbrl/companyfacts/CIK${ref.cik.toString().padStart(10, '0')}.json"
         return CompanyFactsParser.parse(getText(url, DAY), CompanyRefCore(ref.ticker, ref.cik, ref.name))

@@ -9,6 +9,7 @@ data, or explicitly labeled *assumed* — and an assumed input is always visible
 
 | Input | Source | Provenance label | Where it can go wrong | How to reconcile |
 |---|---|---|---|---|
+| Filer identity | SEC ticker list → CIK; predecessor via submissions + entity search when the CIK has no 10-Ks | `filer: sec` / `predecessor` | Holding-company reorganizations (XOM 2026) | Warning line names both CIKs; verify on EDGAR |
 | Revenue, net income, EPS, cash flow, balance sheet | SEC EDGAR `companyfacts` (10-K / 10-Q XBRL) | `sec` | Tag switches between years (fixed Sprint 2: freshest tag wins), 52/53-week years, restatements | Expert Mode → tap the metric → tag, accession, period. Open the filing on EDGAR by accession. |
 | TTM figures | FY(10-K) + YTD(10-Q) − prior YTD | `sec` (derived, note shows the arithmetic) | Misaligned periods when a tag lags | Check "TTM figures come from the same period" |
 | Shares outstanding | `dei:EntityCommonStockSharesOutstanding` (summed across classes), else diluted weighted average | `sec` / `derived` | Multi-class filers (BRK, GOOG) report per class → count stale or partial | "Share count is current and consistent" compares cover-page vs diluted average |
@@ -24,6 +25,7 @@ data, or explicitly labeled *assumed* — and an assumed input is always visible
 
 | Key | Pass | Warn | Fail |
 |---|---|---|---|
+| `filer_identity` | ticker's CIK has 10-K history | filings taken from a predecessor filer (holding-company reorg) | — |
 | `balance_sheet` | assets = liabilities + equity within 0.5% | within 5% | > 5% |
 | `eps_consistency` | reported EPS within 10% of NI ÷ diluted shares | within 25% | further |
 | `share_count` | cover-page shares within 0.7–1.3× diluted average | 0.4–2.5× | outside, or no count |

@@ -18,12 +18,21 @@ object DataChecks {
     private fun pct(a: Double, b: Double) = if (b == 0.0) Double.POSITIVE_INFINITY else abs(a - b) / abs(b)
 
     fun run(fin: NormalizedFinancials, quote: Quote?, priceIsManual: Boolean, a: AssumptionsCore,
-            rates: RatesSnapshot?, ratesOverridden: Boolean, nowMillis: Long): Result {
+            rates: RatesSnapshot?, ratesOverridden: Boolean, nowMillis: Long, predecessor: Predecessor? = null): Result {
         val out = mutableListOf<DataCheck>()
         val prov = LinkedHashMap<String, String>()
         val t = fin.ttm?.values
         val today = Day(floorDiv(nowMillis, Edgar.DAY))
         fun add(key: String, label: String, status: String, msg: String, vararg inputs: String) = out.add(DataCheck(key, label, status, msg, inputs.toList()))
+
+        // 0. Filer identity (successor-issuer substitution is visible, never silent)
+        if (predecessor != null) {
+            prov["filer"] = "predecessor"
+            add("filer_identity", "Filings belong to this ticker", "warn", "SEC lists ${fin.ticker} under ${predecessor.successorName}, a new holding company with no 10-K history yet. ValueLens is using the predecessor ${predecessor.ref.name} (CIK ${predecessor.ref.cik})" + (if (predecessor.viaSuccessorNotice) ", confirmed by an 8-K12B successor notice." else "; same industry code and filing timeline."), "cik")
+        } else {
+            prov["filer"] = "sec"
+            add("filer_identity", "Filings belong to this ticker", "pass", "Ticker ${fin.ticker} resolves to CIK ${fin.cik} with 10-K history.", "cik")
+        }
 
         // 1. Balance sheet identity
         val assets = t?.get("total_assets")?.value; val lae = t?.get("liabilities_and_equity")?.value

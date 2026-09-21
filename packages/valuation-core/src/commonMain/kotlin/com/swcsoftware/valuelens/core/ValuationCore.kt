@@ -32,9 +32,24 @@ class ValuationCore(
     fun valuation(ticker: String, userAgent: String, priceOverride: Double? = null, overrides: RateOverrides = RateOverrides.NONE,
                   defaults: AssumptionsCore = AssumptionsCore(aaaYieldPct = 5.0, treasury10yPct = 4.2)): ValuationReport {
         val ed = edgar(userAgent)
-        val ref = ed.resolve(ticker)
-        val fin = Statements.normalize(ed.companyFacts(ref))
-        if (fin.annual.isEmpty()) throw com.swcsoftware.valuelens.domain.EngineException.NoAnnualData("${ref.ticker} has no 10-K income statement data on EDGAR (foreign filer, fund, SPAC or new listing).")
+        val resolved = ed.resolve(ticker)
+        var ref = resolved
+        var fin = Statements.normalize(ed.companyFacts(resolved))
+        var predecessor: Predecessor? = null
+        if (fin.annual.isEmpty()) {
+            // Successor-issuer fallback (holding-company reorganizations). Never reached for ordinary filers.
+            val today = Day(floorDiv(clock.nowMillis(), Edgar.DAY))
+            predecessor = ed.findPredecessor(resolved, today)
+            if (predecessor != null) {
+                val pf = Statements.normalize(ed.companyFacts(predecessor.ref))
+                if (pf.annual.isNotEmpty()) {
+                    ref = predecessor.ref
+                    val note = "Filings come from predecessor ${predecessor.ref.name} (CIK ${predecessor.ref.cik}); ${resolved.ticker} is now ${predecessor.successorName} (CIK ${resolved.cik}, first filing ${predecessor.successorFirstFiling ?: "n/a"}" + (if (predecessor.viaSuccessorNotice) ", successor notice 8-K12B" else "") + ")."
+                    fin = NormalizedFinancials(resolved.ticker, predecessor.ref.cik, predecessor.ref.name, pf.annual, pf.ttm, pf.currentShares, listOf(note) + pf.warnings)
+                }
+            }
+        }
+        if (fin.annual.isEmpty()) throw com.swcsoftware.valuelens.domain.EngineException.NoAnnualData("${resolved.ticker} has no 10-K income statement data on EDGAR (foreign filer, fund, SPAC or new listing).")
         val quote = priceOverride?.let { Quote(ref.ticker, it, "USD", Market.isoFromMillis(clock.nowMillis()), "manual") } ?: market.quote(ref.ticker)
         val measuredBeta = if (overrides.beta == null) market.beta(ref.ticker) else null
         val rates = rates()
@@ -51,7 +66,7 @@ class ValuationCore(
             rateSource = when { ratesOverridden -> "user override"; rates != null -> "FRED (published ${rates.as_of})"; else -> "defaults" },
             betaSource = when { overrides.beta != null -> "override"; measuredBeta != null -> "measured"; else -> "assumed" },
         )
-        val checks = DataChecks.run(fin, quote, priceOverride != null, a, rates, ratesOverridden, clock.nowMillis())
+        val checks = DataChecks.run(fin, quote, priceOverride != null, a, rates, ratesOverridden, clock.nowMillis(), predecessor)
         val report = Report.build(fin, a, quote, Market.isoFromMillis(clock.nowMillis()), checks.checks, checks.provenance)
         return if (measuredBeta != null) report.withBeta(measuredBeta) else report
     }
