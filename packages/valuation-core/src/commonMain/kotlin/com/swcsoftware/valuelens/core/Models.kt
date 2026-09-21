@@ -170,8 +170,10 @@ object ModelB {
         fun equityPerShare(tv: Double?): Double? {
             if (tv == null || shares == null || shares == 0.0) return null
             val ev = pvStage1 + tv / (1 + w).pow(n)
-            return (ev - debt + cash) / shares
+            val v = (ev - debt + cash) / shares
+            return if (v > 0) v else null  // negative projected cash flow: a DCF is not meaningful, not a negative price
         }
+        if (fcff0 <= 0) notes += "Free cash flow to the firm is negative (${PyFmt.commas(fcff0, 0)}); a DCF cannot value a business that consumes cash — see owner earnings and the growth history instead."
         val base = linkedMapOf<String, Double?>("fcff_ttm" to fcff0, "wacc_pct" to waccPct, "stage1_growth_pct" to g1Pct, "years" to n.toDouble(), "pv_stage1" to pvStage1, "total_debt" to debt, "cash_and_sti" to cash, "shares" to shares)
         return listOf(
             metric("dcf_perpetuity", "DCF fair value (perpetuity growth)", equityPerShare(tvPerp), "USD/share", "Σ FCFF_t/(1+WACC)^t + [FCFF_N(1+g)/(WACC−g)]/(1+WACC)^N − debt + cash, ÷ shares",

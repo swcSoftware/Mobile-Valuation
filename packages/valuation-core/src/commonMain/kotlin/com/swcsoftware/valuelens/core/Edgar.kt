@@ -85,8 +85,10 @@ class Edgar(private val fetcher: Fetcher, cache: KeyValueCache, private val user
      * Find the filer whose 10-K history a successor holding company inherited (see FilerIdentity).
      * Returns null when no candidate passes the evidence test.
      */
-    fun findPredecessor(successor: CompanyRef, today: Day): Predecessor? {
-        val sp = profile(successor.cik) ?: return null
+    fun findPredecessor(successor: CompanyRef, today: Day): Predecessor? = findPredecessor(successor, profile(successor.cik), today)
+
+    fun findPredecessor(successor: CompanyRef, sp: FilerProfile?, today: Day): Predecessor? {
+        if (sp == null || !sp.hasSuccessorNotice) return null  // no 8-K12B → never substitute (IPOs, spin-offs)
         val token = FilerIdentity.searchToken(sp.name.ifBlank { successor.name }) ?: return null
         // "ExxonMobil Holdings" vs "EXXON MOBIL CORP": retry with shorter prefixes so spacing differences still match.
         val seen = HashSet<Long>()

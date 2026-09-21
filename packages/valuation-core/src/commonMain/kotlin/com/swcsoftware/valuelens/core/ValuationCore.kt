@@ -34,12 +34,17 @@ class ValuationCore(
         val ed = edgar(userAgent)
         val resolved = ed.resolve(ticker)
         var ref = resolved
-        var fin = Statements.normalize(ed.companyFacts(resolved))
+        var fin = try { Statements.normalize(ed.companyFacts(resolved)) } catch (e: com.swcsoftware.valuelens.domain.EngineException.NoAnnualData) {
+            // No companyfacts at all (ETFs, trusts): explain from the filing profile instead of a bare 404.
+            throw com.swcsoftware.valuelens.domain.EngineException.NoAnnualData(FilerIdentity.noAnnualDataReason(resolved.ticker, ed.profile(resolved.cik)))
+        }
         var predecessor: Predecessor? = null
+        var profile: FilerProfile? = null
         if (fin.annual.isEmpty()) {
             // Successor-issuer fallback (holding-company reorganizations). Never reached for ordinary filers.
             val today = Day(floorDiv(clock.nowMillis(), Edgar.DAY))
-            predecessor = ed.findPredecessor(resolved, today)
+            profile = ed.profile(resolved.cik)
+            predecessor = ed.findPredecessor(resolved, profile, today)
             if (predecessor != null) {
                 val pf = Statements.normalize(ed.companyFacts(predecessor.ref))
                 if (pf.annual.isNotEmpty()) {
@@ -49,7 +54,7 @@ class ValuationCore(
                 }
             }
         }
-        if (fin.annual.isEmpty()) throw com.swcsoftware.valuelens.domain.EngineException.NoAnnualData("${resolved.ticker} has no 10-K income statement data on EDGAR (foreign filer, fund, SPAC or new listing).")
+        if (fin.annual.isEmpty()) throw com.swcsoftware.valuelens.domain.EngineException.NoAnnualData(FilerIdentity.noAnnualDataReason(resolved.ticker, profile))
         val quote = priceOverride?.let { Quote(ref.ticker, it, "USD", Market.isoFromMillis(clock.nowMillis()), "manual") } ?: market.quote(ref.ticker)
         val measuredBeta = if (overrides.beta == null) market.beta(ref.ticker) else null
         val rates = rates()

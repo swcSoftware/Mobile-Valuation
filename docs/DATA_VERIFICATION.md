@@ -9,7 +9,7 @@ data, or explicitly labeled *assumed* — and an assumed input is always visible
 
 | Input | Source | Provenance label | Where it can go wrong | How to reconcile |
 |---|---|---|---|---|
-| Filer identity | SEC ticker list → CIK; predecessor via submissions + entity search when the CIK has no 10-Ks | `filer: sec` / `predecessor` | Holding-company reorganizations (XOM 2026) | Warning line names both CIKs; verify on EDGAR |
+| Filer identity | SEC ticker list → CIK; predecessor via submissions + entity search **only when the successor filed an 8-K12B/8-K12G3** and the candidate shares the SIC with a recent 10-K predating the successor | `filer: sec` / `predecessor` | Holding-company reorganizations (XOM 2026). IPOs, spin-offs, foreign filers and funds are never substituted — they get a classified "no data" reason instead | Warning line names both CIKs; verify on EDGAR |
 | Revenue, net income, EPS, cash flow, balance sheet | SEC EDGAR `companyfacts` (10-K / 10-Q XBRL) | `sec` | Tag switches between years (fixed Sprint 2: freshest tag wins), 52/53-week years, restatements | Expert Mode → tap the metric → tag, accession, period. Open the filing on EDGAR by accession. |
 | TTM figures | FY(10-K) + YTD(10-Q) − prior YTD | `sec` (derived, note shows the arithmetic) | Misaligned periods when a tag lags | Check "TTM figures come from the same period" |
 | Shares outstanding | `dei:EntityCommonStockSharesOutstanding` (summed across classes), else diluted weighted average | `sec` / `derived` | Multi-class filers (BRK, GOOG) report per class → count stale or partial | "Share count is current and consistent" compares cover-page vs diluted average |

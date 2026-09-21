@@ -22,8 +22,9 @@ class FilerIdentityTest {
     private fun submissions(cik: Long, name: String, sic: String, forms: List<Pair<String, String>>, tickers: List<String>) =
         """{"cik":"$cik","name":"$name","sic":"$sic","tickers":[${tickers.joinToString(",") { "\"$it\"" }}],"filings":{"recent":{"form":[${forms.joinToString(",") { "\"${it.first}\"" }}],"filingDate":[${forms.joinToString(",") { "\"${it.second}\"" }}]}}}"""
 
-    /** Wraps the fixture fetcher with a successor scenario. */
-    private inner class Scenario(val predecessorSic: String = "3571", val predecessor10K: String = "2026-02-15") : Fetcher {
+    /** Wraps the fixture fetcher with a successor scenario. `successorForms` defaults to a real 12g-3 succession. */
+    private inner class Scenario(val predecessorSic: String = "3571", val predecessor10K: String = "2026-02-15",
+                                 val successorForms: List<Pair<String, String>> = listOf("8-K12B" to "2026-07-01", "10-Q" to "2026-08-01")) : Fetcher {
         val inner = FakeFetcher(fixtures, ratesJson = """{"as_of":"2026-09-17","aaa_yield_pct":5.94,"treasury_10y_pct":4.94}""")
         val calls get() = inner.calls
         override fun get(url: String, headers: Map<String, String>): FetchResult {
@@ -31,7 +32,7 @@ class FilerIdentityTest {
             return when {
                 url.endsWith("company_tickers.json") -> FetchResult(200, """{"0":{"cik_str":999,"ticker":"NEWCO","title":"Apple Holdings Corp"},"1":{"cik_str":320193,"ticker":"AAPL","title":"Apple Inc."},"2":{"cik_str":21344,"ticker":"KO","title":"COCA COLA CO"}}""")
                 url.contains("companyfacts/CIK0000000999") -> FetchResult(200, """{"cik":999,"entityName":"Apple Holdings Corp","facts":{}}""")
-                url.contains("submissions/CIK0000000999") -> FetchResult(200, submissions(999, "Apple Holdings Corp", "3571", listOf("8-K12B" to "2026-07-01", "10-Q" to "2026-08-01"), listOf("NEWCO")))
+                url.contains("submissions/CIK0000000999") -> FetchResult(200, submissions(999, "Apple Holdings Corp", "3571", successorForms, listOf("NEWCO")))
                 url.contains("submissions/CIK0000320193") -> FetchResult(200, submissions(320193, "APPLE INC", predecessorSic, listOf("10-K" to predecessor10K, "10-Q" to "2026-05-01"), emptyList()))
                 url.contains("submissions/CIK0000021344") -> FetchResult(200, submissions(21344, "COCA COLA CO", "2080", listOf("10-K" to "2026-02-20"), listOf("KO")))
                 url.contains("efts.sec.gov") -> FetchResult(200, """{"hits":{"hits":[{"_id":"999","_source":{"entity":"Apple Holdings Corp (NEWCO)"}},{"_id":"21344","_source":{"entity":"COCA COLA CO"}},{"_id":"320193","_source":{"entity":"APPLE INC"}}]}}""")
@@ -65,6 +66,20 @@ class FilerIdentityTest {
     @Test fun stalePredecessorIsRejected() {
         val sc = Scenario(predecessor10K = "2023-02-15")
         assertFailsWith<EngineException.NoAnnualData> { ValuationCore(sc, MemCache(), Clock { now }).valuation("NEWCO", ua) }
+    }
+
+    @Test fun ipoWithTemptingSameIndustryNamesakeIsNotSubstituted() {
+        // "Apple Holdings Corp" IPO'd via S-1: same SIC as Apple Inc, same first name token, but NO 8-K12B.
+        val sc = Scenario(successorForms = listOf("S-1" to "2026-06-01", "424B4" to "2026-06-20", "10-Q" to "2026-08-01"))
+        val e = assertFailsWith<EngineException.NoAnnualData> { ValuationCore(sc, MemCache(), Clock { now }).valuation("NEWCO", ua) }
+        assertTrue(e.message!!.contains("listed recently"), e.message)
+        assertFalse(sc.calls.any { it.contains("efts.sec.gov") }, "no predecessor search without a successor notice")
+    }
+
+    @Test fun foreignFilerGetsAnHonestReason() {
+        val sc = Scenario(successorForms = listOf("20-F" to "2026-04-01", "6-K" to "2026-08-01"))
+        val e = assertFailsWith<EngineException.NoAnnualData> { ValuationCore(sc, MemCache(), Clock { now }).valuation("NEWCO", ua) }
+        assertTrue(e.message!!.contains("foreign private issuer"), e.message)
     }
 
     @Test fun ordinaryTickersNeverTouchTheFallback() {

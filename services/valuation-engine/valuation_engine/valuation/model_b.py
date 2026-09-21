@@ -96,7 +96,11 @@ def dcf(fin: NormalizedFinancials, a: Assumptions, wacc_pct: float, g1_pct: floa
         if tv is None or not shares:
             return None
         ev = pv_stage1 + tv / (1 + w) ** n
-        return (ev - debt + cash) / shares
+        v = (ev - debt + cash) / shares
+        return v if v > 0 else None  # negative projected cash flow: a DCF is not meaningful, not a negative price
+
+    if fcff0 <= 0:
+        notes.append(f"Free cash flow to the firm is negative ({fcff0:,.0f}); a DCF cannot value a business that consumes cash — see owner earnings and the growth history instead.")
 
     base_inputs = {"fcff_ttm": fcff0, "wacc_pct": wacc_pct, "stage1_growth_pct": g1_pct, "years": n,
                    "pv_stage1": pv_stage1, "total_debt": debt, "cash_and_sti": cash, "shares": shares}

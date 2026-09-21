@@ -116,6 +116,9 @@ Coverage probe on day 1 (14 tickers): tech/consumer/healthcare correct; **XOM fa
       recent 10-K that predates the successor). Core + Python reference, 5 + 3 tests.
 - [x] `filer_identity` data check (warn) and warning line make the substitution visible; header shows the predecessor CIK
 - [x] Regression guard: ordinary tickers make zero identity lookups; oracle unchanged
+- [x] **Substitution requires an 8-K12B/8-K12G3 successor notice** — IPOs and same-name spin-offs never get another company's numbers (tested)
+- [x] Honest no-data reasons from the filing profile: new listing (S-1/424B4), foreign private issuer (20-F/40-F), fund/trust (N-CSR), no XBRL
+- [x] Negative DCF → null with note instead of a negative price (#51)
 - [ ] Post-reorg 10-Qs are filed by the successor and not merged into the predecessor's TTM (ISSUES #46)
 
 ### B. Sector modes (banks, insurers, REITs)

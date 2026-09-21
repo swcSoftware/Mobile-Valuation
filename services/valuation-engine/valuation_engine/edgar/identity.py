@@ -26,6 +26,19 @@ class FilerProfile:
     first_filing: date | None
     latest_10k: date | None
     has_successor_notice: bool
+    forms: frozenset[str] = frozenset()
+
+    @property
+    def is_foreign_private_issuer(self) -> bool:
+        return any(f.startswith(("20-F", "40-F")) for f in self.forms)
+
+    @property
+    def is_new_listing(self) -> bool:
+        return any(f in ("S-1", "424B4", "S-11") or f.startswith("F-1") for f in self.forms)
+
+    @property
+    def is_fund(self) -> bool:
+        return any(f.startswith(("N-CSR", "N-1A")) or f == "N-2" for f in self.forms)
 
 
 @dataclass
@@ -68,10 +81,29 @@ def parse_profile(raw: dict) -> FilerProfile:
         cik=int(raw["cik"]), name=raw.get("name", ""), sic=(raw.get("sic") or None),
         first_filing=min(all_dates) if all_dates else None, latest_10k=max(ten_k) if ten_k else None,
         has_successor_notice=any(f.startswith(("8-K12B", "8-K12G3")) for f in forms),
+        forms=frozenset(forms),
     )
 
 
+def no_annual_data_reason(ticker: str, p: FilerProfile | None) -> str:
+    if p is None:
+        return f"{ticker} has no 10-K income statement data on EDGAR (foreign filer, fund, SPAC or new listing)."
+    if p.is_foreign_private_issuer:
+        return f"{ticker} ({p.name}) is a foreign private issuer that files 20-F/40-F reports, which ValueLens doesn't parse yet."
+    if p.is_fund:
+        return f"{ticker} ({p.name}) is a fund or trust, not an operating company; it has no 10-K to value."
+    if p.is_new_listing and p.latest_10k is None:
+        first = f" (first SEC filing {p.first_filing})" if p.first_filing else ""
+        return f"{ticker} ({p.name}) listed recently{first} and hasn't filed its first 10-K yet. Come back after its fiscal year-end report."
+    if p.latest_10k is None:
+        return f"{ticker} ({p.name}) has no 10-K on file with SEC."
+    return f"{ticker} ({p.name}) files 10-Ks but none carry XBRL income-statement facts ValueLens can read."
+
+
 def is_plausible_predecessor(successor: FilerProfile, candidate: FilerProfile, today: date) -> bool:
+    """Substitution requires an 8-K12B/8-K12G3 on the successor; IPOs and spin-offs never substitute."""
+    if not successor.has_successor_notice:
+        return False
     if candidate.latest_10k is None:
         return False
     if successor.sic and candidate.sic and successor.sic != candidate.sic:
@@ -90,9 +122,9 @@ async def profile(client: EdgarClient, cik: int) -> FilerProfile | None:
         return None
 
 
-async def find_predecessor(client: EdgarClient, successor: CompanyRef, today: date) -> Predecessor | None:
-    sp = await profile(client, successor.cik)
-    if sp is None:
+async def find_predecessor(client: EdgarClient, successor: CompanyRef, today: date, sp: FilerProfile | None = None) -> Predecessor | None:
+    sp = sp or await profile(client, successor.cik)
+    if sp is None or not sp.has_successor_notice:
         return None
     token = search_token(sp.name or successor.name)
     if not token:
