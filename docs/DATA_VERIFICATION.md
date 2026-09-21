@@ -19,12 +19,15 @@ data, or explicitly labeled *assumed* — and an assumed input is always visible
 | Effective tax rate | income tax ÷ pre-tax income from the latest filing, clamped 0–50% | `sec` / `assumed` (21%) | Negative pre-tax income | Check "Tax rate from filings" |
 | Cost of debt | interest expense ÷ total debt, clamped 2–12% | `sec` / `assumed` (rf + 1.5%) | Interest not tagged (AAPL) | Check "Cost of debt from filings" |
 | Growth (g, stage-1) | CAGR of EPS / revenue / FCF from the 10-K history, clamped 0–15% | `sec` | Split-adjusted EPS history; < 2 years of data | Expert Mode → Growth (CAGR) card |
+| Sector (bank / insurer / broker / REIT / mREIT) | SIC code from the SEC submissions profile; mortgage REIT by D&A ÷ revenue < 5% | `sector` | Conglomerates with a financial SIC (BRK); stale SIC after a pivot | `sector_mode` check names the mode; expert mode shows the SIC |
+| Cost of equity | CAPM = rf + β × ERP, **floored at rf + 4%** | shown on the metric with the unfloored CAPM value | Very low measured beta (KO 0.29, PGR 0.23) would imply 6% | Note on the metric says when the floor applied |
 | Hurdle rate, ERP, terminal growth, exit multiple, MoS bands | Policy constants (10%, 5%, 2.5%, 15×, 25/50%) | shown in Assumptions, user-editable | — | These are the model's *opinions*, not data; change them in Settings |
 
 ## The checks
 
 | Key | Pass | Warn | Fail |
 |---|---|---|---|
+| `sector_mode` | SIC known; models fit the industry (general / financial / REIT) | SIC unknown — general models used | — |
 | `filer_identity` | ticker's CIK has 10-K history | filings taken from a predecessor filer (holding-company reorg) | — |
 | `balance_sheet` | assets = liabilities + equity within 0.5% | within 5% | > 5% |
 | `eps_consistency` | reported EPS within 10% of NI ÷ diluted shares | within 25% | further |
@@ -59,3 +62,11 @@ cd services/valuation-engine && .venv/bin/python tests/fixtures/make_expected.py
 - Multi-class share structures still lack per-class facts (ISSUES #1); the share-count check flags them.
 - Banks / insurers have no operating income or classified balance sheet; several checks warn rather than adapt.
 - Beta uses a public quote feed; a licensed source would remove the "unofficial" caveat.
+
+## Sector models (Sprint 3)
+
+| Sector | Model A | Model B | Hidden as not applicable |
+|---|---|---|---|
+| Banks, insurers, brokers (SIC 6020–6299, 6311–6411, 6712) and mortgage REITs | Graham EPS formulas; book value × justified P/B = min((ROE − g)/(Ke − g), 4×); composite = min | Residual income: B0 + PV of (ROE − Ke)·B over 5 yrs + terminal (spread capped at 15 pts); book grows at ROE × (1 − payout) | Owner earnings, NNWC, FCFF, WACC, ROIC |
+| Property REITs (6798) | Graham formula on FFO/share (FFO = NI + D&A − gains on sale); dividend coverage | mean(FFO × multiple, DPS × (1+g)/(Ke − g)) | NNWC, owner earnings, FCFF DCF |
+| Everything else | unchanged general models | unchanged | — |

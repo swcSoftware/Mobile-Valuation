@@ -38,8 +38,8 @@ object DataChecks {
 
         // 0b. Sector mode is always stated
         prov["sector"] = mode.name.lowercase()
-        add("sector_mode", "Valuation models fit the industry", "pass", when (mode) {
-            SectorMode.GENERAL -> "Operating company (SIC ${sector?.sic ?: "unknown"}): earnings, owner earnings and discounted cash flow apply."
+        add("sector_mode", "Valuation models fit the industry", if (sector?.sic == null) "warn" else "pass", when (mode) {
+            SectorMode.GENERAL -> if (sector?.sic == null) "SEC profile unavailable, so the industry is unknown and the general models were used. If this is a bank, insurer or REIT, the value below does not apply." else "Operating company (SIC ${sector.sic}): earnings, owner earnings and discounted cash flow apply."
             SectorMode.FINANCIAL -> "Bank / insurer (SIC ${sector?.sic}): valued on book value, ROE and residual income; owner earnings, net-net working capital and FCFF are not applicable and are hidden."
             SectorMode.REIT -> "REIT (SIC ${sector?.sic}): valued on funds from operations and dividends; GAAP earnings understate real-estate cash flow."
         }, "sic")

@@ -23,22 +23,34 @@ object Sector {
         return if (capm < floor) floor to true else capm to false
     }
     /** SIC → mode. Ranges per SEC's Standard Industrial Classification list. */
-    fun modeFor(sic: String?): SectorMode {
+    fun modeFor(sic: String?, fin: NormalizedFinancials? = null): SectorMode {
         val code = sic?.toIntOrNull() ?: return SectorMode.GENERAL
         return when (code) {
             in 6020..6199, 6712 -> SectorMode.FINANCIAL        // banks, savings institutions, credit, bank holding cos
+            in 6200..6299 -> SectorMode.FINANCIAL              // brokers, dealers, exchanges, asset managers
             in 6311..6411 -> SectorMode.FINANCIAL              // insurers and agents
-            6798 -> SectorMode.REIT
+            6798 -> if (fin != null && isMortgageReit(fin)) SectorMode.FINANCIAL else SectorMode.REIT
             else -> SectorMode.GENERAL
         }
     }
 
-    fun info(profile: FilerProfile?): SectorInfo {
-        val mode = modeFor(profile?.sic)
-        val desc = when (mode) {
-            SectorMode.FINANCIAL -> "Bank / insurer — valued on book value and return on equity; cash-flow models don't apply to financial balance sheets."
-            SectorMode.REIT -> "REIT — valued on funds from operations (FFO) and dividends; GAAP earnings understate real estate cash flow."
-            SectorMode.GENERAL -> "Operating company — earnings, owner earnings and discounted free cash flow."
+    /** Mortgage REITs share SIC 6798 with property REITs but own loans, not buildings: no depreciation to add back. */
+    fun isMortgageReit(fin: NormalizedFinancials): Boolean {
+        val t = fin.ttm?.values ?: return false
+        val da = t["d_and_a"]?.value ?: return true
+        val rev = t["revenue"]?.value ?: return false
+        return rev > 0 && da / rev < 0.05
+    }
+
+    fun info(profile: FilerProfile?, fin: NormalizedFinancials? = null): SectorInfo {
+        val mode = modeFor(profile?.sic, fin)
+        val mreit = profile?.sic == "6798" && mode == SectorMode.FINANCIAL
+        val desc = when {
+            mreit -> "Mortgage REIT — owns loans, not buildings, so it is valued like a financial: book value and return on equity."
+            mode == SectorMode.FINANCIAL -> "Bank / insurer / broker — valued on book value and return on equity; cash-flow models don't apply to financial balance sheets."
+            mode == SectorMode.REIT -> "REIT — valued on funds from operations (FFO) and dividends; GAAP earnings understate real estate cash flow."
+            profile?.sic == null -> "Industry unknown (SEC profile unavailable) — general models used; check the industry before relying on the value."
+            else -> "Operating company — earnings, owner earnings and discounted free cash flow."
         }
         return SectorInfo(sic = profile?.sic, sicDescription = null, mode = mode.name.lowercase(), note = desc)
     }

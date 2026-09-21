@@ -5458,9 +5458,10 @@
   },
   "metrics": [
    {
-    "formula": "Ke = rf + \u03b2 \u00d7 ERP",
+    "formula": "Ke = max(rf + \u03b2 \u00d7 ERP, rf + 4%)",
     "inputs": {
      "beta": 1.0,
+     "capm_pct": 9.940000000000001,
      "erp_pct": 5.0,
      "rf_pct": 4.94
     },

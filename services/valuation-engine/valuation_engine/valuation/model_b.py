@@ -21,7 +21,9 @@ def cost_of_capital(fin: NormalizedFinancials, a: Assumptions, price: float | No
     ttm = fin.ttm
     v = ttm.values if ttm else {}
     rf = a.treasury_10y_pct / 100.0
-    ke = rf + a.beta * a.equity_risk_premium_pct / 100.0
+    ke_capm = rf + a.beta * a.equity_risk_premium_pct / 100.0
+    ke_floor = rf + 0.04
+    ke = max(ke_capm, ke_floor)
     debt = v["total_debt"].value if "total_debt" in v else 0.0
     interest = abs(v["interest_expense"].value) if "interest_expense" in v else None
     kd_raw = (interest / debt) if (interest is not None and debt > 0) else None
@@ -33,6 +35,7 @@ def cost_of_capital(fin: NormalizedFinancials, a: Assumptions, price: float | No
         # fall back to book equity weights
         mcap = v["equity"].value if "equity" in v else None
     notes = []
+    ke_notes = [f"CAPM gave {ke_capm*100:.2f}% with β {a.beta:.2f}; floored at rf + 4% — no value investor discounts equity below that."] if ke_capm < ke_floor else []
     if mcap is None or mcap <= 0:
         we, wd = 1.0, 0.0
         notes.append("No market cap or book equity available; assuming 100% equity.")
@@ -40,8 +43,8 @@ def cost_of_capital(fin: NormalizedFinancials, a: Assumptions, price: float | No
         we, wd = mcap / (mcap + debt), debt / (mcap + debt)
     wacc = we * ke + wd * kd * (1 - t)
     return [
-        Metric("cost_of_equity", "Cost of equity (CAPM)", ke * 100, "%", "Ke = rf + β × ERP",
-               inputs={"rf_pct": a.treasury_10y_pct, "beta": a.beta, "erp_pct": a.equity_risk_premium_pct}),
+        Metric("cost_of_equity", "Cost of equity (CAPM)", ke * 100, "%", "Ke = max(rf + β × ERP, rf + 4%)",
+               inputs={"rf_pct": a.treasury_10y_pct, "beta": a.beta, "erp_pct": a.equity_risk_premium_pct, "capm_pct": ke_capm * 100}, notes=ke_notes),
         Metric("cost_of_debt", "Cost of debt (pre-tax)", kd * 100, "%", "Kd = interest_expense / total_debt (clamped 2–12%)",
                inputs={"interest_expense": interest, "total_debt": debt, "raw_pct": kd_raw * 100 if kd_raw is not None else None},
                sources=[v[k] for k in ("interest_expense", "total_debt") if k in v]),

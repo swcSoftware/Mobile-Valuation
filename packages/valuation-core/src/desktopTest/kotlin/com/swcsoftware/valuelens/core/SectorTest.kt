@@ -17,6 +17,7 @@ class SectorTest {
 
     @Test fun sicMapping() {
         assertEquals(SectorMode.FINANCIAL, Sector.modeFor("6021")); assertEquals(SectorMode.FINANCIAL, Sector.modeFor("6712")); assertEquals(SectorMode.FINANCIAL, Sector.modeFor("6331"))
+        assertEquals(SectorMode.FINANCIAL, Sector.modeFor("6211")); assertEquals(SectorMode.FINANCIAL, Sector.modeFor("6282"))
         assertEquals(SectorMode.REIT, Sector.modeFor("6798")); assertEquals(SectorMode.GENERAL, Sector.modeFor("3571")); assertEquals(SectorMode.GENERAL, Sector.modeFor(null)); assertEquals(SectorMode.GENERAL, Sector.modeFor("abc"))
     }
 
@@ -53,6 +54,21 @@ class SectorTest {
         // A REIT's FFO-based value must be well above its GAAP-earnings Graham value
         val grahamOnEps = ModelA.run(Statements.normalize(CompanyFactsParser.parse(File(fixtures, "companyfacts_O.json").readText(), CompanyRefCore("O", 726728, "O"))), AssumptionsCore(5.94, 4.94), null)
         assertTrue(r.modelA.intrinsicValuePerShare!! > (grahamOnEps.intrinsicValuePerShare ?: 0.0))
+    }
+
+    @Test fun propertyReitIsNotMistakenForMortgageReit() {
+        val fin = Statements.normalize(CompanyFactsParser.parse(File(fixtures, "companyfacts_O.json").readText(), CompanyRefCore("O", 726728, "O")))
+        assertFalse(Sector.isMortgageReit(fin))
+        assertEquals(SectorMode.REIT, Sector.modeFor("6798", fin))
+        // a 6798 filer with no D&A is a mortgage REIT → financial
+        val bank = Statements.normalize(CompanyFactsParser.parse(File(fixtures, "companyfacts_JPM.json").readText(), CompanyRefCore("JPM", 19617, "JPM")))
+        assertEquals(SectorMode.FINANCIAL, Sector.modeFor("6798", bank))
+        assertTrue(Sector.info(FilerProfile(1, "X", "6798", null, null, false, emptyList()), bank).note.contains("Mortgage REIT"))
+    }
+
+    @Test fun unknownSicWarns() {
+        val info = Sector.info(null, null)
+        assertEquals("general", info.mode); assertTrue(info.note.contains("unknown"))
     }
 
     @Test fun explainAdaptsToSector() {

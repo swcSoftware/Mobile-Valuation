@@ -73,7 +73,7 @@ class ValuationCore(
             rateSource = when { ratesOverridden -> "user override"; rates != null -> "FRED (published ${rates.as_of})"; else -> "defaults" },
             betaSource = when { overrides.beta != null -> "override"; measuredBeta != null -> "measured"; else -> "assumed" },
         )
-        val sector = Sector.info(profile)
+        val sector = Sector.info(profile, fin)
         val checks = DataChecks.run(fin, quote, priceOverride != null, a, rates, ratesOverridden, clock.nowMillis(), predecessor, sector)
         val report = Report.build(fin, a, quote, Market.isoFromMillis(clock.nowMillis()), checks.checks, checks.provenance, sector)
         return if (measuredBeta != null) report.withBeta(measuredBeta) else report

@@ -121,12 +121,15 @@ Coverage probe on day 1 (14 tickers): tech/consumer/healthcare correct; **XOM fa
 - [x] Negative DCF → null with note instead of a negative price (#51)
 - [ ] Post-reorg 10-Qs are filed by the successor and not merged into the predecessor's TTM (ISSUES #46)
 
-### B. Sector modes (banks, insurers, REITs)
-- [ ] Sector detection from SIC (submissions API): banks 6020–6199, insurers 6311–6411, REITs 6798
-- [ ] Financials mode: hide Model B / owner earnings / NNWC; value on book value + sustainable ROE (justified P/B) + Graham EPS; checks adapted (no classified balance sheet expected)
-- [ ] REIT mode: FFO / AFFO from net income + depreciation − gains on sale; FFO multiple + dividend coverage; hide NNWC
-- [ ] Unmapped sectors keep the general model but the checks say so
-- [ ] Basic-mode copy per sector ("banks are valued on their book value…")
+### B. Sector modes (banks, insurers, brokers, REITs) ✅
+- [x] Sector detection from SIC (submissions profile, cached): financial 6020–6199, 6200–6299, 6311–6411, 6712; REIT 6798 (mortgage REITs → financial via a no-depreciation heuristic)
+- [x] Financial Model A: Graham EPS + book value × justified P/B ((ROE−g)/(Ke−g), capped 4×); Model B: residual income (ROE−Ke spread, payout-driven book growth, terminal spread capped 15 pts); owner earnings / NNWC / FCFF hidden
+- [x] REIT Model A: Graham on FFO/share (NI + D&A − gains on sale); Model B: FFO multiple (uses the exit-multiple setting) + dividend discount; dividend coverage
+- [x] Cost of equity floored at rf + 4% (sector models and general Model B; Python mirrored; oracle unchanged)
+- [x] `sector_mode` check (warns when the SIC is unknown); `debt_coverage` / `cost_of_debt` adapted for financials
+- [x] Sector-aware basic copy: model blurbs, "Industry mode" line, ROE / leverage health tiles
+- [x] Verified live: JPM, BAC, WFC, GS, SCHW, PGR, O, PLD, AGNC; AAPL control unchanged
+- [ ] Insurers: float/combined-ratio view (ISSUES #55); Python reference lacks the sector models (#58)
 
 ### C. Multi-class shares (#1)
 - [ ] Per-class `dei` share counts via companyconcept/frames or the filing's instance; BRK-B, GOOG/GOOGL, META per-share values

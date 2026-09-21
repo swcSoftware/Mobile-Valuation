@@ -76,4 +76,12 @@ the workflow once. Until then the apps use the bundled 2026-09-17 snapshot and s
 
 **Day 1**: coverage probe across 14 diverse tickers exposed three gaps (reorganized filers, banks,
 REITs). Track A shipped: successor-issuer resolution (XOM → Exxon Mobil Corp) in the core and the
-Python reference, with evidence rules, a visible data check, and a no-regression guard. Tests: 70.
+Python reference, with evidence rules, a visible data check, and a no-regression guard. Hardened
+after review: substitution requires an 8-K12B successor notice (IPOs/spin-offs never substitute);
+no-data reasons classified (new listing, foreign filer, fund); negative DCF → null.
+
+**Track B shipped**: sector modes. Banks/insurers/brokers valued on book value + residual income,
+property REITs on FFO + dividends, mortgage REITs detected and treated as financials, cost of
+equity floored at rf + 4% (also in the general DCF). Sector-aware checks and copy in both apps.
+Verified live on 9 financial/REIT tickers; general path oracle unchanged. Tests: 76.
+Breaking-scenario review logged ISSUES #53–60 (Visa multi-class → Track C next).

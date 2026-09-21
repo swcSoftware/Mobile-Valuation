@@ -119,7 +119,9 @@ object ModelB {
     fun costOfCapital(fin: NormalizedFinancials, a: AssumptionsCore, price: Double?): List<Metric> {
         val v = fin.ttm?.values ?: LinkedHashMap()
         val rf = a.treasury10yPct / 100.0
-        val ke = rf + a.beta * a.equityRiskPremiumPct / 100.0
+        val keCapm = rf + a.beta * a.equityRiskPremiumPct / 100.0
+        val keFloor = rf + 0.04
+        val ke = maxOf(keCapm, keFloor)
         val debt = v["total_debt"]?.value ?: 0.0
         val interest = v["interest_expense"]?.let { abs(it.value) }
         val kdRaw = if (interest != null && debt > 0) interest / debt else null
@@ -129,12 +131,13 @@ object ModelB {
         var mcap: Double? = if (price != null && price != 0.0 && shares != null && shares != 0.0) price * shares else null
         if (mcap == null) mcap = v["equity"]?.value
         val notes = mutableListOf<String>()
+        val keNotes = if (keCapm < keFloor) listOf("CAPM gave ${PyFmt.fixed(keCapm * 100, 2)}% with β ${PyFmt.fixed(a.beta, 2)}; floored at rf + 4% — no value investor discounts equity below that.") else emptyList()
         val we: Double; val wd: Double
         if (mcap == null || mcap <= 0) { we = 1.0; wd = 0.0; notes += "No market cap or book equity available; assuming 100% equity." }
         else { we = mcap / (mcap + debt); wd = debt / (mcap + debt) }
         val wacc = we * ke + wd * kd * (1 - t)
         return listOf(
-            metric("cost_of_equity", "Cost of equity (CAPM)", ke * 100, "%", "Ke = rf + β × ERP", linkedMapOf("rf_pct" to a.treasury10yPct, "beta" to a.beta, "erp_pct" to a.equityRiskPremiumPct)),
+            metric("cost_of_equity", "Cost of equity (CAPM)", ke * 100, "%", "Ke = max(rf + β × ERP, rf + 4%)", linkedMapOf("rf_pct" to a.treasury10yPct, "beta" to a.beta, "erp_pct" to a.equityRiskPremiumPct, "capm_pct" to keCapm * 100), notes = keNotes),
             metric("cost_of_debt", "Cost of debt (pre-tax)", kd * 100, "%", "Kd = interest_expense / total_debt (clamped 2–12%)",
                 linkedMapOf("interest_expense" to interest, "total_debt" to debt, "raw_pct" to kdRaw?.let { it * 100 }), listOfNotNull(v["interest_expense"], v["total_debt"])),
             metric("wacc", "WACC", wacc * 100, "%", "WACC = E/(D+E)·Ke + D/(D+E)·Kd·(1−t)",
