@@ -19,7 +19,8 @@ object DataChecks {
     private fun pct(a: Double, b: Double) = if (b == 0.0) Double.POSITIVE_INFINITY else abs(a - b) / abs(b)
 
     fun run(fin: NormalizedFinancials, quote: Quote?, priceIsManual: Boolean, a: AssumptionsCore,
-            rates: RatesSnapshot?, ratesOverridden: Boolean, nowMillis: Long, predecessor: Predecessor? = null, sector: SectorInfo? = null): Result {
+            rates: RatesSnapshot?, ratesOverridden: Boolean, nowMillis: Long, predecessor: Predecessor? = null, sector: SectorInfo? = null,
+            classes: ClassResolution? = null): Result {
         val mode = sector?.let { runCatching { SectorMode.valueOf(it.mode.uppercase()) }.getOrNull() } ?: SectorMode.GENERAL
         val out = mutableListOf<DataCheck>()
         val prov = LinkedHashMap<String, String>()
@@ -70,6 +71,15 @@ object DataChecks {
                 if (r in 0.7..1.3) "Cover-page shares ${PyFmt.commas(cur, 0)} vs diluted average ${PyFmt.commas(sh, 0)}." else "Cover-page shares ${PyFmt.commas(cur, 0)} differ from diluted average ${PyFmt.commas(sh, 0)} by ${PyFmt.fixed(r, 2)}× — per-share values may be wrong (multi-class or stale count).", "shares_outstanding", "shares_diluted")
         } else if (cur == null) add("share_count", "Share count is current and consistent", "fail", "No usable share count; per-share values cannot be computed.", "shares_outstanding")
         else add("share_count", "Share count is current and consistent", "warn", "Only one share-count source available; could not cross-check.", "shares_outstanding")
+
+        // 3b. Share classes resolved from the filing instance
+        if (classes != null) {
+            prov["shares"] = "sec-instance"
+            val listed = classes.classes.joinToString("; ") { "${it.cls}${it.ticker?.let { t -> " ($t)" } ?: ""}: ${PyFmt.commas(it.shares, 0)} × ${PyFmt.fixed(it.ratioToSearched, 3)}" }
+            val hasRatioGaps = classes.notes.any { it.contains("assumed economically equal") }
+            add("share_classes", "Share classes reconciled", if (hasRatioGaps) "warn" else "pass",
+                "${classes.classes.size} common classes from ${classes.source.form} ${classes.source.accession}, expressed per class ${classes.searchedClass} share: $listed. Total ${PyFmt.commas(classes.totalInSearchedClass, 0)}." + (if (hasRatioGaps) " Some conversion ratios were assumed 1:1." else " Conversion ratios from per-class EPS."), "shares_outstanding")
+        }
 
         // 4. TTM period alignment
         val ends = listOf("revenue", "net_income", "cfo").mapNotNull { t?.get(it)?.periodEnd }

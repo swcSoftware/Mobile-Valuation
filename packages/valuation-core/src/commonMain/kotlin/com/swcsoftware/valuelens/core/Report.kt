@@ -6,6 +6,7 @@ import com.swcsoftware.valuelens.domain.GrowthEntry
 import com.swcsoftware.valuelens.domain.HistoryPoint
 import com.swcsoftware.valuelens.domain.Quote
 import com.swcsoftware.valuelens.domain.SectorInfo
+import com.swcsoftware.valuelens.domain.ShareClass
 import com.swcsoftware.valuelens.domain.SourcedValue
 import com.swcsoftware.valuelens.domain.ValuationReport
 import kotlinx.serialization.json.JsonArray
@@ -31,7 +32,7 @@ object Report {
 
     fun build(fin: NormalizedFinancials, a: AssumptionsCore, quote: Quote?, generatedAt: String,
               dataChecks: List<DataCheck> = emptyList(), provenance: Map<String, String> = emptyMap(),
-              sector: SectorInfo? = null): ValuationReport {
+              sector: SectorInfo? = null, shareClasses: List<ShareClass> = emptyList()): ValuationReport {
         val price = quote?.price
         val mode = sector?.let { runCatching { SectorMode.valueOf(it.mode.uppercase()) }.getOrNull() } ?: SectorMode.GENERAL
         val modelA = when (mode) { SectorMode.FINANCIAL -> Sector.financialModelA(fin, a, price); SectorMode.REIT -> Sector.reitModelA(fin, a, price); else -> ModelA.run(fin, a, price) }
@@ -43,7 +44,7 @@ object Report {
             snapshot = snapshot, history = history(fin), growth = growth(fin),
             modelA = modelA, modelB = modelB,
             warnings = fin.warnings, disclaimer = DISCLAIMER, generatedAt = generatedAt,
-            dataChecks = dataChecks, provenance = provenance, sector = sector,
+            dataChecks = dataChecks, provenance = provenance, sector = sector, shareClasses = shareClasses,
         )
     }
 

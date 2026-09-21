@@ -44,6 +44,12 @@ import kotlinx.serialization.Serializable
 
 @Serializable data class SectorInfo(val sic: String? = null, @SerialName("sic_description") val sicDescription: String? = null, val mode: String = "general", val note: String = "")
 
+/** One common share class from the filing cover page; ratio converts to the class the user searched. */
+@Serializable data class ShareClass(
+    val cls: String, val ticker: String? = null, val shares: Double,
+    @SerialName("ratio_to_searched") val ratioToSearched: Double, val eps: Double? = null, @SerialName("as_of") val asOf: String? = null,
+)
+
 @Serializable data class DataCheck(
     val key: String, val label: String, val status: String,   // "pass" | "warn" | "fail"
     val message: String, val inputs: List<String> = emptyList(),
@@ -90,6 +96,7 @@ import kotlinx.serialization.Serializable
     /** Every model input with its provenance ("sec", "market", "derived", "assumed"). */
     val provenance: Map<String, String> = emptyMap(),
     val sector: SectorInfo? = null,
+    @SerialName("share_classes") val shareClasses: List<ShareClass> = emptyList(),
 )
 
 // ---- Sprint 1 additions -------------------------------------------------------------------

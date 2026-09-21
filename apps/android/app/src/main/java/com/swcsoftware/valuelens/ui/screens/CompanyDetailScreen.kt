@@ -172,6 +172,19 @@ fun CompanyDetailScreen(state: AppState, company: CompanyRef, onBack: () -> Unit
                     }
                     r.provenance["beta_detail"]?.let { Text(it, style = MaterialTheme.typography.bodySmall, color = VL.textTertiary, modifier = Modifier.padding(top = 6.dp)) }
 
+                    if (r.shareClasses.isNotEmpty()) {
+                        SectionHeader("Share classes", "From the filing cover page; ratios from per-class EPS, in ${company.ticker} share terms")
+                        Card(Modifier.padding(top = 8.dp)) {
+                            r.shareClasses.forEach { c ->
+                                Row(Modifier.padding(vertical = 4.dp)) {
+                                    Text("Class ${c.cls}${c.ticker?.let { " · $it" } ?: " · not traded"}", color = VL.textPrimary, modifier = Modifier.weight(1f))
+                                    Text(Fmt.number(c.shares, 0), color = VL.textSecondary)
+                                    Text("  × ${Fmt.number(c.ratioToSearched, if (c.ratioToSearched >= 10) 0 else 3)}", color = VL.textTertiary, fontSize = 12.sp)
+                                }
+                            }
+                        }
+                    }
+
                     SectionHeader("Balance sheet & quality", "Trailing twelve months")
                     Card(Modifier.padding(top = 8.dp)) { SnapshotGrid(r) }
 

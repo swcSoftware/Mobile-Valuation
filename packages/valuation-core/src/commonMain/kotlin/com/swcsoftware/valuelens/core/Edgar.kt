@@ -104,6 +104,18 @@ class Edgar(private val fetcher: Fetcher, cache: KeyValueCache, private val user
         return null
     }
 
+    /** Raw submissions text (for the latest-filing lookup) — same cache entry the profile uses. */
+    fun submissionsText(cik: Long): String? = runCatching { getText(FilerIdentity.submissionsUrl(cik), DAY) }.getOrNull()
+
+    /** Inline-XBRL instance of a filing; large (1–8 MB) so cached for 30 days and fetched only on demand. */
+    fun instance(ref: InstanceRef): String? = runCatching {
+        val url = ref.instanceUrl
+        ttl.get(url, 30 * DAY)?.let { return it }
+        val text = fetcher.text(url, headers())
+        if (!text.contains("<xbrl") && !text.contains("<xbrli:xbrl")) return null
+        ttl.put(url, text); text
+    }.getOrNull()
+
     fun companyFacts(ref: CompanyRef): CompanyFacts {
         val url = "https://data.sec.gov/api/xbrl/companyfacts/CIK${ref.cik.toString().padStart(10, '0')}.json"
         return CompanyFactsParser.parse(getText(url, DAY), CompanyRefCore(ref.ticker, ref.cik, ref.name))

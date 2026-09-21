@@ -57,6 +57,32 @@ class ValuationCore(
             }
         }
         if (fin.annual.isEmpty()) throw com.swcsoftware.valuelens.domain.EngineException.NoAnnualData(FilerIdentity.noAnnualDataReason(resolved.ticker, profile))
+        // Multi-class share resolution: only when the ordinary share count is missing or inconsistent.
+        var classResolution: ClassResolution? = null
+        if (needsClassResolution(fin)) {
+            classResolution = resolveClasses(ed, fin, resolved.ticker)
+            if (classResolution != null) {
+                val src = fin.currentShares
+                val today = Day(floorDiv(clock.nowMillis(), Edgar.DAY))
+                val sv = SourcedValueCore(classResolution.totalInSearchedClass, "EntityCommonStockSharesOutstanding", "dei", classResolution.source.accession, classResolution.source.form,
+                    classResolution.classes.firstNotNullOfOrNull { it.asOf?.let { d -> Day.parse(d) } } ?: today, null, classResolution.source.filed ?: today, derived = true,
+                    note = "Σ class shares × EPS ratio, in ${classResolution.searchedClass}-share terms: " + classResolution.classes.joinToString("; ") { "${it.cls}${it.ticker?.let { t -> " ($t)" } ?: ""} ${PyFmt.commas(it.shares, 0)} × ${PyFmt.fixed(it.ratioToSearched, 4)}" })
+                val ttm = fin.ttm?.also { t -> classResolution.dilutedInSearchedClass?.let { d -> t.values["shares_diluted"] = SourcedValueCore(d, "WeightedAverageNumberOfDilutedSharesOutstanding", "us-gaap", classResolution.source.accession, classResolution.source.form, sv.periodEnd, null, sv.filed, derived = true, note = "Per-class weighted averages converted to ${classResolution.searchedClass}-share terms") } }
+                // Multi-class filers tag EPS per class only; derive a TTM EPS in searched-class terms so Graham's formulas can run.
+                var derivedEps = false
+                ttm?.let { t ->
+                    val ni = t.values["net_income"]
+                    if (t.values["eps_diluted"] == null && ni != null && classResolution.totalInSearchedClass > 0) {
+                        t.values["eps_diluted"] = SourcedValueCore(ni.value / classResolution.totalInSearchedClass, "derived", "valuelens", ni.accession, ni.form, ni.periodEnd, ni.periodStart, ni.filed, derived = true,
+                            note = "net_income ÷ shares in ${classResolution.searchedClass}-share terms (per-class EPS is dimensioned in the filing)")
+                        derivedEps = true
+                    }
+                }
+                val cleaned = fin.warnings.filterNot { it.contains("multi-class") || it.contains("No usable share count") || it.contains("Using diluted weighted-average shares as current") }
+                fin = NormalizedFinancials(fin.ticker, fin.cik, fin.name, fin.annual, ttm, sv, cleaned + classResolution.notes + (if (derivedEps) listOf("TTM EPS derived from net income ÷ ${classResolution.searchedClass}-equivalent shares.") else emptyList()))
+                if (src == null) { /* per-share metrics now possible */ }
+            }
+        }
         val quote = priceOverride?.let { Quote(ref.ticker, it, "USD", Market.isoFromMillis(clock.nowMillis()), "manual") } ?: market.quote(ref.ticker)
         val measuredBeta = if (overrides.beta == null) market.beta(ref.ticker) else null
         val rates = rates()
@@ -74,9 +100,25 @@ class ValuationCore(
             betaSource = when { overrides.beta != null -> "override"; measuredBeta != null -> "measured"; else -> "assumed" },
         )
         val sector = Sector.info(profile, fin)
-        val checks = DataChecks.run(fin, quote, priceOverride != null, a, rates, ratesOverridden, clock.nowMillis(), predecessor, sector)
-        val report = Report.build(fin, a, quote, Market.isoFromMillis(clock.nowMillis()), checks.checks, checks.provenance, sector)
+        val checks = DataChecks.run(fin, quote, priceOverride != null, a, rates, ratesOverridden, clock.nowMillis(), predecessor, sector, classResolution)
+        val report = Report.build(fin, a, quote, Market.isoFromMillis(clock.nowMillis()), checks.checks, checks.provenance, sector, classResolution?.classes ?: emptyList())
         return if (measuredBeta != null) report.withBeta(measuredBeta) else report
+    }
+
+    /** Missing count, stale multi-class cover page, or cover vs diluted average disagreeing beyond 30%. */
+    internal fun needsClassResolution(fin: NormalizedFinancials): Boolean {
+        val cur = fin.currentShares?.value ?: return true
+        if (fin.warnings.any { it.contains("multi-class") || it.contains("Using diluted weighted-average shares as current") }) return true
+        val sh = fin.ttm?.values?.get("shares_diluted")?.value ?: return false
+        val r = cur / sh
+        return r < 0.7 || r > 1.3
+    }
+
+    private fun resolveClasses(ed: Edgar, fin: NormalizedFinancials, ticker: String): ClassResolution? {
+        val subs = ed.submissionsText(fin.cik) ?: return null
+        val ref = ShareClasses.latestFilingRef(subs, fin.cik) ?: return null
+        val xml = ed.instance(ref) ?: return null
+        return ShareClasses.resolve(xml, ticker, ref)
     }
 
     /** JSON form for hosts without Kotlin interop (iOS decodes it with ValuationReport.swift). */

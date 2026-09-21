@@ -32,7 +32,7 @@ class SampleDump {
             val line = try {
                 val r = core.valuation(t, ua)
                 val fails = r.dataChecks.filter { it.status == "fail" }.map { it.key }; val warns = r.dataChecks.filter { it.status == "warn" }.map { it.key }
-                "$t: ${r.company.name} (CIK ${r.company.cik}) price=${r.quote?.price} A=${r.modelA.intrinsicValuePerShare} B=${r.modelB.intrinsicValuePerShare} verdict=${r.modelA.marginOfSafety.verdict} beta=${r.assumptions.beta}(${r.provenance["beta"]}) fails=$fails warns=$warns"
+                "$t: ${r.company.name} (CIK ${r.company.cik}) price=${r.quote?.price} A=${r.modelA.intrinsicValuePerShare} B=${r.modelB.intrinsicValuePerShare} verdict=${r.modelA.marginOfSafety.verdict} beta=${r.assumptions.beta}(${r.provenance["beta"]}) fails=$fails warns=$warns" + (if (r.shareClasses.isNotEmpty()) " classes=" + r.shareClasses.joinToString(",") { "${it.cls}${it.ticker?.let { x -> "($x)" } ?: ""}×${"%.3f".format(it.ratioToSearched)}" } else "")
             } catch (e: Exception) { "$t: ERROR ${e::class.simpleName}: ${e.message}" }
             println("PROBE $line")
         }

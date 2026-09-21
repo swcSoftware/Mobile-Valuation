@@ -151,6 +151,16 @@ struct SectorInfo: Codable, Hashable {
     let note: String
 }
 
+struct ShareClass: Codable, Hashable, Identifiable {
+    let cls: String
+    let ticker: String?
+    let shares: Double
+    let ratioToSearched: Double
+    let eps: Double?
+    let asOf: String?
+    var id: String { cls }
+}
+
 struct DataCheck: Codable, Hashable, Identifiable {
     let key: String
     let label: String
@@ -175,13 +185,14 @@ struct ValuationReport: Codable, Hashable {
     var dataChecks: [DataCheck] = []
     var provenance: [String: String] = [:]
     var sector: SectorInfo? = nil
+    var shareClasses: [ShareClass] = []
     /// The exact JSON the core produced (not part of Codable); handed back to the core for `explain`.
     var rawJSON: String? = nil
 
     var price: Double? { quote?.price }
     var checksFailed: Bool { dataChecks.contains { $0.status == "fail" } }
 
-    enum CodingKeys: String, CodingKey { case company, quote, assumptions, snapshot, history, growth, modelA, modelB, warnings, disclaimer, generatedAt, dataChecks, provenance, sector }
+    enum CodingKeys: String, CodingKey { case company, quote, assumptions, snapshot, history, growth, modelA, modelB, warnings, disclaimer, generatedAt, dataChecks, provenance, sector, shareClasses }
 
     init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
@@ -199,6 +210,7 @@ struct ValuationReport: Codable, Hashable {
         dataChecks = try c.decodeIfPresent([DataCheck].self, forKey: .dataChecks) ?? []
         provenance = try c.decodeIfPresent([String: String].self, forKey: .provenance) ?? [:]
         sector = try c.decodeIfPresent(SectorInfo.self, forKey: .sector)
+        shareClasses = try c.decodeIfPresent([ShareClass].self, forKey: .shareClasses) ?? []
     }
 }
 

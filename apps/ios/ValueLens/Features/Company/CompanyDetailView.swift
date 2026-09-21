@@ -140,6 +140,22 @@ struct CompanyDetailView: View {
                     Text(beta).font(.caption).foregroundStyle(Theme.textTertiary)
                 }
 
+                if !r.shareClasses.isEmpty {
+                    SectionHeader(title: "Share classes", subtitle: "From the filing cover page; ratios from per-class EPS, in \(vm.company.ticker) share terms")
+                    Card {
+                        VStack(spacing: 8) {
+                            ForEach(r.shareClasses) { c in
+                                HStack {
+                                    Text("Class \(c.cls)\(c.ticker.map { " · \($0)" } ?? " · not traded")").foregroundStyle(Theme.textPrimary)
+                                    Spacer()
+                                    Text(Fmt.number(c.shares, decimals: 0)).font(.body.monospacedDigit()).foregroundStyle(Theme.textSecondary)
+                                    Text("× \(Fmt.number(c.ratioToSearched, decimals: c.ratioToSearched >= 10 ? 0 : 3))").font(.caption.monospacedDigit()).foregroundStyle(Theme.textTertiary).frame(width: 70, alignment: .trailing)
+                                }
+                            }
+                        }
+                    }
+                }
+
                 SectionHeader(title: "Balance sheet & quality", subtitle: "Trailing twelve months")
                 Card { SnapshotGrid(snapshot: r.snapshot) }
 
