@@ -4,6 +4,7 @@ import com.swcsoftware.valuelens.domain.CompanyRef
 import com.swcsoftware.valuelens.domain.EngineException
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 
@@ -108,12 +109,24 @@ class Edgar(private val fetcher: Fetcher, cache: KeyValueCache, private val user
     fun submissionsText(cik: Long): String? = runCatching { getText(FilerIdentity.submissionsUrl(cik), DAY) }.getOrNull()
 
     /** Inline-XBRL instance of a filing; large (1–8 MB) so cached for 30 days and fetched only on demand. */
-    fun instance(ref: InstanceRef): String? = runCatching {
+    fun instance(ref: InstanceRef): String? {
         val url = ref.instanceUrl
         ttl.get(url, 30 * DAY)?.let { return it }
-        val text = fetcher.text(url, headers())
-        if (!text.contains("<xbrl") && !text.contains("<xbrli:xbrl")) return null
-        ttl.put(url, text); text
+        val text = runCatching { fetcher.text(url, headers()) }.getOrNull()?.takeIf { it.contains("<xbrl") || it.contains("<xbrli:xbrl") }
+            ?: instanceViaIndex(ref) ?: return null
+        ttl.put(url, text)
+        return text
+    }
+
+    /** Fallback when the `<primary>_htm.xml` convention doesn't hold: list the filing folder and take the XBRL instance. */
+    private fun instanceViaIndex(ref: InstanceRef): String? = runCatching {
+        val folder = "https://www.sec.gov/Archives/edgar/data/${ref.cik}/${ref.accession.replace("-", "")}"
+        val idx = kotlinx.serialization.json.Json { ignoreUnknownKeys = true }.parseToJsonElement(fetcher.text("$folder/index.json", headers()))
+        val names = idx.jsonObject["directory"]!!.jsonObject["item"]!!.jsonArray.map { it.jsonObject["name"]!!.jsonPrimitive.content }
+        val candidate = names.firstOrNull { it.endsWith("_htm.xml") }
+            ?: names.filter { it.endsWith(".xml") && !it.contains("_cal") && !it.contains("_def") && !it.contains("_lab") && !it.contains("_pre") && !it.endsWith(".xsd") && !it.startsWith("Financial") }.firstOrNull()
+            ?: return null
+        fetcher.text("$folder/$candidate", headers()).takeIf { it.contains("<xbrl") || it.contains("<xbrli:xbrl") }
     }.getOrNull()
 
     fun companyFacts(ref: CompanyRef): CompanyFacts {

@@ -5,7 +5,7 @@ instruction for alpha). Severity: **P1** blocks core flow · **P2** wrong number
 
 | # | Sev | Area | Description | Repro / notes | Status |
 |---|---|---|---|---|---|
-| 1 | P2 | engine | Multi-class filers (BRK-B, GOOG) have no undimensioned per-share facts in `companyfacts`; per-share values and DCF come back `null` with verdict `insufficient_data`. | Search BRK-B. Needs dimensioned XBRL (Sprint 2). | open |
+| 1 | P2 | engine | ~~Multi-class filers (BRK-B, GOOG) have no undimensioned per-share facts in `companyfacts`~~ | Fixed Sprint 3 Track C: per-class facts read from the filing's XBRL instance. | fixed |
 | 2 | P2 | engine | Owner earnings swing wildly when ΔNWC has a one-off (KO FY2025 OE $3.2B vs $15.3B prior). | Use 3-yr average ΔNWC or exclude acquisition-related current liabilities. | open |
 | 3 | P2 | engine | Yahoo chart quote endpoint is unofficial and may break or rate-limit; Stooq currently returns 404 from this network. | Manual price override works as fallback. Replace with licensed provider before beta. | open |
 | 4 | P3 | engine | `Latest 10-K missing concepts` warning lists optional concepts (goodwill, dividends) alongside important ones. | Split into required vs optional. | open |
@@ -60,10 +60,16 @@ instruction for alpha). Severity: **P1** blocks core flow · **P2** wrong number
 | 47 | | | (see row 47 above — fixed by Sprint 3 Track B financial mode) | | fixed |
 | 48 | | | (see row 48 above — fixed by Sprint 3 Track B REIT mode) | | fixed |
 | 53 | P2 | core | KO's TTM ends 2026-04-03 although a June 10-Q should exist (`filing_freshness` warns at 171 days). Either the Q2 10-Q isn't in companyfacts yet or its revenue tag isn't in the fallback list. | Inspect KO's latest 10-Q tags. | open |
-| 54 | P2 | core | Visa (multi-class A/B/C) now fails `share_count` and shows "insufficient data" — honest, but a top-20 company with no value until Track C lands. | Track C multi-class shares. | open |
+| 54 | P2 | core | ~~Visa (multi-class A/B/C) now fails `share_count`~~ Fixed by Track C (as-converted across 5 classes). and shows "insufficient data" — honest, but a top-20 company with no value until Track C lands. | | fixed |
 | 55 | P3 | core | Insurers: ROE swings with AOCI (unrealized bond losses) and catastrophe years; a single TTM ROE drives the justified P/B. | Use 3–5 yr average ROE for the book-value model; add float/combined ratio metrics. | open |
 | 56 | P3 | core | Sector policy constants (Ke floor rf+4%, P/B cap 4×, terminal spread cap 15 pts, mREIT D&A/revenue < 5%) are first guesses and not user-adjustable. | Expose in Settings → Assumptions (expert) after tester feedback. | open |
 | 57 | P3 | core/engine | General Model B now floors CAPM at rf + 4%, departing from the blueprint's pure CAPM for low-beta stocks (KO β 0.29: DCF $26.9 → $14.2). Labeled on the metric. | Owner decision to keep or make optional. | accepted |
 | 58 | P3 | engine | Python reference covers only the general models; sector models, data checks, beta and identity resolution exist in the Kotlin core alone. | Port when a second consumer needs them, or retire the Python engine to fixtures-only. | accepted |
 | 59 | P3 | core | Conglomerates classified by a financial SIC (BRK 6331) get the bank/insurer models even though most of their value is operating businesses. | Manual sector override in Settings (expert). | open |
 | 60 | P3 | core | Sector mode is decided from SIC alone; a company that changed business (e.g. GE → GE Aerospace) keeps its old code until SEC updates it. | Show SIC description in expert mode so the user can spot it. | open |
+| 61 | P3 | core | Conversion ratios come from *rounded* per-class EPS (Visa B2 shows 1.513× vs the true ~1.55×); companies that tag an explicit conversion rate aren't read. | Prefer `ConversionRatio`-style tags when present; use annual EPS for more digits. | open |
+| 62 | P3 | core/apps | The class path downloads the whole inline-XBRL instance (BRK 7.6 MB) with no progress indication; on cellular it's a long spinner. | Show "reading the latest 10-Q…" state; consider ranged fetch of the cover section. | open |
+| 63 | P3 | core | Instance size is unbounded in memory; a 40 MB 10-K instance from a mega-filer would be slow on old phones. | Size guard + streaming scan. | open |
+| 64 | P3 | core | Filers with one EPS for several classes are treated as 1:1 (flagged "assumed"). Correct for NWS/FOX/LEN/META, wrong for any filer with unequal economics but a single EPS line. | Read conversion terms from the equity footnote. | accepted |
+| 65 | P3 | core | Historical per-share series (EPS CAGR, book/share) for multi-class filers still come from undimensioned facts and may be missing; Graham g then falls back to net-income CAGR (labeled). | Per-class history from the instance. | open |
+| 66 | P3 | core | Model B differs slightly between GOOG and GOOGL (0.4%) because each class's own price sets the WACC weights. | Use the searched class's price for MoS but a blended market cap for WACC. | open |

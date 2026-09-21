@@ -27,6 +27,7 @@ data, or explicitly labeled *assumed* — and an assumed input is always visible
 
 | Key | Pass | Warn | Fail |
 |---|---|---|---|
+| `share_classes` | classes reconciled with EPS-based ratios | a conversion ratio assumed 1:1 | — |
 | `sector_mode` | SIC known; models fit the industry (general / financial / REIT) | SIC unknown — general models used | — |
 | `filer_identity` | ticker's CIK has 10-K history | filings taken from a predecessor filer (holding-company reorg) | — |
 | `balance_sheet` | assets = liabilities + equity within 0.5% | within 5% | > 5% |

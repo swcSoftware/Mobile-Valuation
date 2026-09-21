@@ -131,8 +131,12 @@ Coverage probe on day 1 (14 tickers): tech/consumer/healthcare correct; **XOM fa
 - [x] Verified live: JPM, BAC, WFC, GS, SCHW, PGR, O, PLD, AGNC; AAPL control unchanged
 - [ ] Insurers: float/combined-ratio view (ISSUES #55); Python reference lacks the sector models (#58)
 
-### C. Multi-class shares (#1)
-- [ ] Per-class `dei` share counts via companyconcept/frames or the filing's instance; BRK-B, GOOG/GOOGL, META per-share values
+### C. Multi-class shares (#1) ✅
+- [x] Targeted XBRL-instance scanner: per-class cover counts, trading symbols, EPS (BRK, V, GOOG, META, NWS, FOX, LEN, UAA verified live)
+- [x] Conversion ratio from per-class EPS; one company value in the searched ticker's share terms (BRK-A ≡ BRK-B × 1,500.24)
+- [x] Trigger only on missing/stale/inconsistent counts; instance cached 30 days; `index.json` fallback for instance naming
+- [x] `share_classes` data check (warns when a ratio had to be assumed 1:1); TTM EPS derived for per-class-only filers
+- [x] Expert-mode "Share classes" card in both apps
 
 ### D. Model quality
 - [ ] ΔNWC smoothing (3-yr average) for owner earnings (#2)

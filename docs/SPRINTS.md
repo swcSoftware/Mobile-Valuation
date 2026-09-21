@@ -84,4 +84,9 @@ no-data reasons classified (new listing, foreign filer, fund); negative DCF → 
 property REITs on FFO + dividends, mortgage REITs detected and treated as financials, cost of
 equity floored at rf + 4% (also in the general DCF). Sector-aware checks and copy in both apps.
 Verified live on 9 financial/REIT tickers; general path oracle unchanged. Tests: 76.
-Breaking-scenario review logged ISSUES #53–60 (Visa multi-class → Track C next).
+Breaking-scenario review logged ISSUES #53–60.
+
+**Track C shipped**: multi-class shares. The core reads per-class counts, tickers and EPS from the
+filing's inline-XBRL instance (only when needed) and values the company once, in the searched
+class's share terms. Berkshire gets its first real valuation (BRK-A ≡ BRK-B × 1,500); Visa uses all
+five classes as-converted; GOOG/GOOGL agree. Tests: 85. Scenario review logged #61–66.
