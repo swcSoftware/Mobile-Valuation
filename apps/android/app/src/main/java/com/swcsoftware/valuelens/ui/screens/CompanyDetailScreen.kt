@@ -59,8 +59,10 @@ import com.swcsoftware.valuelens.domain.Verdict
 import com.swcsoftware.valuelens.domain.price
 import com.swcsoftware.valuelens.domain.result
 import com.swcsoftware.valuelens.domain.verdictEnum
+import com.swcsoftware.valuelens.core.Coverage
 import com.swcsoftware.valuelens.core.Explain
 import com.swcsoftware.valuelens.export.Exporter
+import com.swcsoftware.valuelens.ui.components.CoverageGapCard
 import com.swcsoftware.valuelens.ui.components.DataChecksCard
 import com.swcsoftware.valuelens.ui.components.FactTile
 import com.swcsoftware.valuelens.ui.Fmt
@@ -87,6 +89,7 @@ fun CompanyDetailScreen(state: AppState, company: CompanyRef, onBack: () -> Unit
     var showExport by remember { mutableStateOf(false) }
     var series by remember { mutableStateOf("earnings") }
     var showMath by remember { mutableStateOf(false) }
+    val uriHandler = androidx.compose.ui.platform.LocalUriHandler.current
     var expandAll by remember { mutableStateOf<Boolean?>(null) }
     var expandVersion by remember { mutableStateOf(0) }
 
@@ -150,6 +153,13 @@ fun CompanyDetailScreen(state: AppState, company: CompanyRef, onBack: () -> Unit
                 }
                 Spacer(Modifier.height(12.dp))
                 DataChecksCard(r.dataChecks, Explain.checksSummary(r), expert)
+                r.coverage?.takeIf { it.gaps.isNotEmpty() }?.let { cov ->
+                    Spacer(Modifier.height(12.dp))
+                    CoverageGapCard(cov, expert) {
+                        // Prefilled GitHub issue; nothing is sent until the user submits it.
+                        runCatching { uriHandler.openUri(Coverage.issueUrl(cov)) }
+                    }
+                }
 
                 if (!expert) {
                     SectionHeader("How healthy is the business?", "Tap a tile for a plain-English explanation")

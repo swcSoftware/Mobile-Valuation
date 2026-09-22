@@ -29,6 +29,15 @@ kotlin {
     }
 }
 
+/*
+ * The oracle fixtures and the Python tag map are read by tests but live outside this module, so
+ * Gradle would consider the test task up to date after they change (and silently skip it).
+ */
+tasks.withType<Test>().configureEach {
+    inputs.dir(project.file("../../services/valuation-engine/tests/fixtures")).withPathSensitivity(PathSensitivity.RELATIVE)
+    inputs.file(project.file("../../services/valuation-engine/valuation_engine/normalize/tags.py")).withPathSensitivity(PathSensitivity.RELATIVE)
+}
+
 android {
     namespace = "com.swcsoftware.valuelens.core"
     compileSdk = 35

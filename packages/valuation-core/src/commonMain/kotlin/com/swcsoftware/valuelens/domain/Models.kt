@@ -50,6 +50,24 @@ import kotlinx.serialization.Serializable
     @SerialName("ratio_to_searched") val ratioToSearched: Double, val eps: Double? = null, @SerialName("as_of") val asOf: String? = null,
 )
 
+/** One unresolved canonical concept, with the tags this filer reports that may match it. */
+@Serializable data class CoverageGap(
+    val concept: String, val label: String,
+    /** missing = filer uses none of our tags · unusable = reported but not in an annual/TTM context · stale = in the 10-K but not the TTM */
+    val kind: String, val statement: String,
+    val candidates: List<String> = emptyList(), val critical: Boolean = false,
+    /** required | expected — optional concepts are never reported as gaps. */
+    val requirement: String = "expected",
+)
+
+@Serializable data class CoverageReport(
+    val ticker: String, val cik: Long, val company: String, val period: String,
+    @SerialName("app_version") val appVersion: String, @SerialName("map_version") val mapVersion: String,
+    val gaps: List<CoverageGap> = emptyList(),
+) {
+    val criticalCount: Int get() = gaps.count { it.critical }
+}
+
 @Serializable data class DataCheck(
     val key: String, val label: String, val status: String,   // "pass" | "warn" | "fail"
     val message: String, val inputs: List<String> = emptyList(),
@@ -97,6 +115,8 @@ import kotlinx.serialization.Serializable
     val provenance: Map<String, String> = emptyMap(),
     val sector: SectorInfo? = null,
     @SerialName("share_classes") val shareClasses: List<ShareClass> = emptyList(),
+    /** Concept-map gaps for this filer (Sprint 4 Track A). Detection only; never changes a value. */
+    val coverage: CoverageReport? = null,
 )
 
 // ---- Sprint 1 additions -------------------------------------------------------------------

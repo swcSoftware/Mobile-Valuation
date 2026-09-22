@@ -6427,7 +6427,5 @@
    }
   }
  },
- "warnings": [
-  "Latest 10-K missing concepts: dividends_paid"
- ]
+ "warnings": []
 }

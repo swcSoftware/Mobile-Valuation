@@ -13,6 +13,8 @@ class ValuationCore(
     private val fetcher: Fetcher, private val cache: KeyValueCache, private val clock: Clock = Clock { currentTimeMillis() },
     /** GitHub Pages base, e.g. https://swcsoftware.github.io/Mobile-Valuation — rates.json and tickers.json live there. */
     val publishedBaseUrl: String = "https://swcsoftware.github.io/Mobile-Valuation",
+    /** Shown in coverage reports so a gap report names the build it came from. */
+    val appVersion: String = "dev",
     /** Used when rates.json is unreachable and nothing is cached (yesterday's FRED values shipped in the app). */
     private val bundledRates: RatesSnapshot? = null,
 ) {
@@ -34,10 +36,11 @@ class ValuationCore(
         val ed = edgar(userAgent)
         val resolved = ed.resolve(ticker)
         var ref = resolved
-        var fin = try { Statements.normalize(ed.companyFacts(resolved)) } catch (e: com.swcsoftware.valuelens.domain.EngineException.NoAnnualData) {
+        var facts = try { ed.companyFacts(resolved) } catch (e: com.swcsoftware.valuelens.domain.EngineException.NoAnnualData) {
             // No companyfacts at all (ETFs, trusts): explain from the filing profile instead of a bare 404.
             throw com.swcsoftware.valuelens.domain.EngineException.NoAnnualData(FilerIdentity.noAnnualDataReason(resolved.ticker, ed.profile(resolved.cik)))
         }
+        var fin = Statements.normalize(facts)
         if (resolved.name.isNotBlank() && fin.annual.isNotEmpty())  // companyfacts entityName can be a co-registrant (BAC → "BofA Finance LLC")
             fin = NormalizedFinancials(fin.ticker, fin.cik, resolved.name, fin.annual, fin.ttm, fin.currentShares, fin.warnings)
         var predecessor: Predecessor? = null
@@ -50,6 +53,7 @@ class ValuationCore(
                 val pf = Statements.normalize(ed.companyFacts(predecessor.ref))
                 if (pf.annual.isNotEmpty()) {
                     ref = predecessor.ref
+                    facts = ed.companyFacts(predecessor.ref)
                     val note = "Filings come from predecessor ${predecessor.ref.name} (CIK ${predecessor.ref.cik}); ${resolved.ticker} is now ${predecessor.successorName} (CIK ${resolved.cik}, first filing ${predecessor.successorFirstFiling ?: "n/a"}" + (if (predecessor.viaSuccessorNotice) ", successor notice 8-K12B" else "") + ")."
                     fin = NormalizedFinancials(resolved.ticker, predecessor.ref.cik, predecessor.ref.name, pf.annual, pf.ttm, pf.currentShares, listOf(note) + pf.warnings)
                     profile = ed.profile(predecessor.ref.cik) ?: profile
@@ -100,8 +104,9 @@ class ValuationCore(
             betaSource = when { overrides.beta != null -> "override"; measuredBeta != null -> "measured"; else -> "assumed" },
         )
         val sector = Sector.info(profile, fin)
+        val coverage = Coverage.analyze(fin, facts, appVersion, Sector.modeFor(profile?.sic, fin))
         val checks = DataChecks.run(fin, quote, priceOverride != null, a, rates, ratesOverridden, clock.nowMillis(), predecessor, sector, classResolution)
-        val report = Report.build(fin, a, quote, Market.isoFromMillis(clock.nowMillis()), checks.checks, checks.provenance, sector, classResolution?.classes ?: emptyList())
+        val report = Report.build(fin, a, quote, Market.isoFromMillis(clock.nowMillis()), checks.checks, checks.provenance, sector, classResolution?.classes ?: emptyList(), coverage)
         return if (measuredBeta != null) report.withBeta(measuredBeta) else report
     }
 
@@ -141,6 +146,13 @@ class ValuationCore(
             blurbA = Explain.modelBlurb(true, mode), blurbB = Explain.modelBlurb(false, mode), sectorNote = r.sector?.note ?: "",
         ))
     }
+    /** Prefilled GitHub issue URL for a coverage report (no token, no server; the user submits it). */
+    @Throws(Exception::class)
+    fun coverageIssueUrl(reportJson: String): String {
+        val r = json.decodeFromString<ValuationReport>(reportJson)
+        return Coverage.issueUrl(r.coverage ?: com.swcsoftware.valuelens.domain.CoverageReport(r.company.ticker, r.company.cik, r.company.name, r.generatedAt.take(10), appVersion, Concepts.VERSION))
+    }
+
     @Throws(Exception::class)
     fun glossaryJson(): String = json.encodeToString(Explain.glossary)
     @Throws(Exception::class)

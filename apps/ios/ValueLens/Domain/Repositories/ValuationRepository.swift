@@ -10,6 +10,9 @@ protocol ValuationRepository: Sendable {
     func rates() async -> RatesInfo?
     func explain(_ report: ValuationReport) async -> ExplainSummary?
     func glossary() -> [GlossaryEntry]
+    /// Prefilled GitHub issue URL for a concept-map gap report. No token, no server — the user
+    /// reviews the text in their browser and decides whether to submit it.
+    func coverageIssueURL(for report: ValuationReport) -> URL?
 }
 
 /// Published FRED snapshot (rates.json on GitHub Pages, or the bundled copy).

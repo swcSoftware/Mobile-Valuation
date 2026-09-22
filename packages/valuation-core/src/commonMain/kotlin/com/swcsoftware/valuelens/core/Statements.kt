@@ -276,7 +276,8 @@ object Statements {
         if (currentShares == null) warnings += "No usable share count found; per-share values unavailable."
 
         if (latest != null) {
-            val missing = Concepts.ALL.filter { it.key !in latest.values && it.key != "shares_outstanding" }.map { it.key }
+            // Only required/expected concepts are worth a warning; optional ones are legitimately absent (ISSUES #4).
+            val missing = Concepts.ALL.filter { it.key !in latest.values && it.key != "shares_outstanding" && it.requirement != "optional" }.map { it.key }
             if (missing.isNotEmpty()) warnings += "Latest 10-K missing concepts: " + missing.joinToString(", ")
         }
         return NormalizedFinancials(cf.ref.ticker, cf.ref.cik, cf.entityName, periods, ttm, currentShares, warnings)

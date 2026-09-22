@@ -97,3 +97,26 @@ Graham removed from the case study. Headline values moved for most companies —
 carried single-year working-capital swings. Bundled samples and web preview regenerated. Tests: 87.
 
 **Sprint 3 closed** with all four tracks delivered. Open issues carried: #53, #55, #56, #59–69.
+
+## Sprint 4 — 2026-09-22 — Track A: concept-map feedback loop
+
+**Goal**: find tag-map gaps before users do, and make every gap a reviewable artifact — without
+letting the map change itself.
+
+**Delivered**
+- `Coverage` in the core: per-filer gap detection with head-noun candidate suggestions, attached to
+  every valuation and surfaced as an "Unmatched line items" card in both apps.
+- Requirement levels (`required`/`expected`/`optional`) on all 31 concepts in both maps, downgraded
+  per sector. This also fixed the long-standing warning noise (ISSUES #4).
+- Report transport by **prefilled GitHub issue URL** — no token in the binary, no server, and the
+  user reads the payload before submitting. (Replaces the endpoint/API options in the plan.)
+- `scripts/coverage_probe.py` + `universe.txt` (77 tickers) → `docs/COVERAGE.md` / `coverage.json`,
+  with regression detection; `.github/workflows/coverage.yml` runs it Mondays.
+- `ConceptMapDriftTest` asserts `Concepts.kt` and `tags.py` are identical (mutation-tested); Gradle
+  now tracks the Python map and oracle fixtures as test inputs so those tests can't go stale.
+
+**Found by the first probe** (77/77 valued, 0 regressions): `capex` tagged only in 10-Qs for LLY,
+COP, VZ and PLD — owner earnings silently missing for four mega-caps (ISSUES #71); AGNC has no
+revenue-family tag at all (#72). Both logged for review rather than fixed, per the agreed loop.
+
+**Tests**: 95 (31 engine · 49 Kotlin · 15 iOS).

@@ -20,6 +20,7 @@
 		460805DB73A3824BC5551855 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8111CC9E464DFABF1A2F9270 /* AppSettings.swift */; };
 		49E6F5826DBF807D57E07645 /* WatchlistStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9AEED314DF764CAEEF2CC9C /* WatchlistStore.swift */; };
 		4F05C103A7A445E2C8966C1F /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB47EAD56F25075486E3A65 /* Theme.swift */; };
+		563F829E9A60346C9786CBE3 /* CoverageGapCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3218A417367A2F5A9E3476 /* CoverageGapCard.swift */; };
 		5A07A1A0BC124BC2AA287000 /* ValuationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A4A835F0EC58DE68BE74F9 /* ValuationRepository.swift */; };
 		5DBCB9DF0085217FFFCF91FF /* rates.json in Resources */ = {isa = PBXBuildFile; fileRef = 2B1C1148B8A673BC52165E8D /* rates.json */; };
 		5E55F3A541CF9B0EDB504946 /* GlossaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070A0FF05C2C083C8FB8F36F /* GlossaryView.swift */; };
@@ -59,6 +60,7 @@
 		22EE3D26153E84F4C07598DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		2B1C1148B8A673BC52165E8D /* rates.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = rates.json; sourceTree = "<group>"; };
 		3C36AAD6F63B1113A18354AB /* Identity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identity.swift; sourceTree = "<group>"; };
+		3F3218A417367A2F5A9E3476 /* CoverageGapCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverageGapCard.swift; sourceTree = "<group>"; };
 		43D36BD403078C5709F7FF7A /* ValuationCore.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ValuationCore.xcframework; path = "../../packages/valuation-core/build/XCFrameworks/release/ValuationCore.xcframework"; sourceTree = "<group>"; };
 		5295BB2379D69947D0EDD444 /* ShareCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareCardView.swift; sourceTree = "<group>"; };
 		56C043C8119525143FFB7C42 /* Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
@@ -196,6 +198,7 @@
 		509ABD7878ABA228149B5464 /* DesignSystem */ = {
 			isa = PBXGroup;
 			children = (
+				3F3218A417367A2F5A9E3476 /* CoverageGapCard.swift */,
 				58DBC1A2858240171F95189B /* ExplainViews.swift */,
 				56C043C8119525143FFB7C42 /* Formatters.swift */,
 				9047AF702CA9D5061FABA1FF /* MarginOfSafetyView.swift */,
@@ -421,6 +424,7 @@
 				43FA3BE9EDEF282EAFBAC800 /* CompanyDetailView.swift in Sources */,
 				9CAC5FF43A8E43F0CCF37C4E /* CompanyViewModel.swift in Sources */,
 				9CD8A86C612EAF2F547F2EBB /* CoreValuationRepository.swift in Sources */,
+				563F829E9A60346C9786CBE3 /* CoverageGapCard.swift in Sources */,
 				0BB46564FD3C46CD7A80C44E /* DossierView.swift in Sources */,
 				083F3581611D5E21D30EFE4C /* ExplainViews.swift in Sources */,
 				03E085E9A8D6C35465BC1520 /* Exporter.swift in Sources */,

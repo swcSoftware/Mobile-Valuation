@@ -6200,7 +6200,6 @@
  },
  "warnings": [
   "Share-count discontinuity (4\u00d7) between FY2017 and FY2018 (stock split, as restated in later filings); earlier per-share data adjusted.",
-  "Dropped stale TTM values (tag no longer reported): interest_expense, goodwill",
-  "Latest 10-K missing concepts: interest_expense, gain_on_sale, goodwill, intangibles"
+  "Dropped stale TTM values (tag no longer reported): interest_expense, goodwill"
  ]
 }

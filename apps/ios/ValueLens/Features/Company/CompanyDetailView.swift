@@ -51,7 +51,9 @@ struct CompanyDetailView: View {
                         Image(systemName: watchlist.contains(r.company.ticker) ? "star.fill" : "star")
                     }
                     Menu {
-                        Button { export(.pdf, r) } label: { Label("PDF valuation dossier", systemImage: "doc.richtext") }
+                        Button { openIssue(r) } label: { Label("Report a data problem", systemImage: "exclamationmark.bubble") }
+                    Divider()
+                    Button { export(.pdf, r) } label: { Label("PDF valuation dossier", systemImage: "doc.richtext") }
                         Button { export(.cardSquare, r) } label: { Label("Share card (1:1)", systemImage: "square") }
                         Button { export(.cardWide, r) } label: { Label("Share card (16:9)", systemImage: "rectangle") }
                     } label: { Image(systemName: "square.and.arrow.up") }
@@ -67,6 +69,11 @@ struct CompanyDetailView: View {
         }
         .sheet(isPresented: $showPriceSheet) { priceSheet }
         .sheet(item: $exportItem) { item in ShareSheet(items: [item.url]) }
+    }
+
+    /// Opens a prefilled GitHub issue in the browser. Nothing is sent until the user submits it.
+    private func openIssue(_ r: ValuationReport) {
+        if let url = settings.repository.coverageIssueURL(for: r) { UIApplication.shared.open(url) }
     }
 
     private func export(_ kind: ExportKind, _ r: ValuationReport) {
@@ -110,6 +117,9 @@ struct CompanyDetailView: View {
                 }
             }
             DataChecksCard(checks: r.dataChecks, summary: explain?.checksSummary ?? "\(r.dataChecks.count) checks run", expanded: expert)
+            if let coverage = r.coverage, !coverage.gaps.isEmpty {
+                CoverageGapCard(coverage: coverage, expert: expert) { openIssue(r) }
+            }
 
             if !expert {
                 SectionHeader(title: "How healthy is the business?", subtitle: "Tap a tile for a plain-English explanation")

@@ -25,6 +25,8 @@ class Fact(
 class CompanyFacts(val ref: CompanyRefCore, val entityName: String, private val facts: Map<String, List<Fact>>) {
     fun get(taxonomy: String, tag: String): List<Fact> = facts["$taxonomy:$tag"] ?: emptyList()
     val tagKeys: Set<String> get() = facts.keys
+    /** Facts under a "taxonomy:tag" key — used by coverage to judge candidate tags. */
+    fun factsFor(key: String): List<Fact> = facts[key] ?: emptyList()
 }
 
 object CompanyFactsParser {

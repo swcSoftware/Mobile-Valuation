@@ -478,7 +478,8 @@ def normalize(cf: CompanyFacts, max_years: int = 10) -> NormalizedFinancials:
     if current_shares is None:
         warnings.append("No usable share count found; per-share values unavailable.")
 
-    missing = [c.key for c in CONCEPTS if latest and c.key not in latest.values and c.key != "shares_outstanding"]
+    # Only required/expected concepts are worth a warning; optional ones are legitimately absent (ISSUES #4).
+    missing = [c.key for c in CONCEPTS if latest and c.key not in latest.values and c.key != "shares_outstanding" and c.requirement != "optional"]
     if missing:
         warnings.append("Latest 10-K missing concepts: " + ", ".join(missing))
 

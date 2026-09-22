@@ -150,12 +150,19 @@ Coverage probe on day 1 (14 tickers): tech/consumer/healthcare correct; **XOM fa
 The tag map (`Concepts.kt` / `tags.py`) is hand-curated; gaps are found by users, not by us.
 Users decide *where we look*; a human review decides *what changes*. Nothing alters a valuation
 until a reviewed map change passes the oracle and tests.
-- [ ] Gap detection is already in the core (`tag_coverage`, "missing concepts", unmapped custom elements) — define a `GapReport` (CIK, period, concept, filer's actual tag list for that statement, app version). No user data.
-- [ ] **Opt-in** reporting toggle in Settings (off by default) stating exactly what is sent; POST to a tiny endpoint or create/append a GitHub Issue via API; deduplicate per CIK + concept with a hit counter; failures never affect the user
-- [ ] Weekly review script: lists open reports by hit count with the candidate tags; outcomes = map the tag (+ oracle regen + test asserting the CIK resolves) / add a rule or check / close as not worth it
-- [ ] Scheduled probe over S&P 500 + all reported CIKs asserting no company *lost* a concept since last week (catches tag renames at year-end before users do)
-- [ ] Optional: publish a versioned, signed `concepts.json` to GitHub Pages (bundled copy as fallback) so reviewed map fixes ship between app releases — CI-only, after tests
-- [ ] In-app "this number looks wrong" button filing the same report (catches wrong-but-resolved tags that no automated check can see)
+- [x] `Coverage` in the core: `CoverageGap` / `CoverageReport` (ticker, CIK, period, concept, kind, candidate tags, app + map version). No user data. Attached to every report.
+- [x] **Requirement levels** on every concept (`required` / `expected` / `optional`) in both maps, sector-downgraded (a bank has no capex) — cuts the noise that made gap reports unusable and fixes the warning in ISSUES #4
+- [x] Candidate suggestion: head-noun + stem matching, filtered by fact kind and unit, so `InterestExpense` is never offered as `revenue`
+- [x] **Report transport: prefilled GitHub issue URL** — no token in the binary, no server, and the user reads the payload in their browser before submitting. (Supersedes "POST to an endpoint / GitHub API"; both needed infrastructure we deliberately don't have.)
+- [x] In-app "Unmatched line items" card (both apps) + "Report a data problem" in the export menu
+- [x] `scripts/coverage_probe.py` + `scripts/universe.txt` (77 tickers): sector-aware, uses the app's `load_financials` so successor resolution applies; writes `docs/COVERAGE.md` + `docs/coverage.json`
+- [x] Regression detection: fails when a company loses a concept it previously resolved (the ISSUES #35 class of bug)
+- [x] `.github/workflows/coverage.yml` — Mondays 13:00 UTC + manual; commits the report to `dev`, fails loudly on regression
+- [x] **Concept-map drift test**: parses `Concepts.kt` and `tags.py` and asserts identical concepts, order, tags, unit, taxonomy and requirement (mutation-tested). Gradle now tracks both as test inputs so they can't go stale
+- [ ] Deferred: publish a versioned `concepts.json` to GitHub Pages so map fixes ship between app releases (only worth it once releases are gated — Sprint 5)
+
+**First probe results** (77 tickers, all valued, 0 regressions): 1 required gap (AGNC revenue) and 5
+`capex` gaps. See `docs/COVERAGE.md` and ISSUES #71–74.
 
 ### B. Release readiness
 - [ ] TestFlight + Play internal testing; crash reporting; Dynamic Type / VoiceOver pass; store assets

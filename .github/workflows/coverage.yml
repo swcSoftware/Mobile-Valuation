@@ -1,0 +1,55 @@
+# Weekly concept-map coverage probe (Sprint 4 Track A).
+#
+# Runs the reference normalizer over scripts/universe.txt and commits docs/COVERAGE.md +
+# docs/coverage.json to `dev`. Fails the run when a company loses a concept it previously
+# resolved — the signal that a filer renamed a tag (see ISSUES #35 for why that matters).
+#
+# Owner setup: none beyond the repo's default GITHUB_TOKEN.
+name: Concept-map coverage
+
+on:
+  schedule:
+    - cron: "0 13 * * 1"   # Mondays 13:00 UTC, after the weekend's filings settle
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: dev
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install the reference engine
+        run: pip install -e "services/valuation-engine[dev]"
+
+      - name: Probe coverage
+        id: probe
+        env:
+          SEC_USER_AGENT: "ValueLens Coverage Probe valuelens@swcsoftware.com"
+        run: python3 scripts/coverage_probe.py
+        continue-on-error: true        # a regression must still commit the report that documents it
+
+      - name: Commit the report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet docs/COVERAGE.md docs/coverage.json; then
+            echo "coverage unchanged"
+          else
+            git add docs/COVERAGE.md docs/coverage.json
+            git commit -m "data: weekly concept-map coverage report"
+            git push origin dev
+          fi
+
+      - name: Fail if a concept regressed
+        if: steps.probe.outcome == 'failure'
+        run: |
+          echo "::error::A company lost a concept it previously resolved — see docs/COVERAGE.md"
+          exit 1

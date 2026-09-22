@@ -6318,7 +6318,6 @@
   }
  },
  "warnings": [
-  "Dropped stale TTM values (tag no longer reported): short_term_investments, intangibles",
-  "Latest 10-K missing concepts: gain_on_sale, short_term_investments, intangibles"
+  "Dropped stale TTM values (tag no longer reported): short_term_investments, intangibles"
  ]
 }

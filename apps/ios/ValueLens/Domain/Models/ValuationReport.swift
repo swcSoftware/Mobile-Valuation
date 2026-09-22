@@ -151,6 +151,27 @@ struct SectorInfo: Codable, Hashable {
     let note: String
 }
 
+struct CoverageGap: Codable, Hashable, Identifiable {
+    let concept: String
+    let label: String
+    let kind: String          // missing | unusable | stale
+    let statement: String
+    let candidates: [String]
+    let critical: Bool
+    let requirement: String
+    var id: String { concept }
+}
+
+struct CoverageReport: Codable, Hashable {
+    let ticker: String
+    let cik: Int
+    let company: String
+    let period: String
+    let appVersion: String
+    let mapVersion: String
+    let gaps: [CoverageGap]
+}
+
 struct ShareClass: Codable, Hashable, Identifiable {
     let cls: String
     let ticker: String?
@@ -186,13 +207,14 @@ struct ValuationReport: Codable, Hashable {
     var provenance: [String: String] = [:]
     var sector: SectorInfo? = nil
     var shareClasses: [ShareClass] = []
+    var coverage: CoverageReport? = nil
     /// The exact JSON the core produced (not part of Codable); handed back to the core for `explain`.
     var rawJSON: String? = nil
 
     var price: Double? { quote?.price }
     var checksFailed: Bool { dataChecks.contains { $0.status == "fail" } }
 
-    enum CodingKeys: String, CodingKey { case company, quote, assumptions, snapshot, history, growth, modelA, modelB, warnings, disclaimer, generatedAt, dataChecks, provenance, sector, shareClasses }
+    enum CodingKeys: String, CodingKey { case company, quote, assumptions, snapshot, history, growth, modelA, modelB, warnings, disclaimer, generatedAt, dataChecks, provenance, sector, shareClasses, coverage }
 
     init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
@@ -211,6 +233,7 @@ struct ValuationReport: Codable, Hashable {
         provenance = try c.decodeIfPresent([String: String].self, forKey: .provenance) ?? [:]
         sector = try c.decodeIfPresent(SectorInfo.self, forKey: .sector)
         shareClasses = try c.decodeIfPresent([ShareClass].self, forKey: .shareClasses) ?? []
+        coverage = try c.decodeIfPresent(CoverageReport.self, forKey: .coverage)
     }
 }
 

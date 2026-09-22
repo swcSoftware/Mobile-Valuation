@@ -20,8 +20,9 @@ when). This file is the index and the tripwires.
 4. **Additive, not rewrites.** New behavior for a new company type goes behind a trigger that
    ordinary filers never hit (successor lookup, sector modes, share-class resolution all work this
    way), with a test asserting the common path is untouched.
-5. **The tag map never self-updates.** `Concepts.kt` / `tags.py` changes go through human review —
-   see Sprint 4 Track A in `docs/TASKS.md`.
+5. **The tag map never self-updates.** `Concepts.kt` / `tags.py` changes go through human review.
+   `ConceptMapDriftTest` asserts the two are identical; `docs/COVERAGE.md` (weekly probe) is the gap
+   backlog. Edit both maps together, then regenerate the oracle.
 6. **No technical analysis. Ever.** Charts of price, momentum, RSI and friends are permanently out of
    scope (blueprint §1).
 
@@ -50,6 +51,9 @@ export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"  
 
 # iOS framework (Xcode's pre-build script does this too)
 (cd apps/android && ./gradlew :valuation-core:assembleValuationCoreReleaseXCFramework)
+
+# Concept-map coverage probe → docs/COVERAGE.md (weekly in CI; fails on regression)
+(cd services/valuation-engine && SEC_USER_AGENT="Name email" .venv/bin/python ../../scripts/coverage_probe.py)
 
 # Live probe / regenerate bundled samples (env vars are NOT Gradle inputs → --rerun)
 (cd apps/android && VL_PROBE_TICKERS="XOM,JPM,BRK-B" SEC_USER_AGENT="Name email" \

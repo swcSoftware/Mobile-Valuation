@@ -24,6 +24,8 @@ interface ValuationRepository {
     suspend fun search(query: String): List<CompanyRef>
     suspend fun valuation(ticker: String, priceOverride: Double? = null, overrides: RateOverrides = RateOverrides.NONE): ValuationReport
     suspend fun rates(): RatesSnapshot?
+    /** Prefilled GitHub issue URL for a concept-map gap; the user reviews and submits it. */
+    fun coverageIssueUrl(reportJson: String): String?
 }
 
 /** OkHttp-backed blocking fetcher for the core. */
@@ -65,7 +67,7 @@ class SampleValuationRepository(private val context: Context) {
  */
 class CoreValuationRepository(context: Context, private val userAgent: String?) : ValuationRepository {
     private val fallback = SampleValuationRepository(context)
-    private val core = ValuationCore(OkHttpFetcher(), FileCache(context), bundledRates = bundledRates(context))
+    private val core = ValuationCore(OkHttpFetcher(), FileCache(context), appVersion = "android ${runCatching { context.packageManager.getPackageInfo(context.packageName, 0).versionName }.getOrNull() ?: "dev"}", bundledRates = bundledRates(context))
 
     private fun bundledRates(context: Context): RatesSnapshot? =
         runCatching { RatesSnapshot.parse(context.assets.open("rates.json").bufferedReader().use { it.readText() }) }.getOrNull()
@@ -83,4 +85,6 @@ class CoreValuationRepository(context: Context, private val userAgent: String?) 
     }
 
     override suspend fun rates(): RatesSnapshot? = withContext(Dispatchers.IO) { core.rates() }
+
+    override fun coverageIssueUrl(reportJson: String): String? = runCatching { core.coverageIssueUrl(reportJson) }.getOrNull()
 }

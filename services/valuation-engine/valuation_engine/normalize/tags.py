@@ -26,6 +26,11 @@ class Concept:
     taxonomy: str = "us-gaap"
     statement: str = "income"
     notes: str = ""
+    # How much its absence matters (coverage probe + "missing concepts" warning):
+    #   required — every operating company reports it; absence is a real gap
+    #   expected — most do; absence disables a model input
+    #   optional — legitimately absent for many filers (no inventory, no dividend, no property sales)
+    requirement: str = "optional"
 
 
 CONCEPTS: list[Concept] = [
@@ -36,54 +41,54 @@ CONCEPTS: list[Concept] = [
         "SalesRevenueNet",
         "RevenueFromContractWithCustomerIncludingAssessedTax",
         "RevenuesNetOfInterestExpense",
-    )),
+    ), requirement="required"),
     Concept("cost_of_revenue", "Cost of revenue", Kind.FLOW, (
         "CostOfRevenue", "CostOfGoodsAndServicesSold", "CostOfGoodsSold",
     )),
     Concept("operating_income", "Operating income (EBIT)", Kind.FLOW, (
         "OperatingIncomeLoss",
-    )),
+    ), requirement="expected"),
     Concept("pretax_income", "Pre-tax income", Kind.FLOW, (
         "IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
         "IncomeLossFromContinuingOperationsBeforeIncomeTaxesMinorityInterestAndIncomeLossFromEquityMethodInvestments",
         "IncomeLossFromContinuingOperationsBeforeIncomeTaxesDomestic",
-    )),
+    ), requirement="expected"),
     Concept("income_tax", "Income tax expense", Kind.FLOW, (
         "IncomeTaxExpenseBenefit",
-    )),
+    ), requirement="expected"),
     Concept("interest_expense", "Interest expense", Kind.FLOW, (
         "InterestExpense", "InterestExpenseNonoperating", "InterestExpenseDebt",
         "InterestAndDebtExpense", "InterestPaidNet",
     )),
     Concept("net_income", "Net income", Kind.FLOW, (
         "NetIncomeLoss", "ProfitLoss", "NetIncomeLossAvailableToCommonStockholdersBasic",
-    )),
+    ), requirement="required"),
     Concept("eps_diluted", "Diluted EPS", Kind.FLOW, (
         "EarningsPerShareDiluted", "EarningsPerShareBasicAndDiluted", "EarningsPerShareBasic",
-    ), unit="USD/shares"),
+    ), unit="USD/shares", requirement="expected"),
     Concept("shares_diluted", "Diluted weighted-avg shares", Kind.FLOW, (
         "WeightedAverageNumberOfDilutedSharesOutstanding",
         "WeightedAverageNumberOfShareOutstandingBasicAndDiluted",
         "WeightedAverageNumberOfSharesOutstandingBasic",
-    ), unit="shares"),
+    ), unit="shares", requirement="expected"),
 
     # ---- Cash-flow statement ---------------------------------------------
     Concept("cfo", "Cash from operations", Kind.FLOW, (
         "NetCashProvidedByUsedInOperatingActivities",
         "NetCashProvidedByUsedInOperatingActivitiesContinuingOperations",
-    ), statement="cashflow"),
+    ), statement="cashflow", requirement="expected"),
     Concept("capex", "Capital expenditures", Kind.FLOW, (
         "PaymentsToAcquirePropertyPlantAndEquipment",
         "PaymentsToAcquireProductiveAssets",
         "PaymentsForCapitalImprovements",
         "PaymentsToAcquirePropertyPlantAndEquipmentAndIntangibleAssets",
-    ), statement="cashflow"),
+    ), statement="cashflow", requirement="expected"),
     Concept("d_and_a", "Depreciation & amortization", Kind.FLOW, (
         "DepreciationDepletionAndAmortization",
         "DepreciationAndAmortization",
         "DepreciationAmortizationAndAccretionNet",
         "Depreciation",
-    ), statement="cashflow"),
+    ), statement="cashflow", requirement="expected"),
     Concept("dividends_paid", "Dividends paid", Kind.FLOW, (
         "PaymentsOfDividendsCommonStock", "PaymentsOfDividends",
     ), statement="cashflow"),
@@ -104,7 +109,7 @@ CONCEPTS: list[Concept] = [
         "CashAndCashEquivalentsAtCarryingValue",
         "CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents",
         "Cash",
-    ), statement="balance"),
+    ), statement="balance", requirement="expected"),
     Concept("short_term_investments", "Short-term investments", Kind.INSTANT, (
         "ShortTermInvestments", "MarketableSecuritiesCurrent",
         "AvailableForSaleSecuritiesDebtSecuritiesCurrent", "AvailableForSaleSecuritiesCurrent",
@@ -120,20 +125,20 @@ CONCEPTS: list[Concept] = [
     ), statement="balance"),
     Concept("total_assets", "Total assets", Kind.INSTANT, (
         "Assets",
-    ), statement="balance"),
+    ), statement="balance", requirement="required"),
     Concept("current_liabilities", "Total current liabilities", Kind.INSTANT, (
         "LiabilitiesCurrent",
     ), statement="balance"),
     Concept("total_liabilities", "Total liabilities", Kind.INSTANT, (
         "Liabilities",
-    ), statement="balance", notes="Derived as Liabilities+Equity − Equity when not tagged directly."),
+    ), statement="balance", notes="Derived as Liabilities+Equity − Equity when not tagged directly.", requirement="expected"),
     Concept("liabilities_and_equity", "Total liabilities & equity", Kind.INSTANT, (
         "LiabilitiesAndStockholdersEquity",
-    ), statement="balance"),
+    ), statement="balance", requirement="expected"),
     Concept("equity", "Shareholders' equity (book value)", Kind.INSTANT, (
         "StockholdersEquity",
         "StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest",
-    ), statement="balance"),
+    ), statement="balance", requirement="required"),
     Concept("long_term_debt", "Long-term debt", Kind.INSTANT, (
         "LongTermDebtNoncurrent", "LongTermDebt", "LongTermDebtAndCapitalLeaseObligations",
     ), statement="balance"),

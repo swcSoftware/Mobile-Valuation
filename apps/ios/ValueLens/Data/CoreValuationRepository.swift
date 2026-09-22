@@ -54,8 +54,10 @@ struct CoreValuationRepository: ValuationRepository {
         let bundled = Bundle.main.url(forResource: "rates", withExtension: "json")
             .flatMap { try? String(contentsOf: $0, encoding: .utf8) }
             .flatMap { RatesSnapshot.companion.parse(text: $0) }
+        let version = (Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String) ?? "dev"
         return ValuationCore(fetcher: URLSessionFetcher(), cache: FileKVCache(), clock: SystemClock(),
-                             publishedBaseUrl: "https://swcsoftware.github.io/Mobile-Valuation", bundledRates: bundled)
+                             publishedBaseUrl: "https://swcsoftware.github.io/Mobile-Valuation",
+                             appVersion: "ios \(version)", bundledRates: bundled)
     }()
 
     private func ua() throws -> String {
@@ -131,6 +133,11 @@ struct CoreValuationRepository: ValuationRepository {
         return try? JSONDecoder().decode(ExplainSummary.self, from: Data(json.utf8))
     }
 
+    func coverageIssueURL(for report: ValuationReport) -> URL? {
+        guard let raw = report.rawJSON, let s = try? Self.core.coverageIssueUrl(reportJson: raw) else { return nil }
+        return URL(string: s)
+    }
+
     func glossary() -> [GlossaryEntry] {
         guard let g = try? Self.core.glossaryJson() else { return [] }
         return (try? JSONDecoder().decode([GlossaryEntry].self, from: Data(g.utf8))) ?? []
@@ -163,5 +170,7 @@ struct SampleValuationRepository: ValuationRepository {
 
     func rates() async -> RatesInfo? { nil }
     func explain(_ report: ValuationReport) async -> ExplainSummary? { await CoreValuationRepository(userAgent: nil).explain(report) }
+    func coverageIssueURL(for report: ValuationReport) -> URL? { CoreValuationRepository(userAgent: nil).coverageIssueURL(for: report) }
+
     func glossary() -> [GlossaryEntry] { [] }
 }

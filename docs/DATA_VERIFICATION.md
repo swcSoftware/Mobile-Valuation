@@ -60,6 +60,17 @@ network path). Regenerate the oracle after any normalization change:
 cd services/valuation-engine && .venv/bin/python tests/fixtures/make_expected.py
 ```
 
+## Concept-map coverage (Sprint 4)
+
+Every concept carries a requirement level — `required` (every operating company reports it),
+`expected` (most do; absence disables a model input) or `optional` (legitimately absent: no
+inventory, no dividend, no property sales) — downgraded per sector, so a bank is never reported as
+"missing capex". Unresolved required/expected concepts become a `CoverageReport` on the valuation,
+shown in both apps as "Unmatched line items" and reportable as a prefilled GitHub issue (no token,
+no server, user submits). `scripts/coverage_probe.py` runs the same analysis weekly over
+`scripts/universe.txt` and fails if any company loses a concept it previously resolved — see
+[COVERAGE.md](COVERAGE.md). The two tag maps are asserted identical by `ConceptMapDriftTest`.
+
 ## Known gaps (Sprint 3)
 
 - Multi-class share structures still lack per-class facts (ISSUES #1); the share-count check flags them.
