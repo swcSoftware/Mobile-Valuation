@@ -1,5 +1,9 @@
 # Known Issues
 
+Fixes recorded here follow the additive rule in [CLAUDE.md](../CLAUDE.md): prefer a trigger the
+common path never enters, then a guarded step, and rewrite existing logic only for a global defect
+or an agreed stronger model. Each fix should name its blast radius (e.g. "1 of 77 universe tickers").
+
 Minor defects noticed during development are logged here rather than fixed immediately (owner
 instruction for alpha). Severity: **P1** blocks core flow · **P2** wrong number shown · **P3** cosmetic.
 

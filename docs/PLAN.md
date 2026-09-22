@@ -24,6 +24,7 @@ and lets the user flip to a modern DCF / ROIC lens for contrast. No technical an
 | Model A composite | `min(Graham revised, OE @ hurdle)` | Lower of the two classic estimates |
 | Model B composite | `mean(DCF perpetuity, DCF exit multiple)` | Two terminal-value conventions averaged |
 | Tests | Only formula unit tests; no UI tests in alpha | Owner instruction: speed over coverage until beta |
+| Change style | Additive fixes behind a trigger or a guard; rewrites only for global defects or an agreed stronger model | Owner decision 2026-09-22: most filers already value correctly, so a fix for one filer must not reshape their path. Full rule in [CLAUDE.md](../CLAUDE.md) |
 
 ## Roadmap
 

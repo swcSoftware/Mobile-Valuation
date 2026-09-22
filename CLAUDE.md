@@ -17,9 +17,32 @@ when). This file is the index and the tripwires.
    normalization and the two general models. Change it **first**, mirror in Kotlin, then
    `cd services/valuation-engine && .venv/bin/python tests/fixtures/make_expected.py`. `OracleTest`
    diffs every number and string; a diff is a real difference, not noise.
-4. **Additive, not rewrites.** New behavior for a new company type goes behind a trigger that
-   ordinary filers never hit (successor lookup, sector modes, share-class resolution all work this
-   way), with a test asserting the common path is untouched.
+4. **Additive, not rewrites.** Working code stays working. A fix for one company or one class of
+   filer must not reshape the path every other company takes. In order of preference:
+
+   1. **A trigger the common path never enters** — best. The successor-issuer lookup only runs when
+      a CIK has no annual data; share-class resolution only when the share count is missing or
+      inconsistent; sector models only for a matching SIC. AAPL never executes any of them.
+   2. **A guarded step on the shared path** — acceptable when ordering forces it. The share-scale
+      correction (ISSUES #77) must run before derived per-share figures, so it sits in the
+      pipeline behind an early exit that returns immediately unless the count is off by >100×.
+   3. **Changing existing logic** — last resort, and only with a reason that applies to *every*
+      filer, not just the one that prompted it.
+
+   **Rewrite only when** the defect is genuinely global (the freshest-tag bug in #35 was: it
+   silently dropped KO's debt and PG's cash), or a demonstrably stronger model replaces a weaker one
+   with the owner's agreement (normalized working capital in Sprint 3). Say which it is in the
+   commit message.
+
+   **Evidence is part of the fix, not optional:**
+   - The oracle diff must be byte-identical for unaffected filers — regenerate only when the
+     reference implementation deliberately changed, and say so.
+   - Measure the blast radius before and after (`scripts/coverage_probe.py`, or a scan over
+     `scripts/universe.txt`): "1 of 77 tickers affected" is a claim you can check, "should be safe"
+     is not.
+   - Add a test asserting the untouched path is untouched (see `ShareScaleTest.correctlyScaledFilersAreUntouched`).
+   - `git show --stat` on the fix should be mostly insertions. Deletions in normalization or model
+     code deserve a sentence explaining them.
 5. **The tag map never self-updates.** `Concepts.kt` / `tags.py` changes go through human review.
    `ConceptMapDriftTest` asserts the two are identical; `docs/COVERAGE.md` (weekly probe) is the gap
    backlog. Edit both maps together, then regenerate the oracle.
