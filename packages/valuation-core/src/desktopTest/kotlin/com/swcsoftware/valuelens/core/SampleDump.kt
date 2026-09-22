@@ -42,7 +42,9 @@ class SampleDump {
         val dir = System.getenv("VL_DUMP_DIR") ?: return
         val ua = System.getenv("SEC_USER_AGENT") ?: "ValueLens Dev dev@example.com"
         val core = ValuationCore(JvmFetcher(), MemCache())
-        for (t in listOf("AAPL", "KO", "MSFT")) {
+        val tickers = System.getenv("VL_DUMP_TICKERS")?.split(",")?.map { it.trim() }?.filter { it.isNotEmpty() }
+            ?: listOf("AAPL", "KO", "MSFT")
+        for (t in tickers) {
             val json = core.valuationJson(t, ua)
             File(dir, "$t.json").writeText(json)
             println("dumped $t (${json.length} bytes)")

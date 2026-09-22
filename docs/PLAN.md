@@ -117,6 +117,14 @@ Opt-in gap reporting → weekly human review → reviewed map changes (never aut
 concept-coverage probe; TestFlight / Play internal track; crash reporting; accessibility; store
 assets; licensed quote/beta source.
 
+### Sprint 5 — Two layouts, one set of numbers (2026-09-22, in progress)
+A design and UI sprint. A second presentation ("report card": light, graded health facts) arrives
+**beside** the existing dark layout rather than replacing it, chosen in Settings. Theme becomes
+independent of layout (light/dark/system, with a user-chosen accent later), which requires the one
+global change in the sprint: `Theme`'s compile-time constants become runtime-resolved tokens.
+The four trust-carrying elements become required components with a test, because two layouts means
+two places they can be dropped. Reasoning and decisions: `docs/DESIGN.md`.
+
 ### Later
 Filing drill-down, notes per company, side-by-side comparison, Apple Watch complication,
 a shared cache/batch screener *if* a server is ever justified (the Dockerfile stays in the repo).

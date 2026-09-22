@@ -126,3 +126,49 @@ in millions while declaring the unit as `shares`, so per-share figures were off 
 checks failed. Fixed by cross-checking share counts against net income ÷ EPS and rescaling only on a
 clean power of 1000 (ISSUES #77). The gate behaved correctly throughout: it refused to show a wrong
 number. 1 of 77 universe tickers was affected; 5 regression tests added.
+
+**Sprint 4 Track A closed**; Track B (release readiness) remains open and unstarted. `dev` and
+`staging` both at `6427ade`; `main` untouched.
+
+## Sprint 5 — 2026-09-22 — Two layouts, one set of numbers (in progress, design phase)
+
+**Goal**: give the app a second presentation that doesn't read like a reference book, without
+touching a single number and without disturbing the layout that already works.
+
+**No engine, model or tag-map work.** One small additive data task (Track F) and the rest is UI.
+
+**Design phase — done so far**
+- Three directions explored as phone artboards driven by real engine output for nine awkward filers
+  (not AAPL alone). Owner chose **"report card"**: light ground, health facts graded against printed
+  thresholds. "The Gap" (a measuring-instrument reading of the price/value gap) is kept unbuilt as a
+  future direction; sources in `docs/design/directions/`.
+- Two review rounds on the tester share site, each followed by owner feedback.
+
+**Owner decisions** (recorded in full in `docs/DESIGN.md`): the new layout is an **add-on**, not a
+replacement, with the dark layout staying default; health facts carry **two** judgements (an
+absolute grade *and* the company's own history); **theme is independent of layout** (light/dark/
+system now, a custom accent picker later); the model toggle stays as it is; price vs value leads the
+screen.
+
+**Architecture that came out of it**: three independent axes — theme, accent, layout — where a
+layout never sets a color token; `price`/`value` are never accented because that pair is how the app
+is read; layouts read only `ValuationReport` / `ModelResult` / `ExplainSummary` and may not compute
+a number; Expert Mode stays one shared presentation. The four trust-carrying elements (withheld
+value, data notes, assumed-vs-measured, sector mode) become **required components with a test**,
+because two layouts means two places they can be silently dropped.
+
+**Found by prototyping against real filers** — four design bugs that mockup data would have hidden:
+revenue-growth history compared revenue *level* (reads "best in 10 years" for anyone healthy);
+a "trend" drawn from two filed years (CRWV); four empty tiles for a mortgage REIT (AGNC); units
+printed on missing numbers. All fixed in the prototype. New issues: **#81** (history series has no
+`total_debt`, so debt load is the only fact without a trend), **#82** (fixed thresholds are unfair
+across sectors — a REIT grades D on return on capital), **#83** (the all-blank filer state).
+
+**Blocked on the owner**: the four grading thresholds are Claude's invention and are not approved,
+and #82 needs a decision — sector-aware thresholds, or a tile that declines to grade. No Swift work
+starts until the design is signed off.
+
+**Tests**: 100 (31 engine · 54 Kotlin — 47 core + 7 Android app · 15 iOS), unchanged — no app
+source was touched this sprint. The engine and Kotlin suites were re-run green at sprint open;
+the iOS suite was not re-run, because no iOS source changed. The only code change is a test
+utility: `SampleDump` now takes `VL_DUMP_TICKERS` so arbitrary filers can be dumped for design work.

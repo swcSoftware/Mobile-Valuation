@@ -159,7 +159,7 @@ until a reviewed map change passes the oracle and tests.
 - [x] Regression detection: fails when a company loses a concept it previously resolved (the ISSUES #35 class of bug)
 - [x] `.github/workflows/coverage.yml` — Mondays 13:00 UTC + manual; commits the report to `dev`, fails loudly on regression
 - [x] **Concept-map drift test**: parses `Concepts.kt` and `tags.py` and asserts identical concepts, order, tags, unit, taxonomy and requirement (mutation-tested). Gradle now tracks both as test inputs so they can't go stale
-- [ ] Deferred: publish a versioned `concepts.json` to GitHub Pages so map fixes ship between app releases (only worth it once releases are gated — Sprint 5)
+- [ ] Deferred: publish a versioned `concepts.json` to GitHub Pages so map fixes ship between app releases (only worth it once releases are gated — Track B below)
 
 **First probe results** (77 tickers, all valued, 0 regressions): 1 required gap (AGNC revenue) and 5
 `capex` gaps. See `docs/COVERAGE.md` and ISSUES #71–74.
@@ -167,4 +167,142 @@ until a reviewed map change passes the oracle and tests.
 ### B. Release readiness
 - [ ] TestFlight + Play internal testing; crash reporting; Dynamic Type / VoiceOver pass; store assets
 - [ ] Licensed quote/beta source behind `Market`; physical-device checks (#19/#20/#22)
+
+## Sprint 5 — Two layouts, one set of numbers (planned, 2026-09-22)
+
+A **design and UI sprint**. No model, normalization or tag-map work. The owner picked the
+"report card" direction (light, graded health facts) from three explored directions
+(canvas: `ValueLens Directions`, three phone artboards driven by real engine output for
+AAPL/MCD/BRK-B/JPM/PGR/O/AGNC/CRWV/PLTR).
+
+**The shape of the work, decided up front:** this is an **add-on, not a replacement**
+(non-negotiable 4). The current dark layout stays exactly as it is and remains the default until
+the new one is finished; the new layout arrives beside it; a Settings toggle picks between them.
+Nobody's existing screen changes behaviour because we added a second one.
+
+**Why two and not three:** A and C are the same information design in different clothes (a
+card-and-section stack; the difference is theme, type and density), so once theming is runtime the
+second one is nearly free. B ("The Gap" — the price/value gap drawn as a measuring instrument) is a
+genuinely different information design and stays in the canvas as a future direction, unbuilt.
+
+### The four things every layout must carry
+
+These are the reasons the app is trustworthy, and they are the things a second layout can silently
+drop. Today each lives in exactly one place in `CompanyDetailView`; with two layouts that becomes
+two. So they stop being inline markup and become **components a layout is required to place**:
+
+1. **Value withheld** — `checksFailed`, and `verdict == .insufficientData`. It must read as a
+   deliberate act of honesty, not an error or an empty state. (CRWV on Model B is the live case: the
+   DCF comes out negative, so no number is shown.)
+2. **Data notes and one-off flags** — `warnings` (MCD's share-scale correction, BRK-B's derived TTM
+   EPS, PLTR's split restatement) and the non-passing `dataChecks`.
+3. **Assumed vs measured** — `provenance`. Beta is measured; cost of debt often is not. An
+   unlabeled input is a bug (non-negotiable 2, ISSUES #31).
+4. **Sector mode** — an operating company, a bank and a REIT are not valued the same way and the
+   screen says which.
+
+- [ ] A shared test asserts **both** layouts render all four, for a fixture of each case, on both
+      platforms. A layout that omits one fails the suite.
+
+### A. The layout seam (additive)
+- [ ] `LayoutStyle` enum: `.classic` (today's dark, default) and `.reportCard` (new). Persisted in
+      `AppSettings` / Android `Stores` beside `expertMode`.
+- [ ] `CompanyDetailView` splits into a **container** (loads, handles error/identity/price-override
+      states, owns `vm`) and a **body** chosen by `LayoutStyle`. Today's body moves into
+      `ClassicLayout` **unchanged** — a move, not a rewrite; `git show --stat` should be
+      near-pure motion for that file.
+- [ ] Layouts read only `ValuationReport`, `ModelResult` and `ExplainSummary`. No layout may compute
+      a number, a label or a verdict — those come from the core so the two layouts cannot disagree.
+- [ ] Expert Mode stays **one shared presentation** ("show the math": metric rows, formulas, SEC line
+      items) rather than being restyled per layout. Two layouts × two modes is four states; this
+      keeps it to three that actually differ.
+
+### B. Runtime theming (the one global change)
+`Theme` is an `enum` of `static let` constants referenced 193× across 15 files, so a light layout is
+impossible without this. This is a **global** change under non-negotiable 4 and gets its own commit
+saying so.
+
+**Three independent axes** (owner decision 2026-09-22 — not "layout implies theme"):
+
+| Axis | Chosen by | Controls |
+|---|---|---|
+| **Theme** | Light / Dark / System | ground, text, and the semantic colors adjusted per ground |
+| **Accent** | the user, eventually any color | chrome only: buttons, tabs, selection, focus |
+| **Layout** | Classic / Report card | typography and components. **Never sets a color token.** |
+
+- [ ] Tokens resolved at runtime (environment value / instance) instead of compile time. Same token
+      *names*, same values for dark — a no-visual-change refactor, verifiable by screenshot diff of
+      the existing screens before the new layout lands.
+- [ ] Four combinations must all hold, including the two that are new: **classic on light** and
+      **report card on dark**.
+- [ ] **`price` = amber and `value` = mint are never accented.** They are the one pair the whole app
+      depends on telling apart; if the user could set both, the core reading breaks. They do get
+      per-theme values — mint fails contrast as text on paper and darkens to `#0B7A57`, amber to
+      `#9A6006`.
+- [ ] A user-chosen accent needs a **computed readable foreground** (relative luminance), not an
+      assumed one, or a pale accent gives white-on-white buttons.
+- [ ] Any color the user can pick must be contrast-checked against the current ground before it is
+      applied, and adjusted or refused with a reason if it fails.
+- [ ] Android `ui/theme/Theme.kt` gets the same seam.
+
+### C. The report-card layout
+
+**Owner decisions, 2026-09-22** (from the first share-site review):
+1. Health facts carry **two judgements, not one** — an absolute grade against a printed rule *and*
+   the same number against the company's own filed history. They answer different questions ("is
+   this good?" vs "is this normal for them?"), and the second reads a utility or a REIT fairly when
+   the first says D.
+2. **Theme is independent of layout** — Light / Dark / System, either layout on either ground —
+   and the longer goal is a **custom accent picker** so the user chooses their own colors, matching
+   the owner's other apps.
+3. **Keep the model toggle as it is** (one model at a time).
+4. **Price vs value leads the screen**, business health below it.
+
+- [ ] Health facts become **grades with the threshold printed next to them**, so a grade is
+      checkable rather than an opinion.
+- [ ] Each fact also carries a **historical read** from the 10-K series ("Best in 10 years",
+      "Below its 10-yr average") plus a sparkline of the underlying figure.
+      - Compare like with like: revenue *growth* is judged 5-yr rate vs full-period rate, never
+        revenue *level* — the level reads "best in 10 years" for any healthy company and says nothing.
+      - **Under five filed years, show no historical read at all.** A trend drawn from two years
+        (CRWV) is not a trend.
+      - **Debt load gets no historical read**: the annual series carries `equity` but not
+        `total_debt`, so there is nothing honest to compare. See Track F.
+- [ ] **The thresholds go in the core, not the view.** `Explain.Fact` gains `grade`, `rule` and the
+      historical read (additive fields) so iOS and Android cannot disagree and the rule can be shown
+      in the UI. The prototype's thresholds were invented by Claude and are **still not approved**.
+- [ ] Sector-aware thresholds are an **open question**: Realty Income grades D on return on capital
+      at 5.1%, which is ordinary for a REIT. The historical read softens this but does not fix it.
+      Either the thresholds vary by sector mode, or the tile says the rule doesn't fit this filer.
+- [ ] An **ungradable** state, designed, not accidental: MCD's equity is negative, so
+      debt-to-equity has no meaning; the tile shows no grade and says why. (Related: ISSUES #78.)
+- [ ] An **all-four-blank** state: AGNC (mortgage REIT) computes none of the four, so the section is
+      replaced by an explanation naming the filer type, not four dashes. (Related: ISSUES #72.)
+- [ ] Never print a unit on a missing number — "—× equity" and "— / yr" were both live in r1.
+- [ ] One display face over one body face, price/value bar, 16-segment check strip, provenance marks
+      distinguishing measured from assumed.
+- [ ] Android parity for the same layout.
+
+### D. The toggle
+- [ ] Settings: layout picker with a live preview of each option, beside Expert Mode.
+- [ ] `.classic` stays the default. The new layout becomes the default only on an explicit owner
+      decision, after it has been used on a physical device.
+
+### E. The iteration loop
+- [ ] Each design revision goes to the **tester share site** (throwaway HTML mirror, not in the
+      repo) so it can be judged on a real iPhone rather than in a simulator, then a round of
+      questions and owner feedback before the next revision. Repeat until the design is settled —
+      **then** it gets built in SwiftUI. No Swift work starts on the report-card body until the
+      design is signed off.
+
+### F. Data the design needs that the core doesn't produce yet
+Small, additive, and the only engine work this sprint. Python first, mirror in Kotlin, regenerate
+the oracle (non-negotiable 3).
+- [ ] Add `total_debt` to the annual history series so the debt-load fact can carry a historical
+      read like the other three. Purely additive: a new field on an existing record.
+- [ ] `Explain.Fact` gains `grade`, `rule` and the historical read (Track C).
+
+### Out of scope
+Model changes, normalization, tag-map edits, technical analysis (permanently, blueprint §1), and
+direction B. Sprint 4 Track B (release readiness) is still open and unaffected.
 

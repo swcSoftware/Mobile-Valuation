@@ -5,6 +5,13 @@ runs **on the device**; there is no server. Deep context lives in `docs/` — st
 [docs/TASKS.md](docs/TASKS.md) (current sprint) and [docs/SPRINTS.md](docs/SPRINTS.md) (what shipped
 when). This file is the index and the tripwires.
 
+**Current sprint: 5 — two layouts, one set of numbers.** A design and UI sprint, in its *design*
+phase: a second presentation ("report card") is being prototyped on a standalone share site and
+reviewed by the owner on a real iPhone. **No Swift or Compose work starts until the design is signed
+off.** Read [docs/DESIGN.md](docs/DESIGN.md) before touching any UI — it holds the decisions, the
+four elements every layout must carry, and the two questions still blocking the build. Working files
+(the prototype and the three explored directions) are in [docs/design/](docs/design/README.md).
+
 ## Non-negotiables
 
 1. **Branches.** Work only on `dev`. Merge `dev` → `staging` only when every suite is green and no
@@ -47,7 +54,11 @@ when). This file is the index and the tripwires.
    `ConceptMapDriftTest` asserts the two are identical; `docs/COVERAGE.md` (weekly probe) is the gap
    backlog. Edit both maps together, then regenerate the oracle.
 6. **No technical analysis. Ever.** Charts of price, momentum, RSI and friends are permanently out of
-   scope (blueprint §1).
+   scope (blueprint §1). Charts of *fundamentals* over filed years are fine and already shipped.
+7. **A layout never computes a number.** Presentation reads `ValuationReport`, `ModelResult` and
+   `ExplainSummary` and renders them. Every number, label and verdict comes from the core, which is
+   what keeps two layouts from disagreeing. A grading threshold is a judgement, so it lives in the
+   core too, next to the facts, and is printed in the UI so a reader can check it.
 
 ## Layout
 
@@ -58,7 +69,8 @@ when). This file is the index and the tripwires.
 | `apps/android` | Jetpack Compose (minSdk 26). Consumes the core as a Gradle module. Also the Gradle entry point for core tasks. |
 | `services/valuation-engine` | Python reference + oracle fixtures. Not shipped, not hosted. |
 | `scripts`, `.github/workflows` | Publish `rates.json` (FRED) and `tickers.json` to GitHub Pages daily. |
-| `docs` | Plan, architecture, API contract, tasks, issues, sprints, runbook, data verification. |
+| `docs` | Plan, architecture, API contract, tasks, issues, sprints, runbook, data verification, UI direction. |
+| `docs/design` | Sprint 5 working files: the share-site prototype and the three explored directions. Not shipped, not built, not tested by CI. |
 
 ## Commands that actually work here
 
@@ -81,6 +93,10 @@ export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"  
 # Live probe / regenerate bundled samples (env vars are NOT Gradle inputs → --rerun)
 (cd apps/android && VL_PROBE_TICKERS="XOM,JPM,BRK-B" SEC_USER_AGENT="Name email" \
    ./gradlew :valuation-core:desktopTest --tests '*SampleDump*' --rerun -i | grep PROBE)
+
+# Dump full report JSON for arbitrary tickers (design work, share-site data)
+(cd apps/android && VL_DUMP_DIR=/tmp/ui VL_DUMP_TICKERS="AAPL,MCD,BRK-B,AGNC,CRWV,O,PLTR" \
+   SEC_USER_AGENT="Name email" ./gradlew :valuation-core:desktopTest --tests '*SampleDump*' --rerun)
 ```
 
 ## Tripwires (each one cost a debugging cycle)
@@ -100,6 +116,10 @@ export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"  
 - **python.org Python 3.13 lacks root certs** — run the publisher scripts with
   `services/valuation-engine/.venv/bin/python` (has certifi).
 - **Gradle caches test tasks**: env-var-driven runs need `--rerun`.
+- **`Theme` is compile-time**: an `enum` of `static let` referenced 193× across 15 files, so no
+  runtime theming (and no light mode) is possible until it is refactored. Sprint 5 Track B.
+- **The share-site prototype is a mirror, not the app**: it re-implements the plain-language layer
+  in JavaScript against the same report JSON. Core copy changes do not reach it automatically.
 
 ## Finishing a piece of work
 
