@@ -8,6 +8,9 @@ No server. The Python engine is the reference implementation the core is tested 
 
 **No technical analysis. Ever.** See [`docs/PLAN.md`](docs/PLAN.md) for the roadmap.
 
+New here (human or agent)? Read [CLAUDE.md](CLAUDE.md) first — working rules, commands and
+known tripwires — then `docs/`.
+
 ## Layout
 
 | Path | What |

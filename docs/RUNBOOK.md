@@ -1,5 +1,7 @@
 # Runbook — running the alpha locally
 
+> Environment gotchas (simulator UDID, JAVA_HOME, `--rerun`, signing) are in [../CLAUDE.md](../CLAUDE.md).
+
 Since Sprint 2 the apps need **no server**: they call SEC EDGAR, the quote feed and the published
 rates file directly. The Python engine (§1) is only for development and regenerating oracle files.
 
