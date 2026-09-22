@@ -216,6 +216,63 @@ object Statements {
         }
     }
 
+    private val SCALE_FACTORS = listOf(1_000.0, 1_000_000.0, 1_000_000_000.0)
+    private const val SCALE_TOLERANCE = 0.2      // reported × factor must land within 20% of the reference
+    private const val SCALE_MIN_RATIO = 100.0    // only obvious mis-scaling, never a rounding difference
+
+    /** Independent estimate of a period's share count, used only to detect a mis-scaled tag. */
+    private fun shareScaleReference(p: PeriodCore, currentShares: SourcedValueCore?): Pair<Double, String>? {
+        val ni = p.get("net_income"); val eps = p.get("eps_diluted")
+        if (ni != null && eps != null && eps != 0.0) {
+            val implied = ni / eps
+            if (implied > 0) return implied to "net income ÷ diluted EPS"
+        }
+        val cs = currentShares?.value
+        if (cs != null && cs > 0) return cs to "cover-page shares outstanding"
+        return null
+    }
+
+    /**
+     * Some filers tag share counts in millions while declaring the unit as `shares` (McDonald's:
+     * `WeightedAverageNumberOfDilutedSharesOutstanding` = 712.3). SEC passes the value through as
+     * filed, so every per-share figure derived from it would be wrong by a factor of a million.
+     * Corrected only when an independent reference agrees on a clean power of 1000, and always noted.
+     * Mirror of `_fix_share_scale` in statements.py.
+     */
+    private fun fixShareScale(periods: List<PeriodCore>, warnings: MutableList<String>, currentShares: SourcedValueCore? = null) {
+        val corrected = mutableSetOf<String>()
+        for (p in periods) {
+            val sv = p.values["shares_diluted"] ?: continue
+            if (sv.value <= 0) continue
+            val (reference, basis) = shareScaleReference(p, currentShares) ?: continue
+            val ratio = reference / sv.value
+            if (ratio < SCALE_MIN_RATIO && ratio > 1 / SCALE_MIN_RATIO) continue
+            outer@ for (factor in SCALE_FACTORS) {
+                for (candidate in listOf(sv.value * factor, sv.value / factor)) {
+                    if (abs(candidate / reference - 1) <= SCALE_TOLERANCE) {
+                        val dir = if (candidate > sv.value) "×" else "÷"
+                        val scaleName = when (factor) { 1_000_000.0 -> "millions"; 1_000.0 -> "thousands"; else -> "billions" }
+                        sv.value = candidate
+                        sv.derived = true
+                        sv.note = (if (sv.note.isNotEmpty()) sv.note + " " else "") +
+                            "share-count scale corrected $dir${PyFmt.commas(factor, 0)} (filer tagged it in $scaleName; cross-checked against $basis)"
+                        corrected += p.label
+                        break@outer
+                    }
+                }
+            }
+        }
+        if (corrected.isNotEmpty()) {
+            val existing = warnings.firstOrNull { it.startsWith("Diluted share count was tagged") }
+            if (existing != null) {
+                warnings.remove(existing)
+                corrected.addAll(existing.substringAfter("(").substringBefore(")").split(", "))
+            }
+            warnings += "Diluted share count was tagged on a different scale than declared (" +
+                corrected.sorted().joinToString(", ") + "); corrected against net income ÷ EPS."
+        }
+    }
+
     /** 52/53-week fiscal years can end on Jan 1–7 of the following calendar year (JNJ, etc.). */
     fun fiscalYearFor(end: Day): Int = if (end.month == 1 && end.day <= 7) end.year - 1 else end.year
 
@@ -239,6 +296,7 @@ object Statements {
             }
         }
         adjustForSplits(periods, warnings)
+        fixShareScale(periods, warnings)      // before derive: per-share items are computed from these
         periods.forEachIndexed { i, p -> derive(p, periods.subList(0, i)) }
 
         var ttm: PeriodCore? = null
@@ -250,6 +308,7 @@ object Statements {
             val stale = t.values.filter { (_, sv) -> sv.periodEnd.daysUntil(t.periodEnd) > 540 }.keys.toList()
             stale.forEach { t.values.remove(it) }
             if (stale.isNotEmpty()) warnings += "Dropped stale TTM values (tag no longer reported): " + stale.joinToString(", ")
+            fixShareScale(listOf(t), warnings)
             derive(t, periods)
             if (t.periodEnd == latest.periodEnd) t.form = "10-K"
             ttm = t

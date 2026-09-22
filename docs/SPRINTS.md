@@ -120,3 +120,9 @@ COP, VZ and PLD — owner earnings silently missing for four mega-caps (ISSUES #
 revenue-family tag at all (#72). Both logged for review rather than fixed, per the agreed loop.
 
 **Tests**: 95 (31 engine · 49 Kotlin · 15 iOS).
+
+**Owner-reported bug, same day**: MCD showed no valuation — McDonald's tags its diluted share count
+in millions while declaring the unit as `shares`, so per-share figures were off by 10^6 and two data
+checks failed. Fixed by cross-checking share counts against net income ÷ EPS and rescaling only on a
+clean power of 1000 (ISSUES #77). The gate behaved correctly throughout: it refused to show a wrong
+number. 1 of 77 universe tickers was affected; 5 regression tests added.

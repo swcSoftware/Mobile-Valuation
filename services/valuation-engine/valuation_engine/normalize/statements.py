@@ -392,6 +392,71 @@ def _adjust_for_splits(periods: list[Period], warnings: list[str]) -> None:
                         sv.note = (sv.note + " " if sv.note else "") + f"split-adjusted ×{factor:g}"
 
 
+SCALE_FACTORS = (1_000.0, 1_000_000.0, 1_000_000_000.0)
+SCALE_TOLERANCE = 0.2      # reported × factor must land within 20% of the reference
+SCALE_MIN_RATIO = 100.0    # only consider obvious mis-scaling, never a rounding difference
+
+
+def _share_scale_reference(period: Period, current_shares: SourcedValue | None) -> tuple[float, str] | None:
+    """
+    An independent estimate of the period's share count: net income ÷ EPS (same filing, same
+    period) or, failing that, the cover-page count. Used only to detect a mis-scaled tag.
+    """
+    ni, eps = period.get("net_income"), period.get("eps_diluted")
+    if ni is not None and eps:
+        implied = ni / eps
+        if implied > 0:
+            return implied, "net income ÷ diluted EPS"
+    if current_shares is not None and current_shares.value > 0:
+        return current_shares.value, "cover-page shares outstanding"
+    return None
+
+
+def _fix_share_scale(periods: list[Period], warnings: list[str], current_shares: SourcedValue | None = None) -> None:
+    """
+    Some filers tag share counts in millions while declaring the unit as `shares` (McDonald's does:
+    `WeightedAverageNumberOfDilutedSharesOutstanding` = 712.3). SEC passes the value through as
+    filed, so every per-share figure derived from it would be wrong by a factor of a million.
+
+    Correct it only when an independent reference agrees on a clean power of 1000, and always say so.
+    """
+    corrected: set[str] = set()
+    for period in [p for p in periods if p]:
+        sv = period.values.get("shares_diluted")
+        if sv is None or sv.value <= 0:
+            continue
+        ref = _share_scale_reference(period, current_shares)
+        if ref is None:
+            continue
+        reference, basis = ref
+        ratio = reference / sv.value
+        if ratio < SCALE_MIN_RATIO and ratio > 1 / SCALE_MIN_RATIO:
+            continue
+        for factor in SCALE_FACTORS:
+            for candidate in (sv.value * factor, sv.value / factor):
+                if abs(candidate / reference - 1) <= SCALE_TOLERANCE:
+                    scaled = "×" if candidate > sv.value else "÷"
+                    sv.value = candidate
+                    sv.derived = True
+                    sv.note = (sv.note + " " if sv.note else "") + (
+                        f"share-count scale corrected {scaled}{factor:,.0f} (filer tagged it in "
+                        f"{'millions' if factor == 1_000_000 else 'thousands' if factor == 1_000 else 'billions'}; "
+                        f"cross-checked against {basis})")
+                    corrected.add(period.label)
+                    break
+            else:
+                continue
+            break
+    if corrected:
+        existing = next((w for w in warnings if w.startswith("Diluted share count was tagged")), None)
+        if existing:
+            warnings.remove(existing)
+            corrected |= set(existing.split("(")[1].split(")")[0].split(", "))
+        warnings.append(
+            "Diluted share count was tagged on a different scale than declared (" + ", ".join(sorted(corrected))
+            + "); corrected against net income ÷ EPS.")
+
+
 def fiscal_year_for(end: date) -> int:
     """52/53-week fiscal years can end on Jan 1–7 of the following calendar year (JNJ, etc.)."""
     return end.year - 1 if (end.month == 1 and end.day <= 7) else end.year
@@ -424,6 +489,7 @@ def normalize(cf: CompanyFacts, max_years: int = 10) -> NormalizedFinancials:
                 p.values[key] = series[end]
         periods.append(p)
     _adjust_for_splits(periods, warnings)
+    _fix_share_scale(periods, warnings)      # before _derive: per-share items are computed from these
     for i, p in enumerate(periods):
         _derive(p, periods[:i])
 
@@ -447,6 +513,7 @@ def normalize(cf: CompanyFacts, max_years: int = 10) -> NormalizedFinancials:
             del ttm.values[k]
         if stale:
             warnings.append("Dropped stale TTM values (tag no longer reported): " + ", ".join(stale))
+        _fix_share_scale([ttm], warnings)
         # Δ working capital for TTM is measured against the latest fiscal year end (annualized in the normalization)
         _derive(ttm, periods)
         if ttm.period_end == latest.period_end:
