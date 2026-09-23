@@ -1,7 +1,9 @@
 # ValueLens — UI direction
 
-Status: **Sprint 5 in progress, design phase.** No Swift or Compose work has started. Written
-2026-09-22.
+Status: **Sprint 5 in progress.** The design was signed off on 2026-09-23 and Tracks A (the layout
+seam) and B (runtime theming) are delivered on both platforms. Track C — the report card's own
+design, and the graded facts that need `Explain.Fact` to carry `grade` and `rule` — is next.
+Written 2026-09-22, updated 2026-09-23.
 
 Read this with [TASKS.md](TASKS.md) Sprint 5, which holds the task list. This file holds the
 *reasoning* — the directions explored, the decisions taken, and the rules a layout has to obey.

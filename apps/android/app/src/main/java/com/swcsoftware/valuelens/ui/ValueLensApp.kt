@@ -35,7 +35,8 @@ import com.swcsoftware.valuelens.ui.theme.ValueLensTheme
 
 @Composable
 fun ValueLensApp(state: AppState) {
-    ValueLensTheme {
+    // The three axes are resolved here, once, and provided to everything below (Sprint 5 Track B).
+    ValueLensTheme(preference = state.themePreference, accentArgb = state.accentArgb) {
         val nav = rememberNavController()
         val entry by nav.currentBackStackEntryAsState()
         val route = entry?.destination?.route ?: ""

@@ -42,6 +42,18 @@ class AppPrefs(context: Context) {
     var overrides: RateOverrides
         get() = prefs.getString("overrides", null)?.let { runCatching { json.decodeFromString<RateOverrides>(it) }.getOrNull() } ?: RateOverrides.NONE
         set(v) = prefs.edit().putString("overrides", json.encodeToString(RateOverrides.serializer(), v)).apply()
+    /** Which presentation of a company to render (Sprint 5 Track A). */
+    var layoutStyle: String
+        get() = prefs.getString("layoutStyle", null) ?: "CLASSIC"
+        set(v) = prefs.edit().putString("layoutStyle", v).apply()
+    /** Light / Dark / System — independent of the layout (Sprint 5 Track B). */
+    var themePreference: String
+        get() = prefs.getString("themePreference", null) ?: "DARK"
+        set(v) = prefs.edit().putString("themePreference", v).apply()
+    /** The user's chrome colour as ARGB, or -1 for "the theme's own". Never applied to price/value. */
+    var accentArgb: Long
+        get() = prefs.getLong("accentArgb", -1L)
+        set(v) = prefs.edit().putLong("accentArgb", v).apply()
 }
 
 @Serializable data class WatchlistEntry(val company: CompanyRef, val lastReport: ValuationReport? = null, val addedAt: Long, val updatedAt: Long? = null)

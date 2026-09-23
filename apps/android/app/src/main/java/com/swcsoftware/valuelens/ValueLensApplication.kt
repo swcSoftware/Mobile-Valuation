@@ -13,6 +13,8 @@ import com.swcsoftware.valuelens.data.WatchlistStore
 import com.swcsoftware.valuelens.domain.RateOverrides
 import com.swcsoftware.valuelens.domain.SecIdentity
 import com.swcsoftware.valuelens.domain.ValuationReport
+import com.swcsoftware.valuelens.ui.LayoutStyle
+import com.swcsoftware.valuelens.ui.theme.ThemePreference
 
 /** App-wide observable state — the Android counterpart of iOS AppSettings + WatchlistStore + AppRouter. */
 class AppState(app: Application) {
@@ -26,6 +28,10 @@ class AppState(app: Application) {
     var onboarded: Boolean by mutableStateOf(prefs.onboarded)
         private set
     var expertMode: Boolean by mutableStateOf(prefs.expertMode)
+    var layoutStyle: LayoutStyle by mutableStateOf(LayoutStyle.from(prefs.layoutStyle))
+    var themePreference: ThemePreference by mutableStateOf(ThemePreference.from(prefs.themePreference))
+    /** null when the user has not chosen one. */
+    var accentArgb: Long? by mutableStateOf(prefs.accentArgb.takeIf { it >= 0 })
         private set
     var overrides: RateOverrides by mutableStateOf(prefs.overrides)
         private set
@@ -43,6 +49,9 @@ class AppState(app: Application) {
     fun clearIdentity() { identityStore.clear(); identity = null; updateOnboarded(false) }
     fun updateOnboarded(v: Boolean) { prefs.onboarded = v; onboarded = v }
     fun updateExpertMode(v: Boolean) { prefs.expertMode = v; expertMode = v }
+    fun updateLayoutStyle(v: LayoutStyle) { prefs.layoutStyle = v.name; layoutStyle = v }
+    fun updateThemePreference(v: ThemePreference) { prefs.themePreference = v.name; themePreference = v }
+    fun updateAccent(v: Long?) { prefs.accentArgb = v ?: -1L; accentArgb = v }
     fun updateOverrides(v: RateOverrides) { prefs.overrides = v; overrides = v }
 
     suspend fun refreshRates() { rates = repository.rates() }

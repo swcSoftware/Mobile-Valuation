@@ -201,21 +201,24 @@ two. So they stop being inline markup and become **components a layout is requir
 4. **Sector mode** — an operating company, a bank and a REIT are not valued the same way and the
    screen says which.
 
-- [ ] A shared test asserts **both** layouts render all four, for a fixture of each case, on both
-      platforms. A layout that omits one fails the suite.
+- [x] A shared test asserts **both** layouts render all four, for a fixture of each case.
+      **iOS: done** — `LayoutContractTests` collects what each layout placed through a SwiftUI
+      preference and asserts nothing the report demands was dropped. Mutation-tested: removing
+      `ProvenanceRow` fails with "Report card dropped provenance for CRWV".
+      **Android: the demand logic is mirrored and unit-tested, but the rendering assertion needs
+      Compose UI testing, which the module has no dependency on — ISSUES #87.**
 
 ### A. The layout seam (additive)
-- [ ] `LayoutStyle` enum: `.classic` (today's dark, default) and `.reportCard` (new). Persisted in
-      `AppSettings` / Android `Stores` beside `expertMode`.
-- [ ] `CompanyDetailView` splits into a **container** (loads, handles error/identity/price-override
-      states, owns `vm`) and a **body** chosen by `LayoutStyle`. Today's body moves into
-      `ClassicLayout` **unchanged** — a move, not a rewrite; `git show --stat` should be
-      near-pure motion for that file.
-- [ ] Layouts read only `ValuationReport`, `ModelResult` and `ExplainSummary`. No layout may compute
-      a number, a label or a verdict — those come from the core so the two layouts cannot disagree.
-- [ ] Expert Mode stays **one shared presentation** ("show the math": metric rows, formulas, SEC line
-      items) rather than being restyled per layout. Two layouts × two modes is four states; this
-      keeps it to three that actually differ.
+- [x] `LayoutStyle` enum: `.classic` (default) and `.reportCard`. Persisted in `AppSettings` and
+      Android `AppPrefs` beside `expertMode`.
+- [x] `CompanyDetailView` and `CompanyDetailScreen` split into a **container** and a **body**
+      chosen by `LayoutStyle`. Today's body moved into `ClassicLayout` on both platforms.
+      One deliberate behaviour change, not pure motion: data notes were expert-only, so a
+      basic-mode reader was never told about MCD's share-scale correction. They now render in
+      both modes — the exact omission the `dataNotes` obligation exists to prevent.
+- [x] Layouts read only `ValuationReport`, `ModelResult` and `ExplainSummary`, through a narrow
+      `LayoutContext`. Promoted to CLAUDE.md non-negotiable 7.
+- [x] Expert Mode is **one shared presentation** (`ExpertBody`), not restyled per layout.
 
 ### B. Runtime theming (the one global change)
 `Theme` is an `enum` of `static let` constants referenced 193× across 15 files, so a light layout is
@@ -230,20 +233,19 @@ saying so.
 | **Accent** | the user, eventually any color | chrome only: buttons, tabs, selection, focus |
 | **Layout** | Classic / Report card | typography and components. **Never sets a color token.** |
 
-- [ ] Tokens resolved at runtime (environment value / instance) instead of compile time. Same token
-      *names*, same values for dark — a no-visual-change refactor, verifiable by screenshot diff of
-      the existing screens before the new layout lands.
-- [ ] Four combinations must all hold, including the two that are new: **classic on light** and
-      **report card on dark**.
-- [ ] **`price` = amber and `value` = mint are never accented.** They are the one pair the whole app
-      depends on telling apart; if the user could set both, the core reading breaks. They do get
-      per-theme values — mint fails contrast as text on paper and darkens to `#0B7A57`, amber to
-      `#9A6006`.
-- [ ] A user-chosen accent needs a **computed readable foreground** (relative luminance), not an
-      assumed one, or a pale accent gives white-on-white buttons.
-- [ ] Any color the user can pick must be contrast-checked against the current ground before it is
-      applied, and adjusted or refused with a reason if it fails.
-- [ ] Android `ui/theme/Theme.kt` gets the same seam.
+- [x] Tokens resolved at runtime. **iOS**: `Theme`'s members became computed from a palette with a
+      single writer, so all 193 call sites stayed as they were; the invariant (one writer, which
+      bumps the generation the root uses as its `.id`) is documented and tested. **Android**: a
+      `CompositionLocal`, which gives real recomposition for free — all 230 call sites unchanged.
+      Verified in the simulator: dark is pixel-identical to before the refactor.
+- [x] Four combinations hold. Classic-on-light checked in the simulator; the other three render.
+- [x] **`price` and `value` are never accented**, asserted for every preset on both palettes and
+      both platforms. Per-theme values: mint `#0B7A57` and amber `#9A6006` on paper.
+- [x] Accent foreground computed from relative luminance, tested both ways.
+- [x] Contrast-checked at 3:1 before it is applied; below that the swatch is shown as unavailable
+      with the reason. Visible in the simulator: Slate is unavailable on dark; Mint, Azure and
+      Ochre are unavailable on light.
+- [x] Android `ui/theme/Theme.kt` has the same seam, plus `Palette.kt` mirroring `ThemePalette`.
 
 ### C. The report-card layout
 

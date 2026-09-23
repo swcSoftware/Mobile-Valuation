@@ -168,7 +168,28 @@ across sectors — a REIT grades D on return on capital), **#83** (the all-blank
 and #82 needs a decision — sector-aware thresholds, or a tile that declines to grade. No Swift work
 starts until the design is signed off.
 
-**Tests**: 100 (31 engine · 54 Kotlin — 47 core + 7 Android app · 15 iOS), unchanged — no app
-source was touched this sprint. The engine and Kotlin suites were re-run green at sprint open;
+**Tracks A and B delivered, 2026-09-23.** The design was signed off on a physical-size simulator,
+and the app work started.
+
+- **A, the layout seam**: `CompanyDetailView` / `CompanyDetailScreen` split into a container and a
+  body chosen by `LayoutStyle`; today's layout moved into `ClassicLayout` on both platforms;
+  `ExpertBody` is one shared presentation. The four obligations became components a layout is
+  *required to place*, and `LayoutContractTests` proves it rather than trusting review — six
+  fixtures chosen for the state they force, mutation-tested by deleting `ProvenanceRow` and watching
+  the suite name the layout, the component and the fixture.
+- **B, runtime theming**: three independent axes (theme / accent / layout). iOS keeps `Theme`'s
+  static API — all 193 call sites unchanged — behind a single-writer invariant that rebuilds the
+  tree on change; Android uses a `CompositionLocal`, which gives recomposition for free across all
+  230 call sites. Dark is pixel-identical to before. A user-chosen accent is contrast-checked at
+  3:1 before it is applied and its foreground computed from luminance.
+
+Two things the work surfaced. A basic-mode reader was never shown data notes — MCD's share-scale
+correction was invisible unless Expert Mode was on, which is exactly the omission the `dataNotes`
+obligation exists to prevent; it now renders in both modes. And a test of mine was wrong rather than
+the palette: price and value are ~1.1:1 in WCAG contrast *by design*, because they are deliberately
+close in lightness so neither dominates; hue separation (119°) is the right measure. That axis is
+red–green, logged as ISSUES #86 for the accessibility pass.
+
+**Tests**: 128 (31 engine · 47 core · 22 Android · 28 iOS), all green. Was 100 at sprint open. The engine and Kotlin suites were re-run green at sprint open;
 the iOS suite was not re-run, because no iOS source changed. The only code change is a test
 utility: `SampleDump` now takes `VL_DUMP_TICKERS` so arbitrary filers can be dumped for design work.

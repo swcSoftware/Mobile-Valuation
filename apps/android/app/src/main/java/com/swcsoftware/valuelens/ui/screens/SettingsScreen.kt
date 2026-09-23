@@ -32,6 +32,12 @@ import com.swcsoftware.valuelens.domain.SecIdentity
 import com.swcsoftware.valuelens.ui.components.Card
 import com.swcsoftware.valuelens.ui.components.PrimaryButton
 import com.swcsoftware.valuelens.ui.components.SectionHeader
+import androidx.compose.material3.SegmentedButton
+import androidx.compose.material3.SegmentedButtonDefaults
+import androidx.compose.material3.SingleChoiceSegmentedButtonRow
+import com.swcsoftware.valuelens.ui.components.AccentSwatches
+import com.swcsoftware.valuelens.ui.theme.LocalPalette
+import com.swcsoftware.valuelens.ui.theme.ThemePreference
 import com.swcsoftware.valuelens.ui.theme.VL
 import kotlinx.coroutines.launch
 
@@ -57,7 +63,34 @@ fun SettingsScreen(state: AppState, onReplayOnboarding: () -> Unit, onGlossary: 
                 Column(Modifier.weight(1f)) { Text("Expert Mode", color = VL.textPrimary); Text(if (state.expertMode) "Showing the full math" else "Showing the basics", style = MaterialTheme.typography.bodySmall, color = VL.textSecondary) }
                 androidx.compose.material3.Switch(checked = state.expertMode, onCheckedChange = { state.updateExpertMode(it) })
             }
-            TextButton(onGlossary) { Text("Glossary — what these terms mean", color = VL.value) }
+            TextButton(onGlossary) { Text("Glossary — what these terms mean", color = VL.accent) }
+        }
+
+        SectionHeader(
+            "Appearance",
+            "Market price stays amber and fair value stays mint in every theme — that pair is how you read a valuation, so it is never restyled. An accent that would be unreadable on the current background is not offered.",
+        )
+        Card {
+            SingleChoiceSegmentedButtonRow(Modifier.fillMaxWidth()) {
+                ThemePreference.entries.forEachIndexed { i, p ->
+                    SegmentedButton(
+                        selected = state.themePreference == p,
+                        onClick = { state.updateThemePreference(p) },
+                        shape = SegmentedButtonDefaults.itemShape(i, ThemePreference.entries.size),
+                    ) { Text(p.displayName) }
+                }
+            }
+            Row(Modifier.fillMaxWidth().padding(top = 14.dp), verticalAlignment = Alignment.CenterVertically) {
+                Text("Accent color", color = VL.textPrimary, modifier = Modifier.weight(1f))
+                if (state.accentArgb != null) {
+                    TextButton({ state.updateAccent(null) }) { Text("Reset", color = VL.accent) }
+                }
+            }
+            AccentSwatches(
+                selected = state.accentArgb,
+                isDark = LocalPalette.current.isDark,
+                onPick = { state.updateAccent(it) },
+            )
         }
 
         SectionHeader("Data sources", "SEC EDGAR filings are fetched directly from this device using your identity. Interest rates come from a daily published FRED snapshot.")
