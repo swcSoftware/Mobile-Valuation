@@ -48,6 +48,25 @@ theming is resolved at runtime, the second one is nearly free. B is not, so B wa
 4. **Keep the model toggle as it is** — one model at a time, not both side by side.
 5. **Price vs value leads the screen**; business health sits below it.
 
+### Taken by the owner, 2026-09-23
+
+6. **An investor lens, not one set of thresholds.** Asked once at onboarding ("what kind of investor
+   are you?") and switchable afterwards: *Value* (default) or *Growth*. The owner's reasoning: "I
+   might be an investor more interested in the Buffett/Graham value investing model — but a different
+   user might be more risk based and growth oriented… we can then deliver to them the grading
+   scenario best fit for their expectations."
+7. **Grading varies by sector, and refuses where the measure is meaningless.** Thresholds have a
+   per-sector scale where the metric still means something (a REIT's return on capital on a REIT
+   scale), and the tile shows the value with no letter plus a reason where it does not (a bank's
+   return on capital and debt-to-equity).
+
+**The boundary on the lens, set by Claude and needing confirmation:** the lens changes **only how a
+fact is graded and which fact is read first**. It never changes a valuation, an intrinsic value, a
+margin of safety or a verdict — those are the same numbers for every user, whatever they call
+themselves. Tailoring the *answer* to a user's self-declared taste would break the thing the app is
+for. Open question: whether the lens may set which *model* is shown first (a presentation default
+that changes no number), or whether even that is too much.
+
 ### Taken by Claude, open to reversal
 
 - **The accent colors chrome only.** Price stays amber and fair value stays mint in every scheme.
@@ -58,13 +77,41 @@ theming is resolved at runtime, the second one is nearly free. B is not, so B wa
 - **Health facts became full-width rows**, not a 2×2 grid. Two judgements plus a sparkline do not fit
   a half-width tile legibly at 375px.
 
-### Still open — these block the Swift work
+### Resolved 2026-09-23, previously blocking
 
-- **The four thresholds are Claude's invention and are not approved**: A at 20% return on capital,
-  0.30× debt-to-equity, 1.00× cash conversion, 15%/yr revenue growth.
-- **Fixed thresholds are unfair across sectors** (ISSUES #82). Realty Income grades D on return on
-  capital at 5.1%, which is ordinary for a REIT. Either thresholds vary by `sector.mode`, or the tile
-  declines to grade and says the rule does not fit this filer.
+Both open questions are answered — by the lens (6) and the per-sector rules (7) above. The
+prototype's flat thresholds were also recalibrated: at A ≥ 15%/yr revenue growth, five of eleven
+sample filers landed on C including Coca-Cola, McDonald's and Apple, while a cash-burning AI company
+took an A at 373%. That is a growth-investor scale on a value-investing app. The Value lens now puts
+an A at 10%/yr; the Growth lens keeps 25%.
+
+### Still open
+
+- **Substituting the metric for financials.** Refusing to grade leaves a bank with one graded fact
+  of four (JPM: revenue growth only; BRK-B the same; AGNC none). Return on equity is the standard
+  measure for a lender and is already in `snapshot`, so the honest fix may be a *substituted* fact
+  rather than a refused one — which is closer to the "different facts per sector" option the owner
+  did not pick. Evidence is in the prototype; needs an owner decision.
+- **Whether the lens may set the default model shown** (see the boundary note above).
+
+## The grading matrix
+
+Curated data, not code branches: **lens → sector mode → metric → rule**, or `null` where the measure
+is meaningless for that filer type. It belongs in `Explain.kt` next to the facts, reviewed by a human
+the way the concept map is (non-negotiable 5 in spirit), because a threshold is a judgement. Every
+rule it produces is printed next to the grade it produces, so a reader can check it.
+
+| Metric | Value · general | Value · REIT | Growth · general | Growth · REIT | Financial |
+|---|---|---|---|---|---|
+| Return on capital | A ≥ 20% | A ≥ 8% | A ≥ 15% | A ≥ 6% | **refused** |
+| Debt load | A ≤ 0.30× | A ≤ 0.80× | A ≤ 0.50× | A ≤ 1.00× | **refused** |
+| Cash conversion | A ≥ 1.00× | A ≥ 2.00× | A ≥ 0.80× | A ≥ 1.50× | **refused** |
+| Revenue growth | A ≥ 10%/yr | A ≥ 10%/yr | A ≥ 25%/yr | A ≥ 25%/yr | same as lens |
+
+The lens also sets **reading order**: Value leads with return on capital, Growth leads with revenue
+growth. Without that, switching to Growth mostly relaxes bars and grades drift upward, which reads as
+"Growth is the easier lens" rather than "Growth cares about different things". With it, Coca-Cola
+under the Growth lens opens on **D, revenue growth** — which is the honest read.
 
 ## The four things every layout must carry
 

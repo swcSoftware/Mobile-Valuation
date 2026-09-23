@@ -270,10 +270,20 @@ saying so.
         `total_debt`, so there is nothing honest to compare. See Track F.
 - [ ] **The thresholds go in the core, not the view.** `Explain.Fact` gains `grade`, `rule` and the
       historical read (additive fields) so iOS and Android cannot disagree and the rule can be shown
-      in the UI. The prototype's thresholds were invented by Claude and are **still not approved**.
-- [ ] Sector-aware thresholds are an **open question**: Realty Income grades D on return on capital
-      at 5.1%, which is ordinary for a REIT. The historical read softens this but does not fix it.
-      Either the thresholds vary by sector mode, or the tile says the rule doesn't fit this filer.
+      in the UI.
+- [x] ~~The thresholds are unapproved~~ — **resolved 2026-09-23**: an **investor lens**, Value
+      (default) or Growth, asked once at onboarding and switchable in Settings or from a chip on the
+      company screen. It changes only how a fact is graded and which fact is read first; it never
+      changes a valuation, a margin of safety or a verdict.
+- [x] ~~Sector-aware thresholds are an open question~~ — **resolved 2026-09-23**: per-sector scales
+      where the measure means something, and a refusal with a stated reason where it does not.
+- [ ] Build the grading matrix as **curated data** (lens → sector → metric → rule | refusal), not
+      code branches, reviewed by a human like the concept map. The table is in `docs/DESIGN.md`.
+- [ ] The active lens must be **visible on the screen it affects** and the rule printed on every row.
+      A grade that silently depends on a setting is the "silent number" this app exists to avoid.
+- [ ] **Open**: financials end up with one graded fact of four (JPM, BRK-B; AGNC none). Return on
+      equity is the standard measure for a lender and is already in `snapshot` — decide whether to
+      *substitute* the fact rather than refuse it. Owner decision (ISSUES #84).
 - [ ] An **ungradable** state, designed, not accidental: MCD's equity is negative, so
       debt-to-equity has no meaning; the tile shows no grade and says why. (Related: ISSUES #78.)
 - [ ] An **all-four-blank** state: AGNC (mortgage REIT) computes none of the four, so the section is
@@ -283,8 +293,11 @@ saying so.
       distinguishing measured from assumed.
 - [ ] Android parity for the same layout.
 
-### D. The toggle
+### D. The toggles
 - [ ] Settings: layout picker with a live preview of each option, beside Expert Mode.
+- [ ] Settings: investor lens (Value / Growth), theme (Light / Dark / System) and accent color.
+- [ ] Onboarding gains one screen: "what kind of investor are you?", after the SEC identity step and
+      before the guided valuation. It must say plainly that it changes no valuation.
 - [ ] `.classic` stays the default. The new layout becomes the default only on an explicit owner
       decision, after it has been used on a physical device.
 
