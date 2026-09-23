@@ -281,9 +281,12 @@ saying so.
       code branches, reviewed by a human like the concept map. The table is in `docs/DESIGN.md`.
 - [ ] The active lens must be **visible on the screen it affects** and the rule printed on every row.
       A grade that silently depends on a setting is the "silent number" this app exists to avoid.
-- [ ] **Open**: financials end up with one graded fact of four (JPM, BRK-B; AGNC none). Return on
-      equity is the standard measure for a lender and is already in `snapshot` — decide whether to
-      *substitute* the fact rather than refuse it. Owner decision (ISSUES #84).
+- [x] ~~Financials end up with one graded fact of four~~ — **resolved 2026-09-23** (ISSUES #84):
+      profitability is **substituted** for financials (return on equity, not return on capital), so a
+      bank shows two graded facts and two explained refusals, and AGNC is no longer wholly blank. Its
+      trend line is derived from net income ÷ equity, both filed.
+- [x] The lens boundary is **confirmed**: grading and reading order only. It never changes a
+      valuation, a verdict, or which model opens first.
 - [ ] An **ungradable** state, designed, not accidental: MCD's equity is negative, so
       debt-to-equity has no meaning; the tile shows no grade and says why. (Related: ISSUES #78.)
 - [ ] An **all-four-blank** state: AGNC (mortgage REIT) computes none of the four, so the section is

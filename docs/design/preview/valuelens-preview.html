@@ -169,7 +169,7 @@
   @media (prefers-reduced-motion: reduce) { .metric-head .chev { transition: none; } }
 </style>
 <div class="frame">
-  <div class="banner"><b>Web preview</b> &#xB7; Sprint 5 design review, r3. New since r2: an <b>investor lens</b> (Value or Growth) that sets the bar health facts are graded against &#x2014; asked once at onboarding, switchable in Settings or from the chip on any company screen. It changes <b>no valuation</b>. Grading is now <b>per sector</b>, and refuses to grade a measure that does not fit a filer (look at JPM). Two layouts, three themes, your own accent. Eleven sample companies including the awkward ones.</div>
+  <div class="banner"><b>Web preview</b> &#xB7; Sprint 5 design review, r4. An <b>investor lens</b> (Value or Growth) sets the bar health facts are graded against &#x2014; asked once at onboarding, switchable in Settings or from the chip on any company screen. It changes <b>no valuation</b>. Grading is <b>per sector</b>: a bank is judged on return on equity, a REIT on a REIT scale, and a measure that does not fit a filer is refused with the reason (see JPM&#x2019;s debt load). Two layouts, three themes, your own accent. Eleven sample companies including the awkward ones.</div>
   <main id="main"></main>
   <nav class="tabs" id="tabs" hidden>
     <button data-tab="watchlist" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6h13M8 12h13M8 18h13"/><path d="M3 6l1 1 2-2M3 12l1 1 2-2M3 18l1 1 2-2"/></svg>Watchlist</button>
@@ -300,38 +300,47 @@
   // The lens also sets what is read FIRST. Without this, switching to Growth mostly relaxes bars
   // and grades drift upward, which reads as "Growth is the easier lens" rather than "Growth cares
   // about different things".
-  var LENS_ORDER = { value: ['roic', 'de', 'conv', 'growth'], growth: ['growth', 'roic', 'conv', 'de'] };
+  var LENS_ORDER = { value: ['profit', 'de', 'conv', 'growth'], growth: ['growth', 'profit', 'conv', 'de'] };
+  // Profitability is measured differently by filer type. An operating company earns on the capital
+  // invested in it; a bank earns on its shareholders' equity, because its balance sheet is funded by
+  // depositors. Same slot, same lens, different measure — and the row says which.
+  var PROFIT_FACT = {
+    general:   { nm: 'Return on capital', src: 'roic' },
+    reit:      { nm: 'Return on capital', src: 'roic' },
+    financial: { nm: 'Return on equity',  src: 'roe' },
+  };
   var GROWTH_RULE = { value: { cuts: [10, 6, 3, 0], txt: 'A at 10% a year or better' },
                       growth: { cuts: [25, 15, 8, 0], txt: 'A at 25% a year or better' } };
   var RULES = {
     value: {
-      general:   { roic: { cuts: [20, 15, 10, 5], txt: 'A at 20% or better' },
+      general:   { profit: { cuts: [20, 15, 10, 5], txt: 'A at 20% or better' },
                    de:   { cuts: [.3, .6, 1, 2], invert: true, txt: 'A at 0.30&#xD7; or less' },
                    conv: { cuts: [1, .8, .6, .4], txt: 'A at 1.00&#xD7; or more' },
                    growth: GROWTH_RULE.value },
-      reit:      { roic: { cuts: [8, 6, 4, 2], txt: 'A at 8% or better (REIT scale)' },
+      reit:      { profit: { cuts: [8, 6, 4, 2], txt: 'A at 8% or better (REIT scale)' },
                    de:   { cuts: [.8, 1.2, 1.8, 2.5], invert: true, txt: 'A at 0.80&#xD7; or less (REIT scale)' },
                    conv: { cuts: [2, 1.5, 1, .5], txt: 'A at 2.00&#xD7; or more (REIT scale)' },
                    growth: GROWTH_RULE.value },
-      financial: { roic: null, de: null, conv: null, growth: GROWTH_RULE.value },
+      financial: { profit: { cuts: [15, 12, 9, 5], txt: 'A at 15% or better (return on equity)' },
+                   de: null, conv: null, growth: GROWTH_RULE.value },
     },
     growth: {
-      general:   { roic: { cuts: [15, 10, 5, 0], txt: 'A at 15% or better' },
+      general:   { profit: { cuts: [15, 10, 5, 0], txt: 'A at 15% or better' },
                    de:   { cuts: [.5, 1, 2, 3], invert: true, txt: 'A at 0.50&#xD7; or less' },
                    conv: { cuts: [.8, .5, .2, 0], txt: 'A at 0.80&#xD7; or more' },
                    growth: GROWTH_RULE.growth },
-      reit:      { roic: { cuts: [6, 4, 3, 1], txt: 'A at 6% or better (REIT scale)' },
+      reit:      { profit: { cuts: [6, 4, 3, 1], txt: 'A at 6% or better (REIT scale)' },
                    de:   { cuts: [1, 1.5, 2.2, 3], invert: true, txt: 'A at 1.00&#xD7; or less (REIT scale)' },
                    conv: { cuts: [1.5, 1, .7, .3], txt: 'A at 1.50&#xD7; or more (REIT scale)' },
                    growth: GROWTH_RULE.growth },
-      financial: { roic: null, de: null, conv: null, growth: GROWTH_RULE.growth },
+      financial: { profit: { cuts: [12, 9, 6, 3], txt: 'A at 12% or better (return on equity)' },
+                   de: null, conv: null, growth: GROWTH_RULE.growth },
     },
   };
   // Why a measure is refused for a filer type. Shown in place of the rule, so a blank grade is
   // always explained rather than looking like missing data.
   var NOT_APPLICABLE = {
     financial: {
-      roic: 'Return on invested capital does not describe a bank or insurer. Its balance sheet is funded by depositors and policyholders, not by capital invested in operations, so the ratio is not comparable to an operating company&#x2019;s. Return on equity is the measure that fits this filer type.',
       de: 'A lender funded by deposits is not comparable to a company funded by borrowings, so debt against equity says nothing useful here.',
       conv: 'Free cash flow is not defined for a financial the way it is for an operating company, so there is no conversion ratio to grade.',
     },
@@ -395,9 +404,21 @@
       return { nm, metric, grade: gradeOf(value, rule.cuts, rule.invert), val: fmt(value), rule: rule.txt, hist: h, spark: h, why: why(h) };
     };
 
-    let h = histRead(hist.map(x => ({ fy: x.fiscal_year, v: x.roic == null ? null : x.roic * 100 })), roic, true);
-    out.push(fact('Return on capital', 'roic', roic, v => pct(v, 1),
-      hh => `What the business earns on the money invested in it. The line is return on capital for each filed year${hh ? `; over ${hh.first}&#x2013;${hh.last} it ran between ${pct(hh.min, 1)} and ${pct(hh.max, 1)}, averaging ${pct(hh.avg, 1)}.` : '.'}`,
+    const pf = PROFIT_FACT[mode] || PROFIT_FACT.general;
+    const roe = val('roe') == null ? null : val('roe') * 100;
+    const onEquity = pf.src === 'roe';
+    const profit = onEquity ? roe : roic;
+    // Return on equity has no filed series, but net income and equity both do, so the trend is
+    // derived from the two rather than left blank.
+    const profitSeries = onEquity
+      ? hist.map(x => ({ fy: x.fiscal_year, v: (x.net_income != null && x.equity) ? (x.net_income / x.equity) * 100 : null }))
+      : hist.map(x => ({ fy: x.fiscal_year, v: x.roic == null ? null : x.roic * 100 }));
+    let h = histRead(profitSeries, profit, true);
+    out.push(fact(pf.nm, 'profit', profit, v => pct(v, 1),
+      hh => (onEquity
+          ? `What the business earns on its shareholders&#x2019; own stake. A bank or insurer is funded by depositors and policyholders, so return on <em>capital</em> would not be comparable to an operating company&#x2019;s &#x2014; return on equity is the measure that fits. The line is net income &#xF7; equity for each filed year`
+          : `What the business earns on the money invested in it. The line is return on capital for each filed year`)
+        + (hh ? `; over ${hh.first}&#x2013;${hh.last} it ran between ${pct(hh.min, 1)} and ${pct(hh.max, 1)}, averaging ${pct(hh.avg, 1)}.` : '.'),
       { hist: h }));
 
     out.push(fact('Debt load', 'de', negEq ? null : val('debt_to_equity'), v => v.toFixed(2) + '&#xD7; equity',

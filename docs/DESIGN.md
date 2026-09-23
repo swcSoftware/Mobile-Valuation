@@ -60,12 +60,15 @@ theming is resolved at runtime, the second one is nearly free. B is not, so B wa
    scale), and the tile shows the value with no letter plus a reason where it does not (a bank's
    return on capital and debt-to-equity).
 
-**The boundary on the lens, set by Claude and needing confirmation:** the lens changes **only how a
-fact is graded and which fact is read first**. It never changes a valuation, an intrinsic value, a
-margin of safety or a verdict — those are the same numbers for every user, whatever they call
-themselves. Tailoring the *answer* to a user's self-declared taste would break the thing the app is
-for. Open question: whether the lens may set which *model* is shown first (a presentation default
-that changes no number), or whether even that is too much.
+8. **Profitability is substituted, not refused, for financials.** A bank or insurer is graded on
+   **return on equity**; an operating company and a REIT on return on capital. Same slot in the
+   layout, same lens, different measure — and the row names which.
+
+**The boundary on the lens — confirmed by the owner 2026-09-23:** the lens changes **only how a fact
+is graded and which fact is read first**. It never changes a valuation, an intrinsic value, a margin
+of safety, a verdict, or which model opens first. Those are the same numbers, in the same order, for
+every user, whatever they call themselves. Two people looking at the same company see one fair value;
+only the judgement of the *business* shifts with the lens.
 
 ### Taken by Claude, open to reversal
 
@@ -87,12 +90,8 @@ an A at 10%/yr; the Growth lens keeps 25%.
 
 ### Still open
 
-- **Substituting the metric for financials.** Refusing to grade leaves a bank with one graded fact
-  of four (JPM: revenue growth only; BRK-B the same; AGNC none). Return on equity is the standard
-  measure for a lender and is already in `snapshot`, so the honest fix may be a *substituted* fact
-  rather than a refused one — which is closer to the "different facts per sector" option the owner
-  did not pick. Evidence is in the prototype; needs an owner decision.
-- **Whether the lens may set the default model shown** (see the boundary note above).
+Nothing blocking. The design is ready for owner sign-off on a physical device; on sign-off, Track A
+(the layout seam) and Track B (runtime theming) can start.
 
 ## The grading matrix
 
@@ -101,12 +100,23 @@ is meaningless for that filer type. It belongs in `Explain.kt` next to the facts
 the way the concept map is (non-negotiable 5 in spirit), because a threshold is a judgement. Every
 rule it produces is printed next to the grade it produces, so a reader can check it.
 
-| Metric | Value · general | Value · REIT | Growth · general | Growth · REIT | Financial |
-|---|---|---|---|---|---|
-| Return on capital | A ≥ 20% | A ≥ 8% | A ≥ 15% | A ≥ 6% | **refused** |
-| Debt load | A ≤ 0.30× | A ≤ 0.80× | A ≤ 0.50× | A ≤ 1.00× | **refused** |
-| Cash conversion | A ≥ 1.00× | A ≥ 2.00× | A ≥ 0.80× | A ≥ 1.50× | **refused** |
-| Revenue growth | A ≥ 10%/yr | A ≥ 10%/yr | A ≥ 25%/yr | A ≥ 25%/yr | same as lens |
+| Slot | Value · general | Value · REIT | Value · financial | Growth · general | Growth · REIT | Growth · financial |
+|---|---|---|---|---|---|---|
+| **Profitability** | return on capital, A ≥ 20% | return on capital, A ≥ 8% | **return on equity**, A ≥ 15% | return on capital, A ≥ 15% | return on capital, A ≥ 6% | **return on equity**, A ≥ 12% |
+| Debt load | A ≤ 0.30× | A ≤ 0.80× | **refused** | A ≤ 0.50× | A ≤ 1.00× | **refused** |
+| Cash conversion | A ≥ 1.00× | A ≥ 2.00× | **refused** | A ≥ 0.80× | A ≥ 1.50× | **refused** |
+| Revenue growth | A ≥ 10%/yr | A ≥ 10%/yr | A ≥ 10%/yr | A ≥ 25%/yr | A ≥ 25%/yr | A ≥ 25%/yr |
+
+The first slot is **substituted**, not fixed: a bank's balance sheet is funded by depositors and
+policyholders, so return on *capital* is not comparable to an operating company's — return on equity
+is the measure that fits, and the row says so. The old flat rules graded JPM's 95.5% return on
+capital an **A**; it now reads return on equity 17.4%, also an A but for a reason that survives
+scrutiny. Return on equity has no filed series, so its trend line is derived from net income ÷ equity,
+both of which are filed.
+
+Debt load and cash conversion stay **refused** for financials: a lender funded by deposits is not
+comparable on debt-to-equity, and free cash flow is not defined for a financial the way it is for an
+operating company. A bank therefore shows two graded facts and two explained refusals.
 
 The lens also sets **reading order**: Value leads with return on capital, Growth leads with revenue
 growth. Without that, switching to Growth mostly relaxes bars and grades drift upward, which reads as
