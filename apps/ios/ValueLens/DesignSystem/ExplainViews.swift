@@ -47,6 +47,10 @@ struct DataChecksCard: View {
                 .padding(.top, 10)
             }
         }
+        // The check list names every failing and warning check, which is half of what
+        // `RequiredComponent.dataNotes` obliges a layout to show; `DataNotesSection` carries the
+        // filer-specific warnings alongside it.
+        .places(.dataNotes)
     }
 }
 
