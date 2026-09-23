@@ -30,8 +30,10 @@
 		5DBCB9DF0085217FFFCF91FF /* rates.json in Resources */ = {isa = PBXBuildFile; fileRef = 2B1C1148B8A673BC52165E8D /* rates.json */; };
 		5E55F3A541CF9B0EDB504946 /* GlossaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070A0FF05C2C083C8FB8F36F /* GlossaryView.swift */; };
 		6119CA8B0347CFBDE3FAF17D /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C043C8119525143FFB7C42 /* Formatters.swift */; };
+		651AD149EA9758DE3F13F3C4 /* ThemeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263AD4A3166856508C9C775D /* ThemeTests.swift */; };
 		6B4B634737935EF98ADE30CF /* ValueLensTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5856ECA7F48C2ED9D111CF0B /* ValueLensTests.swift */; };
 		71EA8DA535ECC68D0940C120 /* AGNC.json in Resources */ = {isa = PBXBuildFile; fileRef = B391B8D9182B0A531D4AD8F4 /* AGNC.json */; };
+		745D392E4C3CA4D5BB7BDFFD /* ThemePalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A092DE101A083E52C686FB /* ThemePalette.swift */; };
 		7FF00B198D4240252B2C11D4 /* ValuationCore.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43D36BD403078C5709F7FF7A /* ValuationCore.xcframework */; };
 		80EA9A94EF2BD9D704067699 /* MSFT.json in Resources */ = {isa = PBXBuildFile; fileRef = F423BFE4865CBAE084D7C598 /* MSFT.json */; };
 		88FF4BBF0BA4DA663435FFAA /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C00A5297374505B57523778 /* SearchView.swift */; };
@@ -48,6 +50,7 @@
 		BA2A1EC70C01453FED2CBF3B /* MCD.json in Resources */ = {isa = PBXBuildFile; fileRef = BD6522D1912134BBFBA51763 /* MCD.json */; };
 		C116C68A0632FF6FADD6BAB7 /* LayoutStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BBA3DBCED5551B4994AAD6 /* LayoutStyle.swift */; };
 		C31EF9E367860AC017094E42 /* ValueLensApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50CCF8165A7C93B1F85A1F5 /* ValueLensApp.swift */; };
+		C7D72794400109CEFF6CFE08 /* AccentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836635629ACB84C624E3A37A /* AccentPicker.swift */; };
 		C8A48CA59817C486507DECD9 /* GateFailed.json in Resources */ = {isa = PBXBuildFile; fileRef = BD68CA04544283316D330C2E /* GateFailed.json */; };
 		D4B96328671050DF7F869DA6 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5086FDE0F067158F24661A0 /* SettingsView.swift */; };
 		E666A05AA194F613B9C61C45 /* MetricRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C0F4EA23293AB9E82A1525 /* MetricRow.swift */; };
@@ -72,12 +75,14 @@
 		1CF331D2C6AAEA02B5C72FDA /* ReportCardLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportCardLayout.swift; sourceTree = "<group>"; };
 		1EC1AEBA453D2052D2086EDD /* CompanyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyViewModel.swift; sourceTree = "<group>"; };
 		22EE3D26153E84F4C07598DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		263AD4A3166856508C9C775D /* ThemeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeTests.swift; sourceTree = "<group>"; };
 		2B1C1148B8A673BC52165E8D /* rates.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = rates.json; sourceTree = "<group>"; };
 		3C36AAD6F63B1113A18354AB /* Identity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identity.swift; sourceTree = "<group>"; };
 		3F3218A417367A2F5A9E3476 /* CoverageGapCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverageGapCard.swift; sourceTree = "<group>"; };
 		43D36BD403078C5709F7FF7A /* ValuationCore.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ValuationCore.xcframework; path = "../../packages/valuation-core/build/XCFrameworks/release/ValuationCore.xcframework"; sourceTree = "<group>"; };
 		5295BB2379D69947D0EDD444 /* ShareCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareCardView.swift; sourceTree = "<group>"; };
 		56C043C8119525143FFB7C42 /* Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
+		57A092DE101A083E52C686FB /* ThemePalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemePalette.swift; sourceTree = "<group>"; };
 		5856ECA7F48C2ED9D111CF0B /* ValueLensTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueLensTests.swift; sourceTree = "<group>"; };
 		58DBC1A2858240171F95189B /* ExplainViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplainViews.swift; sourceTree = "<group>"; };
 		6249289AD4515856983C7EE4 /* RequiredComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequiredComponents.swift; sourceTree = "<group>"; };
@@ -90,6 +95,7 @@
 		7C2B9E34FEA57B70B638DC23 /* ClassicLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassicLayout.swift; sourceTree = "<group>"; };
 		803AB71A36B0E9BDE5AE5933 /* ValueLensTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = ValueLensTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8111CC9E464DFABF1A2F9270 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
+		836635629ACB84C624E3A37A /* AccentPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccentPicker.swift; sourceTree = "<group>"; };
 		86E311EF4DF9987D997F058F /* OnboardingFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFlow.swift; sourceTree = "<group>"; };
 		88D3A095F609E8BFFBCF541E /* O.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = O.json; sourceTree = "<group>"; };
 		8AB55F035150C6D994195F08 /* ExpertBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpertBody.swift; sourceTree = "<group>"; };
@@ -230,6 +236,7 @@
 				E1C0F4EA23293AB9E82A1525 /* MetricRow.swift */,
 				6249289AD4515856983C7EE4 /* RequiredComponents.swift */,
 				DBB47EAD56F25075486E3A65 /* Theme.swift */,
+				57A092DE101A083E52C686FB /* ThemePalette.swift */,
 			);
 			path = DesignSystem;
 			sourceTree = "<group>";
@@ -271,6 +278,7 @@
 			isa = PBXGroup;
 			children = (
 				1BA4ADA0220EB92A9C757D29 /* LayoutContractTests.swift */,
+				263AD4A3166856508C9C775D /* ThemeTests.swift */,
 				5856ECA7F48C2ED9D111CF0B /* ValueLensTests.swift */,
 				A8A1D8349A8BAD1E4FF86FDD /* Fixtures */,
 			);
@@ -324,6 +332,7 @@
 		CBB7778F7B1200B0B33C961F /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				836635629ACB84C624E3A37A /* AccentPicker.swift */,
 				070A0FF05C2C083C8FB8F36F /* GlossaryView.swift */,
 				E5086FDE0F067158F24661A0 /* SettingsView.swift */,
 			);
@@ -485,6 +494,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7D72794400109CEFF6CFE08 /* AccentPicker.swift in Sources */,
 				460805DB73A3824BC5551855 /* AppSettings.swift in Sources */,
 				1EB863BB628BD2DD8125BE6D /* CaseStudyView.swift in Sources */,
 				5B57A92F829F4D1FCA3A0FC8 /* ClassicLayout.swift in Sources */,
@@ -511,6 +521,7 @@
 				D4B96328671050DF7F869DA6 /* SettingsView.swift in Sources */,
 				0F0A7F62B3A1D5DDEE8EF4BC /* ShareCardView.swift in Sources */,
 				4F05C103A7A445E2C8966C1F /* Theme.swift in Sources */,
+				745D392E4C3CA4D5BB7BDFFD /* ThemePalette.swift in Sources */,
 				8995C4700D4DD80960465581 /* ValuationReport.swift in Sources */,
 				5A07A1A0BC124BC2AA287000 /* ValuationRepository.swift in Sources */,
 				C31EF9E367860AC017094E42 /* ValueLensApp.swift in Sources */,
@@ -524,6 +535,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A45F8526CDC915D2D27FC287 /* LayoutContractTests.swift in Sources */,
+				651AD149EA9758DE3F13F3C4 /* ThemeTests.swift in Sources */,
 				6B4B634737935EF98ADE30CF /* ValueLensTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -36,8 +36,6 @@ struct ValueLensApp: App {
                 .environment(settings)
                 .environment(watchlist)
                 .environment(router)
-                .preferredColorScheme(.dark)
-                .tint(Theme.value)
                 .onOpenURL { _ = router.handle($0) }
         }
     }
@@ -47,6 +45,10 @@ struct RootView: View {
     @Environment(AppSettings.self) private var settings
     @Environment(WatchlistStore.self) private var watchlist
     @Environment(\.scenePhase) private var scenePhase
+    /// What the device is doing, which is what `.system` follows. `preferredColorScheme` below
+    /// overrides the rendering, but this value still reports the user's OS setting.
+    @Environment(\.colorScheme) private var deviceScheme
+    @State private var theme = ThemeController()
 
     var body: some View {
         Group {
@@ -56,6 +58,15 @@ struct RootView: View {
                 OnboardingFlow()
             }
         }
+        // The palette is a mutable static (see `Theme`), so the invariant that keeps it safe is
+        // enforced here: when it changes, the whole tree is rebuilt and nothing keeps stale colors.
+        .id(theme.generation)
+        .preferredColorScheme(settings.themePreference.forcedScheme)
+        .tint(Theme.accent)
+        .onAppear { applyTheme() }
+        .onChange(of: settings.themePreference) { _, _ in applyTheme() }
+        .onChange(of: settings.accentHex) { _, _ in applyTheme() }
+        .onChange(of: deviceScheme) { _, _ in applyTheme() }
         .background(Theme.background)
         .task { await settings.refreshRates() }
         .onChange(of: scenePhase) { _, phase in
@@ -68,6 +79,12 @@ struct RootView: View {
                 }
             }
         }
+    }
+
+    private func applyTheme() {
+        theme.resolve(preference: settings.themePreference,
+                      system: deviceScheme,
+                      accentHex: settings.accentHex)
     }
 }
 

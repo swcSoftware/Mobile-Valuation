@@ -1,21 +1,44 @@
 import SwiftUI
 
-/// Typographic-first, dark-by-default palette. Market price and fair value are always
-/// distinguishable by color: price = amber, intrinsic/fair value = mint.
+/// The app's colors, by name.
+///
+/// **Sprint 5 Track B.** These were `static let` constants, referenced 193 times across 15 files,
+/// which is why a light ground was impossible. They are now computed from `current`, a palette the
+/// root resolves from the user's theme preference, the device's appearance and their chosen accent.
+///
+/// The call sites did not change, on purpose: a 193-site rewrite to thread an `@Environment` value
+/// through every view is exactly the kind of global churn CLAUDE.md non-negotiable 4 warns about,
+/// and it would have made "did the dark app change?" impossible to answer by reading the diff.
+///
+/// **The invariant that makes a mutable static safe here**: `current` is written in exactly one
+/// place, `ThemeController.resolve`, which also bumps a generation the root view uses as its `.id`.
+/// A palette change therefore rebuilds the whole tree, so no view can be left holding colors from
+/// the previous palette. Nothing else may write to it.
+@MainActor
 enum Theme {
-    static let background = Color(red: 0.043, green: 0.051, blue: 0.063)   // #0B0D10
-    static let surface = Color(red: 0.082, green: 0.094, blue: 0.114)      // #15181D
-    static let surfaceRaised = Color(red: 0.118, green: 0.133, blue: 0.157)
-    static let border = Color.white.opacity(0.08)
-    static let textPrimary = Color(white: 0.95)
-    static let textSecondary = Color(white: 0.62)
-    static let textTertiary = Color(white: 0.42)
+    /// Written only by `ThemeController.resolve`. See the invariant above.
+    static var current: ThemePalette = .dark
 
-    static let price = Color(red: 0.96, green: 0.65, blue: 0.14)           // amber
-    static let value = Color(red: 0.18, green: 0.85, blue: 0.62)           // mint
-    static let danger = Color(red: 0.94, green: 0.33, blue: 0.31)
-    static let warning = Color(red: 0.98, green: 0.78, blue: 0.25)
-    static let info = Color(red: 0.36, green: 0.62, blue: 0.98)
+    static var background: Color { current.background }
+    static var surface: Color { current.surface }
+    static var surfaceRaised: Color { current.surfaceRaised }
+    static var border: Color { current.border }
+    static var textPrimary: Color { current.textPrimary }
+    static var textSecondary: Color { current.textSecondary }
+    static var textTertiary: Color { current.textTertiary }
+
+    /// Market price is always amber and fair value is always mint, on any ground and whatever accent
+    /// the user picks. That pair is how the app is read; if either could be restyled the reading
+    /// breaks (docs/DESIGN.md, "Semantic colors").
+    static var price: Color { current.price }
+    static var value: Color { current.value }
+    static var danger: Color { current.danger }
+    static var warning: Color { current.warning }
+    static var info: Color { current.info }
+
+    /// Chrome only.
+    static var accent: Color { current.accent }
+    static var accentForeground: Color { current.accentForeground }
 
     static func verdictColor(_ v: Verdict) -> Color {
         switch v {
@@ -24,6 +47,25 @@ enum Theme {
         case .aboveIntrinsic: danger
         case .insufficientData: textTertiary
         }
+    }
+}
+
+/// Owns the one write to `Theme.current`, and the generation that forces the tree to rebuild with it.
+@Observable
+@MainActor
+final class ThemeController {
+    private(set) var palette: ThemePalette = .dark
+    /// Changes whenever the palette does; the root view uses it as `.id` so nothing keeps stale colors.
+    private(set) var generation: Int = 0
+
+    func resolve(preference: ThemePreference, system: ColorScheme, accentHex: UInt32?) {
+        let next = ThemePalette
+            .base(for: preference.forcedScheme ?? system)
+            .withAccent(accentHex)
+        guard next != palette else { return }
+        palette = next
+        Theme.current = next
+        generation += 1
     }
 }
 

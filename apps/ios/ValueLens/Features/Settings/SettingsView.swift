@@ -34,6 +34,16 @@ struct SettingsView: View {
                 }
 
                 Section {
+                    Picker("Theme", selection: $settings.themePreference) {
+                        ForEach(ThemePreference.allCases, id: \.self) { Text($0.displayName).tag($0) }
+                    }
+                    .pickerStyle(.segmented)
+                    AccentPicker(selection: $settings.accentHex)
+                } header: { Text("Appearance") } footer: {
+                    Text("Market price stays amber and fair value stays mint in every theme — that pair is how you read a valuation, so it is never restyled. An accent that would be unreadable on the current background is not offered.")
+                }
+
+                Section {
                     if let r = settings.rates {
                         LabeledContent("FRED rates as of \(r.asOf)", value: "AAA \(Fmt.pct(r.aaaYieldPct, decimals: 2)) · 10-yr \(Fmt.pct(r.treasury10YPct, decimals: 2))")
                     } else {
