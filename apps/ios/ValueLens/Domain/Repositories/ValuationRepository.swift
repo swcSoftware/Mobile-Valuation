@@ -9,6 +9,9 @@ protocol ValuationRepository: Sendable {
     func valuation(ticker: String, priceOverride: Double?, overrides: RateOverrides) async throws -> ValuationReport
     func rates() async -> RatesInfo?
     func explain(_ report: ValuationReport) async -> ExplainSummary?
+    /// Grades, rules, historical reads and verdict chips for the report-card layout, for one
+    /// investor lens. Every judgement comes from the core (Grading.kt); the layout only draws it.
+    func reportCard(_ report: ValuationReport, lens: InvestorLens) async -> ReportCardSummary?
     func glossary() -> [GlossaryEntry]
     /// Prefilled GitHub issue URL for a concept-map gap report. No token, no server — the user
     /// reviews the text in their browser and decides whether to submit it.
@@ -125,3 +128,65 @@ enum RepositoryError: LocalizedError, Equatable {
         }
     }
 }
+
+// MARK: - report card (Sprint 5 Track C) — mirrors Grading.kt
+
+/// Everything on the report card that is a judgement, produced by the core for one lens.
+struct ReportCardSummary: Codable, Sendable, Equatable {
+    let lens: String
+    let lensName: String
+    let lensBlurb: String
+    /// "Operating company" / "Bank / insurer" / "REIT".
+    let modeLabel: String
+    /// Already in the lens's reading order.
+    let facts: [GradedFact]
+    let gradedCount: Int
+    /// Present only when nothing could be graded; replaces the section rather than four dashes.
+    let blankNote: String?
+    let chipA: VerdictChip
+    let chipB: VerdictChip
+    let rulesVersion: String
+
+    func chip(for model: ValuationModel) -> VerdictChip { model == .traditional ? chipA : chipB }
+}
+
+struct GradedFact: Codable, Sendable, Equatable, Identifiable {
+    /// profit / debt / conversion / growth
+    let slot: String
+    let label: String
+    /// Formatted with its unit, or nil when there is nothing to show — never "—× equity".
+    let value: String?
+    /// A–F, or nil when refused, ungradable or missing.
+    let grade: String?
+    /// The threshold, printed beside the grade so it can be checked; or why there is none.
+    let rule: String
+    /// graded / refused / ungradable / missing
+    let state: String
+    let why: String
+    let history: HistoryRead?
+    var id: String { slot }
+}
+
+struct HistoryRead: Codable, Sendable, Equatable {
+    let phrase: String
+    /// good / bad
+    let tone: String
+    let points: [TrendPoint]
+    let min: Double
+    let max: Double
+    let average: Double
+    let firstYear: Int
+    let lastYear: Int
+}
+
+struct TrendPoint: Codable, Sendable, Equatable {
+    let year: Int
+    let value: Double
+}
+
+struct VerdictChip: Codable, Sendable, Equatable {
+    let label: String
+    /// good / mid / bad / none
+    let tone: String
+}
+

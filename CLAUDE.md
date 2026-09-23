@@ -118,6 +118,12 @@ export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"  
 - **Gradle caches test tasks**: env-var-driven runs need `--rerun`.
 - **`Theme` is compile-time**: an `enum` of `static let` referenced 193× across 15 files, so no
   runtime theming (and no light mode) is possible until it is refactored. Sprint 5 Track B.
+- **`simctl spawn … defaults write` does not set an app's preferences.** It writes a device-wide
+  domain; the sandboxed app reads its own container plist first and only falls back to that domain
+  for keys it lacks — so some writes appear to work and others silently don't. Edit
+  `$(xcrun simctl get_app_container <UDID> com.swcsoftware.valuelens data)/Library/Preferences/com.swcsoftware.valuelens.plist`
+  with `plutil` while the app is stopped. (Android: `adb shell run-as com.swcsoftware.valuelens`
+  and `shared_prefs/valuelens.xml`.)
 - **The share-site prototype is a mirror, not the app**: it re-implements the plain-language layer
   in JavaScript against the same report JSON. Core copy changes do not reach it automatically.
 

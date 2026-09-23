@@ -13,6 +13,7 @@ struct CompanyDetailView: View {
     @State private var expandAll: Bool? = nil
     @State private var expandVersion = 0
     @State private var explain: ExplainSummary?
+    @State private var reportCard: ReportCardSummary?
 
     init(company: CompanyRef) {
         _vm = State(initialValue: CompanyViewModel(company: company))
@@ -62,6 +63,11 @@ struct CompanyDetailView: View {
         }
         .task { if vm.report == nil { await vm.load(using: settings.repository, overrides: settings.overrides) } }
         .task(id: vm.report) { if let r = vm.report { explain = await settings.repository.explain(r) } }
+        // Re-grade when the lens changes; the valuation itself is untouched, so nothing reloads.
+        .task(id: ReportCardKey(report: vm.report, lens: settings.investorLens, layout: settings.layoutStyle)) {
+            guard settings.layoutStyle == .reportCard, let r = vm.report else { return }
+            reportCard = await settings.repository.reportCard(r, lens: settings.investorLens)
+        }
         .onChange(of: vm.model) { old, new in
             guard let r = vm.report else { return }
             let before = r.result(for: old).marginOfSafety.verdict, after = r.result(for: new).marginOfSafety.verdict
@@ -100,7 +106,9 @@ struct CompanyDetailView: View {
             setShowMath: { showMath = $0 },
             expandAll: $expandAll,
             expandVersion: $expandVersion,
-            reportIssue: { openIssue(r) }
+            reportIssue: { openIssue(r) },
+            reportCard: reportCard,
+            swapLens: { settings.investorLens = settings.investorLens.toggled }
         )
         switch settings.layoutStyle {
         case .classic:
@@ -213,6 +221,13 @@ struct AssumptionsGrid: View {
 
 
 /// Explains *why* a per-share value is missing instead of showing a bare dash (ISSUES #1).
+/// What the report card's grades depend on — and, deliberately, nothing that would re-run a valuation.
+private struct ReportCardKey: Equatable {
+    let report: ValuationReport?
+    let lens: InvestorLens
+    let layout: LayoutStyle
+}
+
 enum Haptics {
     /// Notification haptic when flipping models changes the verdict; a light tap otherwise.
     static func verdictChanged(_ changed: Bool, improved: Bool) {

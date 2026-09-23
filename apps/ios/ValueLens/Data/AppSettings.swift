@@ -16,6 +16,8 @@ final class AppSettings {
     /// Which presentation of a company to render. Stays `.classic` until the owner promotes the
     /// other one after using it on a physical device (Sprint 5 Track D).
     var layoutStyle: LayoutStyle { didSet { defaults.set(layoutStyle.rawValue, forKey: "layoutStyle") } }
+    /// Value or Growth: the bar health facts are graded against. Never touches a valuation.
+    var investorLens: InvestorLens { didSet { defaults.set(investorLens.rawValue, forKey: "investorLens") } }
     /// Light / Dark / System. Independent of `layoutStyle` — either layout works on either ground.
     var themePreference: ThemePreference { didSet { defaults.set(themePreference.rawValue, forKey: "themePreference") } }
     /// The user's chrome color, or `nil` for the theme's own. Never applied to price or value.
@@ -36,6 +38,7 @@ final class AppSettings {
         hasCompletedOnboarding = defaults.bool(forKey: "onboarded")
         expertMode = defaults.bool(forKey: "expertMode")
         layoutStyle = defaults.string(forKey: "layoutStyle").flatMap(LayoutStyle.init(rawValue:)) ?? .default
+        investorLens = defaults.string(forKey: "investorLens").flatMap(InvestorLens.init(rawValue:)) ?? .default
         themePreference = defaults.string(forKey: "themePreference").flatMap(ThemePreference.init(rawValue:)) ?? .dark
         accentHex = defaults.object(forKey: "accentHex").flatMap { ($0 as? Int).map(UInt32.init) }
         if let data = defaults.data(forKey: "overrides"), let o = try? JSONDecoder().decode(RateOverrides.self, from: data) {

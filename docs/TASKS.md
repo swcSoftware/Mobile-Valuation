@@ -260,43 +260,50 @@ saying so.
 3. **Keep the model toggle as it is** (one model at a time).
 4. **Price vs value leads the screen**, business health below it.
 
-- [ ] Health facts become **grades with the threshold printed next to them**, so a grade is
-      checkable rather than an opinion.
-- [ ] Each fact also carries a **historical read** from the 10-K series ("Best in 10 years",
-      "Below its 10-yr average") plus a sparkline of the underlying figure.
+- [x] Health facts are **grades with the threshold printed next to them** (`GradedFactRow`, both apps).
+- [x] Each fact also carries a **historical read** from the 10-K series plus a sparkline of the
+      underlying figure — fundamentals by filed year, never price.
       - Compare like with like: revenue *growth* is judged 5-yr rate vs full-period rate, never
         revenue *level* — the level reads "best in 10 years" for any healthy company and says nothing.
       - **Under five filed years, show no historical read at all.** A trend drawn from two years
         (CRWV) is not a trend.
       - **Debt load gets no historical read**: the annual series carries `equity` but not
         `total_debt`, so there is nothing honest to compare. See Track F.
-- [ ] **The thresholds go in the core, not the view.** `Explain.Fact` gains `grade`, `rule` and the
-      historical read (additive fields) so iOS and Android cannot disagree and the rule can be shown
-      in the UI.
+- [x] **The thresholds live in the core.** Implemented as a *separate* `Grading` object and one new
+      facade call, `reportCardJson(reportJson, lens)`, rather than new fields on `Explain.Fact`:
+      the classic layout reads `Explain.healthFacts`, and adding fields there would have let the
+      report card move the classic layout's output. `Explain.kt` has no diff this sprint.
 - [x] ~~The thresholds are unapproved~~ — **resolved 2026-09-23**: an **investor lens**, Value
       (default) or Growth, asked once at onboarding and switchable in Settings or from a chip on the
       company screen. It changes only how a fact is graded and which fact is read first; it never
       changes a valuation, a margin of safety or a verdict.
 - [x] ~~Sector-aware thresholds are an open question~~ — **resolved 2026-09-23**: per-sector scales
       where the measure means something, and a refusal with a stated reason where it does not.
-- [ ] Build the grading matrix as **curated data** (lens → sector → metric → rule | refusal), not
-      code branches, reviewed by a human like the concept map. The table is in `docs/DESIGN.md`.
-- [ ] The active lens must be **visible on the screen it affects** and the rule printed on every row.
-      A grade that silently depends on a setting is the "silent number" this app exists to avoid.
+- [x] The grading matrix is **curated data** in `GradingRules.kt` with its own `VERSION`.
+      `GradingTest` pins the owner-reviewed grades for all eleven prototype filers, so changing a
+      threshold without review fails the build (mutation-tested: moving the REIT C cut from 4% to
+      6% fails it).
+- [x] The active lens is **visible and switchable on the screen it affects** (the lens chip), and
+      the rule is printed on every row. Switching it re-grades without re-running the valuation.
 - [x] ~~Financials end up with one graded fact of four~~ — **resolved 2026-09-23** (ISSUES #84):
       profitability is **substituted** for financials (return on equity, not return on capital), so a
       bank shows two graded facts and two explained refusals, and AGNC is no longer wholly blank. Its
       trend line is derived from net income ÷ equity, both filed.
 - [x] The lens boundary is **confirmed**: grading and reading order only. It never changes a
       valuation, a verdict, or which model opens first.
-- [ ] An **ungradable** state, designed, not accidental: MCD's equity is negative, so
-      debt-to-equity has no meaning; the tile shows no grade and says why. (Related: ISSUES #78.)
-- [ ] An **all-four-blank** state: AGNC (mortgage REIT) computes none of the four, so the section is
-      replaced by an explanation naming the filer type, not four dashes. (Related: ISSUES #72.)
-- [ ] Never print a unit on a missing number — "—× equity" and "— / yr" were both live in r1.
-- [ ] One display face over one body face, price/value bar, 16-segment check strip, provenance marks
-      distinguishing measured from assumed.
-- [ ] Android parity for the same layout.
+- [x] An **ungradable** state (`state: "ungradable"`): MCD's debt load shows no grade and says why.
+- [x] An **all-four-blank** state (`blankNote`). With the ROE substitution no sample filer reaches it
+      any more — AGNC now grades one fact — but the state exists and is designed.
+- [x] A missing number arrives from the core as `value: null` and renders as a dash with no unit;
+      tested.
+- [x] Display face over body face, price/value bar, one-segment-per-check strip, provenance marks.
+      **Font caveat**: the display face is SF Pro condensed on iOS and the system sans at heavy
+      weight on Android, not the prototype's Bricolage Grotesque / Public Sans. Bundling those
+      needs the font files downloaded and shipped — an owner decision, not taken yet.
+- [x] Android parity, verified on the emulator with live data (PG: B / C / B / D), in both Expert
+      Mode and basic. Also extracted Android's shared `ExpertBody`, which Track A had left inside
+      `ClassicLayout` — without it, Expert Mode in the report card would have nested two scrolling
+      columns, which Compose rejects at runtime.
 
 ### D. The toggles
 - [ ] Settings: layout picker with a live preview of each option, beside Expert Mode.
@@ -318,7 +325,7 @@ Small, additive, and the only engine work this sprint. Python first, mirror in K
 the oracle (non-negotiable 3).
 - [ ] Add `total_debt` to the annual history series so the debt-load fact can carry a historical
       read like the other three. Purely additive: a new field on an existing record.
-- [ ] `Explain.Fact` gains `grade`, `rule` and the historical read (Track C).
+- [x] Delivered as `Grading` + `reportCardJson` (Track C) — see there for why not on `Explain.Fact`.
 
 ### Out of scope
 Model changes, normalization, tag-map edits, technical analysis (permanently, blueprint §1), and

@@ -146,6 +146,19 @@ class ValuationCore(
             blurbA = Explain.modelBlurb(true, mode), blurbB = Explain.modelBlurb(false, mode), sectorNote = r.sector?.note ?: "",
         ))
     }
+    /**
+     * Everything the report-card layout shows that is a judgement — grades against printed rules,
+     * historical reads, the verdict chips — for one investor lens (Sprint 5 Track C).
+     *
+     * A separate call rather than new fields on `explainJson`, so the classic layout's facts cannot
+     * move because the report card exists. `lens` is `VALUE` or `GROWTH`; anything else is Value.
+     */
+    @Throws(Exception::class)
+    fun reportCardJson(reportJson: String, lens: String): String {
+        val r = json.decodeFromString<ValuationReport>(reportJson)
+        return json.encodeToString(Grading.reportCard(r, Lens.from(lens)))
+    }
+
     /** Prefilled GitHub issue URL for a coverage report (no token, no server; the user submits it). */
     @Throws(Exception::class)
     fun coverageIssueUrl(reportJson: String): String {

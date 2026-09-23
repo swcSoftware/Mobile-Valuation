@@ -30,6 +30,20 @@ enum LayoutStyle: String, CaseIterable, Codable, Sendable {
     }
 }
 
+/// The investor lens: the bar the report card grades a business against.
+///
+/// It changes **only** how a health fact is graded and which fact is read first. It never changes a
+/// valuation, a margin of safety, a verdict or which model opens — two people looking at the same
+/// company see one fair value (owner decision, 2026-09-23). The grading itself lives in the core.
+enum InvestorLens: String, CaseIterable, Codable, Sendable {
+    case value = "VALUE"
+    case growth = "GROWTH"
+
+    static let `default`: InvestorLens = .value
+
+    var toggled: InvestorLens { self == .value ? .growth : .value }
+}
+
 // MARK: - the contract every layout owes the reader
 
 /// The four things that make the app trustworthy, and the four things a second layout can silently

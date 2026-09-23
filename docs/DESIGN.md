@@ -1,8 +1,14 @@
 # ValueLens — UI direction
 
-Status: **Sprint 5 in progress.** The design was signed off on 2026-09-23 and Tracks A (the layout
-seam) and B (runtime theming) are delivered on both platforms. Track C — the report card's own
-design, and the graded facts that need `Explain.Fact` to carry `grade` and `rule` — is next.
+Status: **Sprint 5 in progress.** The design was signed off on 2026-09-23. Tracks A (the layout
+seam), B (runtime theming) and C (the report card, with grading in the core) are delivered on
+both platforms. Track D — the Settings layout picker and the onboarding lens question — is next;
+until then the report card is reachable only by editing stored preferences.
+
+**Open owner decision:** the prototype's faces were Bricolage Grotesque over Public Sans. The
+apps currently use system faces in those roles (SF Pro condensed on iOS; heavy system sans on
+Android). Shipping the real faces means downloading and bundling the font files (both are SIL
+Open Font License).
 Written 2026-09-22, updated 2026-09-23.
 
 Read this with [TASKS.md](TASKS.md) Sprint 5, which holds the task list. This file holds the

@@ -46,6 +46,10 @@ class AppPrefs(context: Context) {
     var layoutStyle: String
         get() = prefs.getString("layoutStyle", null) ?: "CLASSIC"
         set(v) = prefs.edit().putString("layoutStyle", v).apply()
+    /** Value or Growth: the bar the report card grades against. Never touches a valuation. */
+    var investorLens: String
+        get() = prefs.getString("investorLens", null) ?: "VALUE"
+        set(v) = prefs.edit().putString("investorLens", v).apply()
     /** Light / Dark / System — independent of the layout (Sprint 5 Track B). */
     var themePreference: String
         get() = prefs.getString("themePreference", null) ?: "DARK"

@@ -193,3 +193,22 @@ red–green, logged as ISSUES #86 for the accessibility pass.
 **Tests**: 128 (31 engine · 47 core · 22 Android · 28 iOS), all green. Was 100 at sprint open. The engine and Kotlin suites were re-run green at sprint open;
 the iOS suite was not re-run, because no iOS source changed. The only code change is a test
 utility: `SampleDump` now takes `VL_DUMP_TICKERS` so arbitrary filers can be dumped for design work.
+
+**Track C delivered, 2026-09-23.** The report card is built on both platforms to the design signed
+off on the phone. Every grade, rule, historical read and verdict chip comes from a new core module,
+`Grading`, through one facade call — so iOS and Android cannot disagree, and neither layout computes a
+judgement. The rules are curated data (`GradingRules.kt`, versioned); `GradingTest` pins the grades the
+owner reviewed for all eleven prototype filers and fails when a threshold changes without review.
+Verified running: iOS simulator on McDonald's (B / not graded / B / B, and the Growth lens reordering
+to a D on revenue growth), Android emulator on live Procter & Gamble data (B / C / B / D) in both modes.
+
+The classic layout's facts are unchanged by construction: `Explain.kt` has no diff this sprint.
+
+Found along the way: Android's Expert Mode inside the report card would have crashed (two nested
+scrolling columns) because Track A left the shared expert presentation inside `ClassicLayout` on
+Android. Extracted `ExpertBody`, matching iOS. And a debugging detour worth recording: a stored Light
+preference appeared not to apply on cold launch — it was my test method, not the app (`simctl spawn
+defaults` writes a device-wide domain the sandboxed app only falls back to). Added to CLAUDE.md.
+
+**Tests**: 144 (31 engine · 59 core · 22 Android · 32 iOS), all green.
+

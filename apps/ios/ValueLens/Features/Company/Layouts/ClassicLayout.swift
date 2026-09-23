@@ -21,6 +21,11 @@ struct LayoutContext {
     let expandAll: Binding<Bool?>
     let expandVersion: Binding<Int>
     let reportIssue: () -> Void
+    /// The core's grades, rules and chips for the active lens. Only the report card reads it; nil
+    /// until the core has answered, and a layout must render sensibly without it.
+    var reportCard: ReportCardSummary? = nil
+    /// Flips Value ⇄ Growth. The lens is shown on the screen it affects, so it is switched there too.
+    var swapLens: () -> Void = {}
 
     var demandedComponents: Set<RequiredComponent> {
         RequiredComponent.demanded(by: report, result: result)

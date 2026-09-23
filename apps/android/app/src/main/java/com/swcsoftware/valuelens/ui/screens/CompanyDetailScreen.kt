@@ -65,6 +65,8 @@ import com.swcsoftware.valuelens.export.Exporter
 import com.swcsoftware.valuelens.ui.components.CoverageGapCard
 import com.swcsoftware.valuelens.ui.components.DataChecksCard
 import com.swcsoftware.valuelens.ui.components.FactTile
+import com.swcsoftware.valuelens.core.Grading
+import com.swcsoftware.valuelens.core.Lens
 import com.swcsoftware.valuelens.ui.LayoutStyle
 import com.swcsoftware.valuelens.ui.layouts.ClassicLayout
 import com.swcsoftware.valuelens.ui.layouts.LayoutContext
@@ -148,6 +150,12 @@ fun CompanyDetailScreen(state: AppState, company: CompanyRef, onBack: () -> Unit
                     onEditPrice = { showPrice = true },
                     onSetShowMath = { showMath = it },
                     onReportIssue = { cov -> runCatching { uriHandler.openUri(Coverage.issueUrl(cov)) } },
+                    // Grading is pure and cheap; re-run it when the report or the lens changes, and
+                    // never re-run the valuation for a lens change.
+                    reportCard = remember(r, state.investorLens) { Grading.reportCard(r, state.investorLens) },
+                    onSwapLens = {
+                        state.updateInvestorLens(if (state.investorLens == Lens.VALUE) Lens.GROWTH else Lens.VALUE)
+                    },
                 )
                 when (state.layoutStyle) {
                     LayoutStyle.CLASSIC -> ClassicLayout(ctx)

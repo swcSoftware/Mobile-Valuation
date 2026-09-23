@@ -1,18 +1,19 @@
 import SwiftUI
 
-/// Sprint 5's second presentation: the decision first, then the business behind it.
+/// Sprint 5's second presentation: the decision first, then the business behind it, graded.
 ///
-/// **Track A ships the structure; Track C ships the design.** The arrangement here is the one the
-/// owner signed off on the prototype — price against value at the top, health below, notes and
-/// provenance under that — but the health facts are still the core's current plain-language facts.
-/// They become graded facts with a printed threshold once `Explain.Fact` carries `grade` and `rule`
-/// (Track C + F). Nothing here computes a grade locally; that would break non-negotiable 7.
+/// Built to the design the owner signed off on a phone (share-site r4, docs/DESIGN.md). Every grade,
+/// rule, historical read and chip label comes from the core's `ReportCardSummary`; this view decides
+/// only how they look (CLAUDE.md non-negotiable 7). It must render sensibly before the core has
+/// answered, so everything that depends on `ctx.reportCard` has a quiet placeholder.
 struct ReportCardLayout: View {
     let ctx: LayoutContext
 
     private var report: ValuationReport { ctx.report }
     private var result: ModelResult { ctx.result }
     private var mos: MarginOfSafety { result.marginOfSafety }
+    private var card: ReportCardSummary? { ctx.reportCard }
+    private var model: ValuationModel { ctx.model.wrappedValue }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -22,26 +23,24 @@ struct ReportCardLayout: View {
                 SectorModeBadge(sector: sector)
             }
 
-            if report.checksFailed || mos.verdict == .insufficientData {
+            if report.checksFailed {
                 WithheldValueCard(report: report, result: result)
             } else {
-                verdictCard
+                summaryCard
+                if mos.verdict == .insufficientData {
+                    WithheldValueCard(report: report, result: result)
+                }
             }
 
             ModelToggle(model: ctx.model,
                         expert: ctx.expert,
-                        blurbOverride: ctx.expert ? nil : (ctx.model.wrappedValue == .traditional ? ctx.explain?.blurbA : ctx.explain?.blurbB))
+                        blurbOverride: ctx.expert ? nil : (model == .traditional ? ctx.explain?.blurbA : ctx.explain?.blurbB))
 
             if !ctx.expert {
-                SectionHeader(title: "Business health", subtitle: "Tap a fact for a plain-English explanation")
-                VStack(spacing: 8) {
-                    ForEach(ctx.explain?.facts ?? []) { FactTile(fact: $0) }
-                }
+                health
             }
 
-            DataChecksCard(checks: report.dataChecks,
-                           summary: ctx.explain?.checksSummary ?? "\(report.dataChecks.count) checks run",
-                           expanded: ctx.expert)
+            CheckStripCard(checks: report.dataChecks)
 
             if let coverage = report.coverage, !coverage.gaps.isEmpty {
                 CoverageGapCard(coverage: coverage, expert: ctx.expert, onReport: ctx.reportIssue)
@@ -56,7 +55,7 @@ struct ReportCardLayout: View {
                     Text("Show me the math").frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.bordered)
-                .tint(Theme.value)
+                .tint(Theme.accent)
             }
 
             ProvenanceRow(report: report)
@@ -70,55 +69,155 @@ struct ReportCardLayout: View {
         .padding(16)
     }
 
-    private var heading: some View {
-        VStack(alignment: .leading, spacing: 3) {
-            Text(report.company.name)
-                .font(.vlTitle)
-                .foregroundStyle(Theme.textPrimary)
-                .fixedSize(horizontal: false, vertical: true)
-            Text(report.company.ticker + (report.quote.map { " · priced \(Fmt.shortDate($0.asOf))" } ?? " · no quote"))
-                .font(.caption)
-                .foregroundStyle(Theme.textSecondary)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-    }
+    // MARK: heading
 
-    /// Price against value, which is what the reader came for.
-    private var verdictCard: some View {
-        Card {
-            VStack(alignment: .leading, spacing: 12) {
-                if !ctx.expert, let explain = ctx.explain {
-                    Text(ctx.model.wrappedValue == .traditional ? explain.verdictA : explain.verdictB)
-                        .font(.vlBody)
-                        .foregroundStyle(Theme.textPrimary)
-                        .fixedSize(horizontal: false, vertical: true)
-                }
-                HStack(alignment: .top, spacing: 22) {
-                    figure("You pay", Fmt.money(mos.marketPrice), Theme.price, action: ctx.editPrice)
-                    figure("It's worth", Fmt.money(mos.intrinsicValue), Theme.value, action: nil)
-                }
-                MarginOfSafetyView(mos: mos, compact: !ctx.expert)
+    private var heading: some View {
+        HStack(alignment: .top, spacing: 10) {
+            VStack(alignment: .leading, spacing: 3) {
+                Text(report.company.name)
+                    .font(ReportCardType.display(26))
+                    .foregroundStyle(Theme.textPrimary)
+                    .fixedSize(horizontal: false, vertical: true)
+                Text(subtitle)
+                    .font(.caption)
+                    .foregroundStyle(Theme.textSecondary)
+            }
+            Spacer(minLength: 0)
+            if let chip = card?.chip(for: model) {
+                VerdictChipView(chip: chip)
             }
         }
+    }
+
+    private var subtitle: String {
+        var parts = [report.company.ticker]
+        if let mode = card?.modeLabel { parts.append(mode) }
+        parts.append(report.quote.map { "priced \(Fmt.shortDate($0.asOf))" } ?? "no quote")
+        return parts.joined(separator: " · ")
+    }
+
+    // MARK: price against value — what the reader came for
+
+    private var summaryCard: some View {
+        Card {
+            VStack(alignment: .leading, spacing: 0) {
+                Text(model == .traditional ? "EARNINGS POWER" : "DISCOUNTED CASH FLOW")
+                    .font(ReportCardType.eyebrow).tracking(1)
+                    .foregroundStyle(Theme.textTertiary)
+
+                if let explain = ctx.explain {
+                    Text(model == .traditional ? explain.verdictA : explain.verdictB)
+                        // Sentence-length copy reads badly at condensed width; the display face is
+                        // for the name and the two figures, not for paragraphs.
+                        .font(.system(size: 18, weight: .medium))
+                        .foregroundStyle(Theme.textPrimary)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .padding(.top, 8)
+                }
+
+                HStack(alignment: .top, spacing: 24) {
+                    figure("You pay", Fmt.money(mos.marketPrice), Theme.price, action: ctx.editPrice)
+                    figure("It's worth", mos.intrinsicValue.map { Fmt.money($0) } ?? "Withheld",
+                           mos.intrinsicValue == nil ? Theme.textTertiary : Theme.value, action: nil)
+                }
+                .padding(.top, 16)
+
+                PriceValueBar(price: mos.marketPrice, value: mos.intrinsicValue)
+                    .padding(.top, 14)
+
+                HStack(alignment: .firstTextBaseline, spacing: 7) {
+                    Text(marginText)
+                        .font(.subheadline.weight(.bold)).monospacedDigit()
+                        .foregroundStyle(ReportCardTone.color(card?.chip(for: model).tone ?? "none"))
+                    Text(marginCaption)
+                        .font(.caption)
+                        .foregroundStyle(Theme.textSecondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .padding(.top, 10)
+            }
+        }
+    }
+
+    private var marginText: String {
+        guard let pct = mos.marginOfSafetyPct else { return "No figure" }
+        return (pct > 0 ? "+" : pct < 0 ? "−" : "") + "\(Int(abs(pct).rounded()))%"
+    }
+
+    private var marginCaption: String {
+        guard mos.intrinsicValue != nil else { return "see the notes below" }
+        if let band = mos.bands.first(where: { $0.discountPct == 25 }), let buyBelow = band.buyBelow {
+            return "margin today · Graham's 25% discount would be \(Fmt.money(buyBelow))"
+        }
+        return "margin today"
     }
 
     @ViewBuilder
     private func figure(_ label: String, _ value: String, _ tint: Color, action: (() -> Void)?) -> some View {
         let content = VStack(alignment: .leading, spacing: 2) {
-            Text(label.uppercased())
-                .font(.caption2.weight(.semibold))
-                .tracking(0.8)
-                .foregroundStyle(tint)
-            Text(value)
-                .font(.vlNumber)
-                .foregroundStyle(tint)
+            Text(label.uppercased()).font(ReportCardType.eyebrow).tracking(0.8).foregroundStyle(tint)
+            Text(value).font(ReportCardType.display(28)).monospacedDigit().foregroundStyle(tint)
         }
         if let action {
             Button(action: action) { content }
                 .buttonStyle(.plain)
-                .accessibilityLabel("\(label) \(value). Tap to override.")
+                .accessibilityLabel("\(label) \(value). Tap to override the market price.")
         } else {
             content
+        }
+    }
+
+    // MARK: business health, graded
+
+    @ViewBuilder
+    private var health: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack(alignment: .center) {
+                Text("BUSINESS HEALTH, GRADED")
+                    .font(ReportCardType.eyebrow).tracking(1)
+                    .foregroundStyle(Theme.textTertiary)
+                Spacer()
+                if let card {
+                    // The lens is shown on the screen it affects — a grade that silently depends on
+                    // a setting buried in Settings is exactly a "silent number".
+                    Button(action: ctx.swapLens) {
+                        Label("\(card.lensName) lens", systemImage: "arrow.left.arrow.right")
+                            .font(.caption.weight(.semibold))
+                            .padding(.horizontal, 10).padding(.vertical, 6)
+                            .background(Theme.surfaceRaised, in: Capsule())
+                            .foregroundStyle(Theme.textSecondary)
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel("\(card.lensName) lens. Switch lens.")
+                }
+            }
+
+            if let card {
+                Text("\(card.lensBlurb) Thresholds are shown on every row; the valuation above is the same whichever lens you pick.")
+                    .font(.caption)
+                    .foregroundStyle(Theme.textTertiary)
+                    .fixedSize(horizontal: false, vertical: true)
+
+                if let blank = card.blankNote {
+                    Card {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("These four facts don't fit this filer")
+                                .font(.subheadline.weight(.semibold)).foregroundStyle(Theme.textPrimary)
+                            Text(blank).font(.caption).foregroundStyle(Theme.textSecondary)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+                    }
+                } else {
+                    ForEach(card.facts) { GradedFactRow(fact: $0) }
+                }
+            } else {
+                // The core has not answered yet. A quiet placeholder, not a spinner shouting over
+                // the valuation above it.
+                ForEach(0..<4, id: \.self) { _ in
+                    RoundedRectangle(cornerRadius: 12).fill(Theme.surface).frame(height: 56)
+                }
+                .redacted(reason: .placeholder)
+            }
         }
     }
 }

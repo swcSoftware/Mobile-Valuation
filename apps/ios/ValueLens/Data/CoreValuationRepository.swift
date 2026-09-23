@@ -133,6 +133,16 @@ struct CoreValuationRepository: ValuationRepository {
         return try? JSONDecoder().decode(ExplainSummary.self, from: Data(json.utf8))
     }
 
+    func reportCard(_ report: ValuationReport, lens: InvestorLens) async -> ReportCardSummary? {
+        // The core's own JSON, as with `explain` — a Swift re-encode would not round-trip.
+        let s: String
+        if let raw = report.rawJSON { s = raw }
+        else if let data = try? JSONEncoder.engine.encode(report), let str = String(data: data, encoding: .utf8) { s = str }
+        else { return nil }
+        guard let json = try? await onCore({ try Self.core.reportCardJson(reportJson: s, lens: lens.rawValue) }) else { return nil }
+        return try? JSONDecoder().decode(ReportCardSummary.self, from: Data(json.utf8))
+    }
+
     func coverageIssueURL(for report: ValuationReport) -> URL? {
         guard let raw = report.rawJSON, let s = try? Self.core.coverageIssueUrl(reportJson: raw) else { return nil }
         return URL(string: s)
@@ -170,6 +180,7 @@ struct SampleValuationRepository: ValuationRepository {
 
     func rates() async -> RatesInfo? { nil }
     func explain(_ report: ValuationReport) async -> ExplainSummary? { await CoreValuationRepository(userAgent: nil).explain(report) }
+    func reportCard(_ report: ValuationReport, lens: InvestorLens) async -> ReportCardSummary? { await CoreValuationRepository(userAgent: nil).reportCard(report, lens: lens) }
     func coverageIssueURL(for report: ValuationReport) -> URL? { CoreValuationRepository(userAgent: nil).coverageIssueURL(for: report) }
 
     func glossary() -> [GlossaryEntry] { [] }

@@ -13,6 +13,7 @@ import com.swcsoftware.valuelens.data.WatchlistStore
 import com.swcsoftware.valuelens.domain.RateOverrides
 import com.swcsoftware.valuelens.domain.SecIdentity
 import com.swcsoftware.valuelens.domain.ValuationReport
+import com.swcsoftware.valuelens.core.Lens
 import com.swcsoftware.valuelens.ui.LayoutStyle
 import com.swcsoftware.valuelens.ui.theme.ThemePreference
 
@@ -29,6 +30,7 @@ class AppState(app: Application) {
         private set
     var expertMode: Boolean by mutableStateOf(prefs.expertMode)
     var layoutStyle: LayoutStyle by mutableStateOf(LayoutStyle.from(prefs.layoutStyle))
+    var investorLens: Lens by mutableStateOf(Lens.from(prefs.investorLens))
     var themePreference: ThemePreference by mutableStateOf(ThemePreference.from(prefs.themePreference))
     /** null when the user has not chosen one. */
     var accentArgb: Long? by mutableStateOf(prefs.accentArgb.takeIf { it >= 0 })
@@ -50,6 +52,7 @@ class AppState(app: Application) {
     fun updateOnboarded(v: Boolean) { prefs.onboarded = v; onboarded = v }
     fun updateExpertMode(v: Boolean) { prefs.expertMode = v; expertMode = v }
     fun updateLayoutStyle(v: LayoutStyle) { prefs.layoutStyle = v.name; layoutStyle = v }
+    fun updateInvestorLens(v: Lens) { prefs.investorLens = v.name; investorLens = v }
     fun updateThemePreference(v: ThemePreference) { prefs.themePreference = v.name; themePreference = v }
     fun updateAccent(v: Long?) { prefs.accentArgb = v ?: -1L; accentArgb = v }
     fun updateOverrides(v: RateOverrides) { prefs.overrides = v; overrides = v }
