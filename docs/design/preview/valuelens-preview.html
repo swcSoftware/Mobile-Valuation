@@ -539,12 +539,14 @@
 
   function renderCasePicker() {
     tabs.hidden = true;
-    const names = { AAPL: 'Apple', KO: 'Coca-Cola', MSFT: 'Microsoft' };
+    // Names come from the filings, not a hardcoded map — the map only had the original three,
+    // so every sample added later listed as "undefined". Caught on the phone, not the desktop.
+    const names = Object.fromEntries(TICKERS.map(t => [t, DATA[t].company.name]));
     main.innerHTML = `<div class="topbar"><button id="back">&#x2039; Back</button><span class="title">Guided valuation</span><span style="width:52px"></span></div>
       <h2>Pick a company you know.</h2>
       <p>We'll walk through its 10-K and 10-Q numbers and value it together, one step at a time.</p>
-      ${TICKERS.map(t => `<button class="list-btn" data-t="${t}"><span><b>${t}</b><br><span class="small muted">${names[t]}</span></span><span class="chev">&#x203A;</span></button>`).join('')}`;
-    document.getElementById('back').onclick = renderIdentity;
+      ${TICKERS.map(t => `<button class="list-btn" data-t="${t}"><span><b>${t}</b><br><span class="small muted">${esc(names[t])}</span></span><span class="chev">&#x203A;</span></button>`).join('')}`;
+    document.getElementById('back').onclick = renderProfile;
     main.querySelectorAll('[data-t]').forEach(b => b.onclick = () => { state.caseTicker = b.dataset.t; state.page = 0; state.model = 'A'; renderCaseStudy(); });
   }
 

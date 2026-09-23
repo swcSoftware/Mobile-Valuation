@@ -182,8 +182,27 @@ the light column is darker. Neither is ever replaced by the user's accent.
 
 Design revisions go to the **tester share site** — a standalone HTML mirror of both apps, kept at
 [`design/preview/valuelens-preview.html`](design/preview/valuelens-preview.html) and published to a
-private artifact the owner opens on a real iPhone. Then a round of questions and owner feedback, then
-the next revision. **No Swift work starts on the report-card body until the design is signed off.**
+private artifact. Then a round of questions and owner feedback, then the next revision. **No Swift
+work starts on the report-card body until the design is signed off.**
+
+Judge it at phone size, not on a desktop. Two routes:
+
+```bash
+# In the iOS Simulator (no Swift build needed — it is the prototype in Mobile Safari)
+python3 docs/design/preview/serve.py 8787
+# then open http://localhost:8787/ in the simulator's Safari; the simulator shares the host network.
+```
+
+or open the published artifact on a real iPhone. `serve.py` exists because the prototype is an
+artifact *fragment* with no `<head>` — the artifact platform normally supplies the doctype and the
+viewport meta. Served raw, Safari falls back to a 980px viewport and scales the page down, which
+makes any judgement about type size or touch targets worthless. The script wraps it in the same
+skeleton and serves that.
+
+Bugs found only at phone size so far: the case picker listed every sample after the original three as
+"undefined" (a prototype-only regression from expanding the ticker list without the name map), and
+SEC's uppercase company names read as shouting in display type (ISSUES #85 — that one is in the
+shipped app too).
 
 The preview is a mirror, not the app: it re-implements the plain-language layer in JavaScript
 (`verdictSentence`, `healthFacts`) against the same report JSON. When the core's copy changes, the
