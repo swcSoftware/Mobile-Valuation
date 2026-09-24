@@ -292,3 +292,8 @@ have left the icon saying ValueLens; and the sample reports carried the old foot
 and the Settings previews. Identifiers were deliberately left alone (log tags, network headers, the
 link scheme, class names). Verified: iOS home screen and the Android APK label both read "Alpha".
 
+### First TestFlight build (2026-09-24)
+Build 0.1.0 (1) archived in Release, signed with the team's Apple Distribution identity, and uploaded
+to App Store Connect from `dev` (Sprint 6 + the "Alpha" rename). Added the privacy manifest and the
+team ID; procedure in RUNBOOK §2b. Internal TestFlight only — not a staging promotion.
+

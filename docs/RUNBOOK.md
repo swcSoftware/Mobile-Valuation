@@ -45,7 +45,26 @@ identity won't persist (ISSUES #13).
 
 The first build runs Gradle to produce `ValuationCore.xcframework` (needs JAVA_HOME or Android Studio).
 
-Exports land in the app's Documents folder (visible in Files → On My iPhone → ValueLens).
+Exports land in the app's Documents folder (visible in Files → On My iPhone → Alpha).
+
+## 2b. iOS → TestFlight (physical device)
+Team `K4GQT2PHP8`, automatic signing, uses the Apple ID signed into Xcode (no API key on disk).
+App Store Connect record: "Alpha - Stock Valuations", bundle `com.swcsoftware.valuelens`.
+**Bump `CURRENT_PROJECT_VERSION` in `project.yml` first** — App Store Connect rejects a repeated
+build number for the same `MARKETING_VERSION`.
+```bash
+cd apps/ios && xcodegen generate
+xcodebuild -project ValueLens.xcodeproj -scheme ValueLens -configuration Release \
+  -destination 'generic/platform=iOS' -archivePath build/archive/Alpha.xcarchive \
+  -allowProvisioningUpdates archive
+xcodebuild -exportArchive -archivePath build/archive/Alpha.xcarchive \
+  -exportOptionsPlist ExportOptions.plist -exportPath build/archive/upload -allowProvisioningUpdates
+```
+`ExportOptions.plist` uploads directly (`destination: upload`). Processing takes ~10–30 min; the
+build then appears under TestFlight. `ITSAppUsesNonExemptEncryption = false` skips the export-
+compliance question. `Resources/PrivacyInfo.xcprivacy` declares the one required-reason API the
+binary imports (UserDefaults, CA92.1) — re-check with `nm -u` on the archived binary when adding
+a framework or a system API.
 
 ## 3. Android
 ```bash

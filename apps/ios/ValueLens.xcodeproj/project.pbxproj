@@ -52,6 +52,7 @@
 		A1CD4707B5CDB794E4DAD6C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAC3C817B428D42604856D88 /* Assets.xcassets */; };
 		A45F8526CDC915D2D27FC287 /* LayoutContractTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA4ADA0220EB92A9C757D29 /* LayoutContractTests.swift */; };
 		AC7BE9CA035657034FC653A7 /* OnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E311EF4DF9987D997F058F /* OnboardingFlow.swift */; };
+		B186AC3AE089F6784B4318E5 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = B37623FFEDB45CBA9176A96A /* PrivacyInfo.xcprivacy */; };
 		BA2A1EC70C01453FED2CBF3B /* MCD.json in Resources */ = {isa = PBXBuildFile; fileRef = BD6522D1912134BBFBA51763 /* MCD.json */; };
 		C0DE916CFBF821D5A5E5F0CA /* LabelsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC8263A68D3D4768D14AE99 /* LabelsTests.swift */; };
 		C116C68A0632FF6FADD6BAB7 /* LayoutStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BBA3DBCED5551B4994AAD6 /* LayoutStyle.swift */; };
@@ -113,6 +114,7 @@
 		8CAE22EDC5D9CE1F8C45DAB4 /* ReportCardComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportCardComponents.swift; sourceTree = "<group>"; };
 		9047AF702CA9D5061FABA1FF /* MarginOfSafetyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarginOfSafetyView.swift; sourceTree = "<group>"; };
 		A52A6D05EA847678F0390C6D /* JPM.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = JPM.json; sourceTree = "<group>"; };
+		B37623FFEDB45CBA9176A96A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		B391B8D9182B0A531D4AD8F4 /* AGNC.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = AGNC.json; sourceTree = "<group>"; };
 		BB1D0F86EAE591618062C731 /* PresentationPickers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationPickers.swift; sourceTree = "<group>"; };
 		BC933DEDE177B7935DF124C9 /* Exporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exporter.swift; sourceTree = "<group>"; };
@@ -190,6 +192,7 @@
 			isa = PBXGroup;
 			children = (
 				FAC3C817B428D42604856D88 /* Assets.xcassets */,
+				B37623FFEDB45CBA9176A96A /* PrivacyInfo.xcprivacy */,
 				8521EE9049F300A545D81A90 /* SampleData */,
 			);
 			path = Resources;
@@ -431,11 +434,11 @@
 				LastUpgradeCheck = 2600;
 				TargetAttributes = {
 					5189EB9D6760E402628D94BC = {
-						DevelopmentTeam = "";
+						DevelopmentTeam = K4GQT2PHP8;
 						ProvisioningStyle = Automatic;
 					};
 					D8A0A6B5A191E64F42DAFEF6 = {
-						DevelopmentTeam = "";
+						DevelopmentTeam = K4GQT2PHP8;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -469,6 +472,7 @@
 				A1CD4707B5CDB794E4DAD6C0 /* Assets.xcassets in Resources */,
 				23B716BF4FF96B048CBA5211 /* KO.json in Resources */,
 				80EA9A94EF2BD9D704067699 /* MSFT.json in Resources */,
+				B186AC3AE089F6784B4318E5 /* PrivacyInfo.xcprivacy in Resources */,
 				5DBCB9DF0085217FFFCF91FF /* rates.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -633,7 +637,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = K4GQT2PHP8;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -733,7 +737,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = K4GQT2PHP8;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
