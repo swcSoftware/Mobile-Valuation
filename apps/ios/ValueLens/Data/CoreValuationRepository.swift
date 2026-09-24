@@ -163,6 +163,32 @@ struct CoreValuationRepository: ValuationRepository {
         displayNameCache[key] = out
         return out
     }
+    /// Sprint 6: plain-language labels for machine keys, from the core's display-labels.json.
+    /// One cache for all of them — list rows call these on every render.
+    static func label(_ kind: LabelKind, _ text: String, metric: String = "") -> String {
+        let key = "\(kind.rawValue)\u{1F}\(metric)\u{1F}\(text)"
+        labelLock.lock(); defer { labelLock.unlock() }
+        if let hit = labelCache[key] { return hit }
+        let out: String
+        switch kind {
+        case .tag: out = core.labelTag(tag: text)
+        case .input: out = core.labelInput(key: text, metric: metric)
+        case .concept: out = core.labelConcept(key: text)
+        case .sentence: out = core.labelSentence(text: text)
+        case .formula: out = core.labelFormula(text: text)
+        }
+        labelCache[key] = out
+        return out
+    }
+    enum LabelKind: String { case tag, input, concept, sentence, formula }
+    private static let labelLock = NSLock()
+    nonisolated(unsafe) private static var labelCache: [String: String] = [:]
+
+    static func tagIndex() -> [TagIndexEntry] {
+        guard let j = try? core.tagIndexJson() else { return [] }
+        return (try? JSONDecoder().decode([TagIndexEntry].self, from: Data(j.utf8))) ?? []
+    }
+
     private static let displayNameLock = NSLock()
     nonisolated(unsafe) private static var displayNameCache: [String: String] = [:]
 
@@ -209,5 +235,29 @@ extension CompanyRef {
     /// How the name is *shown* — "Merck & Co., Inc.", never "MERCK & CO., INC." (ISSUES #85).
     /// `name` stays the filed name: use it wherever the name is evidence or a search key.
     var displayName: String { CoreValuationRepository.displayName(name, ticker: ticker) }
+}
+
+/// What the app calls things (Sprint 6). Every machine key on screen goes through here; the words
+/// come from `packages/valuation-core/labels/display-labels.json`. Display only — never use these as
+/// lookup keys; the raw tags are listed on the Index page.
+enum Labels {
+    /// `us-gaap:EarningsPerShareDiluted` → "Earnings per share (diluted)".
+    static func tag(_ raw: String) -> String { CoreValuationRepository.label(.tag, raw) }
+    /// A model input key → its label, with the metric's own meaning where it has one.
+    static func input(_ key: String, metric: String = "") -> String { CoreValuationRepository.label(.input, key, metric: metric) }
+    static func concept(_ key: String) -> String { CoreValuationRepository.label(.concept, key) }
+    /// Tags and snake_case keys inside a warning, data-check message or note, rewritten into words.
+    static func sentence(_ text: String) -> String { CoreValuationRepository.label(.sentence, text) }
+    /// A formula's keys in words; the mathematics is kept.
+    static func formula(_ text: String) -> String { CoreValuationRepository.label(.formula, text) }
+}
+
+/// One Index row: a term the app shows, and the SEC tags behind it in the order they are tried.
+struct TagIndexEntry: Codable, Identifiable, Hashable {
+    let term: String
+    let key: String
+    let tags: [Tag]
+    var id: String { key }
+    struct Tag: Codable, Hashable { let tag: String; let label: String }
 }
 

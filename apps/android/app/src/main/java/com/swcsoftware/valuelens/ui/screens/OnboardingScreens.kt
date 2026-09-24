@@ -152,7 +152,7 @@ private fun CaseStudyWalkthrough(r: ValuationReport, onFinish: () -> Unit) {
                         r.snapshot[k]?.let { sv ->
                             Column(Modifier.padding(vertical = 8.dp)) {
                                 Row { Text(label, color = VL.textPrimary, modifier = Modifier.weight(1f)); Text(if (k == "eps_diluted") Fmt.money(sv.value) else Fmt.compact(sv.value), color = VL.textPrimary) }
-                                Text("${sv.tag} · ${sv.form} · ${sv.periodEnd}", fontSize = 11.sp, color = VL.textTertiary, maxLines = 1)
+                                Text("${com.swcsoftware.valuelens.core.DisplayLabels.tag(sv.tag)} · ${sv.form} · ${sv.periodEnd}", fontSize = 11.sp, color = VL.textTertiary, maxLines = 1)
                             }
                             if (i < keys.lastIndex) ThinDivider()
                         }
@@ -179,7 +179,7 @@ private fun CaseStudyWalkthrough(r: ValuationReport, onFinish: () -> Unit) {
                         Text("● Amber dot: what the market charges today.", color = VL.price, modifier = Modifier.padding(top = 6.dp))
                         Text("╱ Mint line: what the filings say the business is worth.", color = VL.value, modifier = Modifier.padding(top = 4.dp))
                         Text("The two ticks mark 25% and 50% discounts. Value investors wait for the amber dot to fall left of a tick — the deeper, the safer.", style = MaterialTheme.typography.bodySmall, color = VL.textSecondary, modifier = Modifier.padding(top = 8.dp))
-                        Text(r.modelA.marginOfSafety.formula, fontFamily = Mono, fontSize = 12.sp, color = VL.info, modifier = Modifier.padding(top = 8.dp))
+                        Text(com.swcsoftware.valuelens.core.DisplayLabels.formula(r.modelA.marginOfSafety.formula), fontFamily = Mono, fontSize = 12.sp, color = VL.info, modifier = Modifier.padding(top = 8.dp))
                     }
                 }
             }

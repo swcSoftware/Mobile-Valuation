@@ -38,7 +38,7 @@ struct CoverageGapCard: View {
                         ForEach(coverage.gaps) { g in
                             VStack(alignment: .leading, spacing: 2) {
                                 HStack {
-                                    Text(g.label).font(.subheadline).foregroundStyle(Theme.textPrimary)
+                                    Text(Labels.concept(g.concept)).font(.subheadline).foregroundStyle(Theme.textPrimary)
                                     if g.critical { Pill(text: "needed", color: Theme.danger) }
                                 }
                                 Text(g.kind == "unusable" ? "Reported, but not in an annual or trailing-twelve-month form we can use."
@@ -47,7 +47,7 @@ struct CoverageGapCard: View {
                                     .font(.caption).foregroundStyle(Theme.textSecondary).fixedSize(horizontal: false, vertical: true)
                                 if expert, !g.candidates.isEmpty {
                                     ForEach(g.candidates, id: \.self) { c in
-                                        Text(c).font(.vlMono).foregroundStyle(Theme.info).lineLimit(1).truncationMode(.middle)
+                                        Text(Labels.sentence(c)).font(.caption).foregroundStyle(Theme.info).lineLimit(2)
                                     }
                                 }
                             }

@@ -30,6 +30,7 @@ import com.swcsoftware.valuelens.ui.screens.IdentityScreen
 import com.swcsoftware.valuelens.ui.screens.LensChoiceScreen
 import com.swcsoftware.valuelens.ui.screens.SearchScreen
 import com.swcsoftware.valuelens.ui.screens.SettingsScreen
+import com.swcsoftware.valuelens.ui.screens.TagIndexScreen
 import com.swcsoftware.valuelens.ui.screens.WatchlistScreen
 import com.swcsoftware.valuelens.ui.theme.VL
 import com.swcsoftware.valuelens.ui.theme.ValueLensTheme
@@ -70,7 +71,8 @@ fun ValueLensApp(state: AppState) {
                 composable("casestudy") { CaseStudyScreen(state) { nav.navigate("watchlist") { popUpTo(0) } } }
                 composable("watchlist") { WatchlistScreen(state, ::open) { nav.navigate("search") } }
                 composable("search") { SearchScreen(state, ::open) }
-                composable("settings") { SettingsScreen(state, onReplayOnboarding = { nav.navigate("identity") { popUpTo(0) } }, onGlossary = { nav.navigate("glossary") }) }
+                composable("settings") { SettingsScreen(state, onReplayOnboarding = { nav.navigate("identity") { popUpTo(0) } }, onGlossary = { nav.navigate("glossary") }, onIndex = { nav.navigate("index") }) }
+                composable("index") { TagIndexScreen { nav.popBackStack() } }
                 composable("glossary") { GlossaryScreen(state) { nav.popBackStack() } }
                 composable("company/{ticker}/{cik}/{name}", arguments = listOf(navArgument("ticker") { type = NavType.StringType }, navArgument("cik") { type = NavType.LongType }, navArgument("name") { type = NavType.StringType })) { e ->
                     val c = CompanyRef(e.arguments!!.getString("ticker")!!, e.arguments!!.getLong("cik"), java.net.URLDecoder.decode(e.arguments!!.getString("name")!!, "UTF-8"))

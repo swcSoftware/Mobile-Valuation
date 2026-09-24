@@ -33,13 +33,13 @@ struct MetricRow: View {
 
             if expanded {
                 VStack(alignment: .leading, spacing: 8) {
-                    Text(metric.formula).font(.vlMono).foregroundStyle(Theme.info)
+                    Text(Labels.formula(metric.formula)).font(.vlMono).foregroundStyle(Theme.info)
                         .fixedSize(horizontal: false, vertical: true)
                     if !metric.inputs.isEmpty {
                         VStack(alignment: .leading, spacing: 3) {
                             ForEach(metric.inputs.keys.sorted(), id: \.self) { k in
                                 HStack {
-                                    Text(k).font(.vlMono).foregroundStyle(Theme.textSecondary)
+                                    Text(Labels.input(k, metric: metric.key)).font(.caption).foregroundStyle(Theme.textSecondary)
                                     Spacer()
                                     Text(Fmt.input(k, metric.inputs[k] ?? nil)).font(.vlMono).foregroundStyle(Theme.textPrimary)
                                 }
@@ -53,7 +53,7 @@ struct MetricRow: View {
                         }
                     }
                     ForEach(metric.notes, id: \.self) { n in
-                        Text(n).font(.caption).foregroundStyle(Theme.textSecondary).fixedSize(horizontal: false, vertical: true)
+                        Text(Labels.sentence(n)).font(.caption).foregroundStyle(Theme.textSecondary).fixedSize(horizontal: false, vertical: true)
                     }
                 }
                 .padding(12)
@@ -69,14 +69,14 @@ struct SourceLine: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 2) {
             HStack {
-                Text(source.tag).font(.vlMono).foregroundStyle(Theme.textPrimary).lineLimit(1).truncationMode(.middle)
+                Text(Labels.tag(source.tag)).font(.caption.weight(.medium)).foregroundStyle(Theme.textPrimary).lineLimit(1).truncationMode(.middle)
                 Spacer()
                 Text(Fmt.compact(source.value)).font(.vlMono).foregroundStyle(Theme.textSecondary)
             }
             Text("\(source.form) · period ending \(source.periodEnd) · filed \(source.filed) · \(source.accession)")
                 .font(.caption2).foregroundStyle(Theme.textTertiary)
             if !source.note.isEmpty {
-                Text(source.note).font(.caption2).foregroundStyle(Theme.textTertiary).fixedSize(horizontal: false, vertical: true)
+                Text(Labels.sentence(source.note)).font(.caption2).foregroundStyle(Theme.textTertiary).fixedSize(horizontal: false, vertical: true)
             }
         }
     }

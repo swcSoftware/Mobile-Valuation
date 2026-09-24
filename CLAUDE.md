@@ -58,6 +58,10 @@ why; read it before touching presentation code.
    `ExplainSummary` and renders them. Every number, label and verdict comes from the core, which is
    what keeps two layouts from disagreeing. A grading threshold is a judgement, so it lives in the
    core too, next to the facts, and is printed in the UI so a reader can check it.
+8. **No machine key on a value screen.** Anything drawn from a report — a tag, an input key, a
+   warning, a check message, a note, a formula — goes through `DisplayLabels` (`Labels` in Swift).
+   Raw tags live only on the Index page. New keys need an entry in `display-labels.json`; the test
+   tells you which.
 
 ## Layout
 
@@ -69,6 +73,7 @@ why; read it before touching presentation code.
 | `services/valuation-engine` | Python reference + oracle fixtures. Not shipped, not hosted. |
 | `scripts`, `.github/workflows` | Publish `rates.json` (FRED) and `tickers.json` to GitHub Pages daily. |
 | `docs` | Plan, architecture, API contract, tasks, issues, sprints, runbook, data verification, UI direction. |
+| `packages/valuation-core/labels/display-labels.json` | **What the app calls things.** Every SEC tag, model key and formula term shown on screen. Edit freely: it changes words, never numbers. `DisplayLabelsTest` checks it; Xcode and Gradle rebuild on change. |
 | `docs/design` | Sprint 5 working files: the share-site prototype and the three explored directions. Not shipped, not built, not tested by CI. |
 
 ## Commands that actually work here

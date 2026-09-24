@@ -105,10 +105,10 @@ fun DataNotesSection(r: ValuationReport, includeChecks: Boolean = true) {
         AnimatedVisibility(expanded) {
             Column(Modifier.padding(top = 8.dp)) {
                 flagged.forEach { check ->
-                    NoteRow(check.label, check.message,
+                    NoteRow(check.label, com.swcsoftware.valuelens.core.DisplayLabels.sentence(check.message),
                             if (check.status == "fail") VL.danger else VL.warning)
                 }
-                r.warnings.forEach { NoteRow(null, it, VL.border) }
+                r.warnings.forEach { NoteRow(null, com.swcsoftware.valuelens.core.DisplayLabels.sentence(it), VL.border) }
             }
         }
     }

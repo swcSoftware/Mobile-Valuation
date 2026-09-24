@@ -180,7 +180,7 @@ private struct RawNumbersStep: View {
                                 Text(k == "eps_diluted" ? Fmt.money(sv.value) : Fmt.compact(sv.value))
                                     .font(.body.monospacedDigit()).foregroundStyle(Theme.textPrimary)
                             }
-                            Text("\(sv.tag) · \(sv.form) · \(sv.periodEnd)").font(.caption2).foregroundStyle(Theme.textTertiary).lineLimit(1)
+                            Text("\(Labels.tag(sv.tag)) · \(sv.form) · \(sv.periodEnd)").font(.caption2).foregroundStyle(Theme.textTertiary).lineLimit(1)
                         }
                         if k != keys.last?.0 { Divider().overlay(Theme.border) }
                     }
@@ -243,7 +243,7 @@ private struct MoSStep: View {
                     Label("Mint line: what the filings say the business is worth.", systemImage: "line.diagonal").foregroundStyle(Theme.value)
                     Text("The two ticks mark 25% and 50% discounts. Value investors wait for the amber dot to fall left of a tick — the deeper, the safer.")
                         .font(.caption).foregroundStyle(Theme.textSecondary)
-                    Text(report.modelA.marginOfSafety.formula).font(.vlMono).foregroundStyle(Theme.info)
+                    Text(Labels.formula(report.modelA.marginOfSafety.formula)).font(.vlMono).foregroundStyle(Theme.info)
                 }
             }
         }

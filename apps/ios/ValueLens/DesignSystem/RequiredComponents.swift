@@ -110,11 +110,11 @@ struct DataNotesSection: View {
                     if expanded {
                         VStack(alignment: .leading, spacing: 8) {
                             ForEach(flagged) { check in
-                                noteRow(check.label, check.message,
+                                noteRow(check.label, Labels.sentence(check.message),
                                         tint: check.status == "fail" ? Theme.danger : Theme.warning)
                             }
                             ForEach(report.warnings, id: \.self) { warning in
-                                noteRow(nil, warning, tint: Theme.border)
+                                noteRow(nil, Labels.sentence(warning), tint: Theme.border)
                             }
                         }
                     }

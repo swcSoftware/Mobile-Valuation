@@ -42,7 +42,7 @@ import com.swcsoftware.valuelens.ui.theme.VL
 import kotlinx.coroutines.launch
 
 @Composable
-fun SettingsScreen(state: AppState, onReplayOnboarding: () -> Unit, onGlossary: () -> Unit) {
+fun SettingsScreen(state: AppState, onReplayOnboarding: () -> Unit, onGlossary: () -> Unit, onIndex: () -> Unit = {}) {
     val scope = rememberCoroutineScope()
     var name by remember { mutableStateOf(state.identity?.fullName ?: "") }
     var email by remember { mutableStateOf(state.identity?.email ?: "") }
@@ -64,6 +64,7 @@ fun SettingsScreen(state: AppState, onReplayOnboarding: () -> Unit, onGlossary: 
                 androidx.compose.material3.Switch(checked = state.expertMode, onCheckedChange = { state.updateExpertMode(it) })
             }
             TextButton(onGlossary) { Text("Glossary — what these terms mean", color = VL.accent) }
+            TextButton(onIndex) { Text("Index — the SEC tags behind each term", color = VL.accent) }
         }
 
         SectionHeader("Layout", "Two presentations of the same numbers. Each preview is the real layout, drawn on a bundled Apple sample.")

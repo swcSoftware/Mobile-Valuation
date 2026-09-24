@@ -30,6 +30,7 @@ struct SettingsView: View {
                         }
                     }
                     NavigationLink("Glossary — what these terms mean") { GlossaryView() }
+                    NavigationLink("Index — the SEC tags behind each term") { TagIndexView() }
                 } header: { Text("Presentation") } footer: {
                     Text("Off: plain-language values and health facts. On: every formula, XBRL tag and assumption, with expand-all.")
                 }

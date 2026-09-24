@@ -225,7 +225,7 @@ fun CheckStripCard(checks: List<DataCheck>) {
                         Box(Modifier.width(2.dp).height(30.dp).background(color(c.status)))
                         Column(Modifier.padding(start = 9.dp)) {
                             Text(c.label, fontSize = 12.sp, fontWeight = FontWeight.SemiBold, color = VL.textPrimary)
-                            Text(c.message, fontSize = 12.sp, color = VL.textSecondary)
+                            Text(com.swcsoftware.valuelens.core.DisplayLabels.sentence(c.message), fontSize = 12.sp, color = VL.textSecondary)
                         }
                     }
                 }

@@ -39,7 +39,7 @@ struct DataChecksCard: View {
                                 .frame(width: 16)
                             VStack(alignment: .leading, spacing: 2) {
                                 Text(c.label).font(.subheadline).foregroundStyle(Theme.textPrimary)
-                                Text(c.message).font(.caption).foregroundStyle(Theme.textSecondary).fixedSize(horizontal: false, vertical: true)
+                                Text(Labels.sentence(c.message)).font(.caption).foregroundStyle(Theme.textSecondary).fixedSize(horizontal: false, vertical: true)
                             }
                         }
                     }

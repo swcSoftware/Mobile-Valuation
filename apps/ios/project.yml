@@ -23,11 +23,14 @@ targets:
       - framework: ../../packages/valuation-core/build/XCFrameworks/release/ValuationCore.xcframework
         embed: false
     preBuildScripts:
-      - name: Build ValuationCore.xcframework if missing
+      - name: Build ValuationCore.xcframework if missing or stale
         script: |
           set -e
           FW="$SRCROOT/../../packages/valuation-core/build/XCFrameworks/release/ValuationCore.xcframework"
-          if [ ! -d "$FW" ]; then
+          # The display labels are compiled into the core, so an edit to them must rebuild it —
+          # otherwise the app keeps showing the old words with no error (Sprint 6).
+          LABELS="$SRCROOT/../../packages/valuation-core/labels/display-labels.json"
+          if [ ! -d "$FW" ] || [ "$LABELS" -nt "$FW/Info.plist" ]; then
             cd "$SRCROOT/../android"
             export JAVA_HOME="${JAVA_HOME:-/Applications/Android Studio.app/Contents/jbr/Contents/Home}"
             ./gradlew :valuation-core:assembleValuationCoreReleaseXCFramework -q

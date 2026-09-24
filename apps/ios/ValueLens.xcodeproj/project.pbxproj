@@ -42,6 +42,7 @@
 		88FF4BBF0BA4DA663435FFAA /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C00A5297374505B57523778 /* SearchView.swift */; };
 		8983B812D72FA8135CB756F4 /* WatchlistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7748DEB7230EEA4CC058323D /* WatchlistView.swift */; };
 		8995C4700D4DD80960465581 /* ValuationReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AE70A4B292870DAFC649FAF /* ValuationReport.swift */; };
+		8EB9A3799E81797723A28D77 /* TagIndexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880647A99078B6BA0E7970C5 /* TagIndexView.swift */; };
 		96CAAD56DB778F2075267214 /* JPM.json in Resources */ = {isa = PBXBuildFile; fileRef = A52A6D05EA847678F0390C6D /* JPM.json */; };
 		9A6C48CD303B7414F0264129 /* O.json in Resources */ = {isa = PBXBuildFile; fileRef = 88D3A095F609E8BFFBCF541E /* O.json */; };
 		9CAC5FF43A8E43F0CCF37C4E /* CompanyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC1AEBA453D2052D2086EDD /* CompanyViewModel.swift */; };
@@ -52,6 +53,7 @@
 		A45F8526CDC915D2D27FC287 /* LayoutContractTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA4ADA0220EB92A9C757D29 /* LayoutContractTests.swift */; };
 		AC7BE9CA035657034FC653A7 /* OnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E311EF4DF9987D997F058F /* OnboardingFlow.swift */; };
 		BA2A1EC70C01453FED2CBF3B /* MCD.json in Resources */ = {isa = PBXBuildFile; fileRef = BD6522D1912134BBFBA51763 /* MCD.json */; };
+		C0DE916CFBF821D5A5E5F0CA /* LabelsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC8263A68D3D4768D14AE99 /* LabelsTests.swift */; };
 		C116C68A0632FF6FADD6BAB7 /* LayoutStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BBA3DBCED5551B4994AAD6 /* LayoutStyle.swift */; };
 		C31EF9E367860AC017094E42 /* ValueLensApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50CCF8165A7C93B1F85A1F5 /* ValueLensApp.swift */; };
 		C7D72794400109CEFF6CFE08 /* AccentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836635629ACB84C624E3A37A /* AccentPicker.swift */; };
@@ -85,6 +87,7 @@
 		3C36AAD6F63B1113A18354AB /* Identity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identity.swift; sourceTree = "<group>"; };
 		3F3218A417367A2F5A9E3476 /* CoverageGapCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverageGapCard.swift; sourceTree = "<group>"; };
 		43D36BD403078C5709F7FF7A /* ValuationCore.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ValuationCore.xcframework; path = "../../packages/valuation-core/build/XCFrameworks/release/ValuationCore.xcframework"; sourceTree = "<group>"; };
+		4FC8263A68D3D4768D14AE99 /* LabelsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelsTests.swift; sourceTree = "<group>"; };
 		5295BB2379D69947D0EDD444 /* ShareCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareCardView.swift; sourceTree = "<group>"; };
 		52F47776F4BF9AA874F9C3AA /* KO.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = KO.json; sourceTree = "<group>"; };
 		56C043C8119525143FFB7C42 /* Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
@@ -104,6 +107,7 @@
 		8111CC9E464DFABF1A2F9270 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		836635629ACB84C624E3A37A /* AccentPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccentPicker.swift; sourceTree = "<group>"; };
 		86E311EF4DF9987D997F058F /* OnboardingFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFlow.swift; sourceTree = "<group>"; };
+		880647A99078B6BA0E7970C5 /* TagIndexView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagIndexView.swift; sourceTree = "<group>"; };
 		88D3A095F609E8BFFBCF541E /* O.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = O.json; sourceTree = "<group>"; };
 		8AB55F035150C6D994195F08 /* ExpertBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpertBody.swift; sourceTree = "<group>"; };
 		8CAE22EDC5D9CE1F8C45DAB4 /* ReportCardComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportCardComponents.swift; sourceTree = "<group>"; };
@@ -288,6 +292,7 @@
 		78AEB3D327D59A466138D5F9 /* ValueLensTests */ = {
 			isa = PBXGroup;
 			children = (
+				4FC8263A68D3D4768D14AE99 /* LabelsTests.swift */,
 				1BA4ADA0220EB92A9C757D29 /* LayoutContractTests.swift */,
 				64DB999A4BAC6EBC0E823F83 /* PresentationSettingsTests.swift */,
 				E826040C19B5066D7DD4B3A6 /* ReportCardTests.swift */,
@@ -350,6 +355,7 @@
 				070A0FF05C2C083C8FB8F36F /* GlossaryView.swift */,
 				BB1D0F86EAE591618062C731 /* PresentationPickers.swift */,
 				E5086FDE0F067158F24661A0 /* SettingsView.swift */,
+				880647A99078B6BA0E7970C5 /* TagIndexView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -380,7 +386,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2F78B5ABD48ABCBACA9158A8 /* Build configuration list for PBXNativeTarget "ValueLens" */;
 			buildPhases = (
-				E1FD00DADE6F7D67756ED378 /* Build ValuationCore.xcframework if missing */,
+				FF2410BE4AB73D9C725EE023 /* Build ValuationCore.xcframework if missing or stale */,
 				5054D22DA233B7E985B0E0B1 /* Sources */,
 				8078CF2A680EB4D415638086 /* Resources */,
 				BB28825F59DFEB8A9765862A /* Frameworks */,
@@ -484,7 +490,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		E1FD00DADE6F7D67756ED378 /* Build ValuationCore.xcframework if missing */ = {
+		FF2410BE4AB73D9C725EE023 /* Build ValuationCore.xcframework if missing or stale */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -494,14 +500,14 @@
 			);
 			inputPaths = (
 			);
-			name = "Build ValuationCore.xcframework if missing";
+			name = "Build ValuationCore.xcframework if missing or stale";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "set -e\nFW=\"$SRCROOT/../../packages/valuation-core/build/XCFrameworks/release/ValuationCore.xcframework\"\nif [ ! -d \"$FW\" ]; then\n  cd \"$SRCROOT/../android\"\n  export JAVA_HOME=\"${JAVA_HOME:-/Applications/Android Studio.app/Contents/jbr/Contents/Home}\"\n  ./gradlew :valuation-core:assembleValuationCoreReleaseXCFramework -q\nfi\n";
+			shellScript = "set -e\nFW=\"$SRCROOT/../../packages/valuation-core/build/XCFrameworks/release/ValuationCore.xcframework\"\n# The display labels are compiled into the core, so an edit to them must rebuild it —\n# otherwise the app keeps showing the old words with no error (Sprint 6).\nLABELS=\"$SRCROOT/../../packages/valuation-core/labels/display-labels.json\"\nif [ ! -d \"$FW\" ] || [ \"$LABELS\" -nt \"$FW/Info.plist\" ]; then\n  cd \"$SRCROOT/../android\"\n  export JAVA_HOME=\"${JAVA_HOME:-/Applications/Android Studio.app/Contents/jbr/Contents/Home}\"\n  ./gradlew :valuation-core:assembleValuationCoreReleaseXCFramework -q\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -538,6 +544,7 @@
 				88FF4BBF0BA4DA663435FFAA /* SearchView.swift in Sources */,
 				D4B96328671050DF7F869DA6 /* SettingsView.swift in Sources */,
 				0F0A7F62B3A1D5DDEE8EF4BC /* ShareCardView.swift in Sources */,
+				8EB9A3799E81797723A28D77 /* TagIndexView.swift in Sources */,
 				4F05C103A7A445E2C8966C1F /* Theme.swift in Sources */,
 				745D392E4C3CA4D5BB7BDFFD /* ThemePalette.swift in Sources */,
 				8995C4700D4DD80960465581 /* ValuationReport.swift in Sources */,
@@ -552,6 +559,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0DE916CFBF821D5A5E5F0CA /* LabelsTests.swift in Sources */,
 				A45F8526CDC915D2D27FC287 /* LayoutContractTests.swift in Sources */,
 				502FEF6843337DD00D22D80A /* PresentationSettingsTests.swift in Sources */,
 				E093E4CA84B294492EE1959F /* ReportCardTests.swift in Sources */,

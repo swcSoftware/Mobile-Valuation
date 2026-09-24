@@ -119,11 +119,11 @@ fun MetricRow(metric: Metric, emphasize: Boolean = false, expandAll: Boolean? = 
         }
         AnimatedVisibility(expanded) {
             Column(Modifier.padding(top = 10.dp).clip(RoundedCornerShape(10.dp)).background(VL.raised).padding(12.dp)) {
-                Text(metric.formula, fontFamily = Mono, fontSize = 12.sp, color = VL.info)
+                Text(com.swcsoftware.valuelens.core.DisplayLabels.formula(metric.formula), fontFamily = Mono, fontSize = 12.sp, color = VL.info)
                 if (metric.inputs.isNotEmpty()) {
                     Spacer(Modifier.height(6.dp))
                     metric.inputs.toSortedMap().forEach { (k, v) ->
-                        Row { Text(k, fontFamily = Mono, fontSize = 12.sp, color = VL.textSecondary, modifier = Modifier.weight(1f)); Text(Fmt.input(k, v), fontFamily = Mono, fontSize = 12.sp, color = VL.textPrimary) }
+                        Row { Text(com.swcsoftware.valuelens.core.DisplayLabels.input(k, metric.key), fontSize = 12.sp, color = VL.textSecondary, modifier = Modifier.weight(1f)); Text(Fmt.input(k, v), fontFamily = Mono, fontSize = 12.sp, color = VL.textPrimary) }
                     }
                 }
                 if (metric.sources.isNotEmpty()) {
@@ -131,7 +131,7 @@ fun MetricRow(metric: Metric, emphasize: Boolean = false, expandAll: Boolean? = 
                     Text("SEC SOURCES", style = MaterialTheme.typography.labelSmall, color = VL.textTertiary)
                     metric.sources.forEach { SourceLine(it) }
                 }
-                metric.notes.forEach { Text(it, style = MaterialTheme.typography.bodySmall, color = VL.textSecondary, modifier = Modifier.padding(top = 6.dp)) }
+                metric.notes.forEach { Text(com.swcsoftware.valuelens.core.DisplayLabels.sentence(it), style = MaterialTheme.typography.bodySmall, color = VL.textSecondary, modifier = Modifier.padding(top = 6.dp)) }
             }
         }
     }
@@ -140,9 +140,9 @@ fun MetricRow(metric: Metric, emphasize: Boolean = false, expandAll: Boolean? = 
 @Composable
 fun SourceLine(s: SourcedValue) {
     Column(Modifier.padding(top = 6.dp)) {
-        Row { Text(s.tag, fontFamily = Mono, fontSize = 12.sp, color = VL.textPrimary, modifier = Modifier.weight(1f), maxLines = 1); Text(Fmt.compact(s.value), fontFamily = Mono, fontSize = 12.sp, color = VL.textSecondary) }
+        Row { Text(com.swcsoftware.valuelens.core.DisplayLabels.tag(s.tag), fontSize = 12.sp, color = VL.textPrimary, modifier = Modifier.weight(1f), maxLines = 1); Text(Fmt.compact(s.value), fontFamily = Mono, fontSize = 12.sp, color = VL.textSecondary) }
         Text("${s.form} · period ending ${s.periodEnd} · filed ${s.filed} · ${s.accession}", fontSize = 11.sp, color = VL.textTertiary)
-        if (s.note.isNotEmpty()) Text(s.note, fontSize = 11.sp, color = VL.textTertiary)
+        if (s.note.isNotEmpty()) Text(com.swcsoftware.valuelens.core.DisplayLabels.sentence(s.note), fontSize = 11.sp, color = VL.textTertiary)
     }
 }
 
@@ -215,7 +215,7 @@ fun DataChecksCard(checks: List<com.swcsoftware.valuelens.domain.DataCheck>, sum
                     val color = when (c.status) { "pass" -> VL.value; "warn" -> VL.warning; else -> VL.danger }
                     Row(Modifier.padding(vertical = 5.dp), verticalAlignment = Alignment.Top) {
                         Text(when (c.status) { "pass" -> "✓"; "warn" -> "!"; else -> "✕" }, color = color, fontWeight = FontWeight.Bold, modifier = Modifier.width(18.dp))
-                        Column { Text(c.label, color = VL.textPrimary, fontSize = 14.sp); Text(c.message, style = MaterialTheme.typography.bodySmall, color = VL.textSecondary) }
+                        Column { Text(c.label, color = VL.textPrimary, fontSize = 14.sp); Text(com.swcsoftware.valuelens.core.DisplayLabels.sentence(c.message), style = MaterialTheme.typography.bodySmall, color = VL.textSecondary) }
                     }
                 }
             }

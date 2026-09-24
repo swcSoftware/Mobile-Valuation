@@ -165,7 +165,7 @@ struct SnapshotGrid: View {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(label).font(.caption).foregroundStyle(Theme.textSecondary)
                     Text(snapshot[key].map { fmt($0.value) } ?? "—").font(.body.monospacedDigit()).foregroundStyle(Theme.textPrimary)
-                    if let s = snapshot[key] { Text(s.tag.replacingOccurrences(of: "us-gaap:", with: "")).font(.caption2).foregroundStyle(Theme.textTertiary).lineLimit(1) }
+                    if let s = snapshot[key] { Text(Labels.tag(s.tag)).font(.caption2).foregroundStyle(Theme.textTertiary).lineLimit(1) }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
             }

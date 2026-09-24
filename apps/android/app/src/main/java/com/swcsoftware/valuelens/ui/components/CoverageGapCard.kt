@@ -52,7 +52,7 @@ fun CoverageGapCard(coverage: CoverageReport, expert: Boolean, onReport: () -> U
                 coverage.gaps.forEach { g ->
                     Column(Modifier.padding(vertical = 4.dp)) {
                         Row {
-                            Text(g.label, color = VL.textPrimary, fontSize = 14.sp)
+                            Text(com.swcsoftware.valuelens.core.DisplayLabels.concept(g.concept), color = VL.textPrimary, fontSize = 14.sp)
                             if (g.critical) { Spacer(Modifier.padding(horizontal = 3.dp)); Pill("needed", VL.danger) }
                         }
                         Text(
@@ -63,7 +63,7 @@ fun CoverageGapCard(coverage: CoverageReport, expert: Boolean, onReport: () -> U
                             },
                             style = MaterialTheme.typography.bodySmall, color = VL.textSecondary,
                         )
-                        if (expert) g.candidates.forEach { Text(it, fontFamily = Mono, fontSize = 11.sp, color = VL.info, maxLines = 1) }
+                        if (expert) g.candidates.forEach { Text(com.swcsoftware.valuelens.core.DisplayLabels.sentence(it), fontSize = 11.sp, color = VL.info, maxLines = 2) }
                     }
                 }
                 TextButton(onReport) { Text("Report this to the ValueLens team", color = VL.accent, fontSize = 13.sp) }

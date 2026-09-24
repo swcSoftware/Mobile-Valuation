@@ -55,7 +55,7 @@ object Exporter {
         mos.marginOfSafetyPct?.let { line("Margin of safety ${Fmt.pct(it)}. Buy-below: " + mos.bands.joinToString(", ") { b -> "${b.discountPct.toInt()}% → ${Fmt.money(b.buyBelow)}" }, paint(Color.BLACK, 9f)) }
         line("Model: ${res.name}", paint(Color.DKGRAY, 8f))
         header("Valuation metrics")
-        res.metrics.filter { it.key != "fcff_projection" }.forEach { m -> row(m.label, Fmt.metric(m)); line(m.formula, paint(Color.GRAY, 7f, mono = true), 11f) }
+        res.metrics.filter { it.key != "fcff_projection" }.forEach { m -> row(m.label, Fmt.metric(m)); line(com.swcsoftware.valuelens.core.DisplayLabels.formula(m.formula), paint(Color.GRAY, 7f, mono = true), 11f) }
         header("Key balance sheet ratios (TTM)")
         listOf("equity" to "Book value", "cash" to "Cash", "total_debt" to "Total debt").forEach { (k, l) -> row(l, r.snapshot[k]?.let { Fmt.compact(it.value) } ?: "—") }
         listOf("current_ratio" to "Current ratio", "debt_to_equity" to "Debt / equity").forEach { (k, l) -> row(l, r.snapshot[k]?.let { Fmt.number(it.value) + "×" } ?: "—") }

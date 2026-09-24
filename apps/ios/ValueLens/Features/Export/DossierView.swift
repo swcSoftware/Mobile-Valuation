@@ -31,7 +31,7 @@ struct DossierView: View {
                 ForEach(r.metrics.filter { $0.key != "fcff_projection" }) { m in
                     VStack(alignment: .leading, spacing: 1) {
                         HStack { Text(m.label); Spacer(); Text(Fmt.metric(m)).monospacedDigit() }
-                        Text(m.formula).font(.system(size: 8, design: .monospaced)).foregroundStyle(.secondary)
+                        Text(Labels.formula(m.formula)).font(.system(size: 8, design: .monospaced)).foregroundStyle(.secondary)
                     }
                 }
             }

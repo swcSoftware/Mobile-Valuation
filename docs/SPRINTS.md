@@ -259,3 +259,26 @@ Carried forward, none app-breaking:
 - **#86** — price/value sit on the red–green axis; check under colour-blindness simulation.
 - Sprint 4 Track B (release readiness) is still open and unstarted.
 
+## Sprint 6 — 2026-09-24 — Plain language for every label (built on `dev`)
+
+**Goal**: no machine key on a value screen. `us-gaap:EarningsPerShareDiluted` reads "Earnings per
+share (diluted)"; `OE = net_income + d_and_a − …` reads "OE = net income + depreciation and
+amortization − …".
+
+**Delivered**
+- One JSON file, `packages/valuation-core/labels/display-labels.json`, controls every label —
+  deliberately separate from the concept map, so editing words can never change a number. Compiled
+  into the core, so both apps say the same thing (non-negotiable 7).
+- Four kinds of machine text handled, measured first: XBRL tags, model input keys, keys inside
+  warnings and data-check messages, and formulas. A per-metric override covers the one key that
+  changes meaning (`revenue` is a 5-year growth rate inside Stage-1 growth). An automatic fallback
+  covers only tags a company files that the app does not read.
+- Sentences are rewritten at display time, not at source, so the oracle is untouched. Only
+  `snake_case` is rewritten in prose: "shares" and "terminal" are both keys and English.
+- Raw tags left the value screens for a new **Index** page in Settings (owner decision), with every
+  term, its tags in try-order, and how to look one up on sec.gov.
+- Xcode now rebuilds the core when the labels file changes, so an edit reaches iOS without a manual
+  Gradle step — found because the first iOS test run used a stale framework.
+
+**Tests**: 172 (31 engine · 78 core · 22 Android · 41 iOS), all green.
+

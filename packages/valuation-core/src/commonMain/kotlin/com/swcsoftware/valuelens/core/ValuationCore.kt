@@ -174,6 +174,21 @@ class ValuationCore(
      */
     fun displayName(name: String, ticker: String): String = CompanyNames.display(name, ticker)
 
+    // ---- Sprint 6: plain language for machine keys (labels/display-labels.json) -------------
+    /** `us-gaap:EarningsPerShareDiluted` → "Earnings per share (diluted)". */
+    fun labelTag(tag: String): String = DisplayLabels.tag(tag)
+    /** A model input key → its label; `metric` (may be empty) picks a per-metric meaning. */
+    fun labelInput(key: String, metric: String): String = DisplayLabels.input(key, metric.ifEmpty { null })
+    /** A concept-map key → its label. */
+    fun labelConcept(key: String): String = DisplayLabels.concept(key)
+    /** Rewrites tags and snake_case keys inside a sentence (warnings, check messages, notes). */
+    fun labelSentence(text: String): String = DisplayLabels.sentence(text)
+    /** Rewrites a formula's keys into words, keeping the mathematics. */
+    fun labelFormula(text: String): String = DisplayLabels.formula(text)
+    /** Every term the app shows with the SEC tags behind it, for the Index page. */
+    @Throws(Exception::class)
+    fun tagIndexJson(): String = json.encodeToString(DisplayLabels.index())
+
     /** The investor lenses with their copy and live example rule (Sprint 5 Track D). */
     @Throws(Exception::class)
     fun lensesJson(): String = json.encodeToString(Grading.lenses())

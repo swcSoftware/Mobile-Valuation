@@ -339,3 +339,63 @@ the oracle (non-negotiable 3).
 Model changes, normalization, tag-map edits, technical analysis (permanently, blueprint §1), and
 direction B. Sprint 4 Track B (release readiness) is still open and unaffected.
 
+## Sprint 6 — Plain language for every label (2026-09-24, built on `dev`)
+
+**The owner's brief:** views show machine keys — `us-gaap:EarningsPerShareDiluted` — which make the
+app less presentable. Build a separate mapping file, updated as needed, that controls how tags and
+data references are shown: `us-gaap:EarningsPerShareDiluted` → "Earnings per share (diluted)".
+
+**What actually reaches the screen** (measured over the eleven sample reports, 2026-09-24):
+
+| Kind | Example | Count | Where |
+|---|---|---|---|
+| XBRL tags | `us-gaap:EarningsPerShareDiluted`, `valuelens:derived` | 29 seen; 79 readable by the concept map | SEC-source lines, balance-sheet grid, onboarding step 1 |
+| Model input keys | `aaa_yield_pct`, `eps_ttm`, `FY2024` | 85 | every metric's breakdown in Expert Mode |
+| Concept keys inside sentences | "no longer reported: `long_term_debt`" | 10 | data notes, data-check messages |
+| Arbitrary tags from a filing | `us-gaap:IncomeLossFromContinuingOperations…` | unbounded | the "unmatched line items" card |
+
+**Shape of the work, decided up front:**
+- **Separate from the concept map.** `Concepts.kt` / `tags.py` decide which tags are *read*; changing
+  them changes valuations and goes through the oracle and the drift test (non-negotiable 5). The
+  display file changes only words on screen, so it can be edited without touching a number.
+- **In the core**, so iOS and Android show the same words (non-negotiable 7).
+- **Curated first, automatic second.** Every tag the concept map can read and every key a model
+  emits gets an explicit entry; a test fails if one is missing. A CamelCase/snake_case splitter
+  covers only what no file can list — tags a company files that we don't read.
+- **Sentences are rewritten at display time, not at source.** Warnings and data-check messages are
+  produced by normalization and pinned by the oracle; the core replaces known keys in them when
+  presenting, so the oracle is untouched (additive, non-negotiable 4).
+- **Display only.** Search, the concept-map issue report and anything used as a lookup key keep
+  the raw form.
+
+**Owner decisions, 2026-09-24:**
+1. **Raw tags leave the value screens entirely** and move to a new **Index** page in Settings,
+   beside the Glossary: a reference that says "these are the tags behind the terms you see, if you
+   want to search the SEC filing yourself". The path back to the filing is kept, just not in the way.
+2. **Natural phrasing, curated** — "Earnings per share (diluted)", written the way a finance writer
+   would. The automatic word-splitter is only a fallback for tags nobody listed.
+3. **The file is JSON.**
+
+### A. The mapping file and its loader
+- [x] `packages/valuation-core/labels/display-labels.json`: 78 tags, 31 concepts, 74 model inputs,
+      per-metric overrides, formula-only terms and proper nouns, with editing instructions inside.
+- [x] Compiled into the core by a Gradle task (`generateDisplayLabels`). Xcode's pre-build step now
+      rebuilds the core when the file is newer than the framework, so an edit reaches iOS from Xcode
+      alone — verified with a real edit.
+- [x] `DisplayLabels`: `tag()`, `input(key, metric)`, `concept()`, `sentence()`, `formula()`, `index()`,
+      with an automatic fallback for tags nobody listed. Hand-tokenised, no `\b` regex (Kotlin/Native).
+
+### D. The Index page (both platforms)
+- [x] Settings → Index on both platforms: searchable, tags selectable for copying, in try-order.
+      **To confirm with the owner**: the lookup instructions name sec.gov's Inline XBRL viewer.
+
+### B. Coverage tests
+- [x] `DisplayLabelsTest` (12): every concept-map tag and concept has an entry (it caught one my
+      inventory script missed, `GainLossOnDispositionOfAssets1`); every input key the eleven sample
+      reports emit has one; no duplicate keys; no machine key survives in any warning, check message,
+      source note, metric note or formula; plain English words are never rewritten.
+
+### C. Wire every display site, both platforms
+- [x] All of them, plus formulas and metric notes (the notes were missed at first and caught on the
+      simulator), on both platforms and in the exported dossier's formulas.
+
