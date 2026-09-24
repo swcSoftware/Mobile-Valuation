@@ -168,7 +168,7 @@ until a reviewed map change passes the oracle and tests.
 - [ ] TestFlight + Play internal testing; crash reporting; Dynamic Type / VoiceOver pass; store assets
 - [ ] Licensed quote/beta source behind `Market`; physical-device checks (#19/#20/#22)
 
-## Sprint 5 — Two layouts, one set of numbers (planned, 2026-09-22)
+## Sprint 5 — Two layouts, one set of numbers (2026-09-22 → 09-24) ✅ promoted to staging at `d403096`
 
 A **design and UI sprint**. No model, normalization or tag-map work. The owner picked the
 "report card" direction (light, graded health facts) from three explored directions

@@ -248,3 +248,14 @@ share-site prototype still shows the old names and faces; it is a design tool an
 
 **Tests**: 156 (31 engine · 66 core · 22 Android · 37 iOS), all green.
 
+**Sprint 5 closed and promoted to `staging`, 2026-09-24**, at `d403096` — a fast-forward from `dev`
+after all 156 tests passed on that exact commit. `main` untouched.
+
+Carried forward, none app-breaking:
+- **Track F** — `total_debt` in the annual history, so debt load gets a trend (ISSUES #81). The one
+  piece of engine work Sprint 5 planned and did not do: Python first, mirror Kotlin, regenerate the oracle.
+- **#87** — Android asserts the layout contract's logic but not its rendering (no Compose UI tests).
+- **#88** — watchlist prices wrap mid-number in Expert Mode with a long company name.
+- **#86** — price/value sit on the red–green axis; check under colour-blindness simulation.
+- Sprint 4 Track B (release readiness) is still open and unstarted.
+

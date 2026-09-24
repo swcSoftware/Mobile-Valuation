@@ -5,12 +5,11 @@ runs **on the device**; there is no server. Deep context lives in `docs/` — st
 [docs/TASKS.md](docs/TASKS.md) (current sprint) and [docs/SPRINTS.md](docs/SPRINTS.md) (what shipped
 when). This file is the index and the tripwires.
 
-**Current sprint: 5 — two layouts, one set of numbers.** A design and UI sprint, in its *design*
-phase: a second presentation ("report card") is being prototyped on a standalone share site and
-reviewed by the owner on a real iPhone. **No Swift or Compose work starts until the design is signed
-off.** Read [docs/DESIGN.md](docs/DESIGN.md) before touching any UI — it holds the decisions, the
-four elements every layout must carry, and the two questions still blocking the build. Working files
-(the prototype and the three explored directions) are in [docs/design/](docs/design/README.md).
+**Sprint 5 is closed and on `staging`** (2026-09-24, `d403096`): two layouts over one set of numbers,
+with the report card as the default, grading in the core, runtime theming, and first-letter-capital
+company names. The next sprint has not been planned yet — see the carry-overs at the end of
+[docs/SPRINTS.md](docs/SPRINTS.md). [docs/DESIGN.md](docs/DESIGN.md) records every UI decision and
+why; read it before touching presentation code.
 
 ## Non-negotiables
 
