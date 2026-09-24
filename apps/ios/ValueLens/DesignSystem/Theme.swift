@@ -77,6 +77,13 @@ extension Font {
     static let vlMono = Font.system(.footnote, design: .monospaced)
     static let vlNumber = Font.system(.title3, design: .rounded).weight(.semibold).monospacedDigit()
     static let vlCaption = Font.system(.caption)
+
+    /// The app's one display face at any size: SF Pro Rounded, the face the classic layout has used
+    /// since Sprint 0. Every layout uses it (owner decision, 2026-09-24) — a layout changes
+    /// arrangement and emphasis, never the typeface.
+    static func vlRounded(_ size: CGFloat, _ weight: Font.Weight = .bold) -> Font {
+        .system(size: size, weight: weight, design: .rounded)
+    }
 }
 
 struct Card<Content: View>: View {

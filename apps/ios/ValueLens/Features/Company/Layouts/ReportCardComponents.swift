@@ -5,13 +5,12 @@ import SwiftUI
 
 // MARK: - type
 
-/// One display face over one body face (Sprint 5 Track C). The prototype used Bricolage Grotesque
-/// over Public Sans; until those are bundled (an owner decision — see docs/DESIGN.md) the display
-/// role is SF Pro at condensed width, which keeps the tight, set-in-type feel the classic layout's
-/// rounded face does not have.
+/// The report card's type roles. It uses the app's one display face (`Font.vlRounded`) like every
+/// other screen: the owner chose SF Pro Rounded over the prototype's Bricolage Grotesque, globally,
+/// on 2026-09-24. The report card differs from classic in size and weight, not in typeface.
 enum ReportCardType {
     static func display(_ size: CGFloat, _ weight: Font.Weight = .bold) -> Font {
-        .system(size: size, weight: weight).width(.condensed)
+        .vlRounded(size, weight)
     }
     static let eyebrow = Font.caption2.weight(.bold)
 }

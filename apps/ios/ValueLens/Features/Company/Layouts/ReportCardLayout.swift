@@ -74,7 +74,7 @@ struct ReportCardLayout: View {
     private var heading: some View {
         HStack(alignment: .top, spacing: 10) {
             VStack(alignment: .leading, spacing: 3) {
-                Text(report.company.name)
+                Text(report.company.displayName)
                     .font(ReportCardType.display(26))
                     .foregroundStyle(Theme.textPrimary)
                     .fixedSize(horizontal: false, vertical: true)

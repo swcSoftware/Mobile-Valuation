@@ -117,8 +117,10 @@ class ThemeAndLayoutContractTest {
         assertEquals(LayoutStyle.REPORT_CARD, LayoutStyle.from("REPORT_CARD"))
         assertEquals(LayoutStyle.DEFAULT, LayoutStyle.from(null))
         assertEquals(LayoutStyle.DEFAULT, LayoutStyle.from("something we removed"))
-        assertEquals("classic must stay the default until the owner promotes the other one",
-            LayoutStyle.CLASSIC, LayoutStyle.DEFAULT)
+        assertEquals("the report card is the default (owner decision, 2026-09-24)",
+            LayoutStyle.REPORT_CARD, LayoutStyle.DEFAULT)
+        assertEquals("an explicit choice of Classic survives the new default",
+            LayoutStyle.CLASSIC, LayoutStyle.from("CLASSIC"))
     }
 
     // ---- the layout contract (pure logic; see the class comment) ----

@@ -168,6 +168,12 @@ class ValuationCore(
 
     @Throws(Exception::class)
     fun glossaryJson(): String = json.encodeToString(Explain.glossary)
+    /**
+     * A company name as it should be *shown*: "Merck & Co., Inc.", not "MERCK & CO., INC.". Display
+     * only — the filed name stays the evidence everywhere it is used as such (ISSUES #85).
+     */
+    fun displayName(name: String, ticker: String): String = CompanyNames.display(name, ticker)
+
     /** The investor lenses with their copy and live example rule (Sprint 5 Track D). */
     @Throws(Exception::class)
     fun lensesJson(): String = json.encodeToString(Grading.lenses())

@@ -12,6 +12,12 @@ struct ExpertBody: View {
     private var result: ModelResult { ctx.result }
 
     var body: some View {
+        if report.company.displayName != report.company.name {
+            // The display form is for reading; the filed name is the evidence.
+            Text("Filed with the SEC as \(report.company.name) · CIK \(String(report.company.cik))")
+                .font(.caption.monospaced())
+                .foregroundStyle(Theme.textTertiary)
+        }
         SectionHeader(title: result.name, subtitle: "Tap any metric for the formula and SEC line items")
 
         HStack {

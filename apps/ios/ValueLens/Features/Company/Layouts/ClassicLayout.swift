@@ -107,7 +107,7 @@ struct ClassicLayout: View {
 
     private var header: some View {
         VStack(alignment: .leading, spacing: 6) {
-            Text(report.company.name).font(.vlTitle).foregroundStyle(Theme.textPrimary)
+            Text(report.company.displayName).font(.vlTitle).foregroundStyle(Theme.textPrimary)
             HStack(alignment: .firstTextBaseline, spacing: 12) {
                 Button(action: ctx.editPrice) {
                     HStack(spacing: 4) {

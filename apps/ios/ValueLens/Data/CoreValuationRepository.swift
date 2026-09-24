@@ -153,6 +153,19 @@ struct CoreValuationRepository: ValuationRepository {
         return (try? JSONDecoder().decode([GlossaryEntry].self, from: Data(g.utf8))) ?? []
     }
 
+    /// The core's display form of a filed name ("Merck & Co., Inc."). Cached: it is called from list
+    /// rows on every render, and the answer for a given name never changes within a build.
+    static func displayName(_ name: String, ticker: String) -> String {
+        let key = ticker + "\u{1F}" + name
+        displayNameLock.lock(); defer { displayNameLock.unlock() }
+        if let hit = displayNameCache[key] { return hit }
+        let out = core.displayName(name: name, ticker: ticker)
+        displayNameCache[key] = out
+        return out
+    }
+    private static let displayNameLock = NSLock()
+    nonisolated(unsafe) private static var displayNameCache: [String: String] = [:]
+
     func lenses() -> [LensInfo] {
         guard let j = try? Self.core.lensesJson() else { return [] }
         return (try? JSONDecoder().decode([LensInfo].self, from: Data(j.utf8))) ?? []
@@ -191,3 +204,10 @@ struct SampleValuationRepository: ValuationRepository {
     func glossary() -> [GlossaryEntry] { [] }
     func lenses() -> [LensInfo] { CoreValuationRepository(userAgent: nil).lenses() }
 }
+
+extension CompanyRef {
+    /// How the name is *shown* — "Merck & Co., Inc.", never "MERCK & CO., INC." (ISSUES #85).
+    /// `name` stays the filed name: use it wherever the name is evidence or a search key.
+    var displayName: String { CoreValuationRepository.displayName(name, ticker: ticker) }
+}
+

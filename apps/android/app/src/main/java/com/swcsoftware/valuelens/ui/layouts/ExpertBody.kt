@@ -1,5 +1,6 @@
 package com.swcsoftware.valuelens.ui.layouts
 
+import com.swcsoftware.valuelens.ui.displayName
 import android.content.Context
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
@@ -98,6 +99,12 @@ fun ExpertBody(ctx: LayoutContext) {
     var expandVersion by remember { mutableStateOf(0) }
 
     Column(Modifier.fillMaxWidth()) {
+        if (r.company.displayName != r.company.name) {
+            // The display form is for reading; the filed name is the evidence.
+            Text("Filed with the SEC as ${r.company.name} · CIK ${r.company.cik}", fontSize = 11.sp,
+                 fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace, color = VL.textTertiary,
+                 modifier = Modifier.padding(top = 8.dp))
+        }
         Row(Modifier.fillMaxWidth().padding(top = 8.dp), verticalAlignment = Alignment.CenterVertically) {
             SectionHeader(res.name, "Tap any metric for the formula and SEC line items")
         }

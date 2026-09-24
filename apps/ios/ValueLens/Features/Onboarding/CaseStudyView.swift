@@ -79,7 +79,7 @@ struct CaseStudyView: View {
                                 HStack {
                                     VStack(alignment: .leading, spacing: 2) {
                                         Text(c.ticker).font(.vlHeadline).foregroundStyle(Theme.textPrimary)
-                                        Text(c.name).font(.caption).foregroundStyle(Theme.textSecondary).lineLimit(1)
+                                        Text(c.displayName).font(.caption).foregroundStyle(Theme.textSecondary).lineLimit(1)
                                     }
                                     Spacer()
                                     if loading && selected == c.ticker { ProgressView() } else { Image(systemName: "chevron.right").foregroundStyle(Theme.textTertiary) }

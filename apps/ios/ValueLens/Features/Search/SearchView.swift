@@ -21,7 +21,7 @@ struct SearchView: View {
                     NavigationLink(value: c) {
                         VStack(alignment: .leading, spacing: 2) {
                             Text(c.ticker).font(.vlHeadline).foregroundStyle(Theme.textPrimary)
-                            Text(c.name).font(.caption).foregroundStyle(Theme.textSecondary)
+                            Text(c.displayName).font(.caption).foregroundStyle(Theme.textSecondary)
                         }
                     }
                     .listRowBackground(Theme.surface)

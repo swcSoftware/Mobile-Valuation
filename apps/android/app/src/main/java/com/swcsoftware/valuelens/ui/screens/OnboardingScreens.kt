@@ -1,5 +1,6 @@
 package com.swcsoftware.valuelens.ui.screens
 
+import com.swcsoftware.valuelens.ui.displayName
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -112,7 +113,7 @@ fun CaseStudyScreen(state: AppState, onFinished: () -> Unit) {
                 query = q; searchJob?.cancel()
                 searchJob = scope.launch { delay(300); results = runCatching { state.repository.search(q) }.getOrDefault(emptyList()) }
             }, label = { Text("Ticker or company name") }, singleLine = true, modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp))
-            results.take(6).forEach { c -> CompanyChoice(c.ticker, c.name, loading == c.ticker, enabled = loading == null) { load(c.ticker) } }
+            results.take(6).forEach { c -> CompanyChoice(c.ticker, c.displayName, loading == c.ticker, enabled = loading == null) { load(c.ticker) } }
         }
         error?.let { Text(it, style = MaterialTheme.typography.bodySmall, color = VL.danger, modifier = Modifier.padding(top = 8.dp)) }
     }

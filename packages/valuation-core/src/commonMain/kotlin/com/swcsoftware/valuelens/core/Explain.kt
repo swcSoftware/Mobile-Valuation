@@ -63,7 +63,7 @@ object Explain {
 
     /** One sentence a first-time investor can act on. */
     fun verdictSentence(r: ValuationReport, res: ModelResult): String {
-        val name = r.company.name.trim().trimEnd('.')
+        val name = CompanyNames.display(r.company.name, r.company.ticker).trim().trimEnd('.')
         val mos = res.marginOfSafety
         val iv = mos.intrinsicValue; val p = mos.marketPrice
         if (iv == null) return "ValueLens couldn't estimate a per-share value for $name from its filings yet — see the data checks below for why."

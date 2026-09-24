@@ -217,7 +217,7 @@ object Grading {
     }
 
     private fun blankNote(r: ValuationReport, mode: String): String {
-        val name = r.company.name.trim().removeSuffix(".")
+        val name = CompanyNames.display(r.company.name, r.company.ticker).trim().removeSuffix(".")
         return "$name files as a ${modeLabel(mode).lowercase()}, and none of the four general health measures could be computed from its filings — a mortgage REIT reports no revenue line, for instance. The valuation above still uses the models built for its industry; only these facts are blank. The data notes list exactly what was missing."
     }
 

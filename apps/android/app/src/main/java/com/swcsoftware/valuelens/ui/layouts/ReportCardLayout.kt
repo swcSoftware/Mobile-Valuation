@@ -1,5 +1,6 @@
 package com.swcsoftware.valuelens.ui.layouts
 
+import com.swcsoftware.valuelens.ui.displayName
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -54,7 +55,7 @@ fun ReportCardLayout(ctx: LayoutContext) {
         // ---- heading
         Row(verticalAlignment = Alignment.Top) {
             Column(Modifier.weight(1f)) {
-                Text(r.company.name, fontSize = 26.sp, fontWeight = FontWeight.ExtraBold,
+                Text(r.company.displayName, fontSize = 26.sp, fontWeight = FontWeight.ExtraBold,
                      letterSpacing = (-0.4).sp, lineHeight = 29.sp, color = VL.textPrimary)
                 Text(listOfNotNull(r.company.ticker, card?.modeLabel,
                                    r.quote?.let { "priced ${it.asOf.take(10)}" } ?: "no quote").joinToString(" · "),

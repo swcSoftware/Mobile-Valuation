@@ -1,5 +1,6 @@
 package com.swcsoftware.valuelens.export
 
+import com.swcsoftware.valuelens.ui.displayName
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -46,7 +47,9 @@ object Exporter {
         fun row(l: String, v: String, p: Paint = paint(Color.BLACK, 9f)) { c.drawText(l, left, y, p); val w = p.measureText(v); c.drawText(v, right - w, y, p); y += 13f }
         fun header(t: String) { y += 8f; line(t.uppercase(), paint(Color.GRAY, 8f, bold = true), 12f) }
         line("ValueLens Valuation Dossier", paint(Color.BLACK, 18f, bold = true), 20f)
-        line("${r.company.name} (${r.company.ticker}) · CIK ${r.company.cik} · ${r.generatedAt.take(10)}", paint(Color.DKGRAY, 10f), 18f)
+        line("${r.company.displayName} (${r.company.ticker}) · CIK ${r.company.cik} · ${r.generatedAt.take(10)}", paint(Color.DKGRAY, 10f), 18f)
+        // The dossier is a record: keep the filed name alongside the display form.
+        if (r.company.displayName != r.company.name) line("Filed with the SEC as ${r.company.name}", paint(Color.GRAY, 8f), 12f)
         header("Executive summary")
         line("Market price ${Fmt.money(r.quote?.price)} vs. ${model.label} intrinsic value ${Fmt.money(res.intrinsicValuePerShare)}. Verdict: ${mos.verdictEnum.title}.", paint(Color.BLACK, 9f))
         mos.marginOfSafetyPct?.let { line("Margin of safety ${Fmt.pct(it)}. Buy-below: " + mos.bands.joinToString(", ") { b -> "${b.discountPct.toInt()}% → ${Fmt.money(b.buyBelow)}" }, paint(Color.BLACK, 9f)) }
@@ -80,7 +83,7 @@ object Exporter {
         c.drawText("ValueLens", pad + 74f, pad + 44f, paint(T1, 44f, bold = true))
         val sub = "${model.label} · ${model.subtitle}"; val sp = paint(T2, 26f); c.drawText(sub, w - pad - sp.measureText(sub), pad + 40f, sp)
         c.drawText(r.company.ticker, pad, h * 0.42f, paint(T1, 110f, bold = true))
-        c.drawText(r.company.name, pad, h * 0.42f + 50f, paint(T2, 36f))
+        c.drawText(r.company.displayName, pad, h * 0.42f + 50f, paint(T2, 36f))
         var x = pad; val statY = h * 0.42f + 140f
         fun stat(label: String, value: String, color: Int) { c.drawText(label, x, statY, paint(color, 22f, bold = true)); c.drawText(value, x, statY + 70f, paint(color, 64f, bold = true)); x += paint(color, 64f, bold = true).measureText(value) + 80f }
         stat("MARKET PRICE", Fmt.money(mos.marketPrice), AMBER); stat("INTRINSIC VALUE", Fmt.money(mos.intrinsicValue), MINT)

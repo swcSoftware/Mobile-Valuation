@@ -4,14 +4,11 @@ Status: **Sprint 5 in progress.** The design was signed off on 2026-09-23. Track
 seam), B (runtime theming) and C (the report card, with grading in the core) are delivered on
 both platforms, and Track D (the Settings pickers and the onboarding lens question) makes it
 reachable the normal way. What remains is owner decisions and follow-ups: promoting the report
-card to default after physical-device use; bundling the prototype's typefaces; title-casing
-SEC's uppercase names for display (ISSUES #85); Android's rendered contract test (#87); and
+card to default, the typeface and name casing are decided and done (decisions 9–11). What remains:
+Android's rendered contract test (#87); and
 `total_debt` in the history series so debt load gets a trend (#81, Track F).
 
-**Open owner decision:** the prototype's faces were Bricolage Grotesque over Public Sans. The
-apps currently use system faces in those roles (SF Pro condensed on iOS; heavy system sans on
-Android). Shipping the real faces means downloading and bundling the font files (both are SIL
-Open Font License).
+The typeface question is settled — see decision 10 below.
 Written 2026-09-22, updated 2026-09-23.
 
 Read this with [TASKS.md](TASKS.md) Sprint 5, which holds the task list. This file holds the
@@ -80,6 +77,19 @@ is graded and which fact is read first**. It never changes a valuation, an intri
 of safety, a verdict, or which model opens first. Those are the same numbers, in the same order, for
 every user, whatever they call themselves. Two people looking at the same company see one fair value;
 only the judgement of the *business* shifts with the lens.
+
+### Taken by the owner, 2026-09-24
+
+9. **The report card is the default layout.** Anyone who has not chosen gets it; anyone who chose
+   Classic keeps Classic, because their choice is stored.
+10. **One typeface across the app: the one Classic uses on iOS** (SF Pro Rounded for display, SF
+    Pro for text), whichever layout is showing. The prototype's Bricolage Grotesque / Public Sans
+    are dropped; nothing is bundled. On Android, SF Pro cannot ship — Apple licenses SF fonts for
+    Apple platforms only — so the same principle applies with Android's own system face, which both
+    Android layouts already share.
+11. **Company names in first-letter capitals**, e.g. "Merck & Co., Inc." not "MERCK & CO., INC." —
+    everywhere a name is *displayed*, both layouts, lists and exports. The filed name remains the
+    evidence: the dossier and Expert Mode show "Filed with the SEC as …".
 
 ### Taken by Claude, open to reversal
 

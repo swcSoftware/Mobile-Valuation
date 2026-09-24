@@ -315,8 +315,11 @@ saying so.
 - [x] Onboarding gains "what kind of investor are you?" between the SEC identity step and the
       guided valuation, on both platforms. It says plainly that it changes no valuation, and its
       example quotes the live revenue-growth rules (`LensInfo.growthRule`) so it cannot drift.
-- [x] `.classic` stays the default, enforced by a test on each platform. **Still open, and the
-      owner's call**: promoting the report card to default, after using it on a physical device.
+- [x] Default layout — **the report card, by owner decision on 2026-09-24**. Enforced by a test on
+      each platform; a stored choice of Classic is kept.
+- [x] One typeface app-wide (SF Pro Rounded on iOS; Android's system face), by owner decision.
+- [x] Company names in first-letter capitals (ISSUES #85), by owner decision; filed name kept as
+      evidence in the dossier and Expert Mode.
 
 ### E. The iteration loop
 - [x] Each design revision went to the **tester share site** (throwaway HTML mirror, not in the

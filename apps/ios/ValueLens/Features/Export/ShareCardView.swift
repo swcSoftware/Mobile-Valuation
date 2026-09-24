@@ -24,7 +24,7 @@ struct ShareCardView: View {
                 Spacer(minLength: 0)
                 VStack(alignment: .leading, spacing: 8) {
                     Text(report.company.ticker).font(.system(size: 110, weight: .heavy, design: .rounded)).foregroundStyle(Theme.textPrimary)
-                    Text(report.company.name).font(.system(size: 36)).foregroundStyle(Theme.textSecondary)
+                    Text(report.company.displayName).font(.system(size: 36)).foregroundStyle(Theme.textSecondary)
                 }
                 HStack(alignment: .top, spacing: 60) {
                     stat("MARKET PRICE", Fmt.money(mos.marketPrice), Theme.price)

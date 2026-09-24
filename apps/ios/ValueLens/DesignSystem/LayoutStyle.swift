@@ -11,9 +11,9 @@ enum LayoutStyle: String, CaseIterable, Codable, Sendable {
     /// Sprint 5's second presentation: the decision first, health facts graded against a printed rule.
     case reportCard
 
-    /// The default, and it stays the default until the owner says otherwise after using the other
-    /// one on a physical device (Sprint 5 Track D).
-    static let `default`: LayoutStyle = .classic
+    /// The default for anyone who has not chosen. The report card was promoted by the owner on
+    /// 2026-09-24; a user who picked Classic keeps Classic, because their choice is stored.
+    static let `default`: LayoutStyle = .reportCard
 
     var displayName: String {
         switch self {

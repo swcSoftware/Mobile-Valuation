@@ -232,3 +232,19 @@ A note for the record: the owner remembered Track C as delivered to `staging`. I
 
 **Tests**: 149 (31 engine · 60 core · 22 Android · 36 iOS), all green.
 
+**Owner decisions applied, 2026-09-24.** The report card is now the default layout (stored choices
+of Classic are kept). The whole app uses one typeface — SF Pro Rounded, the one Classic already used
+— including the report card, which had been on SF Pro condensed standing in for the prototype's
+Bricolage Grotesque; on Android the same rule means Android's system face, because SF fonts are
+licensed for Apple platforms only. And company names display in first-letter capitals: a new core
+rule, `CompanyNames`, pinned against all 77 universe names (42 of which SEC files in capitals),
+used by both apps and by the core's own verdict sentence. The filed name stays the evidence — shown
+in the dossier and in Expert Mode. Closes ISSUES #85; logged #88 (watchlist prices wrapping
+mid-number in Expert Mode, which predates the sprint).
+
+Two sprint-wide notes. The verdict sentence is shared by both layouts, so Classic's sentence now reads
+"McDonalds Corp" too — a deliberate global change at the owner's request, not a side effect. And the
+share-site prototype still shows the old names and faces; it is a design tool and was not updated.
+
+**Tests**: 156 (31 engine · 66 core · 22 Android · 37 iOS), all green.
+

@@ -97,7 +97,7 @@ struct WatchlistRow: View {
         HStack(spacing: 12) {
             VStack(alignment: .leading, spacing: 3) {
                 Text(entry.company.ticker).font(.vlHeadline).foregroundStyle(Theme.textPrimary)
-                Text(entry.company.name).font(.caption).foregroundStyle(Theme.textSecondary).lineLimit(1)
+                Text(entry.company.displayName).font(.caption).foregroundStyle(Theme.textSecondary).lineLimit(1)
             }
             Spacer()
             VStack(alignment: .trailing, spacing: 3) {
@@ -115,6 +115,6 @@ struct WatchlistRow: View {
         }
         .padding(.vertical, 4)
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(entry.company.name), price \(Fmt.money(mos?.marketPrice)), intrinsic value \(Fmt.money(mos?.intrinsicValue)), \(mos?.verdict.title ?? "not loaded")")
+        .accessibilityLabel("\(entry.company.displayName), price \(Fmt.money(mos?.marketPrice)), intrinsic value \(Fmt.money(mos?.intrinsicValue)), \(mos?.verdict.title ?? "not loaded")")
     }
 }

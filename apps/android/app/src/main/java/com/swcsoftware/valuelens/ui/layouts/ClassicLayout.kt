@@ -1,5 +1,6 @@
 package com.swcsoftware.valuelens.ui.layouts
 
+import com.swcsoftware.valuelens.ui.displayName
 import android.content.Context
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
@@ -122,7 +123,7 @@ fun ClassicLayout(ctx: LayoutContext) {
 
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp, 8.dp, 16.dp, 32.dp)) {
 val failed = r.dataChecks.any { it.status == "fail" }
-Text(r.company.name, style = MaterialTheme.typography.headlineSmall, color = VL.textPrimary)
+Text(r.company.displayName, style = MaterialTheme.typography.headlineSmall, color = VL.textPrimary)
 Row(verticalAlignment = Alignment.Bottom) {
     Text(Fmt.money(r.price), fontSize = 38.sp, fontWeight = FontWeight.ExtraBold, color = VL.price, modifier = Modifier.clickable { ctx.onEditPrice() })
     Column(Modifier.padding(start = 12.dp, bottom = 8.dp)) {

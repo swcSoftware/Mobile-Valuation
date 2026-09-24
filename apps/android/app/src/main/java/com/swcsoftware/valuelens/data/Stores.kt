@@ -43,8 +43,9 @@ class AppPrefs(context: Context) {
         get() = prefs.getString("overrides", null)?.let { runCatching { json.decodeFromString<RateOverrides>(it) }.getOrNull() } ?: RateOverrides.NONE
         set(v) = prefs.edit().putString("overrides", json.encodeToString(RateOverrides.serializer(), v)).apply()
     /** Which presentation of a company to render (Sprint 5 Track A). */
-    var layoutStyle: String
-        get() = prefs.getString("layoutStyle", null) ?: "CLASSIC"
+    /** null when the user has never chosen, so the app's current default applies. */
+    var layoutStyle: String?
+        get() = prefs.getString("layoutStyle", null)
         set(v) = prefs.edit().putString("layoutStyle", v).apply()
     /** Value or Growth: the bar the report card grades against. Never touches a valuation. */
     var investorLens: String

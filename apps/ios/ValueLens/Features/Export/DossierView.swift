@@ -11,7 +11,10 @@ struct DossierView: View {
             HStack(alignment: .firstTextBaseline) {
                 VStack(alignment: .leading) {
                     Text("ValueLens Valuation Dossier").font(.title2.bold())
-                    Text("\(report.company.name) (\(report.company.ticker)) · CIK " + String(report.company.cik)).font(.subheadline)
+                    Text("\(report.company.displayName) (\(report.company.ticker)) · CIK " + String(report.company.cik)).font(.subheadline)
+                    if report.company.displayName != report.company.name {
+                        Text("Filed with the SEC as \(report.company.name)").font(.caption)
+                    }
                 }
                 Spacer()
                 Text(Fmt.shortDate(report.generatedAt)).font(.caption)

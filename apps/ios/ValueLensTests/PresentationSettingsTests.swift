@@ -4,10 +4,14 @@ import XCTest
 /// Sprint 5 Track D: the choices a user makes about presentation, and the defaults they start from.
 final class PresentationSettingsTests: XCTestCase {
 
-    func testClassicStaysTheDefaultUntilTheOwnerPromotesTheReportCard() {
-        // Changing this is an owner decision taken after the report card has been used on a
-        // physical device (docs/TASKS.md, Track D) — not a refactor.
-        XCTAssertEqual(LayoutStyle.default, .classic)
+    func testTheReportCardIsTheDefault() {
+        // Owner decision, 2026-09-24. Changing it again is a decision, not a refactor.
+        XCTAssertEqual(LayoutStyle.default, .reportCard)
+    }
+
+    func testAnExplicitChoiceOfClassicSurvivesTheNewDefault() {
+        // Promoting the report card must not override someone who chose Classic.
+        XCTAssertEqual(LayoutStyle(rawValue: LayoutStyle.classic.rawValue), .classic)
     }
 
     func testValueIsTheDefaultLens() {

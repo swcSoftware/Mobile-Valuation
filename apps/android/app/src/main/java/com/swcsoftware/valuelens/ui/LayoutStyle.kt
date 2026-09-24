@@ -18,8 +18,11 @@ enum class LayoutStyle(val displayName: String, val blurb: String) {
     REPORT_CARD("Report card", "Graded health facts, the decision first.");
 
     companion object {
-        /** Stays the default until the owner promotes the other one (Sprint 5 Track D). */
-        val DEFAULT = CLASSIC
+        /**
+         * The default for anyone who has not chosen — promoted by the owner on 2026-09-24. A user
+         * who picked Classic keeps Classic, because their choice is stored.
+         */
+        val DEFAULT = REPORT_CARD
         fun from(raw: String?): LayoutStyle = entries.firstOrNull { it.name == raw } ?: DEFAULT
     }
 }

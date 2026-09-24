@@ -1,5 +1,6 @@
 package com.swcsoftware.valuelens.ui.screens
 
+import com.swcsoftware.valuelens.ui.displayName
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -73,7 +74,7 @@ private fun WatchlistRow(e: WatchlistEntry, expert: Boolean, onOpen: () -> Unit,
         Row(verticalAlignment = Alignment.CenterVertically) {
             Column(Modifier.weight(1f)) {
                 Text(e.company.ticker, style = MaterialTheme.typography.titleMedium, color = VL.textPrimary)
-                Text(e.company.name, style = MaterialTheme.typography.bodySmall, color = VL.textSecondary, maxLines = 1)
+                Text(e.company.displayName, style = MaterialTheme.typography.bodySmall, color = VL.textSecondary, maxLines = 1)
             }
             Column(horizontalAlignment = Alignment.End) {
                 if (expert) Row { Text(Fmt.money(mos?.marketPrice), color = VL.price); Text(" vs ", color = VL.textTertiary, fontSize = 11.sp, modifier = Modifier.align(Alignment.CenterVertically)); Text(Fmt.money(mos?.intrinsicValue), color = VL.value) }
@@ -116,7 +117,7 @@ fun SearchScreen(state: AppState, onOpen: (CompanyRef) -> Unit) {
             LazyColumn { items(results, key = { it.cik }) { c ->
                 Card(Modifier.padding(bottom = 10.dp).clickable { onOpen(c) }, padding = 14) {
                     Text(c.ticker, style = MaterialTheme.typography.titleMedium, color = VL.textPrimary)
-                    Text(c.name, style = MaterialTheme.typography.bodySmall, color = VL.textSecondary)
+                    Text(c.displayName, style = MaterialTheme.typography.bodySmall, color = VL.textSecondary)
                 }
             } }
         }
