@@ -125,8 +125,9 @@ struct PrimaryButton: View {
             Text(title).font(.vlHeadline).frame(maxWidth: .infinity).padding(.vertical, 14)
         }
         .buttonStyle(.borderedProminent)
-        .tint(Theme.value)
-        .foregroundStyle(Theme.background)
+        // Chrome takes the accent, never the fair-value colour: a button is not a valuation.
+        .tint(Theme.accent)
+        .foregroundStyle(Theme.accentForeground)
         .disabled(!enabled)
     }
 }

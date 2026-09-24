@@ -152,6 +152,11 @@ struct CoreValuationRepository: ValuationRepository {
         guard let g = try? Self.core.glossaryJson() else { return [] }
         return (try? JSONDecoder().decode([GlossaryEntry].self, from: Data(g.utf8))) ?? []
     }
+
+    func lenses() -> [LensInfo] {
+        guard let j = try? Self.core.lensesJson() else { return [] }
+        return (try? JSONDecoder().decode([LensInfo].self, from: Data(j.utf8))) ?? []
+    }
 }
 
 /// Bundled JSON captured from the engine for AAPL, KO and MSFT (offline fallback).
@@ -184,4 +189,5 @@ struct SampleValuationRepository: ValuationRepository {
     func coverageIssueURL(for report: ValuationReport) -> URL? { CoreValuationRepository(userAgent: nil).coverageIssueURL(for: report) }
 
     func glossary() -> [GlossaryEntry] { [] }
+    func lenses() -> [LensInfo] { CoreValuationRepository(userAgent: nil).lenses() }
 }

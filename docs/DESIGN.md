@@ -2,8 +2,11 @@
 
 Status: **Sprint 5 in progress.** The design was signed off on 2026-09-23. Tracks A (the layout
 seam), B (runtime theming) and C (the report card, with grading in the core) are delivered on
-both platforms. Track D — the Settings layout picker and the onboarding lens question — is next;
-until then the report card is reachable only by editing stored preferences.
+both platforms, and Track D (the Settings pickers and the onboarding lens question) makes it
+reachable the normal way. What remains is owner decisions and follow-ups: promoting the report
+card to default after physical-device use; bundling the prototype's typefaces; title-casing
+SEC's uppercase names for display (ISSUES #85); Android's rendered contract test (#87); and
+`total_debt` in the history series so debt load gets a trend (#81, Track F).
 
 **Open owner decision:** the prototype's faces were Bricolage Grotesque over Public Sans. The
 apps currently use system faces in those roles (SF Pro condensed on iOS; heavy system sans on

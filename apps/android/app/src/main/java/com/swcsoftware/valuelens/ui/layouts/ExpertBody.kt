@@ -102,7 +102,7 @@ fun ExpertBody(ctx: LayoutContext) {
             SectionHeader(res.name, "Tap any metric for the formula and SEC line items")
         }
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-            TextButton({ expandAll = true; expandVersion++ }) { Text("Expand all", color = VL.value, fontSize = 12.sp) }
+            TextButton({ expandAll = true; expandVersion++ }) { Text("Expand all", color = VL.accent, fontSize = 12.sp) }
             TextButton({ expandAll = false; expandVersion++ }) { Text("Collapse all", color = VL.textSecondary, fontSize = 12.sp) }
         }
         Card {

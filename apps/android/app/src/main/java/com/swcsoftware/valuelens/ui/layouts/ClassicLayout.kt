@@ -154,7 +154,7 @@ if (!expert) {
     val facts = Explain.healthFacts(r)
     facts.chunked(2).forEach { row -> Row(Modifier.fillMaxWidth().padding(top = 8.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) { row.forEach { f -> FactTile(f.label, f.value, f.tone, f.plain, Modifier.weight(1f)) }; if (row.size == 1) Spacer(Modifier.weight(1f)) } }
     Spacer(Modifier.height(16.dp))
-    TextButton({ ctx.onSetShowMath(true) }, Modifier.fillMaxWidth()) { Text("Show me the math", color = VL.value) }
+    TextButton({ ctx.onSetShowMath(true) }, Modifier.fillMaxWidth()) { Text("Show me the math", color = VL.accent) }
     Text("Turn on Expert Mode in Settings to always see formulas and SEC line items.", style = MaterialTheme.typography.bodySmall, color = VL.textTertiary, modifier = Modifier.fillMaxWidth(), textAlign = androidx.compose.ui.text.style.TextAlign.Center)
 } else {
     ExpertBody(ctx)

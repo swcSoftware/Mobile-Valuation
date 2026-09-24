@@ -138,7 +138,7 @@ struct ClassicLayout: View {
             Text("Show me the math").frame(maxWidth: .infinity)
         }
         .buttonStyle(.bordered)
-        .tint(Theme.value)
+        .tint(Theme.accent)
         Text("Turn on Expert Mode in Settings to always see formulas and SEC line items.")
             .font(.caption)
             .foregroundStyle(Theme.textTertiary)

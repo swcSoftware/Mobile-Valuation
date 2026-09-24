@@ -212,3 +212,23 @@ defaults` writes a device-wide domain the sandboxed app only falls back to). Add
 
 **Tests**: 144 (31 engine · 59 core · 22 Android · 32 iOS), all green.
 
+**Track D delivered, 2026-09-24.** The report card is now reachable the normal way. Settings gained a
+layout picker whose previews are the real layouts drawn on the bundled Apple sample and scaled down
+(they follow the reader's theme, accent and lens), and an investor-lens picker. Onboarding gained
+"what kind of investor are you?" between the SEC identity and the guided valuation. The lens copy
+comes from the core (`lensesJson()`), so neither app restates it. Classic stays the default,
+enforced by tests; promoting the report card is the owner's decision after using it on a phone.
+
+Fixed while here, all Track B leftovers that a chosen accent exposed: iOS's primary button, the
+coverage card and "show me the math" were drawn in the fair-value mint, and fourteen Android button
+labels likewise — chrome takes the accent, never the valuation colour. With no accent chosen the
+accent *is* mint on dark, so nothing moved for anyone who hasn't picked one. Android's selected
+segments were Material's default lavender because the palette never mapped `secondaryContainer`;
+mapped now. And one bug of my own caught on the simulator before commit: the onboarding example
+lower-cased the rule text and turned the grade "A" into "a".
+
+A note for the record: the owner remembered Track C as delivered to `staging`. It was delivered to
+`dev`; `staging` is still at `6427ade` and none of Sprint 5 has been promoted.
+
+**Tests**: 149 (31 engine · 60 core · 22 Android · 36 iOS), all green.
+

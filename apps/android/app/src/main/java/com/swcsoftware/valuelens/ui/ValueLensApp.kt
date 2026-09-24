@@ -27,6 +27,7 @@ import com.swcsoftware.valuelens.ui.screens.CaseStudyScreen
 import com.swcsoftware.valuelens.ui.screens.CompanyDetailScreen
 import com.swcsoftware.valuelens.ui.screens.GlossaryScreen
 import com.swcsoftware.valuelens.ui.screens.IdentityScreen
+import com.swcsoftware.valuelens.ui.screens.LensChoiceScreen
 import com.swcsoftware.valuelens.ui.screens.SearchScreen
 import com.swcsoftware.valuelens.ui.screens.SettingsScreen
 import com.swcsoftware.valuelens.ui.screens.WatchlistScreen
@@ -63,7 +64,9 @@ fun ValueLensApp(state: AppState) {
         }) { pad ->
             fun open(c: CompanyRef) = nav.navigate("company/${c.ticker}/${c.cik}/${java.net.URLEncoder.encode(c.name, "UTF-8")}")
             NavHost(nav, startDestination = if (onboarding) "identity" else "watchlist", modifier = Modifier.padding(pad)) {
-                composable("identity") { IdentityScreen(state) { nav.navigate("casestudy") } }
+                // Identity → investor lens → guided valuation (Sprint 5 Track D).
+                composable("identity") { IdentityScreen(state) { nav.navigate("lens") } }
+                composable("lens") { LensChoiceScreen(state, onBack = { nav.popBackStack() }) { nav.navigate("casestudy") } }
                 composable("casestudy") { CaseStudyScreen(state) { nav.navigate("watchlist") { popUpTo(0) } } }
                 composable("watchlist") { WatchlistScreen(state, ::open) { nav.navigate("search") } }
                 composable("search") { SearchScreen(state, ::open) }

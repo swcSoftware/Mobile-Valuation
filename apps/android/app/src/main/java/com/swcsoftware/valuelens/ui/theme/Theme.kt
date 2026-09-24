@@ -64,6 +64,9 @@ private fun colorSchemeFor(p: ThemePalette) = if (p.isDark) {
         primary = p.accent, onPrimary = p.accentForeground, secondary = p.info, tertiary = p.price,
         onBackground = p.textPrimary, onSurface = p.textPrimary, onSurfaceVariant = p.textSecondary,
         outline = p.border, error = p.danger,
+        // Selected segments and chips. Unmapped, Material falls back to its own lavender,
+        // which belongs to no palette of ours.
+        secondaryContainer = p.accent.copy(alpha = 0.18f), onSecondaryContainer = p.textPrimary,
     )
 } else {
     lightColorScheme(
@@ -71,6 +74,9 @@ private fun colorSchemeFor(p: ThemePalette) = if (p.isDark) {
         primary = p.accent, onPrimary = p.accentForeground, secondary = p.info, tertiary = p.price,
         onBackground = p.textPrimary, onSurface = p.textPrimary, onSurfaceVariant = p.textSecondary,
         outline = p.border, error = p.danger,
+        // Selected segments and chips. Unmapped, Material falls back to its own lavender,
+        // which belongs to no palette of ours.
+        secondaryContainer = p.accent.copy(alpha = 0.18f), onSecondaryContainer = p.textPrimary,
     )
 }
 

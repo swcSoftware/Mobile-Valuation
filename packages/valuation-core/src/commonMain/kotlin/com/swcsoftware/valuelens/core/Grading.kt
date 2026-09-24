@@ -44,6 +44,21 @@ object Grading {
         )
     }
 
+    /**
+     * The lenses as the user meets them — at onboarding and in Settings, before any report exists.
+     * `growthRule` is the actual revenue-growth threshold for an operating company under that lens,
+     * read from the rules rather than restated, so the example the user is shown cannot drift from
+     * the grading it describes.
+     */
+    fun lenses(): List<LensInfo> = Lens.entries.map { lens ->
+        LensInfo(
+            key = lens.name,
+            name = lens.displayName,
+            blurb = lens.blurb,
+            growthRule = GradingRules.rule(lens, "general", GradingRules.Slot.GROWTH)!!.text,
+        )
+    }
+
     // ---- the four slots ---------------------------------------------------------------------
 
     private fun profitability(r: ValuationReport, lens: Lens, mode: String): GradedFact {
@@ -276,3 +291,14 @@ data class TrendPoint(val year: Int, val value: Double)
 
 @Serializable
 data class VerdictChip(val label: String, /** `good` / `mid` / `bad` / `none` */ val tone: String)
+
+@Serializable
+data class LensInfo(
+    /** `VALUE` / `GROWTH` — what gets stored and passed back to `reportCardJson`. */
+    val key: String,
+    val name: String,
+    val blurb: String,
+    /** e.g. "A at 10% a year or better" — the live rule, for the onboarding example. */
+    val growthRule: String,
+)
+

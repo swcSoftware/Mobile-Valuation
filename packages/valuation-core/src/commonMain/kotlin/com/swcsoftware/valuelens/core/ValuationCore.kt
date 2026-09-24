@@ -168,6 +168,9 @@ class ValuationCore(
 
     @Throws(Exception::class)
     fun glossaryJson(): String = json.encodeToString(Explain.glossary)
+    /** The investor lenses with their copy and live example rule (Sprint 5 Track D). */
+    @Throws(Exception::class)
+    fun lensesJson(): String = json.encodeToString(Grading.lenses())
     @Throws(Exception::class)
     fun ratesJson(): String? = rates()?.let { json.encodeToString(it) }
 

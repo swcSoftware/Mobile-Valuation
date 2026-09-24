@@ -112,13 +112,13 @@ fun CompanyDetailScreen(state: AppState, company: CompanyRef, onBack: () -> Unit
 
     Column(Modifier.fillMaxSize().background(VL.background)) {
         Row(Modifier.fillMaxWidth().background(VL.surface).padding(8.dp, 12.dp), verticalAlignment = Alignment.CenterVertically) {
-            TextButton(onBack) { Text("‹ Back", color = VL.value) }
+            TextButton(onBack) { Text("‹ Back", color = VL.accent) }
             Text(company.ticker, fontWeight = FontWeight.Bold, color = VL.textPrimary, modifier = Modifier.weight(1f), textAlign = androidx.compose.ui.text.style.TextAlign.Center)
             report?.let { r ->
                 val starred = state.inWatchlist(r.company.ticker)
-                TextButton({ if (starred) state.removeFromWatchlist(r.company.ticker) else state.addToWatchlist(r) }) { Text(if (starred) "★" else "☆", color = VL.value, fontSize = 20.sp) }
+                TextButton({ if (starred) state.removeFromWatchlist(r.company.ticker) else state.addToWatchlist(r) }) { Text(if (starred) "★" else "☆", color = VL.accent, fontSize = 20.sp) }
                 Box {
-                    TextButton({ showExport = true }) { Text("⇪", color = VL.value, fontSize = 18.sp) }
+                    TextButton({ showExport = true }) { Text("⇪", color = VL.accent, fontSize = 18.sp) }
                     DropdownMenu(showExport, { showExport = false }) {
                         DropdownMenuItem({ Text("PDF valuation dossier") }, { showExport = false; Exporter.sharePdf(context, r, model) })
                         DropdownMenuItem({ Text("Share card (1:1)") }, { showExport = false; Exporter.shareCard(context, r, model, square = true) })
@@ -168,8 +168,8 @@ fun CompanyDetailScreen(state: AppState, company: CompanyRef, onBack: () -> Unit
             else -> Column(Modifier.fillMaxWidth().padding(32.dp, 80.dp), horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(error?.title ?: "Couldn't value ${company.ticker}", style = MaterialTheme.typography.titleMedium, color = VL.textPrimary)
                 Text(error?.message ?: "", color = VL.textSecondary, modifier = Modifier.padding(top = 8.dp), textAlign = androidx.compose.ui.text.style.TextAlign.Center)
-                TextButton({ load() }) { Text("Retry", color = VL.value) }
-                if (error is EngineException.InvalidIdentity) TextButton(onOpenSettings) { Text("Open Settings", color = VL.value) }
+                TextButton({ load() }) { Text("Retry", color = VL.accent) }
+                if (error is EngineException.InvalidIdentity) TextButton(onOpenSettings) { Text("Open Settings", color = VL.accent) }
             }
         }
     }

@@ -57,7 +57,7 @@ struct CoverageGapCard: View {
                                 .font(.caption)
                         }
                         .buttonStyle(.bordered)
-                        .tint(Theme.value)
+                        .tint(Theme.accent)
                         Text("Opens a prefilled report in your browser. Nothing is sent until you submit it, and it contains only public SEC identifiers — no personal data.")
                             .font(.caption2).foregroundStyle(Theme.textTertiary).fixedSize(horizontal: false, vertical: true)
                     }

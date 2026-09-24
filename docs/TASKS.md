@@ -306,15 +306,20 @@ saying so.
       columns, which Compose rejects at runtime.
 
 ### D. The toggles
-- [ ] Settings: layout picker with a live preview of each option, beside Expert Mode.
-- [ ] Settings: investor lens (Value / Growth), theme (Light / Dark / System) and accent color.
-- [ ] Onboarding gains one screen: "what kind of investor are you?", after the SEC identity step and
-      before the guided valuation. It must say plainly that it changes no valuation.
-- [ ] `.classic` stays the default. The new layout becomes the default only on an explicit owner
-      decision, after it has been used on a physical device.
+- [x] Settings: layout picker beside Expert Mode. Each preview **is the real layout**, drawn on the
+      bundled Apple sample and scaled down, so it follows the user's theme, accent and lens rather
+      than being an illustration of them. Both platforms.
+- [x] Settings: investor lens (Value / Growth) — its descriptions come from the core via a new
+      `lensesJson()` / `Grading.lenses()`, so Swift restates none of the copy. Theme and accent
+      shipped in Track B.
+- [x] Onboarding gains "what kind of investor are you?" between the SEC identity step and the
+      guided valuation, on both platforms. It says plainly that it changes no valuation, and its
+      example quotes the live revenue-growth rules (`LensInfo.growthRule`) so it cannot drift.
+- [x] `.classic` stays the default, enforced by a test on each platform. **Still open, and the
+      owner's call**: promoting the report card to default, after using it on a physical device.
 
 ### E. The iteration loop
-- [ ] Each design revision goes to the **tester share site** (throwaway HTML mirror, not in the
+- [x] Each design revision went to the **tester share site** (throwaway HTML mirror, not in the
       repo) so it can be judged on a real iPhone rather than in a simulator, then a round of
       questions and owner feedback before the next revision. Repeat until the design is settled —
       **then** it gets built in SwiftUI. No Swift work starts on the report-card body until the

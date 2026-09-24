@@ -187,7 +187,7 @@ private fun CaseStudyWalkthrough(r: ValuationReport, onFinish: () -> Unit) {
             }
         }
         Row(Modifier.fillMaxWidth().background(VL.surface).padding(20.dp), verticalAlignment = Alignment.CenterVertically) {
-            if (page > 0) TextButton({ page-- }) { Text("Back", color = VL.value) }
+            if (page > 0) TextButton({ page-- }) { Text("Back", color = VL.accent) }
             Spacer(Modifier.weight(1f))
             if (page < 3) PrimaryButtonSmall("Next") { page++ } else PrimaryButtonSmall("Finish & add to watchlist", onFinish)
         }
@@ -198,3 +198,24 @@ private fun CaseStudyWalkthrough(r: ValuationReport, onFinish: () -> Unit) {
 fun PrimaryButtonSmall(title: String, onClick: () -> Unit) {
     androidx.compose.material3.Button(onClick = onClick, colors = androidx.compose.material3.ButtonDefaults.buttonColors(containerColor = VL.value, contentColor = VL.background)) { Text(title, fontWeight = FontWeight.SemiBold) }
 }
+
+/** Step 2: "what kind of investor are you?" — asked once, changeable any time in Settings. */
+@Composable
+fun LensChoiceScreen(state: AppState, onBack: () -> Unit, onContinue: () -> Unit) {
+    val lenses = remember { com.swcsoftware.valuelens.core.Grading.lenses() }
+    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp)) {
+        TextButton(onBack) { Text("‹ Back", color = VL.accent) }
+        Text("What kind of investor are you?", style = MaterialTheme.typography.headlineSmall,
+             color = VL.textPrimary, modifier = Modifier.padding(top = 8.dp))
+        // It must say plainly that this changes no valuation (Track D).
+        Text("This sets the bar we grade a business against — nothing else. Fair value, margin of safety and the verdict are worked out the same way whichever you pick, and you can change this any time in Settings.",
+             color = VL.textSecondary, modifier = Modifier.padding(top = 10.dp, bottom = 20.dp))
+        LensPicker(state.investorLens, { state.updateInvestorLens(it); onContinue() }, cards = true)
+        // Quoted as-is from the live rules: the text opens with the grade letter.
+        if (lenses.size == 2) {
+            Text("Example — revenue growth for an operating company. ${lenses[0].name}: ${lenses[0].growthRule}. ${lenses[1].name}: ${lenses[1].growthRule}. The company's growth rate is the same number either way.",
+                 style = MaterialTheme.typography.bodySmall, color = VL.textTertiary, modifier = Modifier.padding(top = 16.dp))
+        }
+    }
+}
+

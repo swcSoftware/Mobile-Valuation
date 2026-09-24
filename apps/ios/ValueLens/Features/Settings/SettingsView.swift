@@ -5,6 +5,7 @@ struct SettingsView: View {
     @State private var name = ""
     @State private var email = ""
     @State private var showResetConfirm = false
+    @State private var lenses: [LensInfo] = []
 
     var body: some View {
         @Bindable var settings = settings
@@ -31,6 +32,18 @@ struct SettingsView: View {
                     NavigationLink("Glossary — what these terms mean") { GlossaryView() }
                 } header: { Text("Presentation") } footer: {
                     Text("Off: plain-language values and health facts. On: every formula, XBRL tag and assumption, with expand-all.")
+                }
+
+                Section {
+                    LayoutPicker(selection: $settings.layoutStyle, lens: settings.investorLens)
+                } header: { Text("Layout") } footer: {
+                    Text("Two presentations of the same numbers. Each preview is the real layout, drawn on a bundled Apple sample.")
+                }
+
+                Section {
+                    LensPicker(selection: $settings.investorLens, lenses: lenses)
+                } header: { Text("Investor lens") } footer: {
+                    Text("Sets the bar the report card grades a business against. It never changes a valuation — fair value, margin of safety and the verdict are the same numbers whichever you pick.")
                 }
 
                 Section {
@@ -81,7 +94,10 @@ struct SettingsView: View {
             .scrollContentBackground(.hidden)
             .background(Theme.background)
             .navigationTitle("Settings")
-            .onAppear { name = settings.identity?.fullName ?? ""; email = settings.identity?.email ?? "" }
+            .onAppear {
+                name = settings.identity?.fullName ?? ""; email = settings.identity?.email ?? ""
+                if lenses.isEmpty { lenses = settings.repository.lenses() }
+            }
             .confirmationDialog("This removes your SEC identity from Keychain and restarts onboarding.", isPresented: $showResetConfirm, titleVisibility: .visible) {
                 Button("Clear & restart", role: .destructive) { settings.identity = nil; settings.resetOnboarding() }
             }

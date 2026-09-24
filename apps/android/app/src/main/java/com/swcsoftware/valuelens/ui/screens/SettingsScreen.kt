@@ -66,6 +66,12 @@ fun SettingsScreen(state: AppState, onReplayOnboarding: () -> Unit, onGlossary: 
             TextButton(onGlossary) { Text("Glossary — what these terms mean", color = VL.accent) }
         }
 
+        SectionHeader("Layout", "Two presentations of the same numbers. Each preview is the real layout, drawn on a bundled Apple sample.")
+        Card { LayoutPicker(state.layoutStyle, state.investorLens) { state.updateLayoutStyle(it) } }
+
+        SectionHeader("Investor lens", "Sets the bar the report card grades a business against. It never changes a valuation — fair value, margin of safety and the verdict are the same numbers whichever you pick.")
+        Card { LensPicker(state.investorLens, { state.updateInvestorLens(it) }) }
+
         SectionHeader(
             "Appearance",
             "Market price stays amber and fair value stays mint in every theme — that pair is how you read a valuation, so it is never restyled. An accent that would be unreadable on the current background is not offered.",
@@ -97,7 +103,7 @@ fun SettingsScreen(state: AppState, onReplayOnboarding: () -> Unit, onGlossary: 
         Card(Modifier.padding(top = 8.dp)) {
             val r = state.rates
             Text(if (r != null) "FRED rates as of ${r.as_of}: AAA ${r.aaa_yield_pct}% · 10-yr ${r.treasury_10y_pct}%" else "Rates not loaded yet", color = VL.textPrimary, style = MaterialTheme.typography.bodySmall)
-            TextButton({ scope.launch { state.refreshRates() } }) { Text("Refresh rates", color = VL.value) }
+            TextButton({ scope.launch { state.refreshRates() } }) { Text("Refresh rates", color = VL.accent) }
         }
 
         SectionHeader("Valuation assumptions", "Blank = engine live/default value. Every report shows which values were used.")
@@ -115,7 +121,7 @@ fun SettingsScreen(state: AppState, onReplayOnboarding: () -> Unit, onGlossary: 
 
         SectionHeader("Onboarding")
         Card(Modifier.padding(top = 8.dp)) {
-            TextButton({ state.updateOnboarded(false); onReplayOnboarding() }) { Text("Replay guided onboarding", color = VL.value) }
+            TextButton({ state.updateOnboarded(false); onReplayOnboarding() }) { Text("Replay guided onboarding", color = VL.accent) }
             TextButton({ state.clearIdentity(); onReplayOnboarding() }) { Text("Clear identity & restart", color = VL.danger) }
         }
 

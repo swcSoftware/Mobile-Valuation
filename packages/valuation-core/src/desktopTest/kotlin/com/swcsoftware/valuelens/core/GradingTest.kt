@@ -133,6 +133,14 @@ class GradingTest {
         }
     }
 
+    @Test fun lensCopyQuotesTheLiveRules() {
+        val lenses = Grading.lenses().associateBy { it.key }
+        assertEquals(listOf("VALUE", "GROWTH"), Grading.lenses().map { it.key }, "Value is listed first — it is the default")
+        assertEquals("A at 10% a year or better", lenses.getValue("VALUE").growthRule)
+        assertEquals("A at 25% a year or better", lenses.getValue("GROWTH").growthRule)
+        lenses.values.forEach { assertTrue(it.blurb.length > 40, "${it.key} needs a real description") }
+    }
+
     @Test fun theFacadeRoundTrips() {
         val raw = javaClass.getResource("/fixtures/O.json")!!.readText()
         // Grading reads the report it is handed and nothing else; a fetcher that refuses every

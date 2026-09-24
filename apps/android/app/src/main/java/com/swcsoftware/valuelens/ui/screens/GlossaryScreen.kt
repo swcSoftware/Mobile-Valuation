@@ -25,7 +25,7 @@ import com.swcsoftware.valuelens.ui.theme.VL
 fun GlossaryScreen(state: AppState, onBack: () -> Unit) {
     Column(Modifier.fillMaxSize().background(VL.background)) {
         Row(Modifier.fillMaxWidth().background(VL.surface).padding(8.dp, 12.dp), verticalAlignment = Alignment.CenterVertically) {
-            TextButton(onBack) { Text("‹ Back", color = VL.value) }
+            TextButton(onBack) { Text("‹ Back", color = VL.accent) }
             Text("Glossary", fontWeight = FontWeight.Bold, color = VL.textPrimary, modifier = Modifier.weight(1f), textAlign = androidx.compose.ui.text.style.TextAlign.Center)
             androidx.compose.foundation.layout.Spacer(Modifier.padding(horizontal = 32.dp))
         }

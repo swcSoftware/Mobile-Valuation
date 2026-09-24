@@ -49,13 +49,13 @@ fun WatchlistScreen(state: AppState, onOpen: (CompanyRef) -> Unit, onSearch: () 
         Row(Modifier.fillMaxWidth().padding(20.dp, 28.dp, 20.dp, 8.dp), verticalAlignment = Alignment.CenterVertically) {
             Text("Watchlist", style = MaterialTheme.typography.displaySmall, color = VL.textPrimary, modifier = Modifier.weight(1f))
             if (refreshing) CircularProgressIndicator(Modifier.width(20.dp).height(20.dp), strokeWidth = 2.dp)
-            else if (state.watchlist.isNotEmpty()) TextButton({ scope.launch { refreshing = true; state.refreshWatchlist(); refreshing = false } }) { Text("Refresh", color = VL.value) }
+            else if (state.watchlist.isNotEmpty()) TextButton({ scope.launch { refreshing = true; state.refreshWatchlist(); refreshing = false } }) { Text("Refresh", color = VL.accent) }
         }
         if (state.watchlist.isEmpty()) {
             Column(Modifier.fillMaxSize().padding(40.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
                 Text("No companies yet", style = MaterialTheme.typography.titleMedium, color = VL.textPrimary)
                 Text("Search for a ticker to value it from its SEC filings.", color = VL.textSecondary, modifier = Modifier.padding(top = 6.dp))
-                TextButton(onSearch) { Text("Search", color = VL.value) }
+                TextButton(onSearch) { Text("Search", color = VL.accent) }
             }
         } else {
             LazyColumn(Modifier.fillMaxSize(), contentPadding = androidx.compose.foundation.layout.PaddingValues(16.dp, 4.dp, 16.dp, 24.dp)) {

@@ -13,6 +13,9 @@ protocol ValuationRepository: Sendable {
     /// investor lens. Every judgement comes from the core (Grading.kt); the layout only draws it.
     func reportCard(_ report: ValuationReport, lens: InvestorLens) async -> ReportCardSummary?
     func glossary() -> [GlossaryEntry]
+    /// The investor lenses with their copy and live example rule, from the core. Available before
+    /// any report exists, so onboarding can ask the question without restating the rules in Swift.
+    func lenses() -> [LensInfo]
     /// Prefilled GitHub issue URL for a concept-map gap report. No token, no server — the user
     /// reviews the text in their browser and decides whether to submit it.
     func coverageIssueURL(for report: ValuationReport) -> URL?
@@ -188,5 +191,17 @@ struct VerdictChip: Codable, Sendable, Equatable {
     let label: String
     /// good / mid / bad / none
     let tone: String
+}
+
+/// One investor lens as the user meets it (Grading.lenses() in the core).
+struct LensInfo: Codable, Sendable, Equatable, Identifiable {
+    /// VALUE / GROWTH — what gets stored and passed back to the core.
+    let key: String
+    let name: String
+    let blurb: String
+    /// The live revenue-growth rule for this lens, e.g. "A at 10% a year or better".
+    let growthRule: String
+    var id: String { key }
+    var lens: InvestorLens { InvestorLens(rawValue: key) ?? .default }
 }
 
