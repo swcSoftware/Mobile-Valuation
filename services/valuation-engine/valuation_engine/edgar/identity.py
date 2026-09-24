@@ -89,7 +89,7 @@ def no_annual_data_reason(ticker: str, p: FilerProfile | None) -> str:
     if p is None:
         return f"{ticker} has no 10-K income statement data on EDGAR (foreign filer, fund, SPAC or new listing)."
     if p.is_foreign_private_issuer:
-        return f"{ticker} ({p.name}) is a foreign private issuer that files 20-F/40-F reports, which ValueLens doesn't parse yet."
+        return f"{ticker} ({p.name}) is a foreign private issuer that files 20-F/40-F reports, which Alpha doesn't parse yet."
     if p.is_fund:
         return f"{ticker} ({p.name}) is a fund or trust, not an operating company; it has no 10-K to value."
     if p.is_new_listing and p.latest_10k is None:
@@ -97,7 +97,7 @@ def no_annual_data_reason(ticker: str, p: FilerProfile | None) -> str:
         return f"{ticker} ({p.name}) listed recently{first} and hasn't filed its first 10-K yet. Come back after its fiscal year-end report."
     if p.latest_10k is None:
         return f"{ticker} ({p.name}) has no 10-K on file with SEC."
-    return f"{ticker} ({p.name}) files 10-Ks but none carry XBRL income-statement facts ValueLens can read."
+    return f"{ticker} ({p.name}) files 10-Ks but none carry XBRL income-statement facts Alpha can read."
 
 
 def is_plausible_predecessor(successor: FilerProfile, candidate: FilerProfile, today: date) -> bool:

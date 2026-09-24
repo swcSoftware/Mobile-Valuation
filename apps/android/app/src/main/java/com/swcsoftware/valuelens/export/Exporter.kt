@@ -25,7 +25,7 @@ object Exporter {
     private const val BG = 0xFF0B0D10.toInt(); private const val MINT = 0xFF2ED99E.toInt(); private const val AMBER = 0xFFF5A623.toInt()
     private const val T1 = 0xFFF2F2F2.toInt(); private const val T2 = 0xFF9EA3AB.toInt(); private const val T3 = 0xFF6B7079.toInt(); private const val RED = 0xFFEF5450.toInt()
 
-    private fun docsDir(context: Context): File = File(context.getExternalFilesDir(android.os.Environment.DIRECTORY_DOCUMENTS) ?: context.filesDir, "ValueLens").apply { mkdirs() }
+    private fun docsDir(context: Context): File = File(context.getExternalFilesDir(android.os.Environment.DIRECTORY_DOCUMENTS) ?: context.filesDir, "Alpha").apply { mkdirs() }
 
     private fun share(context: Context, file: File, mime: String) {
         val uri = FileProvider.getUriForFile(context, "${context.packageName}.files", file)
@@ -46,7 +46,7 @@ object Exporter {
         fun line(text: String, p: Paint, dy: Float = 14f) { c.drawText(text, left, y, p); y += dy }
         fun row(l: String, v: String, p: Paint = paint(Color.BLACK, 9f)) { c.drawText(l, left, y, p); val w = p.measureText(v); c.drawText(v, right - w, y, p); y += 13f }
         fun header(t: String) { y += 8f; line(t.uppercase(), paint(Color.GRAY, 8f, bold = true), 12f) }
-        line("ValueLens Valuation Dossier", paint(Color.BLACK, 18f, bold = true), 20f)
+        line("Alpha Valuation Dossier", paint(Color.BLACK, 18f, bold = true), 20f)
         line("${r.company.displayName} (${r.company.ticker}) · CIK ${r.company.cik} · ${r.generatedAt.take(10)}", paint(Color.DKGRAY, 10f), 18f)
         // The dossier is a record: keep the filed name alongside the display form.
         if (r.company.displayName != r.company.name) line("Filed with the SEC as ${r.company.name}", paint(Color.GRAY, 8f), 12f)
@@ -67,7 +67,7 @@ object Exporter {
         line("AAA ${Fmt.pct(a.aaaYieldPct, 2)} · 10-yr ${Fmt.pct(a.treasury10yPct, 2)} · hurdle ${Fmt.pct(a.hurdleRatePct)} · ERP ${Fmt.pct(a.equityRiskPremiumPct)} · β ${Fmt.number(a.beta)} · g ${Fmt.pct(a.terminalGrowthPct)} · exit ${Fmt.number(a.exitMultiple, 0)}× · ${a.rateSource}", paint(Color.BLACK, 8f))
         y = 760f; line(r.disclaimer, paint(Color.GRAY, 7f))
         doc.finishPage(page)
-        val file = File(docsDir(context), "ValueLens-${r.company.ticker}-${System.currentTimeMillis()}.pdf")
+        val file = File(docsDir(context), "Alpha-${r.company.ticker}-${System.currentTimeMillis()}.pdf")
         file.outputStream().use { doc.writeTo(it) }; doc.close()
         share(context, file, "application/pdf")
     }
@@ -80,7 +80,7 @@ object Exporter {
         val res = r.result(model); val mos = res.marginOfSafety; val v = mos.verdictEnum
         val vc = when (v) { com.swcsoftware.valuelens.domain.Verdict.DEEP_VALUE, com.swcsoftware.valuelens.domain.Verdict.WITHIN_MARGIN -> MINT; com.swcsoftware.valuelens.domain.Verdict.THIN_MARGIN -> 0xFFFAC73F.toInt(); com.swcsoftware.valuelens.domain.Verdict.ABOVE_INTRINSIC -> RED; else -> T3 }
         c.drawCircle(pad + 28f, pad + 28f, 28f, Paint(Paint.ANTI_ALIAS_FLAG).apply { color = MINT; style = Paint.Style.STROKE; strokeWidth = 8f })
-        c.drawText("ValueLens", pad + 74f, pad + 44f, paint(T1, 44f, bold = true))
+        c.drawText("Alpha", pad + 74f, pad + 44f, paint(T1, 44f, bold = true))
         val sub = "${model.label} · ${model.subtitle}"; val sp = paint(T2, 26f); c.drawText(sub, w - pad - sp.measureText(sub), pad + 40f, sp)
         c.drawText(r.company.ticker, pad, h * 0.42f, paint(T1, 110f, bold = true))
         c.drawText(r.company.displayName, pad, h * 0.42f + 50f, paint(T2, 36f))
@@ -90,7 +90,7 @@ object Exporter {
         mos.marginOfSafetyPct?.let { stat("MARGIN OF SAFETY", (if (it < 0) "−" else "") + Fmt.pct(kotlin.math.abs(it), 0), vc) }
         c.drawText(v.title.uppercase(), pad, statY + 150f, paint(vc, 30f, bold = true))
         c.drawText(r.disclaimer, pad, h - pad, paint(T3, 22f))
-        val file = File(docsDir(context), "ValueLens-${r.company.ticker}-${if (square) "1x1" else "16x9"}.png")
+        val file = File(docsDir(context), "Alpha-${r.company.ticker}-${if (square) "1x1" else "16x9"}.png")
         file.outputStream().use { bmp.compress(Bitmap.CompressFormat.PNG, 100, it) }
         share(context, file, "image/png")
     }

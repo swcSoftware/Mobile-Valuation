@@ -109,7 +109,7 @@ object Coverage {
 
     /** Markdown body for a GitHub issue — reviewed by the user before they submit it. */
     fun issueBody(r: CoverageReport): String = buildString {
-        appendLine("Automatic concept-map gap report from the ValueLens app.")
+        appendLine("Automatic concept-map gap report from the Alpha app.")
         appendLine()
         appendLine("| | |")
         appendLine("|---|---|")

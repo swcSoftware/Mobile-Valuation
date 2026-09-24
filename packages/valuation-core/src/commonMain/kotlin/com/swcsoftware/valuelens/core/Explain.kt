@@ -16,14 +16,14 @@ data class GlossaryEntry(val key: String, val term: String, val plain: String, v
 object Explain {
     val glossary: List<GlossaryEntry> = listOf(
         GlossaryEntry("intrinsic_value", "Intrinsic value",
-            "What a business is actually worth per share, judged by the cash it earns — not by what people are paying for it today. ValueLens estimates it two ways from the company's own SEC filings.",
+            "What a business is actually worth per share, judged by the cash it earns — not by what people are paying for it today. Alpha estimates it two ways from the company's own SEC filings.",
             "Present value of the cash an owner can take out of the business over its life. Model A uses Graham's earnings multiple and Buffett's owner earnings; Model B discounts projected free cash flow to the firm at WACC."),
         GlossaryEntry("margin_of_safety", "Margin of safety",
             "The discount between the price and what the business is worth. Buying at 25–50% below intrinsic value leaves room to be wrong. If the price is above the value, there is no margin — just risk.",
             "MoS = 1 − price ÷ intrinsic value. Graham's central rule: the estimate is uncertain, so demand a price far enough below it that errors in the estimate don't lose money."),
         GlossaryEntry("owner_earnings", "Owner earnings",
             "The cash a business could hand to its owners each year after paying to keep itself running. Buffett's preferred measure of what a company really makes.",
-            "Net income + depreciation & amortization − maintenance capital expenditure ± change in working capital. ValueLens proxies maintenance capex as min(capex, D&A) and labels it."),
+            "Net income + depreciation & amortization − maintenance capital expenditure ± change in working capital. Alpha proxies maintenance capex as min(capex, D&A) and labels it."),
         GlossaryEntry("free_cash_flow", "Free cash flow",
             "Cash from operations minus what was spent on equipment and buildings. It's the money left over after the business invests in itself.",
             "Cash from operating activities − capital expenditures (levered FCF). Model B uses FCFF — unlevered, after-tax operating cash flow before interest."),
@@ -34,7 +34,7 @@ object Explain {
             "The return investors and lenders expect for putting money into this company. Future cash is discounted at this rate — the riskier the business, the higher it is and the less future cash is worth today.",
             "Weighted average of cost of equity (CAPM: risk-free + β × equity risk premium) and after-tax cost of debt, weighted by market value of equity and debt."),
         GlossaryEntry("beta", "Beta",
-            "How much the stock swings compared with the overall market. 1.0 moves with the market; 0.5 is calmer; 1.5 is wilder. ValueLens measures it from five years of monthly prices — it is never just assumed.",
+            "How much the stock swings compared with the overall market. 1.0 moves with the market; 0.5 is calmer; 1.5 is wilder. Alpha measures it from five years of monthly prices — it is never just assumed.",
             "Slope of the regression of the stock's monthly returns on the S&P 500's over 5 years (≥ 36 months required). R² shows how much of the movement the market explains."),
         GlossaryEntry("book_value", "Book value",
             "What the accountants say the company owns minus what it owes. A floor of sorts — though for modern companies brands and software rarely show up in it.",
@@ -43,7 +43,7 @@ object Explain {
             "A quick rule from Benjamin Graham: a company's value is its earnings per share times a multiple that grows with expected growth. Adjusted for today's interest rates.",
             "V* = EPS × (8.5 + 2g) × 4.4 ÷ Y, where g is expected growth (capped at 15%) and Y the current AAA corporate bond yield."),
         GlossaryEntry("data_checks", "Data checks",
-            "Before ValueLens shows a value, it tests the numbers it pulled from SEC: do the books balance, are the figures recent, is anything assumed rather than measured? Failures block the value; warnings are shown beside it.",
+            "Before Alpha shows a value, it tests the numbers it pulled from SEC: do the books balance, are the figures recent, is anything assumed rather than measured? Failures block the value; warnings are shown beside it.",
             "Balance-sheet identity, EPS vs NI/shares, share-count plausibility, TTM period alignment, filing and price freshness, sign sanity, and provenance of beta, tax rate, cost of debt and rates."),
     )
 
@@ -66,9 +66,9 @@ object Explain {
         val name = CompanyNames.display(r.company.name, r.company.ticker).trim().trimEnd('.')
         val mos = res.marginOfSafety
         val iv = mos.intrinsicValue; val p = mos.marketPrice
-        if (iv == null) return "ValueLens couldn't estimate a per-share value for $name from its filings yet — see the data checks below for why."
+        if (iv == null) return "Alpha couldn't estimate a per-share value for $name from its filings yet — see the data checks below for why."
         val ivS = money(iv)
-        if (p == null) return "Based on its filings, ValueLens estimates $name is worth about $ivS per share. Enter a market price to see whether that's a bargain."
+        if (p == null) return "Based on its filings, Alpha estimates $name is worth about $ivS per share. Enter a market price to see whether that's a bargain."
         val pS = money(p)
         val m = mos.marginOfSafetyPct ?: 0.0
         return when (mos.verdict) {

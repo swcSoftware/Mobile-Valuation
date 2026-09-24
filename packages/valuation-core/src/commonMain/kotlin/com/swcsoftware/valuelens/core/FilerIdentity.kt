@@ -54,11 +54,11 @@ object FilerIdentity {
     /** Honest explanation for a filer with no 10-K data, from its filing history. */
     fun noAnnualDataReason(ticker: String, p: FilerProfile?): String = when {
         p == null -> "$ticker has no 10-K income statement data on EDGAR (foreign filer, fund, SPAC or new listing)."
-        p.isForeignPrivateIssuer -> "$ticker (${p.name}) is a foreign private issuer that files 20-F/40-F reports, which ValueLens doesn't parse yet."
+        p.isForeignPrivateIssuer -> "$ticker (${p.name}) is a foreign private issuer that files 20-F/40-F reports, which Alpha doesn't parse yet."
         p.isFund -> "$ticker (${p.name}) is a fund or trust, not an operating company; it has no 10-K to value."
         p.isNewListing && p.latest10K == null -> "$ticker (${p.name}) listed recently${p.firstFiling?.let { " (first SEC filing $it)" } ?: ""} and hasn't filed its first 10-K yet. Come back after its fiscal year-end report."
         p.latest10K == null -> "$ticker (${p.name}) has no 10-K on file with SEC."
-        else -> "$ticker (${p.name}) files 10-Ks but none carry XBRL income-statement facts ValueLens can read."
+        else -> "$ticker (${p.name}) files 10-Ks but none carry XBRL income-statement facts Alpha can read."
     }
 
     fun searchToken(name: String): String? =

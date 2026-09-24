@@ -21,8 +21,8 @@ struct TagIndexView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 12) {
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("Every figure ValueLens shows is read from a company's SEC filing, where it is recorded under a standard tag. These are the tags behind the terms you see, if you want to find a number in the filing yourself.")
-                    Text("On sec.gov, open the company's 10-K or 10-Q in the Inline XBRL viewer (the iXBRL link beside the document) and search for the tag. Where a term lists several tags, ValueLens uses the first one the company actually filed.")
+                    Text("Every figure Alpha shows is read from a company's SEC filing, where it is recorded under a standard tag. These are the tags behind the terms you see, if you want to find a number in the filing yourself.")
+                    Text("On sec.gov, open the company's 10-K or 10-Q in the Inline XBRL viewer (the iXBRL link beside the document) and search for the tag. Where a term lists several tags, Alpha uses the first one the company actually filed.")
                 }
                 .font(.caption)
                 .foregroundStyle(Theme.textSecondary)

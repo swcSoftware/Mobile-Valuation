@@ -53,7 +53,7 @@ struct CoverageGapCard: View {
                             }
                         }
                         Button(action: onReport) {
-                            Label("Report this to the ValueLens team", systemImage: "arrow.up.forward.square")
+                            Label("Report this to the Alpha team", systemImage: "arrow.up.forward.square")
                                 .font(.caption)
                         }
                         .buttonStyle(.bordered)

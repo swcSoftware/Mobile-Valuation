@@ -51,7 +51,7 @@ fun WithheldValueCard(r: ValuationReport, res: ModelResult) {
             val names = r.dataChecks.filter { it.status == "fail" }.joinToString(", ") { it.label }
             "Some of the numbers pulled from SEC didn't pass verification" +
                 (if (names.isEmpty()) "" else " ($names)") +
-                ", so ValueLens won't show a fair value it can't stand behind."
+                ", so Alpha won't show a fair value it can't stand behind."
         }
         r.price == null && res.marginOfSafety.intrinsicValue != null ->
             "No market quote was available, so the margin of safety can't be computed. Tap the price to enter one manually."

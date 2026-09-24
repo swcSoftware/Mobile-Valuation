@@ -1,6 +1,10 @@
 # Working in this repo
 
-ValueLens: native iOS + Android value-investing app over SEC EDGAR. One Kotlin Multiplatform core
+ValueLens (the project's working name) ships to users as **Alpha** — App Store name "Alpha - Stock
+Valuations", home-screen name "Alpha" (owner decision, 2026-09-24). Every string a user reads says
+Alpha; code, folders, the bundle ID `com.swcsoftware.valuelens`, the `valuelens://` link scheme, the
+`valuelens:derived` data key, log tags and network identifiers keep the working name, deliberately.
+Native iOS + Android value-investing app over SEC EDGAR. One Kotlin Multiplatform core
 runs **on the device**; there is no server. Deep context lives in `docs/` — start with
 [docs/TASKS.md](docs/TASKS.md) (current sprint) and [docs/SPRINTS.md](docs/SPRINTS.md) (what shipped
 when). This file is the index and the tripwires.

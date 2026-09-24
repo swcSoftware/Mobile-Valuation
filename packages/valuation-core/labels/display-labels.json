@@ -1,7 +1,7 @@
 {
   "version": "2026-09-24",
   "howToEdit": [
-    "This file controls the words ValueLens shows for SEC tags and model keys. It never changes a number.",
+    "This file controls the words the app shows for SEC tags and model keys. It never changes a number.",
     "Edit a label on the right-hand side, keep the key on the left exactly as it is, then rebuild; the test suite checks the file.",
     "Adding a tag here does NOT make the app read it — that is the concept map (Concepts.kt / tags.py), which goes through review.",
     "tags: XBRL tag -> what it is. concepts: the app's own line items. inputs: numbers a model uses.",
@@ -90,7 +90,7 @@
     "us-gaap:WeightedAverageNumberOfDilutedSharesOutstanding": "Average diluted shares outstanding",
     "us-gaap:WeightedAverageNumberOfShareOutstandingBasicAndDiluted": "Average shares outstanding (basic and diluted)",
     "us-gaap:WeightedAverageNumberOfSharesOutstandingBasic": "Average basic shares outstanding",
-    "valuelens:derived": "Calculated by ValueLens from filed figures"
+    "valuelens:derived": "Calculated by Alpha from filed figures"
   },
   "concepts": {
     "revenue": "Revenue",

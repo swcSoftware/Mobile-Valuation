@@ -50,9 +50,9 @@ fun TagIndexScreen(onBack: () -> Unit) {
             Spacer(Modifier.padding(horizontal = 32.dp))
         }
         Column(Modifier.verticalScroll(rememberScrollState()).padding(16.dp)) {
-            Text("Every figure ValueLens shows is read from a company's SEC filing, where it is recorded under a standard tag. These are the tags behind the terms you see, if you want to find a number in the filing yourself.",
+            Text("Every figure Alpha shows is read from a company's SEC filing, where it is recorded under a standard tag. These are the tags behind the terms you see, if you want to find a number in the filing yourself.",
                  style = MaterialTheme.typography.bodySmall, color = VL.textSecondary)
-            Text("On sec.gov, open the company's 10-K or 10-Q in the Inline XBRL viewer (the iXBRL link beside the document) and search for the tag. Where a term lists several tags, ValueLens uses the first one the company actually filed.",
+            Text("On sec.gov, open the company's 10-K or 10-Q in the Inline XBRL viewer (the iXBRL link beside the document) and search for the tag. Where a term lists several tags, Alpha uses the first one the company actually filed.",
                  style = MaterialTheme.typography.bodySmall, color = VL.textSecondary, modifier = Modifier.padding(top = 8.dp, bottom = 12.dp))
             OutlinedTextField(query, { query = it }, label = { Text("Search terms or tags") }, singleLine = true,
                               modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp))

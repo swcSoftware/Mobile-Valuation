@@ -39,7 +39,7 @@ targets:
     info:
       path: ValueLens/Info.plist
       properties:
-        CFBundleDisplayName: ValueLens
+        CFBundleDisplayName: Alpha
         UILaunchScreen: {}
         UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
         UIFileSharingEnabled: true

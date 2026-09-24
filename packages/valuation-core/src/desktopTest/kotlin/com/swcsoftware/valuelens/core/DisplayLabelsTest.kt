@@ -118,7 +118,7 @@ class DisplayLabelsTest {
 
     @Test fun theIndexCoversEveryTagInTryOrder() {
         val index = DisplayLabels.index()
-        assertEquals(Concepts.ALL.size + 1, index.size, "one entry per concept, plus the ValueLens-derived note")
+        assertEquals(Concepts.ALL.size + 1, index.size, "one entry per concept, plus the derived-figures note")
         val revenue = index.first { it.key == "revenue" }
         assertEquals("Revenue", revenue.term)
         assertEquals(Concepts.ALL.first { it.key == "revenue" }.tags.map { "us-gaap:$it" }, revenue.tags.map { it.tag },

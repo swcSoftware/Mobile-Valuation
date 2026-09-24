@@ -14,13 +14,13 @@ enum Exporter {
         let stamp = ISO8601DateFormatter().string(from: .now).replacingOccurrences(of: ":", with: "-")
         switch kind {
         case .pdf:
-            let url = docs.appending(path: "ValueLens-\(report.company.ticker)-\(stamp).pdf")
+            let url = docs.appending(path: "Alpha-\(report.company.ticker)-\(stamp).pdf")
             return renderPDF(DossierView(report: report, model: model), to: url) ? url : nil
         case .cardSquare:
-            let url = docs.appending(path: "ValueLens-\(report.company.ticker)-1x1.png")
+            let url = docs.appending(path: "Alpha-\(report.company.ticker)-1x1.png")
             return renderPNG(ShareCardView(report: report, model: model, aspect: .square).frame(width: 1080, height: 1080), to: url) ? url : nil
         case .cardWide:
-            let url = docs.appending(path: "ValueLens-\(report.company.ticker)-16x9.png")
+            let url = docs.appending(path: "Alpha-\(report.company.ticker)-16x9.png")
             return renderPNG(ShareCardView(report: report, model: model, aspect: .wide).frame(width: 1920, height: 1080), to: url) ? url : nil
         }
     }

@@ -66,7 +66,7 @@ fun CoverageGapCard(coverage: CoverageReport, expert: Boolean, onReport: () -> U
                         if (expert) g.candidates.forEach { Text(com.swcsoftware.valuelens.core.DisplayLabels.sentence(it), fontSize = 11.sp, color = VL.info, maxLines = 2) }
                     }
                 }
-                TextButton(onReport) { Text("Report this to the ValueLens team", color = VL.accent, fontSize = 13.sp) }
+                TextButton(onReport) { Text("Report this to the Alpha team", color = VL.accent, fontSize = 13.sp) }
                 Text("Opens a prefilled report in your browser. Nothing is sent until you submit it, and it contains only public SEC identifiers — no personal data.",
                     style = MaterialTheme.typography.bodySmall, color = VL.textTertiary)
             }

@@ -22,7 +22,7 @@ struct WithheldValueCard: View {
         if report.checksFailed {
             let failed = report.dataChecks.filter { $0.status == "fail" }
             let names = failed.map(\.label).joined(separator: ", ")
-            return "Some of the numbers pulled from SEC didn't pass verification\(failed.isEmpty ? "" : " (\(names))"), so ValueLens won't show a fair value it can't stand behind."
+            return "Some of the numbers pulled from SEC didn't pass verification\(failed.isEmpty ? "" : " (\(names))"), so Alpha won't show a fair value it can't stand behind."
         }
         if report.price == nil, result.intrinsicValuePerShare != nil {
             return "No market quote was available, so the margin of safety can't be computed. Tap the price to enter one manually."

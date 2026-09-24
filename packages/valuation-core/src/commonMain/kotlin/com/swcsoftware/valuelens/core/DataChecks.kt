@@ -31,7 +31,7 @@ object DataChecks {
         // 0. Filer identity (successor-issuer substitution is visible, never silent)
         if (predecessor != null) {
             prov["filer"] = "predecessor"
-            add("filer_identity", "Filings belong to this ticker", "warn", "SEC lists ${fin.ticker} under ${predecessor.successorName}, a new holding company with no 10-K history yet. ValueLens is using the predecessor ${predecessor.ref.name} (CIK ${predecessor.ref.cik})" + (if (predecessor.viaSuccessorNotice) ", confirmed by an 8-K12B successor notice." else "; same industry code and filing timeline."), "cik")
+            add("filer_identity", "Filings belong to this ticker", "warn", "SEC lists ${fin.ticker} under ${predecessor.successorName}, a new holding company with no 10-K history yet. Alpha is using the predecessor ${predecessor.ref.name} (CIK ${predecessor.ref.cik})" + (if (predecessor.viaSuccessorNotice) ", confirmed by an 8-K12B successor notice." else "; same industry code and filing timeline."), "cik")
         } else {
             prov["filer"] = "sec"
             add("filer_identity", "Filings belong to this ticker", "pass", "Ticker ${fin.ticker} resolves to CIK ${fin.cik} with 10-K history.", "cik")

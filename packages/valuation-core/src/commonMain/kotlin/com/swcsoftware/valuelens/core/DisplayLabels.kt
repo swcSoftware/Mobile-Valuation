@@ -109,7 +109,7 @@ object DisplayLabels {
     } + IndexEntry(
         term = tag("valuelens:derived"),
         key = "derived",
-        tags = listOf(IndexTag("valuelens:derived", "Not an SEC tag: ValueLens computed this from other filed figures, and the calculation is shown with the number.")),
+        tags = listOf(IndexTag("valuelens:derived", "Not an SEC tag: Alpha computed this from other filed figures, and the calculation is shown with the number.")),
     )
 
     // ---- mechanics -----------------------------------------------------------------------

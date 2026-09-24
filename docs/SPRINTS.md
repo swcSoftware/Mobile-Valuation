@@ -282,3 +282,13 @@ amortization − …".
 
 **Tests**: 172 (31 engine · 78 core · 22 Android · 41 iOS), all green.
 
+**Public name, 2026-09-24 (owner decision).** The app ships as **Alpha**: App Store name "Alpha -
+Stock Valuations" (24 of 30 characters), home-screen name "Alpha". The bundle ID stays
+`com.swcsoftware.valuelens` — invisible to users and permanent once an App Store record exists.
+Every user-visible "ValueLens" became "Alpha" (41 string literals across both apps, the core and the
+Python reference, plus the display names, the labels file and the bundled sample reports' footer).
+Two catches: Android's manifest hard-coded the launcher label, so changing `app_name` alone would
+have left the icon saying ValueLens; and the sample reports carried the old footer into offline mode
+and the Settings previews. Identifiers were deliberately left alone (log tags, network headers, the
+link scheme, class names). Verified: iOS home screen and the Android APK label both read "Alpha".
+

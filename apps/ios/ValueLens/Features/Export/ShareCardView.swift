@@ -16,7 +16,7 @@ struct ShareCardView: View {
                 HStack {
                     HStack(spacing: 14) {
                         Circle().stroke(Theme.value, lineWidth: 8).frame(width: 56, height: 56)
-                        Text("ValueLens").font(.system(size: 44, weight: .bold, design: .rounded)).foregroundStyle(Theme.textPrimary)
+                        Text("Alpha").font(.system(size: 44, weight: .bold, design: .rounded)).foregroundStyle(Theme.textPrimary)
                     }
                     Spacer()
                     Text(model.rawValue + " · " + model.subtitle).font(.system(size: 26, weight: .medium)).foregroundStyle(Theme.textSecondary)

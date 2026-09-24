@@ -7,7 +7,7 @@ final class LabelsTests: XCTestCase {
 
     func testTagsReadAsEnglish() {
         XCTAssertEqual(Labels.tag("us-gaap:EarningsPerShareDiluted"), "Earnings per share (diluted)")
-        XCTAssertEqual(Labels.tag("valuelens:derived"), "Calculated by ValueLens from filed figures")
+        XCTAssertEqual(Labels.tag("valuelens:derived"), "Calculated by Alpha from filed figures")
     }
 
     func testAKeyKeepsItsMeaningInsideOneMetric() {
