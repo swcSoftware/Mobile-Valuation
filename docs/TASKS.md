@@ -419,7 +419,8 @@ blast radius with `scripts/value_snapshot.py` (new: snapshot the universe before
       when only short-term debt is found. Remainder (Deere, O's term loans, PGR) → #93.
 - [ ] #72 AGNC has no revenue tag (mREIT net interest income)
 - [ ] #53 KO's TTM stops at April; find the missing Q2 10-Q tag
-- [ ] #6 interest-expense variants so cost of debt is read, not assumed
+- [x] #6 interest expense — nothing to map: AAPL files no interest figure; DHI's `InterestCostsIncurred`
+      was tried and reverted (it inflated DHI's EBIT proxy ~5%). Both keep the labeled assumed rate.
 
 ## Backlog — candidate sprints (proposed 2026-09-26, not yet ordered)
 
