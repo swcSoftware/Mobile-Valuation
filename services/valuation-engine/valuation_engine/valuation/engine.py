@@ -88,7 +88,8 @@ async def build_valuation(ticker: str, user_agent: str | None, overrides: dict[s
     if ttm:
         for k in ("revenue", "net_income", "eps_diluted", "cfo", "fcf", "owner_earnings", "equity", "cash",
                   "total_debt", "total_liabilities", "roic", "roe", "current_ratio", "debt_to_equity",
-                  "operating_margin", "net_margin", "book_value_per_share"):
+                  "operating_margin", "net_margin", "book_value_per_share",
+                  "operating_income", "d_and_a"):   # EBITDA, for leverage when equity is negative (ISSUES #78)
             if k in ttm.values:
                 snapshot[k] = ttm.values[k].to_dict()
     history = [

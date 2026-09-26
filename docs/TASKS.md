@@ -409,7 +409,8 @@ blast radius with `scripts/value_snapshot.py` (new: snapshot the universe before
 - [x] #71 capex — the issue's diagnosis was wrong: LLY and VZ file annual capex under two "Other"
       tags. Both appended last to the map (**2 of 77** affected, values only appear). COP and PLD → #91.
       The weekly probe misled us: an "unusable" gap now also lists the tags the filer files instead.
-- [ ] #78 negative equity (MCD) — show the state and a leverage measure instead of dropping the tile
+- [x] #78 negative equity — classic "Debt load" reads "Negative equity · 3.1× EBITDA" for MCD instead of
+      vanishing; the report card gives the same measure, ungraded (grading it is an owner decision).
 - [x] #81 / Sprint 5 Track F — `total_debt` in the annual history; debt load now has a trend (debt ÷
       equity per year, positive-equity years only) with "lower is better" wording. Saved reports
       without the field still load and grade the same. Fixtures backfilled with the one new field.

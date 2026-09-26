@@ -103,12 +103,37 @@ object Explain {
             if (eq != null && ta != null && ta > 0) { val lev = ta / eq; out += Fact("Leverage", "${fixed(lev, 1)}× assets / equity", if (lev <= 10) "good" else if (lev <= 15) "neutral" else "bad", "The balance sheet holds ${fixed(lev, 1)} dollars of assets for every dollar of equity — normal for a bank is 8–12×.") }
         } else r.snapshot["debt_to_equity"]?.value?.let { de ->
             out += Fact("Debt load", "${fixed(de, 1)}× equity", if (de <= 0.5) "good" else if (de <= 1.5) "neutral" else "bad", "The company owes ${fixed(de, 1)} dollars of debt for every dollar of shareholders' equity.")
-        }
+        } ?: negativeEquityDebt(r)?.let { out += it }
         val cash = r.snapshot["cash"]?.value; val fcf = r.snapshot["fcf"]?.value
         if (cash != null && fcf != null) {
             out += Fact("Cash", "${compact(cash)} on hand · ${compact(fcf)} free cash flow", if (fcf > 0) "good" else "bad", "It holds ${compact(cash)} in cash and ${if (fcf > 0) "generated" else "burned"} ${compact(abs(fcf))} of free cash flow in the last twelve months.")
         }
         return out
+    }
+
+    /**
+     * Debt load for a company whose equity is zero or negative (MCD after decades of buybacks), where
+     * debt ÷ equity doesn't exist. Before ISSUES #78 the tile silently vanished; negative equity is
+     * material to a value investor, so say it, and measure debt against earnings instead.
+     * Never reached when debt ÷ equity exists.
+     */
+    fun negativeEquityDebt(r: ValuationReport): Fact? {
+        val equity = r.snapshot["equity"]?.value ?: return null
+        if (equity > 0) return null
+        val debt = r.snapshot["total_debt"]?.value
+        val lev = debtToEbitda(r)
+        return if (debt != null && lev != null) Fact("Debt load", "Negative equity · ${fixed(lev, 1)}× EBITDA",
+            if (lev <= 2.0) "good" else if (lev <= 3.5) "neutral" else "bad",
+            "Shareholders' equity is below zero (${compact(equity)}), usually after years of buybacks, so debt measured against equity has no meaning. Measured against earnings instead, it owes ${fixed(lev, 1)} dollars of debt for every dollar of EBITDA (operating income plus depreciation) a year.")
+        else Fact("Debt load", "Negative equity", "neutral",
+            "Shareholders' equity is below zero (${compact(equity)}), so debt measured against equity has no meaning, and earnings aren't available to measure it against instead.")
+    }
+
+    /** Total debt ÷ EBITDA (operating income + D&A, trailing twelve months); null unless both are positive. */
+    fun debtToEbitda(r: ValuationReport): Double? {
+        val debt = r.snapshot["total_debt"]?.value ?: return null
+        val ebitda = (r.snapshot["operating_income"]?.value ?: return null) + (r.snapshot["d_and_a"]?.value?.let { abs(it) } ?: return null)
+        return if (debt > 0 && ebitda > 0) debt / ebitda else null
     }
 
     fun checksSummary(r: ValuationReport): String {

@@ -91,7 +91,8 @@ object Grading {
             return GradedFact(
                 slot = "debt", label = "Debt load", value = null, grade = null,
                 rule = "Rule does not fit this filer", state = "ungradable",
-                why = "Equity is negative (${compact(equity)}), so debt measured against equity has no meaning for this company. We show nothing rather than a number that would mislead.",
+                why = "Equity is negative (${compact(equity)}), so debt measured against equity has no meaning for this company. We show nothing rather than a number that would mislead." +
+                    (Explain.debtToEbitda(r)?.let { " Measured against earnings instead, it owes ${fixed(it, 1)} dollars of debt for every dollar of EBITDA (operating income plus depreciation) a year — not graded, because no rule for that measure has been agreed." } ?: ""),
                 history = null,
             )
         }
