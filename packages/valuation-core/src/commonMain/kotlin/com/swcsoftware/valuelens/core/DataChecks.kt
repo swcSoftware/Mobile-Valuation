@@ -130,6 +130,10 @@ object DataChecks {
         if (skipDebtCoverage) add("debt_coverage", "Debt captured", "pass", "Bank/insurer: liabilities are mostly deposits or reserves; debt coverage check not applicable.")
         else if (liab != null && liab > 0 && t?.get("total_debt") == null)
             add("debt_coverage", "Debt captured", "warn", "No debt tags were found although total liabilities are ${PyFmt.commas(liab, 0)}. Leverage, WACC and invested capital may be understated.", "long_term_debt", "short_term_debt")
+        else if (t?.get("long_term_debt") == null && t?.get("short_term_debt") != null)
+            // Short-term debt alone is a warning sign, not a pass: Realty Income read as $1.4B of commercial
+            // paper against $25B of notes and graded A on debt (ISSUES #92). Deere still reads this way.
+            add("debt_coverage", "Debt captured", "warn", "Only short-term debt (${PyFmt.commas(t["short_term_debt"]!!.value, 0)}) was found; this filer reports no long-term debt in a form we read. Leverage, WACC and invested capital are likely understated.", "long_term_debt")
         else add("debt_coverage", "Debt captured", "pass", if (t?.get("total_debt") != null) "Total debt ${PyFmt.commas(t["total_debt"]!!.value, 0)} from short- and long-term debt tags." else "No liabilities reported.")
 
         // 8. Provenance of every assumption-prone input

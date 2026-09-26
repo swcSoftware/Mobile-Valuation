@@ -48,7 +48,7 @@ object Concepts {
         Concept("total_liabilities", "Total liabilities", Kind.INSTANT, listOf("Liabilities"), statement = "balance", requirement = "expected"),
         Concept("liabilities_and_equity", "Total liabilities & equity", Kind.INSTANT, listOf("LiabilitiesAndStockholdersEquity"), statement = "balance", requirement = "expected"),
         Concept("equity", "Shareholders' equity (book value)", Kind.INSTANT, listOf("StockholdersEquity", "StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest"), statement = "balance", requirement = "required"),
-        Concept("long_term_debt", "Long-term debt", Kind.INSTANT, listOf("LongTermDebtNoncurrent", "LongTermDebt", "LongTermDebtAndCapitalLeaseObligations"), statement = "balance"),
+        Concept("long_term_debt", "Long-term debt", Kind.INSTANT, listOf("LongTermDebtNoncurrent", "LongTermDebt", "LongTermDebtAndCapitalLeaseObligations", "LongTermNotesAndLoans", "NotesPayable"), statement = "balance"), // last two: ORCL, O, DHI (ISSUES #92)
         Concept("short_term_debt", "Short-term debt", Kind.INSTANT, listOf("DebtCurrent", "LongTermDebtCurrent", "ShortTermBorrowings", "CommercialPaper", "LongTermDebtAndCapitalLeaseObligationsCurrent"), statement = "balance"),
         Concept("goodwill", "Goodwill", Kind.INSTANT, listOf("Goodwill"), statement = "balance"),
         Concept("intangibles", "Intangible assets", Kind.INSTANT, listOf("IntangibleAssetsNetExcludingGoodwill", "FiniteLivedIntangibleAssetsNet"), statement = "balance"),

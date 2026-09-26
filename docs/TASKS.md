@@ -413,8 +413,9 @@ blast radius with `scripts/value_snapshot.py` (new: snapshot the universe before
 - [x] #81 / Sprint 5 Track F — `total_debt` in the annual history; debt load now has a trend (debt ÷
       equity per year, positive-equity years only) with "lower is better" wording. Saved reports
       without the field still load and grade the same. Fixtures backfilled with the one new field.
-- [ ] **#92 (found while doing #81)** Realty Income's debt is read as $1.4B of commercial paper; its
-      $25B of notes and $2.8B of term loans are tagged as components, so O grades **A** on debt load.
+- [x] **#92 (found while doing #81)** debt read as short-term only for O, ORCL and DHI. Two tags
+      appended last to long-term debt (**3 of 77**; ORCL's debt grade A → D); the data check now warns
+      when only short-term debt is found. Remainder (Deere, O's term loans, PGR) → #93.
 - [ ] #72 AGNC has no revenue tag (mREIT net interest income)
 - [ ] #53 KO's TTM stops at April; find the missing Q2 10-Q tag
 - [ ] #6 interest-expense variants so cost of debt is read, not assumed

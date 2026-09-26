@@ -143,8 +143,11 @@ CONCEPTS: list[Concept] = [
         "StockholdersEquity",
         "StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest",
     ), statement="balance", requirement="required"),
+    # LongTermNotesAndLoans (ORCL) and NotesPayable (O, DHI: unclassified balance sheets) are last resort,
+    # per period, for filers with no LongTermDebt* tag (ISSUES #92).
     Concept("long_term_debt", "Long-term debt", Kind.INSTANT, (
         "LongTermDebtNoncurrent", "LongTermDebt", "LongTermDebtAndCapitalLeaseObligations",
+        "LongTermNotesAndLoans", "NotesPayable",
     ), statement="balance"),
     Concept("short_term_debt", "Short-term debt", Kind.INSTANT, (
         "DebtCurrent", "LongTermDebtCurrent", "ShortTermBorrowings",

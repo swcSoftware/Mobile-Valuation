@@ -90,3 +90,21 @@ def test_capex_other_variant_is_last_resort_per_period():
     capex = {p.fiscal_year: p.values["capex"] for p in fin.annual}
     assert capex[2024].value == 80e6 and capex[2024].tag == "PaymentsToAcquirePropertyPlantAndEquipment"
     assert capex[2025].value == 90e6 and capex[2025].tag == "PaymentsToAcquireOtherPropertyPlantAndEquipment"
+
+
+def test_debt_tagged_as_notes_payable_is_read():
+    """ISSUES #92: Realty Income tags no LongTermDebt*; its $25B of notes are NotesPayable. Before, total
+    debt was $1.4B of commercial paper and O graded A on debt load."""
+    from conftest import load_fin
+    o = load_fin("O")
+    assert o.ttm.values["long_term_debt"].tag == "NotesPayable"
+    assert abs(o.ttm.get("total_debt") - (25_092e6 + 1_400e6)) < 50e6
+    assert 0.6 < o.ttm.get("debt_to_equity") < 0.75
+
+
+def test_filers_with_long_term_debt_tags_keep_them(aapl, ko, jnj):
+    """The new debt tags sit last: a filer with a LongTermDebt* tag never reaches them."""
+    for fin in (aapl, ko, jnj):
+        for p in fin.annual + [fin.ttm]:
+            if "long_term_debt" in p.values:
+                assert p.values["long_term_debt"].tag.startswith("LongTermDebt"), (fin.ticker, p.label, p.values["long_term_debt"].tag)
