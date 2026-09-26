@@ -8,18 +8,16 @@ Generated 2026-09-26 by `scripts/coverage_probe.py` over 77 tickers (`scripts/un
 
 | Concept | Companies | Critical |
 |---|---|---|
-| `capex` | 3 |  |
+| `capex` | 2 |  |
 | `eps_diluted` | 2 |  |
 | `shares_diluted` | 2 |  |
 | `pretax_income` | 2 |  |
-| `revenue` | 1 | yes |
-| `operating_income` | 1 |  |
+| `revenue` | 1 |  |
 | `income_tax` | 1 |  |
-| `d_and_a` | 1 |  |
 
 ## Critical gaps (a model input is unavailable)
 
-- **AGNC** (AGNC INVESTMENT CORP., CIK 1423689, reit) — `revenue` missing; no related tags
+None.
 
 ## Not valued
 

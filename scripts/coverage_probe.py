@@ -57,6 +57,25 @@ NOT_EXPECTED = {
 }
 
 
+# Mirrors Coverage.DOWNGRADED_BY_SECTOR: not a model input for this sector, so a gap but never critical.
+DOWNGRADED = {"financial": {"revenue": "expected"}}
+
+
+def requirement_for(concept, mode: str) -> str:
+    return DOWNGRADED.get(mode, {}).get(concept.key, concept.requirement)
+
+
+def is_mortgage_reit(fin) -> bool:
+    """Mirrors Sector.isMortgageReit: a SIC-6798 filer that owns loans, not buildings (no D&A to add back)."""
+    t = fin.ttm.values if fin.ttm else None
+    if t is None:
+        return False
+    if "d_and_a" not in t:
+        return True
+    rev = t["revenue"].value if "revenue" in t else None
+    return bool(rev and rev > 0 and t["d_and_a"].value / rev < 0.05)
+
+
 def sector_mode(sic: str | None) -> str:
     try:
         code = int(sic or "")
@@ -125,6 +144,8 @@ async def probe_one(client: EdgarClient, ticker: str) -> dict:
 
     prof = await filer_profile(client, fin.cik)
     mode = sector_mode(prof.sic if prof else None)
+    if mode == "reit" and is_mortgage_reit(fin):
+        mode = "financial"          # mirrors Sector.isMortgageReit in the core (ISSUES #74)
     not_expected = NOT_EXPECTED[mode]
     latest = fin.latest_annual
     ttm = fin.ttm
@@ -144,8 +165,8 @@ async def probe_one(client: EdgarClient, ticker: str) -> dict:
             "concept": c.key,
             "kind": "unusable" if uses_mapped else "missing",
             "statement": c.statement,
-            "critical": c.requirement == "required",
-            "requirement": c.requirement,
+            "critical": requirement_for(c, mode) == "required",
+            "requirement": requirement_for(c, mode),
             # An "unusable" gap lists the mapped tags the filer stopped using *and* what it files instead:
             # LLY's only capex line moved to an unmapped "Other" tag years ago (ISSUES #71).
             "candidates": ([f"{c.taxonomy}:{t}" for t in c.tags if cf.get(c.taxonomy, t)] if uses_mapped else []) + candidates(cf, c),

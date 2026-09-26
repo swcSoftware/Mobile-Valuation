@@ -25,9 +25,37 @@ object Coverage {
         SectorMode.GENERAL to emptySet(),
     )
 
+    /**
+     * Concepts that still matter for a sector but are not a model input there. A bank or insurer is valued
+     * on book value and return on equity, so a missing revenue line is a gap, not a critical one: a
+     * mortgage REIT (AGNC) reports net interest income instead and has no revenue tag at all (ISSUES #72).
+     */
+    private val DOWNGRADED_BY_SECTOR = mapOf(
+        SectorMode.FINANCIAL to mapOf("revenue" to "expected"),
+    )
+
     /** Effective requirement for this filer: the map's level, downgraded where the sector explains the absence. */
     internal fun requirementFor(c: Concept, mode: SectorMode): String =
-        if (c.key in (NOT_EXPECTED_BY_SECTOR[mode] ?: emptySet())) "optional" else c.requirement
+        if (c.key in (NOT_EXPECTED_BY_SECTOR[mode] ?: emptySet())) "optional"
+        else DOWNGRADED_BY_SECTOR[mode]?.get(c.key) ?: c.requirement
+
+    /**
+     * The normalizer's "Latest 10-K missing concepts" warning is written before the sector is known, so a
+     * bank's lists capex and a mortgage REIT's lists six items it never reports. Drop what this sector
+     * isn't expected to report (the Sprint 4 downgrade, applied to the warning too). Operating companies
+     * never reach this: their warnings are returned untouched.
+     */
+    fun sectorAwareWarnings(warnings: List<String>, mode: SectorMode): List<String> {
+        if (mode == SectorMode.GENERAL) return warnings
+        val prefix = "Latest 10-K missing concepts: "
+        return warnings.mapNotNull { w ->
+            if (!w.startsWith(prefix)) return@mapNotNull w
+            val keep = w.removePrefix(prefix).split(", ").filter { key ->
+                Concepts.ALL.firstOrNull { it.key == key }?.let { requirementFor(it, mode) != "optional" } ?: true
+            }
+            if (keep.isEmpty()) null else prefix + keep.joinToString(", ")
+        }
+    }
 
     /** Words too generic to identify a concept when matching a filer's unmapped tags. */
     private val STOPWORDS = setOf("of", "and", "the", "net", "total", "current", "noncurrent", "other", "common", "stock",

@@ -1190,7 +1190,7 @@
    "status": "ok",
    "cik": 1423689,
    "company": "AGNC INVESTMENT CORP.",
-   "sector": "reit",
+   "sector": "financial",
    "period": "2026-06-30",
    "resolved": [
     "net_income",
@@ -1211,19 +1211,9 @@
      "concept": "revenue",
      "kind": "missing",
      "statement": "income",
-     "critical": true,
-     "requirement": "required",
-     "candidates": []
-    },
-    {
-     "concept": "operating_income",
-     "kind": "missing",
-     "statement": "income",
      "critical": false,
      "requirement": "expected",
-     "candidates": [
-      "us-gaap:OperatingExpenses"
-     ]
+     "candidates": []
     },
     {
      "concept": "pretax_income",
@@ -1254,29 +1244,6 @@
       "us-gaap:IncomeTaxesPaid",
       "us-gaap:NetIncomeLossAvailableToCommonStockholdersBasic"
      ]
-    },
-    {
-     "concept": "capex",
-     "kind": "missing",
-     "statement": "cashflow",
-     "critical": false,
-     "requirement": "expected",
-     "candidates": [
-      "us-gaap:PaymentsToAcquireMarketableSecurities",
-      "us-gaap:PaymentsToAcquireAvailableForSaleSecurities",
-      "us-gaap:PaymentsToAcquireBusinessesNetOfCashAcquired",
-      "us-gaap:PaymentsToAcquireMortgageBackedSecuritiesMBSCategorizedAsAvailableForSale",
-      "us-gaap:PaymentsOfDividends",
-      "us-gaap:PaymentsForRepurchaseOfCommonStock"
-     ]
-    },
-    {
-     "concept": "d_and_a",
-     "kind": "missing",
-     "statement": "cashflow",
-     "critical": false,
-     "requirement": "expected",
-     "candidates": []
     }
    ]
   },

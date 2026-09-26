@@ -68,4 +68,28 @@ class CoverageTest {
         assertFalse(url.contains("Ω") || url.contains("&quot"))
         assertTrue(url.contains("%") && url.count { it == '&' } == 2, "only the two query separators remain literal")
     }
+
+    // ---- ISSUES #72: sector-aware requirement and warning --------------------------------------
+
+    private val agncWarning = "Latest 10-K missing concepts: revenue, operating_income, pretax_income, income_tax, capex, d_and_a"
+
+    @Test fun revenueIsAGapButNotCriticalForFinancials() {
+        val revenue = Concepts.ALL.first { it.key == "revenue" }
+        assertEquals("required", Coverage.requirementFor(revenue, SectorMode.GENERAL))
+        assertEquals("required", Coverage.requirementFor(revenue, SectorMode.REIT))
+        assertEquals("expected", Coverage.requirementFor(revenue, SectorMode.FINANCIAL))
+    }
+
+    @Test fun missingConceptsWarningDropsWhatTheSectorNeverReports() {
+        val stale = "Dropped stale TTM values (tag no longer reported): pretax_income"
+        assertEquals(listOf(stale, "Latest 10-K missing concepts: revenue, pretax_income, income_tax"),
+            Coverage.sectorAwareWarnings(listOf(stale, agncWarning), SectorMode.FINANCIAL))
+        // A bank whose only "missing" item is capex loses the line entirely.
+        assertEquals(emptyList(), Coverage.sectorAwareWarnings(listOf("Latest 10-K missing concepts: capex"), SectorMode.FINANCIAL))
+    }
+
+    @Test fun operatingCompanyWarningsAreUntouched() {
+        val ws = listOf(agncWarning, "Latest 10-K missing concepts: gain_on_sale", "anything else")
+        assertTrue(Coverage.sectorAwareWarnings(ws, SectorMode.GENERAL) === ws, "the general path must return the same list")
+    }
 }

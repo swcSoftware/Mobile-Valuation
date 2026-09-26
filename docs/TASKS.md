@@ -417,7 +417,9 @@ blast radius with `scripts/value_snapshot.py` (new: snapshot the universe before
 - [x] **#92 (found while doing #81)** debt read as short-term only for O, ORCL and DHI. Two tags
       appended last to long-term debt (**3 of 77**; ORCL's debt grade A → D); the data check now warns
       when only short-term debt is found. Remainder (Deere, O's term loans, PGR) → #93.
-- [ ] #72 AGNC has no revenue tag (mREIT net interest income)
+- [x] #72 AGNC — no tag to map: revenue isn't a model input for financials, so it is no longer *critical*
+      there, and the "missing concepts" warning now drops what the sector never reports (AGNC 6 → 3
+      items, JPM's "capex" gone; operating companies untouched). Probe: 0 critical gaps. #74 fixed with it.
 - [ ] #53 KO's TTM stops at April; find the missing Q2 10-Q tag
 - [x] #6 interest expense — nothing to map: AAPL files no interest figure; DHI's `InterestCostsIncurred`
       was tried and reverted (it inflated DHI's EBIT proxy ~5%). Both keep the labeled assumed rate.
