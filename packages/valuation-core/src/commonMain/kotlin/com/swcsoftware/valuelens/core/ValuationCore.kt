@@ -40,7 +40,12 @@ class ValuationCore(
             // No companyfacts at all (ETFs, trusts): explain from the filing profile instead of a bare 404.
             throw com.swcsoftware.valuelens.domain.EngineException.NoAnnualData(FilerIdentity.noAnnualDataReason(resolved.ticker, ed.profile(resolved.cik)))
         }
+        // Companyfacts lagging the filer's latest 10-Q/10-K (ISSUES #53): read that filing directly. Returns
+        // the same facts, fetching nothing, for every filer that isn't lagging.
+        val (filled, lagNote) = GapFill.fill(facts, ed.submissionsText(resolved.cik)) { ed.instance(it) }
+        facts = filled
         var fin = Statements.normalize(facts)
+        if (lagNote != null) fin = NormalizedFinancials(fin.ticker, fin.cik, fin.name, fin.annual, fin.ttm, fin.currentShares, listOf(lagNote) + fin.warnings)
         if (resolved.name.isNotBlank() && fin.annual.isNotEmpty())  // companyfacts entityName can be a co-registrant (BAC → "BofA Finance LLC")
             fin = NormalizedFinancials(fin.ticker, fin.cik, resolved.name, fin.annual, fin.ttm, fin.currentShares, fin.warnings)
         var predecessor: Predecessor? = null

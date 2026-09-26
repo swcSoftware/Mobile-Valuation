@@ -420,7 +420,8 @@ blast radius with `scripts/value_snapshot.py` (new: snapshot the universe before
 - [x] #72 AGNC — no tag to map: revenue isn't a model input for financials, so it is no longer *critical*
       there, and the "missing concepts" warning now drops what the sector never reports (AGNC 6 → 3
       items, JPM's "capex" gone; operating companies untouched). Probe: 0 critical gaps. #74 fixed with it.
-- [ ] #53 KO's TTM stops at April; find the missing Q2 10-Q tag
+- [x] #53 not a tag: SEC's companyfacts never ingested KO's July 10-Q (5 of 77 lag a quarter). The
+      filing's own XBRL now fills the gap, only for a lagging filer, with a note (**4 of 77**; XOM is #46).
 - [x] #6 interest expense — nothing to map: AAPL files no interest figure; DHI's `InterestCostsIncurred`
       was tried and reverted (it inflated DHI's EBIT proxy ~5%). Both keep the labeled assumed rate.
 

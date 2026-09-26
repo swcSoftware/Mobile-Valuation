@@ -75,3 +75,22 @@ class EdgarClient:
             _cache.set(url, payload)
         return payload
 
+    async def get_text(self, url: str, *, use_cache: bool = True) -> str | None:
+        """Plain-text fetch (an XBRL instance). None on 404 rather than an error: the caller has a fallback."""
+        if use_cache:
+            cached = _cache.get(url)
+            if cached is not None:
+                return cached
+        await _limiter.wait()
+        headers = {"User-Agent": self.user_agent, "Accept-Encoding": "gzip, deflate"}
+        try:
+            async with httpx.AsyncClient(timeout=60.0, follow_redirects=True) as client:
+                resp = await client.get(url, headers=headers)
+        except httpx.HTTPError:
+            return None
+        if resp.status_code != 200:
+            return None
+        if use_cache:
+            _cache.set(url, resp.text)
+        return resp.text
+

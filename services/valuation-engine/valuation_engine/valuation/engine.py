@@ -5,6 +5,7 @@ from datetime import date, datetime, timezone
 
 from ..config import settings
 from ..edgar.client import EdgarClient
+from ..edgar import gapfill
 from ..edgar.companyfacts import fetch_companyfacts
 from ..edgar.identity import find_predecessor, no_annual_data_reason, profile
 from ..edgar.tickers import resolve_ticker
@@ -23,7 +24,10 @@ async def load_financials(ticker: str, user_agent: str | None) -> NormalizedFina
     client = EdgarClient(user_agent)
     ref = await resolve_ticker(client, ticker)
     try:
-        fin = normalize(await fetch_companyfacts(client, ref))
+        cf, lag_note = await gapfill.fill(client, await fetch_companyfacts(client, ref))
+        fin = normalize(cf)
+        if lag_note:
+            fin.warnings.insert(0, lag_note)
     except NoAnnualData:
         raise NoAnnualData(no_annual_data_reason(ref.ticker, await profile(client, ref.cik)), {"ticker": ref.ticker, "cik": ref.cik})
     if not fin.annual:
