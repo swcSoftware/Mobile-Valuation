@@ -297,3 +297,36 @@ Build 0.1.0 (1) archived in Release, signed with the team's Apple Distribution i
 to App Store Connect from `dev` (Sprint 6 + the "Alpha" rename). Added the privacy manifest and the
 team ID; procedure in RUNBOOK §2b. Internal TestFlight only — not a staging promotion.
 
+## Sprint 7 — 2026-09-26 — Numbers that go missing (built on `dev`)
+
+**Goal**: real companies stop showing blanks or wrong figures. First sprint planned from the owner's
+TestFlight playtesting; every item followed the full routine (Python first, Kotlin mirror, oracle,
+and a measured blast radius with the new `scripts/value_snapshot.py`).
+
+**Delivered**
+- **#71 capex** — the issue's diagnosis was wrong: LLY and VZ file capex under two "Other" tags, now
+  mapped last (2 of 77). The weekly probe had misled us by listing only our own stale tags for an
+  "unusable" gap; it (and the in-app gap report) now also lists what the filer files instead.
+- **#81 debt trend** (Sprint 5 Track F) — `total_debt` in the annual history; the report card's debt
+  load has a trend worded for "lower is better".
+- **#92 debt read as short-term only** — found while doing #81. Oracle showed 0.11× debt to equity
+  against a true 1.87× and graded **A**; now **D**. Realty Income and D.R. Horton fixed too (3 of 77).
+  The data check now warns when only short-term debt is found.
+- **#78 negative equity** — MCD's classic "Debt load" reads "Negative equity · 3.1× EBITDA" instead of
+  vanishing; the report card gives the measure ungraded.
+- **#72 / #74 AGNC** — no tag to map: revenue isn't a model input for financials, so it's no longer
+  critical there, and the "missing concepts" note drops what the sector never reports. 0 critical
+  gaps across the universe.
+- **#53 KO's stale quarter** — not a tag either: SEC's companyfacts never ingested KO's July 10-Q.
+  A filer whose latest filing is missing from companyfacts is now read from that filing's XBRL,
+  with a note (KO, PLD, V, PYPL — 4 of 77).
+- **#6 interest expense** — nothing honest left to map; AAPL files no figure, and DHI's mapping was
+  tried and reverted because it inflated EBIT.
+
+**Tried and rejected, on evidence**: a filer-reported total-debt tag (touched 24 of 77 to help one
+insurer) and DHI's interest incurred (distorted its EBIT proxy). Both are in ISSUES with the reason.
+
+**Logged, not fixed**: #91 (COP capex, PLD's REIT spending), #93 (Deere's debt, O's term loans, PGR).
+
+**Tests**: 194 (38 engine · 93 core · 22 Android · 41 iOS), all green. Bundled samples regenerated.
+

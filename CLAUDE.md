@@ -86,11 +86,11 @@ why; read it before touching presentation code.
 export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"   # no system JDK
 
 # All tests (run from repo root)
-(cd services/valuation-engine && .venv/bin/python -m pytest -q)                        # 32
-(cd apps/android && ./gradlew :valuation-core:desktopTest testDebugUnitTest)           # 41
+(cd services/valuation-engine && .venv/bin/python -m pytest -q)                        # 38
+(cd apps/android && ./gradlew :valuation-core:desktopTest testDebugUnitTest)           # 93 + 22
 (cd apps/ios && xcodebuild -project ValueLens.xcodeproj -scheme ValueLens \
    -destination 'platform=iOS Simulator,id=CCCBA21C-24A4-488B-B751-EECB523241B9' \
-   -derivedDataPath build/DerivedData -configuration Debug test)                      # 15
+   -derivedDataPath build/DerivedData -configuration Debug test)                      # 41
 
 # iOS framework (Xcode's pre-build script does this too)
 (cd apps/android && ./gradlew :valuation-core:assembleValuationCoreReleaseXCFramework)
@@ -138,6 +138,11 @@ export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"  
   and `shared_prefs/valuelens.xml`.)
 - **The share-site prototype is a mirror, not the app**: it re-implements the plain-language layer
   in JavaScript against the same report JSON. Core copy changes do not reach it automatically.
+  Since Sprint 7 it is also stale on data (O's and ORCL's debt); TestFlight is the review surface now.
+- **A missing figure is not always a missing tag.** Sprint 7 found three other causes: a mapped tag
+  the filer stopped using years ago (LLY capex), SEC's companyfacts not ingesting a filing at all
+  (KO's July 10-Q), and a figure that isn't a model input for the sector (AGNC revenue). Check the
+  live companyfacts and the submissions list before editing the tag map.
 
 ## Finishing a piece of work
 

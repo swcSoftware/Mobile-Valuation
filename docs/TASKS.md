@@ -400,7 +400,7 @@ data references are shown: `us-gaap:EarningsPerShareDiluted` → "Earnings per s
       simulator), on both platforms and in the exported dossier's formulas.
 
 
-## Sprint 7 — Numbers that go missing (started 2026-09-26, on `dev`)
+## Sprint 7 — Numbers that go missing (2026-09-26, built on `dev`) ✅
 
 **Goal:** real companies stop showing blanks or wrong figures. Every item changes normalization, so
 each follows the full routine: Python first, mirror Kotlin, regenerate the oracle, and measure the
