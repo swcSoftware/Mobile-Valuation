@@ -125,6 +125,11 @@ global change in the sprint: `Theme`'s compile-time constants become runtime-res
 The four trust-carrying elements become required components with a test, because two layouts means
 two places they can be dropped. Reasoning and decisions: `docs/DESIGN.md`.
 
+### Alpha Pro — subscriptions (candidate, after release readiness)
+Cheap monthly/yearly subscription via StoreKit 2 / Play Billing, gating depth (Expert Mode, unlimited
+watchlist, full history, exports) rather than a daily valuation cap. Honesty features are never
+paywalled. Detail and owner actions: TASKS.md backlog.
+
 ### Later
 Filing drill-down, notes per company, side-by-side comparison, Apple Watch complication,
 a shared cache/batch screener *if* a server is ever justified (the Dockerfile stays in the repo).

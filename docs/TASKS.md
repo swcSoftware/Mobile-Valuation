@@ -399,3 +399,63 @@ data references are shown: `us-gaap:EarningsPerShareDiluted` → "Earnings per s
 - [x] All of them, plus formulas and metric notes (the notes were missed at first and caught on the
       simulator), on both platforms and in the exported dossier's formulas.
 
+
+## Backlog — candidate sprints (proposed 2026-09-26, not yet ordered)
+
+Derived from ISSUES, the Sprint 5 carry-overs and PLAN "Later" after the first TestFlight build.
+The owner picks the order; each gets a number when it starts.
+
+### Candidate: Numbers that go missing (correctness)
+Normalization changes: Python first, mirror Kotlin, regenerate the oracle, measure over the universe.
+- [ ] #71 `capex` tagged only in 10-Qs (LLY, COP, VZ, PLD) — owner earnings and FCF disappear
+- [ ] #78 negative equity (MCD) — show the state and a leverage measure instead of dropping the tile
+- [ ] #81 / Sprint 5 Track F — `total_debt` in the annual history so debt load gets a trend
+- [ ] #72 AGNC has no revenue tag (mREIT net interest income)
+- [ ] #53 KO's TTM stops at April; find the missing Q2 10-Q tag
+- [ ] #6 interest-expense variants so cost of debt is read, not assumed
+
+### Candidate: Release readiness (was Sprint 4 Track B)
+- [ ] Licensed quote/beta source behind `Market` (#3, #36, #49) — Yahoo's endpoint is unofficial
+- [ ] Crash reporting via MetricKit (no third party, privacy manifest unchanged)
+- [ ] Dynamic Type / VoiceOver pass; colour-blindness check of price vs value (#86)
+- [ ] External TestFlight: privacy policy URL, "What to test" notes, beta app review
+- [ ] App Store screenshots and description; Play internal testing track
+
+### Candidate: Bug-fix sprint (deferred P3s)
+- [ ] iOS: #88 wrapped watchlist prices, #11 keyboard, #10 two-digit years, #14 PDF pagination, #37
+- [ ] Android: #24 concurrent refresh, #25 chart axes, #26 deep-link back stack, #21 secure prefs, #87 Compose UI tests
+- [ ] Performance: #62 progress for large filing downloads, #41 cache the ticker list
+- [ ] Stale docs: PLAN says Sprint 5 in progress; ISSUES #15 says Android never compiled; `AppSettings.swift` layoutStyle comment
+
+### Candidate: Alpha Pro — subscriptions (after release readiness)
+**Goal:** steady revenue from a cheap monthly/yearly subscription without breaking the on-device,
+no-server design or the trust rules.
+
+**Recommended model (owner to confirm): gate depth, not volume.** A daily valuation cap (1–2/day)
+was considered and not recommended: it stops a new user at the moment they are judging whether to
+trust the app (the first session is 5–10 known tickers), it maps to no real cost (a valuation is
+free to run on-device), and an on-device counter is trivially reset (clock change, reinstall).
+
+| Free | Pro |
+|---|---|
+| Unlimited valuations, report card, verdict | Expert Mode: formulas, rate overrides, sector settings |
+| Watchlist of ~5 | Unlimited watchlist, sort/filter by margin of safety |
+| 3–5 filed years of history | Full history, PDF and share exports |
+| **Every** data note, withheld value and "assumed" label | Future: comparison, per-company notes, widget, margin-of-safety alerts |
+
+- **Rule: never paywall honesty.** Withheld values, data notes, provenance and assumed labels stay
+  free (non-negotiable 2). Charge for depth and convenience, never for the caveat on a number.
+- 7-day free trial of Pro. Indicative price $3–5/month, $25–40/year (yearly shown as the better
+  deal). Start slightly tighter than feels right: loosening a free tier is welcome, tightening isn't.
+- **Tech:** StoreKit 2 (on-device transaction verification) and Google Play Billing. No RevenueCat
+  or other third party unless the privacy manifest is deliberately changed. Entitlement read in one
+  place; layouts never decide it themselves.
+- **App Review:** privacy policy and terms-of-use links, a "Restore purchases" button, clear pricing
+  on the paywall.
+
+**Owner actions before building:**
+- [ ] Confirm the free/Pro split and price points
+- [ ] Sign the Paid Apps agreement in App Store Connect; banking and tax forms (Small Business Program → 15%)
+- [ ] Get licensed data quotes first — per-user pricing or free-tier restrictions change the maths
+- [ ] Ask a lawyer whether charging for "undervalued" verdicts raises investment-adviser questions
+      (impersonal publications are usually exempt; confirm before charging)
