@@ -330,3 +330,8 @@ insurer) and DHI's interest incurred (distorted its EBIT proxy). Both are in ISS
 
 **Tests**: 194 (38 engine · 93 core · 22 Android · 41 iOS), all green. Bundled samples regenerated.
 
+### TestFlight build 1.0 (2) (2026-09-26)
+Sprints 6 + 7 from `dev` at the owner's request while remote. Found on the way: the Info.plist ignored
+`MARKETING_VERSION`/`CURRENT_PROJECT_VERSION` (xcodegen wrote a fixed 1.0 (1)), so build 1 shipped as 1.0,
+not 0.1.0. The plist now reads both settings; marketing version set to 1.0 to stay on that train.
+

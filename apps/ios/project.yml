@@ -9,8 +9,8 @@ options:
 settings:
   base:
     SWIFT_VERSION: "5.10"
-    MARKETING_VERSION: "0.1.0"
-    CURRENT_PROJECT_VERSION: "1"
+    MARKETING_VERSION: "1.0"   # build 1 shipped as 1.0 (the plist ignored this setting until build 2)
+    CURRENT_PROJECT_VERSION: "2"
     DEVELOPMENT_TEAM: K4GQT2PHP8
     CODE_SIGN_STYLE: Automatic
 targets:
@@ -40,6 +40,9 @@ targets:
       path: ValueLens/Info.plist
       properties:
         CFBundleDisplayName: Alpha
+        # Read from the build settings below; xcodegen otherwise writes a fixed "1.0 (1)".
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         UILaunchScreen: {}
         UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
         UIFileSharingEnabled: true
