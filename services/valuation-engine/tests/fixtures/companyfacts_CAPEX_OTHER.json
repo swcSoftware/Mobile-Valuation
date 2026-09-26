@@ -1,0 +1,103 @@
+{
+ "cik": 1,
+ "entityName": "SYNTHETIC CAPEX CO",
+ "_comment": "Synthetic filer for ISSUES #71: main capex tag in FY2024 alongside an 'Other' subset; only the 'Other' tag in FY2025.",
+ "facts": {
+  "us-gaap": {
+   "Revenues": {
+    "units": {
+     "USD": [
+      {
+       "start": "2024-01-01",
+       "end": "2024-12-31",
+       "val": 1000000000.0,
+       "accn": "0000000001-25-000001",
+       "fy": 2024,
+       "fp": "FY",
+       "form": "10-K",
+       "filed": "2025-02-15"
+      },
+      {
+       "start": "2025-01-01",
+       "end": "2025-12-31",
+       "val": 1100000000.0,
+       "accn": "0000000001-26-000001",
+       "fy": 2025,
+       "fp": "FY",
+       "form": "10-K",
+       "filed": "2026-02-15"
+      }
+     ]
+    }
+   },
+   "NetIncomeLoss": {
+    "units": {
+     "USD": [
+      {
+       "start": "2024-01-01",
+       "end": "2024-12-31",
+       "val": 100000000.0,
+       "accn": "0000000001-25-000001",
+       "fy": 2024,
+       "fp": "FY",
+       "form": "10-K",
+       "filed": "2025-02-15"
+      },
+      {
+       "start": "2025-01-01",
+       "end": "2025-12-31",
+       "val": 110000000.0,
+       "accn": "0000000001-26-000001",
+       "fy": 2025,
+       "fp": "FY",
+       "form": "10-K",
+       "filed": "2026-02-15"
+      }
+     ]
+    }
+   },
+   "PaymentsToAcquirePropertyPlantAndEquipment": {
+    "units": {
+     "USD": [
+      {
+       "start": "2024-01-01",
+       "end": "2024-12-31",
+       "val": 80000000.0,
+       "accn": "0000000001-25-000001",
+       "fy": 2024,
+       "fp": "FY",
+       "form": "10-K",
+       "filed": "2025-02-15"
+      }
+     ]
+    }
+   },
+   "PaymentsToAcquireOtherPropertyPlantAndEquipment": {
+    "units": {
+     "USD": [
+      {
+       "start": "2024-01-01",
+       "end": "2024-12-31",
+       "val": 5000000.0,
+       "accn": "0000000001-25-000001",
+       "fy": 2024,
+       "fp": "FY",
+       "form": "10-K",
+       "filed": "2025-02-15"
+      },
+      {
+       "start": "2025-01-01",
+       "end": "2025-12-31",
+       "val": 90000000.0,
+       "accn": "0000000001-26-000001",
+       "fy": 2025,
+       "fp": "FY",
+       "form": "10-K",
+       "filed": "2026-02-15"
+      }
+     ]
+    }
+   }
+  }
+ }
+}

@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-22",
+ "generated": "2026-09-26",
  "universe": 77,
  "results": [
   {
@@ -643,6 +643,7 @@
     "eps_diluted",
     "shares_diluted",
     "cfo",
+    "capex",
     "d_and_a",
     "dividends_paid",
     "buybacks",
@@ -662,18 +663,7 @@
     "goodwill",
     "intangibles"
    ],
-   "gaps": [
-    {
-     "concept": "capex",
-     "kind": "unusable",
-     "statement": "cashflow",
-     "critical": false,
-     "requirement": "expected",
-     "candidates": [
-      "us-gaap:PaymentsToAcquireProductiveAssets"
-     ]
-    }
-   ]
+   "gaps": []
   },
   {
    "ticker": "ABBV",
@@ -910,7 +900,13 @@
      "critical": false,
      "requirement": "expected",
      "candidates": [
-      "us-gaap:PaymentsToAcquireProductiveAssets"
+      "us-gaap:PaymentsToAcquireProductiveAssets",
+      "us-gaap:PaymentsForProceedsFromProductiveAssets",
+      "us-gaap:PaymentsToAcquireLongtermInvestments",
+      "us-gaap:PaymentsToAcquireShortTermInvestments",
+      "us-gaap:PaymentsToAcquireBusinessesNetOfCashAcquired",
+      "us-gaap:PaymentsForRestructuring",
+      "us-gaap:PaymentsForAdvanceToAffiliate"
      ]
     }
    ]
@@ -1236,7 +1232,12 @@
      "critical": false,
      "requirement": "expected",
      "candidates": [
-      "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest"
+      "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+      "us-gaap:NetIncomeLoss",
+      "us-gaap:IncomeTaxesPaid",
+      "us-gaap:IncomeLossFromSubsidiariesNetOfTax",
+      "us-gaap:NetIncomeLossAvailableToCommonStockholdersBasic",
+      "us-gaap:IncomeTaxExpenseBenefit"
      ]
     },
     {
@@ -1246,7 +1247,12 @@
      "critical": false,
      "requirement": "expected",
      "candidates": [
-      "us-gaap:IncomeTaxExpenseBenefit"
+      "us-gaap:IncomeTaxExpenseBenefit",
+      "us-gaap:IncomeLossFromSubsidiariesNetOfTax",
+      "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+      "us-gaap:NetIncomeLoss",
+      "us-gaap:IncomeTaxesPaid",
+      "us-gaap:NetIncomeLossAvailableToCommonStockholdersBasic"
      ]
     },
     {
@@ -1343,7 +1349,13 @@
      "critical": false,
      "requirement": "expected",
      "candidates": [
-      "us-gaap:PaymentsForCapitalImprovements"
+      "us-gaap:PaymentsForCapitalImprovements",
+      "us-gaap:PaymentsToAcquireBuildings",
+      "us-gaap:PaymentsToAcquireRealEstate",
+      "us-gaap:PaymentsToAcquireNotesReceivable",
+      "us-gaap:PaymentsToAcquireLoansReceivable",
+      "us-gaap:PaymentsToDevelopRealEstateAssets",
+      "us-gaap:PaymentsToAcquireShortTermInvestments"
      ]
     }
    ]
@@ -1711,6 +1723,7 @@
     "eps_diluted",
     "shares_diluted",
     "cfo",
+    "capex",
     "d_and_a",
     "dividends_paid",
     "dividends_per_share",
@@ -1727,18 +1740,7 @@
     "goodwill",
     "intangibles"
    ],
-   "gaps": [
-    {
-     "concept": "capex",
-     "kind": "unusable",
-     "statement": "cashflow",
-     "critical": false,
-     "requirement": "expected",
-     "candidates": [
-      "us-gaap:PaymentsToAcquireProductiveAssets"
-     ]
-    }
-   ]
+   "gaps": []
   },
   {
    "ticker": "T",
@@ -2237,7 +2239,7 @@
    "cik": 796343,
    "company": "ADOBE INC.",
    "sector": "general",
-   "period": "2026-05-29",
+   "period": "2026-08-28",
    "resolved": [
     "revenue",
     "cost_of_revenue",

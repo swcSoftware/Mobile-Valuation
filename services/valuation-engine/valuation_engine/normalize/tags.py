@@ -77,11 +77,15 @@ CONCEPTS: list[Concept] = [
         "NetCashProvidedByUsedInOperatingActivities",
         "NetCashProvidedByUsedInOperatingActivitiesContinuingOperations",
     ), statement="cashflow", requirement="expected"),
+    # The two "Other" variants are last resort, per period (earlier tags win): LLY and VZ file their only
+    # annual capex line under them (ISSUES #71). For filers that also use the tags above they are a subset.
     Concept("capex", "Capital expenditures", Kind.FLOW, (
         "PaymentsToAcquirePropertyPlantAndEquipment",
         "PaymentsToAcquireProductiveAssets",
         "PaymentsForCapitalImprovements",
         "PaymentsToAcquirePropertyPlantAndEquipmentAndIntangibleAssets",
+        "PaymentsToAcquireOtherPropertyPlantAndEquipment",
+        "PaymentsToAcquireOtherProductiveAssets",
     ), statement="cashflow", requirement="expected"),
     Concept("d_and_a", "Depreciation & amortization", Kind.FLOW, (
         "DepreciationDepletionAndAmortization",

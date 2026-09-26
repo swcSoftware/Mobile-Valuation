@@ -146,7 +146,9 @@ async def probe_one(client: EdgarClient, ticker: str) -> dict:
             "statement": c.statement,
             "critical": c.requirement == "required",
             "requirement": c.requirement,
-            "candidates": [f"{c.taxonomy}:{t}" for t in c.tags if cf.get(c.taxonomy, t)] if uses_mapped else candidates(cf, c),
+            # An "unusable" gap lists the mapped tags the filer stopped using *and* what it files instead:
+            # LLY's only capex line moved to an unmapped "Other" tag years ago (ISSUES #71).
+            "candidates": ([f"{c.taxonomy}:{t}" for t in c.tags if cf.get(c.taxonomy, t)] if uses_mapped else []) + candidates(cf, c),
         })
     return {"ticker": ticker, "status": "ok", "cik": fin.cik, "company": fin.name, "sector": mode,
             "period": str(ttm.period_end if ttm else (latest.period_end if latest else "")),

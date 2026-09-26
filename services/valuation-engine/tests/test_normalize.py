@@ -74,3 +74,19 @@ def test_working_capital_normalization_dampens_one_offs(ko):
 def test_ttm_normalization_is_annualized(aapl):
     sv = aapl.ttm.values["delta_nwc_normalized"]
     assert "annualized" in sv.note or aapl.ttm.form == "10-K"
+
+
+def test_capex_other_variant_is_last_resort_per_period():
+    """ISSUES #71: LLY/VZ file capex only under the "Other" tags. They fill a year that has no main
+    capex tag, and never override one that does (for most filers the "Other" line is a subset)."""
+    import json
+    from pathlib import Path
+    from valuation_engine.edgar.companyfacts import parse_companyfacts
+    from valuation_engine.edgar.tickers import CompanyRef
+    from valuation_engine.normalize.statements import normalize
+
+    raw = json.loads((Path(__file__).parent / "fixtures" / "companyfacts_CAPEX_OTHER.json").read_text())
+    fin = normalize(parse_companyfacts(raw, CompanyRef(ticker="CAPX", cik=1, name=raw["entityName"])))
+    capex = {p.fiscal_year: p.values["capex"] for p in fin.annual}
+    assert capex[2024].value == 80e6 and capex[2024].tag == "PaymentsToAcquirePropertyPlantAndEquipment"
+    assert capex[2025].value == 90e6 and capex[2025].tag == "PaymentsToAcquireOtherPropertyPlantAndEquipment"

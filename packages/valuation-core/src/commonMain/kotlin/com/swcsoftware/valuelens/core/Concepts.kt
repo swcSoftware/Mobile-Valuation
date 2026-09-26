@@ -19,7 +19,7 @@ class Concept(
 
 object Concepts {
     /** Bump when the tag map changes; reported with coverage gaps so a report names the map it came from. */
-    const val VERSION = "2026-09-22"
+    const val VERSION = "2026-09-26"
 
     val ALL: List<Concept> = listOf(
         Concept("revenue", "Revenue", Kind.FLOW, listOf("Revenues", "RevenueFromContractWithCustomerExcludingAssessedTax", "SalesRevenueNet", "RevenueFromContractWithCustomerIncludingAssessedTax", "RevenuesNetOfInterestExpense"), requirement = "required"),
@@ -32,7 +32,7 @@ object Concepts {
         Concept("eps_diluted", "Diluted EPS", Kind.FLOW, listOf("EarningsPerShareDiluted", "EarningsPerShareBasicAndDiluted", "EarningsPerShareBasic"), unit = "USD/shares", requirement = "expected"),
         Concept("shares_diluted", "Diluted weighted-avg shares", Kind.FLOW, listOf("WeightedAverageNumberOfDilutedSharesOutstanding", "WeightedAverageNumberOfShareOutstandingBasicAndDiluted", "WeightedAverageNumberOfSharesOutstandingBasic"), unit = "shares", requirement = "expected"),
         Concept("cfo", "Cash from operations", Kind.FLOW, listOf("NetCashProvidedByUsedInOperatingActivities", "NetCashProvidedByUsedInOperatingActivitiesContinuingOperations"), statement = "cashflow", requirement = "expected"),
-        Concept("capex", "Capital expenditures", Kind.FLOW, listOf("PaymentsToAcquirePropertyPlantAndEquipment", "PaymentsToAcquireProductiveAssets", "PaymentsForCapitalImprovements", "PaymentsToAcquirePropertyPlantAndEquipmentAndIntangibleAssets"), statement = "cashflow", requirement = "expected"),
+        Concept("capex", "Capital expenditures", Kind.FLOW, listOf("PaymentsToAcquirePropertyPlantAndEquipment", "PaymentsToAcquireProductiveAssets", "PaymentsForCapitalImprovements", "PaymentsToAcquirePropertyPlantAndEquipmentAndIntangibleAssets", "PaymentsToAcquireOtherPropertyPlantAndEquipment", "PaymentsToAcquireOtherProductiveAssets"), statement = "cashflow", requirement = "expected"), // "Other" variants last: LLY, VZ (ISSUES #71)
         Concept("d_and_a", "Depreciation & amortization", Kind.FLOW, listOf("DepreciationDepletionAndAmortization", "DepreciationAndAmortization", "DepreciationAmortizationAndAccretionNet", "Depreciation"), statement = "cashflow", requirement = "expected"),
         Concept("dividends_paid", "Dividends paid", Kind.FLOW, listOf("PaymentsOfDividendsCommonStock", "PaymentsOfDividends"), statement = "cashflow"),
         Concept("buybacks", "Share repurchases", Kind.FLOW, listOf("PaymentsForRepurchaseOfCommonStock"), statement = "cashflow"),

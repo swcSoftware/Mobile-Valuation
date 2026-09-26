@@ -86,7 +86,7 @@ why; read it before touching presentation code.
 export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"   # no system JDK
 
 # All tests (run from repo root)
-(cd services/valuation-engine && .venv/bin/python -m pytest -q)                        # 31
+(cd services/valuation-engine && .venv/bin/python -m pytest -q)                        # 32
 (cd apps/android && ./gradlew :valuation-core:desktopTest testDebugUnitTest)           # 41
 (cd apps/ios && xcodebuild -project ValueLens.xcodeproj -scheme ValueLens \
    -destination 'platform=iOS Simulator,id=CCCBA21C-24A4-488B-B751-EECB523241B9' \
@@ -101,6 +101,10 @@ export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"  
 # Live probe / regenerate bundled samples (env vars are NOT Gradle inputs → --rerun)
 (cd apps/android && VL_PROBE_TICKERS="XOM,JPM,BRK-B" SEC_USER_AGENT="Name email" \
    ./gradlew :valuation-core:desktopTest --tests '*SampleDump*' --rerun -i | grep PROBE)
+
+# Blast radius of a normalization change: snapshot the universe before and after, then diff
+(cd services/valuation-engine && SEC_USER_AGENT="Name email" .venv/bin/python ../../scripts/value_snapshot.py snap /tmp/before.json)
+(cd services/valuation-engine && .venv/bin/python ../../scripts/value_snapshot.py diff /tmp/before.json /tmp/after.json)
 
 # Dump full report JSON for arbitrary tickers (design work, share-site data)
 (cd apps/android && VL_DUMP_DIR=/tmp/ui VL_DUMP_TICKERS="AAPL,MCD,BRK-B,AGNC,CRWV,O,PLTR" \

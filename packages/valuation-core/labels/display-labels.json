@@ -74,6 +74,8 @@
     "us-gaap:PaymentsOfDividends": "Dividends paid",
     "us-gaap:PaymentsOfDividendsCommonStock": "Dividends paid to common shareholders",
     "us-gaap:PaymentsToAcquireProductiveAssets": "Purchases of productive assets",
+    "us-gaap:PaymentsToAcquireOtherProductiveAssets": "Capital spending (other productive assets)",
+    "us-gaap:PaymentsToAcquireOtherPropertyPlantAndEquipment": "Purchases of property and equipment (other)",
     "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment": "Purchases of property, plant and equipment",
     "us-gaap:PaymentsToAcquirePropertyPlantAndEquipmentAndIntangibleAssets": "Purchases of property, equipment and intangibles",
     "us-gaap:ProfitLoss": "Net income, including minority interests",

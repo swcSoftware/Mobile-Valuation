@@ -95,7 +95,8 @@ object Coverage {
                     gaps += CoverageGap(c.key, c.label, "missing", c.statement, candidates(cf, c), requirement == "required", requirement)
                 !inAnnual && !inTtm ->
                     // The filer uses a mapped tag, but not in a form the normalizer accepts (wrong period, unit or form).
-                    gaps += CoverageGap(c.key, c.label, "unusable", c.statement, c.tags.filter { cf.get(c.taxonomy, it).isNotEmpty() }.map { "${c.taxonomy}:$it (reported, not in an annual/TTM context)" }, requirement == "required", requirement)
+                    // Also list what it files instead: LLY's capex moved to an unmapped "Other" tag (ISSUES #71).
+                    gaps += CoverageGap(c.key, c.label, "unusable", c.statement, c.tags.filter { cf.get(c.taxonomy, it).isNotEmpty() }.map { "${c.taxonomy}:$it (reported, not in an annual/TTM context)" } + candidates(cf, c), requirement == "required", requirement)
                 inAnnual && !inTtm ->
                     gaps += CoverageGap(c.key, c.label, "stale", c.statement, emptyList(), false, requirement)
             }

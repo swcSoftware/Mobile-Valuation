@@ -400,19 +400,25 @@ data references are shown: `us-gaap:EarningsPerShareDiluted` → "Earnings per s
       simulator), on both platforms and in the exported dossier's formulas.
 
 
-## Backlog — candidate sprints (proposed 2026-09-26, not yet ordered)
+## Sprint 7 — Numbers that go missing (started 2026-09-26, on `dev`)
 
-Derived from ISSUES, the Sprint 5 carry-overs and PLAN "Later" after the first TestFlight build.
-The owner picks the order; each gets a number when it starts.
+**Goal:** real companies stop showing blanks or wrong figures. Every item changes normalization, so
+each follows the full routine: Python first, mirror Kotlin, regenerate the oracle, and measure the
+blast radius with `scripts/value_snapshot.py` (new: snapshot the universe before and after, then diff).
 
-### Candidate: Numbers that go missing (correctness)
-Normalization changes: Python first, mirror Kotlin, regenerate the oracle, measure over the universe.
-- [ ] #71 `capex` tagged only in 10-Qs (LLY, COP, VZ, PLD) — owner earnings and FCF disappear
+- [x] #71 capex — the issue's diagnosis was wrong: LLY and VZ file annual capex under two "Other"
+      tags. Both appended last to the map (**2 of 77** affected, values only appear). COP and PLD → #91.
+      The weekly probe misled us: an "unusable" gap now also lists the tags the filer files instead.
 - [ ] #78 negative equity (MCD) — show the state and a leverage measure instead of dropping the tile
 - [ ] #81 / Sprint 5 Track F — `total_debt` in the annual history so debt load gets a trend
 - [ ] #72 AGNC has no revenue tag (mREIT net interest income)
 - [ ] #53 KO's TTM stops at April; find the missing Q2 10-Q tag
 - [ ] #6 interest-expense variants so cost of debt is read, not assumed
+
+## Backlog — candidate sprints (proposed 2026-09-26, not yet ordered)
+
+Derived from ISSUES, the Sprint 5 carry-overs and PLAN "Later" after the first TestFlight build.
+The owner picks the order; each gets a number when it starts.
 
 ### Candidate: Release readiness (was Sprint 4 Track B)
 - [ ] Licensed quote/beta source behind `Market` (#3, #36, #49) — Yahoo's endpoint is unofficial
