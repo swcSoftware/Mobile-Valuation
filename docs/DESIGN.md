@@ -5,8 +5,8 @@ seam), B (runtime theming) and C (the report card, with grading in the core) are
 both platforms, and Track D (the Settings pickers and the onboarding lens question) makes it
 reachable the normal way. What remains is owner decisions and follow-ups: promoting the report
 card to default, the typeface and name casing are decided and done (decisions 9–11). What remains:
-Android's rendered contract test (#87); and
-`total_debt` in the history series so debt load gets a trend (#81, Track F).
+Android's rendered contract test (#87). (`total_debt` in the history series — #81, Track F — shipped
+in Sprint 7: debt load now has a trend, worded "Lower/Higher than its average" because lower is better.)
 
 The typeface question is settled — see decision 10 below.
 Written 2026-09-22, updated 2026-09-23.
@@ -251,5 +251,6 @@ fixed in the prototype and logged for the real implementation:
   state naming the filer type (ISSUES #83).
 - Missing numbers printed their units: "—× equity", "— / yr".
 
-One gap in the data, not the design: the annual history series carries `equity` but not `total_debt`,
-so debt load is the only fact with no trend line (ISSUES #81, Sprint 5 Track F).
+Debt load gained its trend line in Sprint 7 (ISSUES #81): total debt ÷ equity per filed year, skipping
+years with negative equity. Because lower is better, its phrases read "Lowest in N years", "Lower
+than its N-yr average" — never "above its average", which would read as more debt.

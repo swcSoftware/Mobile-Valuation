@@ -28,7 +28,7 @@ object Report {
 
     fun history(fin: NormalizedFinancials): List<HistoryPoint> = fin.annual.map { p ->
         HistoryPoint(p.fiscalYear, p.periodEnd.toString(), p.get("revenue"), p.get("net_income"), p.get("eps_diluted"), p.get("fcf"),
-            p.get("owner_earnings"), p.get("equity"), p.get("roic"), p.get("book_value_per_share"), p.get("cfo"), p.get("capex"))
+            p.get("owner_earnings"), p.get("equity"), p.get("roic"), p.get("book_value_per_share"), p.get("cfo"), p.get("capex"), p.get("total_debt"))
     }
 
     fun build(fin: NormalizedFinancials, a: AssumptionsCore, quote: Quote?, generatedAt: String,

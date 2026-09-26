@@ -113,7 +113,28 @@ class GradingTest {
             "an A on the fixed rule can still be below the company's own norm — that is the point of two judgements")
         assertEquals("Faster than its 9-yr rate", phrase("AAPL", "growth"))
         assertEquals("Slower than its 9-yr rate", phrase("PGR", "growth"))
-        assertNull(phrase("AAPL", "debt"), "no total_debt in the annual series yet (ISSUES #81)")
+        // Debt load has a trend since Sprint 7 (ISSUES #81), worded for "lower is better".
+        assertEquals("Lower than its 10-yr average", phrase("AAPL", "debt"))
+        assertEquals("Lowest in 10 years", phrase("MSFT", "debt"))
+        assertEquals("Lowest in 10 years", phrase("KO", "debt"))
+    }
+
+    @Test fun debtTrendSkipsNegativeEquityAndStaysNullWithoutHistory() {
+        val mcd = Grading.reportCard(report("MCD"), Lens.VALUE).facts.first { it.slot == "debt" }
+        assertNull(mcd.history, "every MCD year has negative equity; no ratio is meaningful")
+        val aapl = Grading.reportCard(report("AAPL"), Lens.VALUE).facts.first { it.slot == "debt" }
+        assertEquals(10, aapl.history!!.points.size)
+        assertTrue(aapl.why.contains("2016–2025 ran 0.62× to 2.17×"), aapl.why)
+    }
+
+    @Test fun reportsSavedBeforeTotalDebtStillLoadAndGrade() {
+        // A watchlist entry cached by an earlier build has no total_debt: same grade, no trend, no crash.
+        val raw = javaClass.getResource("/fixtures/AAPL.json")!!.readText().replace(Regex(",.total_debt.:(null|[-0-9.eE+]+)"), "")   // history values only; the snapshot's is an object
+        val old = json.decodeFromString<ValuationReport>(raw)
+        assertTrue(old.history.all { it.totalDebt == null })
+        val fact = Grading.reportCard(old, Lens.VALUE).facts.first { it.slot == "debt" }
+        assertNull(fact.history)
+        assertEquals(Grading.reportCard(report("AAPL"), Lens.VALUE).facts.first { it.slot == "debt" }.grade, fact.grade)
     }
 
     @Test fun chipsComeFromTheCore() {

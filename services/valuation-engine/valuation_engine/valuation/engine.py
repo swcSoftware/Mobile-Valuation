@@ -94,7 +94,7 @@ async def build_valuation(ticker: str, user_agent: str | None, overrides: dict[s
     history = [
         {"fiscal_year": p.fiscal_year, "period_end": p.period_end.isoformat(),
          **{k: p.get(k) for k in ("revenue", "net_income", "eps_diluted", "fcf", "owner_earnings", "equity",
-                                   "roic", "book_value_per_share", "cfo", "capex")}}
+                                   "roic", "book_value_per_share", "cfo", "capex", "total_debt")}}
         for p in fin.annual
     ]
     return {

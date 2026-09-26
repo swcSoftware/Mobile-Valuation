@@ -331,8 +331,8 @@ saying so.
 ### F. Data the design needs that the core doesn't produce yet
 Small, additive, and the only engine work this sprint. Python first, mirror in Kotlin, regenerate
 the oracle (non-negotiable 3).
-- [ ] Add `total_debt` to the annual history series so the debt-load fact can carry a historical
-      read like the other three. Purely additive: a new field on an existing record.
+- [x] Add `total_debt` to the annual history series so the debt-load fact can carry a historical
+      read like the other three. (Done in Sprint 7.) Purely additive: a new field on an existing record.
 - [x] Delivered as `Grading` + `reportCardJson` (Track C) — see there for why not on `Explain.Fact`.
 
 ### Out of scope
@@ -410,7 +410,11 @@ blast radius with `scripts/value_snapshot.py` (new: snapshot the universe before
       tags. Both appended last to the map (**2 of 77** affected, values only appear). COP and PLD → #91.
       The weekly probe misled us: an "unusable" gap now also lists the tags the filer files instead.
 - [ ] #78 negative equity (MCD) — show the state and a leverage measure instead of dropping the tile
-- [ ] #81 / Sprint 5 Track F — `total_debt` in the annual history so debt load gets a trend
+- [x] #81 / Sprint 5 Track F — `total_debt` in the annual history; debt load now has a trend (debt ÷
+      equity per year, positive-equity years only) with "lower is better" wording. Saved reports
+      without the field still load and grade the same. Fixtures backfilled with the one new field.
+- [ ] **#92 (found while doing #81)** Realty Income's debt is read as $1.4B of commercial paper; its
+      $25B of notes and $2.8B of term loans are tagged as components, so O grades **A** on debt load.
 - [ ] #72 AGNC has no revenue tag (mREIT net interest income)
 - [ ] #53 KO's TTM stops at April; find the missing Q2 10-Q tag
 - [ ] #6 interest-expense variants so cost of debt is read, not assumed

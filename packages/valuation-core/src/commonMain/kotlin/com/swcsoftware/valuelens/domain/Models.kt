@@ -95,6 +95,8 @@ import kotlinx.serialization.Serializable
     @SerialName("owner_earnings") val ownerEarnings: Double? = null, val equity: Double? = null,
     val roic: Double? = null, @SerialName("book_value_per_share") val bookValuePerShare: Double? = null,
     val cfo: Double? = null, val capex: Double? = null,
+    /** Added Sprint 7 (ISSUES #81) so debt load has a trend; null in reports saved before it. */
+    @SerialName("total_debt") val totalDebt: Double? = null,
 )
 
 @Serializable data class GrowthEntry(

@@ -95,9 +95,17 @@ object Grading {
                 history = null,
             )
         }
-        val why = "Borrowings measured against shareholders' own stake. No trend line yet: the annual series we pull from the filings carries equity but not total debt, so there is nothing honest to compare year by year."
-        return fact(GradingRules.Slot.DEBT, "Debt load", lens, mode, r.snapshot["debt_to_equity"]?.value,
-                    { "${fixed(it, 2)}× equity" }, why, null)
+        val current = r.snapshot["debt_to_equity"]?.value
+        // Only years with positive equity: a ratio against negative equity is meaningless (see above).
+        val series = years(r).map { h ->
+            val d = h.totalDebt; val eq = h.equity
+            h.fiscalYear!! to if (d != null && eq != null && eq > 0) d / eq else null
+        }
+        val history = historyRead(series, current, higherIsBetter = false)
+        val why = "Borrowings measured against shareholders' own stake. The line is total debt ÷ equity for each filed year" +
+            (history?.let { "; ${it.firstYear}–${it.lastYear} ran ${fixed(it.min, 2)}× to ${fixed(it.max, 2)}×." } ?: ".")
+        return fact(GradingRules.Slot.DEBT, "Debt load", lens, mode, current,
+                    { "${fixed(it, 2)}× equity" }, why, history)
     }
 
     private fun cashConversion(r: ValuationReport, lens: Lens, mode: String): GradedFact {
@@ -189,11 +197,17 @@ object Grading {
         val best = if (higherIsBetter) hi else lo
         val worst = if (higherIsBetter) lo else hi
         fun better(a: Double, b: Double) = if (higherIsBetter) a >= b else a <= b
-        val (phrase, tone) = when {
+        val (phrase, tone) = if (higherIsBetter) when {
             better(current, best) -> "Best in $n years" to "good"
             better(worst, current) -> "Weakest in $n years" to "bad"
-            if (higherIsBetter) current > avg else current < avg -> "Above its $n-yr average" to "good"
+            current > avg -> "Above its $n-yr average" to "good"
             else -> "Below its $n-yr average" to "bad"
+        } else when {
+            // Debt load: "above its average" would read as more debt, so say which way it moved.
+            better(current, best) -> "Lowest in $n years" to "good"
+            better(worst, current) -> "Highest in $n years" to "bad"
+            current < avg -> "Lower than its $n-yr average" to "good"
+            else -> "Higher than its $n-yr average" to "bad"
         }
         return HistoryRead(phrase, tone, points, lo, hi, avg, points.first().year, points.last().year)
     }
