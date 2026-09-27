@@ -157,9 +157,16 @@ fun CompanyDetailScreen(state: AppState, company: CompanyRef, onBack: () -> Unit
                         state.updateInvestorLens(if (state.investorLens == Lens.VALUE) Lens.GROWTH else Lens.VALUE)
                     },
                 )
-                when (state.layoutStyle) {
-                    LayoutStyle.CLASSIC -> ClassicLayout(ctx)
-                    LayoutStyle.REPORT_CARD -> ReportCardLayout(ctx)
+                // Terms link whenever this screen shows expert detail — Expert Mode *or* "Show me the math".
+                val links = com.swcsoftware.valuelens.ui.components.LocalGlossary.current
+                androidx.compose.runtime.CompositionLocalProvider(
+                    com.swcsoftware.valuelens.ui.components.LocalGlossary provides
+                        com.swcsoftware.valuelens.ui.components.GlossaryLinks(ctx.expert, links.onTerm),
+                ) {
+                    when (state.layoutStyle) {
+                        LayoutStyle.CLASSIC -> ClassicLayout(ctx)
+                        LayoutStyle.REPORT_CARD -> ReportCardLayout(ctx)
+                    }
                 }
             }
             loading -> Column(Modifier.fillMaxWidth().padding(top = 120.dp), horizontalAlignment = Alignment.CenterHorizontally) {

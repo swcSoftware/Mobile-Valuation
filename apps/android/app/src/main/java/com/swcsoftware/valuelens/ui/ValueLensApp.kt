@@ -64,7 +64,7 @@ fun ValueLensApp(state: AppState) {
         // Sprint 8: tap a term in Expert Mode → its definition in a sheet, without leaving the screen.
         var term by remember { mutableStateOf<String?>(null) }
         term?.let { k ->
-            GlossaryDefinitionSheet(k, state.expertMode, onDismiss = { term = null }, onOpenGlossary = { focus -> term = null; nav.navigate("glossary?focus=$focus") })
+            GlossaryDefinitionSheet(k, expert = true, onDismiss = { term = null }, onOpenGlossary = { focus -> term = null; nav.navigate("glossary?focus=$focus") })
         }
         CompositionLocalProvider(LocalGlossary provides GlossaryLinks(state.expertMode) { term = it }) {
         Scaffold(containerColor = VL.background, bottomBar = {

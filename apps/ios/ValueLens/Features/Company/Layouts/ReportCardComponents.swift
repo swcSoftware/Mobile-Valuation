@@ -180,9 +180,8 @@ struct GradedFactRow: View {
             .accessibilityHint(open ? "Hides the explanation" : "Shows the explanation")
 
             if open {
-                Text(fact.why)
+                GlossaryText(fact.why, color: Theme.textSecondary)
                     .font(.caption)
-                    .foregroundStyle(Theme.textSecondary)
                     .fixedSize(horizontal: false, vertical: true)
                     .padding(.top, 10)
                     .overlay(alignment: .top) { Divider().overlay(Theme.border) }

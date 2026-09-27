@@ -106,11 +106,10 @@ struct ReportCardLayout: View {
                     .foregroundStyle(Theme.textTertiary)
 
                 if let explain = ctx.explain {
-                    Text(model == .traditional ? explain.verdictA : explain.verdictB)
+                    GlossaryText(model == .traditional ? explain.verdictA : explain.verdictB, color: Theme.textPrimary)
                         // Sentence-length copy reads badly at condensed width; the display face is
                         // for the name and the two figures, not for paragraphs.
                         .font(.system(size: 18, weight: .medium))
-                        .foregroundStyle(Theme.textPrimary)
                         .fixedSize(horizontal: false, vertical: true)
                         .padding(.top, 8)
                 }
@@ -129,9 +128,8 @@ struct ReportCardLayout: View {
                     Text(marginText)
                         .font(.subheadline.weight(.bold)).monospacedDigit()
                         .foregroundStyle(ReportCardTone.color(card?.chip(for: model).tone ?? "none"))
-                    Text(marginCaption)
+                    GlossaryText(marginCaption, color: Theme.textSecondary)
                         .font(.caption)
-                        .foregroundStyle(Theme.textSecondary)
                         .fixedSize(horizontal: false, vertical: true)
                 }
                 .padding(.top, 10)
@@ -193,9 +191,8 @@ struct ReportCardLayout: View {
             }
 
             if let card {
-                Text("\(card.lensBlurb) Thresholds are shown on every row; the valuation above is the same whichever lens you pick.")
+                GlossaryText("\(card.lensBlurb) Thresholds are shown on every row; the valuation above is the same whichever lens you pick.", color: Theme.textTertiary)
                     .font(.caption)
-                    .foregroundStyle(Theme.textTertiary)
                     .fixedSize(horizontal: false, vertical: true)
 
                 if let blank = card.blankNote {
@@ -203,7 +200,7 @@ struct ReportCardLayout: View {
                         VStack(alignment: .leading, spacing: 4) {
                             Text("These four facts don't fit this filer")
                                 .font(.subheadline.weight(.semibold)).foregroundStyle(Theme.textPrimary)
-                            Text(blank).font(.caption).foregroundStyle(Theme.textSecondary)
+                            GlossaryText(blank, color: Theme.textSecondary).font(.caption)
                                 .fixedSize(horizontal: false, vertical: true)
                         }
                     }

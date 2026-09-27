@@ -184,8 +184,7 @@ fun GradedFactRow(fact: GradedFact) {
             }
         }
         AnimatedVisibility(open) {
-            Text(fact.why, style = MaterialTheme.typography.bodySmall, color = VL.textSecondary,
-                 modifier = Modifier.padding(top = 10.dp))
+            com.swcsoftware.valuelens.ui.components.GlossaryText(fact.why, VL.textSecondary, Modifier.padding(top = 10.dp), style = MaterialTheme.typography.bodySmall)
         }
     }
 }

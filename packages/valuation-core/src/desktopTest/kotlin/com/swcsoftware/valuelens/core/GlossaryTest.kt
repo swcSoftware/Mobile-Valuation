@@ -57,8 +57,9 @@ class GlossaryTest {
     }
 
     /**
-     * Every abbreviation Expert Mode shows — metric labels, formulas, input names, notes, source notes and
-     * data-check messages across the eleven sample reports, as the labels layer renders them — must link.
+     * Every abbreviation Expert Mode shows — metric labels, formulas, input names, notes, source notes,
+     * data-check messages and the report card's verdicts and graded facts, across the eleven sample
+     * reports as the labels layer renders them — must link.
      */
     @Test fun everyAbbreviationOnScreenHasADefinition() {
         val abbrev = Regex("(?<![A-Za-z])([A-Z][a-z]?[A-Z][A-Za-z]*|[A-Z]{2,}s?|P/B|P/E|V\\*|Ke|Kd|D&A)(?![A-Za-z])")
@@ -73,11 +74,19 @@ class GlossaryTest {
                 texts += m.notes.map { DisplayLabels.sentence(it) }
                 texts += m.sources.map { DisplayLabels.sentence(it.note) }
             }
+            // The report card's own prose (Sprint 8 follow-up: the owner found it unlinked).
+            texts += Explain.verdictSentence(r, r.modelA); texts += Explain.verdictSentence(r, r.modelB)
+            for (lens in Lens.entries) {
+                val card = Grading.reportCard(r, lens)
+                texts += card.lensBlurb; card.blankNote?.let { texts += it }
+                card.facts.forEach { f -> texts += f.label; texts += f.rule; texts += f.why }
+            }
             texts += r.dataChecks.map { DisplayLabels.sentence(it.message) }
             texts += r.warnings.map { DisplayLabels.sentence(it) }
             for (text in texts) for (hit in abbrev.findAll(text)) {
                 val word = hit.groupValues[1]
                 if (word in notTerms) continue
+                if (word in CompanyNames.display(r.company.name, r.company.ticker).split(" ", ",", ".")) continue   // "JPMorgan", "McDonalds"
                 if (Glossary.link(word).none { it.key != null }) missing.putIfAbsent(word, "$t: ${text.take(90)}")
             }
         }

@@ -110,12 +110,16 @@ struct CompanyDetailView: View {
             reportCard: reportCard,
             swapLens: { settings.investorLens = settings.investorLens.toggled }
         )
-        switch settings.layoutStyle {
-        case .classic:
-            ClassicLayout(ctx: ctx)
-        case .reportCard:
-            ReportCardLayout(ctx: ctx)
+        Group {
+            switch settings.layoutStyle {
+            case .classic:
+                ClassicLayout(ctx: ctx)
+            case .reportCard:
+                ReportCardLayout(ctx: ctx)
+            }
         }
+        // Terms link whenever this screen shows expert detail — Expert Mode *or* "Show me the math".
+        .environment(\.glossaryLinksEnabled, ctx.expert)
     }
 
     private var priceSheet: some View {

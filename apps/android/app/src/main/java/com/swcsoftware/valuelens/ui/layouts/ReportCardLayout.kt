@@ -75,8 +75,8 @@ fun ReportCardLayout(ctx: LayoutContext) {
             Card {
                 Text(if (ctx.model == ValuationModel.A) "EARNINGS POWER" else "DISCOUNTED CASH FLOW",
                      fontSize = 10.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.sp, color = VL.textTertiary)
-                Text(Explain.verdictSentence(r, res), fontSize = 18.sp, fontWeight = FontWeight.Medium,
-                     lineHeight = 24.sp, color = VL.textPrimary, modifier = Modifier.padding(top = 8.dp))
+                com.swcsoftware.valuelens.ui.components.GlossaryText(Explain.verdictSentence(r, res), VL.textPrimary, Modifier.padding(top = 8.dp),
+                     style = androidx.compose.material3.LocalTextStyle.current.copy(fontSize = 18.sp, fontWeight = FontWeight.Medium, lineHeight = 24.sp))
                 Row(Modifier.padding(top = 16.dp), horizontalArrangement = Arrangement.spacedBy(24.dp)) {
                     Column(Modifier.clickable { ctx.onEditPrice() }) {
                         Text("YOU PAY", fontSize = 10.sp, fontWeight = FontWeight.Bold, letterSpacing = 0.8.sp, color = VL.price)
@@ -96,13 +96,13 @@ fun ReportCardLayout(ctx: LayoutContext) {
                     Text(pct?.let { (if (it > 0) "+" else if (it < 0) "−" else "") + "${abs(it).roundToInt()}%" } ?: "No figure",
                          fontSize = 14.sp, fontWeight = FontWeight.Bold, color = toneColor(chip?.tone ?: "none"))
                     val band = mos.bands.firstOrNull { it.discountPct == 25.0 }?.buyBelow
-                    Text(
+                    com.swcsoftware.valuelens.ui.components.GlossaryText(
                         when {
                             mos.intrinsicValue == null -> "see the notes below"
                             band != null -> "margin today · Graham's 25% discount would be ${Fmt.money(band)}"
                             else -> "margin today"
                         },
-                        style = MaterialTheme.typography.bodySmall, color = VL.textSecondary,
+                        VL.textSecondary, style = MaterialTheme.typography.bodySmall,
                         modifier = Modifier.padding(start = 7.dp),
                     )
                 }
@@ -128,14 +128,14 @@ fun ReportCardLayout(ctx: LayoutContext) {
                      modifier = Modifier.background(VL.raised, RoundedCornerShape(50))
                          .clickable { ctx.onSwapLens() }.padding(horizontal = 10.dp, vertical = 6.dp))
             }
-            Text("${card.lensBlurb} Thresholds are shown on every row; the valuation above is the same whichever lens you pick.",
-                 style = MaterialTheme.typography.bodySmall, color = VL.textTertiary, modifier = Modifier.padding(top = 6.dp))
+            com.swcsoftware.valuelens.ui.components.GlossaryText("${card.lensBlurb} Thresholds are shown on every row; the valuation above is the same whichever lens you pick.",
+                 VL.textTertiary, Modifier.padding(top = 6.dp), style = MaterialTheme.typography.bodySmall)
             val blank = card.blankNote
             if (blank != null) {
                 Spacer(Modifier.height(8.dp))
                 Card {
                     Text("These four facts don't fit this filer", fontSize = 14.sp, fontWeight = FontWeight.SemiBold, color = VL.textPrimary)
-                    Text(blank, style = MaterialTheme.typography.bodySmall, color = VL.textSecondary, modifier = Modifier.padding(top = 4.dp))
+                    com.swcsoftware.valuelens.ui.components.GlossaryText(blank, VL.textSecondary, Modifier.padding(top = 4.dp), style = MaterialTheme.typography.bodySmall)
                 }
             } else {
                 card.facts.forEach { GradedFactRow(it) }

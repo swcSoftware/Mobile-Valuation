@@ -444,6 +444,10 @@ screen (not a jump to the Glossary page); tap, not tap-and-hold; start now.
       Outside Expert Mode the text is plain.
 - [x] "See it in the Glossary" opens the full list scrolled to the entry, outlined.
 - [x] Found on the way: #95 (capitalised machine keys) fixed; #94 (headers don't link) logged.
+- [x] **Follow-up (owner, same day): the report card didn't link.** Two causes: its own prose (verdict,
+      margin caption, lens note, blank-state note) used plain `Text`; and links followed only global Expert
+      Mode, not the screen's "Show me the math". Both fixed on both platforms — a screen showing expert
+      detail links its terms either way — and `GlossaryTest` now covers the report card's text too.
 
 ## Backlog — candidate sprints (proposed 2026-09-26, not yet ordered)
 

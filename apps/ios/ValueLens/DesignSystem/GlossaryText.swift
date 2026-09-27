@@ -9,12 +9,13 @@ struct GlossaryText: View {
     let text: String
     let color: Color
     @Environment(AppSettings.self) private var settings
+    @Environment(\.glossaryLinksEnabled) private var screenShowsMath
 
     init(_ text: String, color: Color) { self.text = text; self.color = color }
 
     var body: some View {
         Group {
-            if settings.expertMode { Text(Self.attributed(text)) } else { Text(text) }
+            if settings.expertMode || screenShowsMath { Text(Self.attributed(text)) } else { Text(text) }
         }
         .foregroundStyle(color)
         .tint(color)   // a linked term keeps the text's color; the dotted underline marks it
@@ -32,6 +33,11 @@ struct GlossaryText: View {
         }
         return out
     }
+}
+
+extension EnvironmentValues {
+    /// Set by a company screen while it shows expert detail without global Expert Mode ("Show me the math").
+    @Entry var glossaryLinksEnabled: Bool = false
 }
 
 enum GlossaryLink {

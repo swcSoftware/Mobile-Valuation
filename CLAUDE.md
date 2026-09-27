@@ -143,6 +143,8 @@ export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"  
 - **After a core API change, the first Xcode build can fail** ("no member …") even though the
   pre-build step rebuilt the framework: Swift compiled against the old module. Build again.
 - **Expert Mode text goes through `GlossaryText`** (both platforms), not `Text`, so its terms link.
+  Links follow the *screen's* expert state (`glossaryLinksEnabled` / `LocalGlossary`), which includes
+  "Show me the math" — not just the global Expert Mode switch.
   A metric row's header is its expand button, so terms link in the expanded area, not the header.
 - **A missing figure is not always a missing tag.** Sprint 7 found three other causes: a mapped tag
   the filer stopped using years ago (LLY capex), SEC's companyfacts not ingesting a filing at all
