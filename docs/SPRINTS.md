@@ -335,3 +335,19 @@ Sprints 6 + 7 from `dev` at the owner's request while remote. Found on the way: 
 `MARKETING_VERSION`/`CURRENT_PROJECT_VERSION` (xcodegen wrote a fixed 1.0 (1)), so build 1 shipped as 1.0,
 not 0.1.0. The plist now reads both settings; marketing version set to 1.0 to stay on that train.
 
+## Sprint 8 — 2026-09-26 — Tap to define (built on `dev`)
+
+**Goal** (owner, from playtesting TestFlight build 2): Expert Mode's abbreviations are hard to remember,
+and the round trip to the Glossary is too slow. Tap a term, read its definition in place.
+
+**Delivered**
+- Every dotted-underlined term in Expert Mode opens a half-height sheet with the plain and precise
+  definitions and "See it in the Glossary". Same words link on both platforms, because the core decides.
+- The Glossary moved to an editable file and grew from 10 to 45 terms; a test fails the build if Expert
+  Mode ever shows an abbreviation without a definition. Settles ISSUES #89 (link, don't expand).
+- Fixed on the way: three machine keys (`OE_per_share` and two EPS keys) that Sprint 6's labels missed
+  (#95), and the definition sheet's buttons ignoring the app's accent color.
+- Verified on the iOS simulator and the Android emulator: underline, tap, sheet, jump to the entry.
+
+**Tests**: 199 (38 engine · 98 core · 22 Android · 41 iOS), all green.
+

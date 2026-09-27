@@ -134,7 +134,9 @@ object DisplayLabels {
     private fun replaceTokens(text: String, lookup: (String) -> String?): String {
         val out = StringBuilder()
         var i = 0
-        fun isTokenChar(c: Char) = c.isLowerCase() || c.isDigit() || c == '_'
+        // Letters of either case: a key can start with capitals (`OE_per_share`, Sprint 8). Only a token the
+        // file lists is ever replaced, so a capitalised word like "EPS" still passes through unchanged.
+        fun isTokenChar(c: Char) = c.isLetter() || c.isDigit() || c == '_'
         while (i < text.length) {
             val c = text[i]
             val boundaryBefore = i == 0 || !(text[i - 1].isLetterOrDigit() || text[i - 1] == '_')

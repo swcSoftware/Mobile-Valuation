@@ -63,6 +63,7 @@ struct RootView: View {
         .id(theme.generation)
         .preferredColorScheme(settings.themePreference.forcedScheme)
         .tint(Theme.accent)
+        .glossarySheet()   // Sprint 8: tap a term in Expert Mode → its definition, without leaving the screen
         .onAppear { applyTheme() }
         .onChange(of: settings.themePreference) { _, _ in applyTheme() }
         .onChange(of: settings.accentHex) { _, _ in applyTheme() }

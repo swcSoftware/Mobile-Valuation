@@ -1,0 +1,458 @@
+{
+  "version": "2026-09-26",
+  "howToEdit": "Every term the app can define. Edit the wording freely: it changes words, never numbers. 'aliases' are the exact words that link to the entry in Expert Mode — an alias with a capital letter matches case-sensitively (ROIC, Ke), an all-lowercase one matches any case (owner earnings). GlossaryTest fails if Expert Mode shows an abbreviation that no entry defines. Xcode and Gradle rebuild when this file changes.",
+  "entries": [
+    {
+      "key": "intrinsic_value",
+      "term": "Intrinsic value",
+      "plain": "What a business is actually worth per share, judged by the cash it earns — not by what people are paying for it today. Alpha estimates it two ways from the company's own SEC filings.",
+      "expert": "Present value of the cash an owner can take out of the business over its life. Model A uses Graham's earnings multiple and Buffett's owner earnings; Model B discounts projected free cash flow to the firm at WACC.",
+      "aliases": [
+        "intrinsic value"
+      ]
+    },
+    {
+      "key": "margin_of_safety",
+      "term": "Margin of safety (MoS)",
+      "plain": "The discount between the price and what the business is worth. Buying at 25–50% below intrinsic value leaves room to be wrong. If the price is above the value, there is no margin — just risk.",
+      "expert": "MoS = 1 − price ÷ intrinsic value. Graham's central rule: the estimate is uncertain, so demand a price far enough below it that errors in the estimate don't lose money.",
+      "aliases": [
+        "margin of safety",
+        "MoS"
+      ]
+    },
+    {
+      "key": "owner_earnings",
+      "term": "Owner earnings (OE)",
+      "plain": "The cash a business could hand to its owners each year after paying to keep itself running. Buffett's preferred measure of what a company really makes.",
+      "expert": "Net income + depreciation & amortization − maintenance capital expenditure ± change in working capital. Alpha proxies maintenance capex as min(capex, D&A) and labels it.",
+      "aliases": [
+        "owner earnings",
+        "OE"
+      ]
+    },
+    {
+      "key": "free_cash_flow",
+      "term": "Free cash flow (FCF)",
+      "plain": "Cash from operations minus what was spent on equipment and buildings. It's the money left over after the business invests in itself.",
+      "expert": "Cash from operating activities − capital expenditures (levered FCF). Model B uses FCFF — unlevered, after-tax operating cash flow before interest.",
+      "aliases": [
+        "free cash flow",
+        "FCF"
+      ]
+    },
+    {
+      "key": "roic",
+      "term": "Return on capital (ROIC)",
+      "plain": "How much profit the company earns for every dollar invested in it. High and steady returns are the signature of a business with a durable advantage.",
+      "expert": "NOPAT ÷ invested capital (equity + debt − cash). Compared with WACC: a positive, persistent spread indicates an economic moat.",
+      "aliases": [
+        "ROIC",
+        "return on capital",
+        "return on invested capital"
+      ]
+    },
+    {
+      "key": "wacc",
+      "term": "Cost of capital (WACC)",
+      "plain": "The return investors and lenders expect for putting money into this company. Future cash is discounted at this rate — the riskier the business, the higher it is and the less future cash is worth today.",
+      "expert": "Weighted average of cost of equity (CAPM: risk-free + β × equity risk premium) and after-tax cost of debt, weighted by market value of equity and debt.",
+      "aliases": [
+        "WACC",
+        "cost of capital"
+      ]
+    },
+    {
+      "key": "beta",
+      "term": "Beta",
+      "plain": "How much the stock swings compared with the overall market. 1.0 moves with the market; 0.5 is calmer; 1.5 is wilder. Alpha measures it from five years of monthly prices — it is never just assumed.",
+      "expert": "Slope of the regression of the stock's monthly returns on the S&P 500's over 5 years (≥ 36 months required). R² shows how much of the movement the market explains.",
+      "aliases": [
+        "beta",
+        "β"
+      ]
+    },
+    {
+      "key": "book_value",
+      "term": "Book value",
+      "plain": "What the accountants say the company owns minus what it owes. A floor of sorts — though for modern companies brands and software rarely show up in it.",
+      "expert": "Shareholders' equity from the balance sheet. Per share = equity ÷ diluted shares. NNWC (net-net working capital) is Graham's harsher liquidation view.",
+      "aliases": [
+        "book value"
+      ]
+    },
+    {
+      "key": "graham_number",
+      "term": "Graham formula (V*)",
+      "plain": "A quick rule from Benjamin Graham: a company's value is its earnings per share times a multiple that grows with expected growth. Adjusted for today's interest rates.",
+      "expert": "V* = EPS × (8.5 + 2g) × 4.4 ÷ Y, where g is expected growth (capped at 15%) and Y the current AAA corporate bond yield.",
+      "aliases": [
+        "V*",
+        "Graham formula",
+        "Graham's formula"
+      ]
+    },
+    {
+      "key": "data_checks",
+      "term": "Data checks",
+      "plain": "Before Alpha shows a value, it tests the numbers it pulled from SEC: do the books balance, are the figures recent, is anything assumed rather than measured? Failures block the value; warnings are shown beside it.",
+      "expert": "Balance-sheet identity, EPS vs NI/shares, share-count plausibility, TTM period alignment, filing and price freshness, sign sanity, and provenance of beta, tax rate, cost of debt and rates.",
+      "aliases": [
+        "data checks",
+        "data check"
+      ]
+    },
+    {
+      "key": "eps",
+      "term": "Earnings per share (EPS)",
+      "aliases": [
+        "EPS",
+        "earnings per share"
+      ],
+      "plain": "The company's profit for the year divided by its number of shares — the slice of profit that belongs to one share.",
+      "expert": "Diluted EPS = net income ÷ diluted weighted-average shares, as filed. The trailing-twelve-month figure is built additively (full year + year-to-date − prior year-to-date), so it is exact only when the share count is steady."
+    },
+    {
+      "key": "ttm",
+      "term": "Trailing twelve months (TTM)",
+      "aliases": [
+        "TTM",
+        "trailing twelve months"
+      ],
+      "plain": "The most recent full year of results, ending at the latest quarterly report rather than the last fiscal year-end — the freshest year-long picture available.",
+      "expert": "Flows: the last 10-K fiscal year + the current year-to-date from the latest 10-Q − the same year-to-date a year earlier. Balance-sheet items: the latest filed balance sheet."
+    },
+    {
+      "key": "cost_of_equity",
+      "term": "Cost of equity (Ke)",
+      "aliases": [
+        "Ke",
+        "cost of equity"
+      ],
+      "plain": "The yearly return shareholders expect for owning the stock, given how risky it is. A business has to earn more than this to create value for its owners.",
+      "expert": "CAPM: rf + β × ERP, floored at rf + 4% so a very low measured beta can't imply an implausibly cheap cost of equity. The metric says when the floor applied."
+    },
+    {
+      "key": "cost_of_debt",
+      "term": "Cost of debt (Kd)",
+      "aliases": [
+        "Kd",
+        "cost of debt"
+      ],
+      "plain": "The interest rate the company pays on what it borrows.",
+      "expert": "Interest expense ÷ total debt from the filings, clamped to 2–12%. When interest isn't tagged, rf + 1.5% is assumed and flagged. It enters WACC after tax: Kd × (1 − t)."
+    },
+    {
+      "key": "capm",
+      "term": "CAPM",
+      "aliases": [
+        "CAPM",
+        "capital asset pricing model"
+      ],
+      "plain": "A standard formula for the return investors demand from a stock: the rate on a safe government bond, plus extra for how much the stock moves with the market.",
+      "expert": "Capital asset pricing model: Ke = rf + β × ERP, with rf the 10-year Treasury yield."
+    },
+    {
+      "key": "erp",
+      "term": "Equity risk premium (ERP)",
+      "aliases": [
+        "ERP",
+        "equity risk premium"
+      ],
+      "plain": "The extra yearly return investors demand for owning stocks instead of safe government bonds.",
+      "expert": "A policy assumption (5% by default), editable in Settings. Multiplied by beta in CAPM."
+    },
+    {
+      "key": "risk_free",
+      "term": "Risk-free rate (rf)",
+      "aliases": [
+        "rf",
+        "risk-free rate"
+      ],
+      "plain": "What a safe investment pays — here, the 10-year U.S. Treasury yield. Every other required return is built on top of it.",
+      "expert": "FRED series DGS10, published daily to the app's rates file; editable in Settings."
+    },
+    {
+      "key": "fcff",
+      "term": "Free cash flow to the firm (FCFF)",
+      "aliases": [
+        "FCFF",
+        "free cash flow to the firm"
+      ],
+      "plain": "The cash the business produces for everyone who funded it — shareholders and lenders — before any interest is paid.",
+      "expert": "NOPAT + D&A − capex − the normalized change in working capital. Model B projects it and discounts it at WACC; shareholders' value is what remains after subtracting debt and adding cash."
+    },
+    {
+      "key": "dcf",
+      "term": "Discounted cash flow (DCF)",
+      "aliases": [
+        "DCF",
+        "discounted cash flow"
+      ],
+      "plain": "Valuing a business by estimating the cash it will produce in future years and converting that into what it is worth today.",
+      "expert": "Model B: FCFF grown at the stage-one rate over the projection years, plus a terminal value, each discounted at WACC. A business that consumes cash can't be valued this way, so no DCF value is shown for it."
+    },
+    {
+      "key": "terminal_value",
+      "term": "Terminal value (TV)",
+      "aliases": [
+        "TV",
+        "terminal value",
+        "terminal growth",
+        "exit multiple"
+      ],
+      "plain": "What the business is assumed to be worth beyond the years projected in detail. It is often the largest part of a DCF value, which is why its assumptions matter.",
+      "expert": "Model B computes two — a perpetuity growing at the terminal rate (2.5% by default) and an exit multiple of the last year's cash flow (15× by default) — and averages the resulting values. Both assumptions are editable."
+    },
+    {
+      "key": "nopat",
+      "term": "NOPAT",
+      "aliases": [
+        "NOPAT",
+        "net operating profit after tax"
+      ],
+      "plain": "Operating profit after tax, as if the company had no debt — what the business itself earns before financing choices.",
+      "expert": "Operating income × (1 − effective tax rate)."
+    },
+    {
+      "key": "roe",
+      "term": "Return on equity (ROE)",
+      "aliases": [
+        "ROE",
+        "return on equity"
+      ],
+      "plain": "Profit for every dollar of shareholders' own money in the business. The key measure for banks and insurers.",
+      "expert": "Net income ÷ shareholders' equity. Not shown when equity is negative (after heavy buybacks), where the ratio has no meaning."
+    },
+    {
+      "key": "cagr",
+      "term": "Compound annual growth rate (CAGR)",
+      "aliases": [
+        "CAGR",
+        "compound annual growth rate"
+      ],
+      "plain": "The steady yearly growth rate that would take a figure from its starting value to its ending value, smoothing out the bumpy years in between.",
+      "expert": "(last ÷ first)^(1 ÷ years) − 1. Undefined when either end is zero or negative."
+    },
+    {
+      "key": "nnwc",
+      "term": "Net-net working capital (NNWC)",
+      "aliases": [
+        "NNWC",
+        "net-net working capital",
+        "net-net"
+      ],
+      "plain": "Benjamin Graham's liquidation test: roughly what shareholders would get if the company sold its short-term assets at a discount and paid off everything it owes.",
+      "expert": "Cash + short-term investments + 75% of receivables + 50% of inventory − total liabilities. Negative for most operating businesses; a positive figure per share above the price is Graham's 'net-net' bargain."
+    },
+    {
+      "key": "working_capital",
+      "term": "Working capital (NWC)",
+      "aliases": [
+        "NWC",
+        "working capital"
+      ],
+      "plain": "The cash tied up in running the business day to day — stock on shelves and bills customers haven't paid yet, less bills the company hasn't paid yet.",
+      "expert": "(Current assets − cash − short-term investments) − (current liabilities − short-term debt). Owner earnings and FCFF use a normalized yearly change: the 5-year average of NWC ÷ revenue × the change in revenue."
+    },
+    {
+      "key": "d_and_a",
+      "term": "Depreciation & amortization (D&A)",
+      "aliases": [
+        "D&A",
+        "depreciation and amortization",
+        "depreciation & amortization"
+      ],
+      "plain": "The yearly accounting charge for equipment and buildings wearing out (depreciation) and purchased intangibles being used up (amortization). It reduces profit, but no cash leaves the business that year.",
+      "expert": "Added back in owner earnings, FCFF and FFO. Maintenance capex is proxied as the smaller of capex and D&A."
+    },
+    {
+      "key": "capex",
+      "term": "Capital expenditures (capex)",
+      "aliases": [
+        "capex",
+        "capital expenditures",
+        "capital expenditure"
+      ],
+      "plain": "Money spent on long-lived assets — factories, equipment, stores, software.",
+      "expert": "Payments for property, plant and equipment from the cash-flow statement. The part needed just to stay in place (maintenance capex) isn't disclosed, so Alpha uses the smaller of capex and D&A and labels it."
+    },
+    {
+      "key": "ffo",
+      "term": "Funds from operations (FFO)",
+      "aliases": [
+        "FFO",
+        "funds from operations"
+      ],
+      "plain": "The REIT version of earnings: net income with property depreciation added back and one-off property-sale gains removed, because well-kept buildings don't wear out the way machines do.",
+      "expert": "NAREIT definition: net income + D&A − gains on sale of property. Model A applies Graham's formula to FFO per share."
+    },
+    {
+      "key": "price_to_book",
+      "term": "Price-to-book (P/B)",
+      "aliases": [
+        "P/B",
+        "price-to-book",
+        "price to book"
+      ],
+      "plain": "The share price divided by book value per share — how many dollars investors pay for each dollar of net assets on the books.",
+      "expert": "For banks and insurers the justified multiple is P/B* = (ROE − g) ÷ (Ke − g), capped at 4×: worth more than book only when returns on equity beat the cost of equity."
+    },
+    {
+      "key": "price_to_earnings",
+      "term": "Price-to-earnings (P/E)",
+      "aliases": [
+        "P/E",
+        "price-to-earnings",
+        "price to earnings"
+      ],
+      "plain": "The share price divided by earnings per share — how many years of today's profit you pay for.",
+      "expert": "Graham's 8.5 is the P/E he considered fair for a company with no growth."
+    },
+    {
+      "key": "eva",
+      "term": "Economic value added (EVA)",
+      "aliases": [
+        "EVA",
+        "economic value added"
+      ],
+      "plain": "Profit left over after charging the business for all the capital it uses. Positive means it earns more than its investors require.",
+      "expert": "(ROIC − WACC) × invested capital."
+    },
+    {
+      "key": "residual_income",
+      "term": "Residual income",
+      "aliases": [
+        "residual income"
+      ],
+      "plain": "A way to value banks and insurers: book value today, plus the value of future profits above what shareholders require.",
+      "expert": "V = B0 + Σ (ROE − Ke) × prior book value ÷ (1 + Ke)^t + TV, where B0 is today's book value."
+    },
+    {
+      "key": "aaa_yield",
+      "term": "AAA bond yield",
+      "aliases": [
+        "AAA yield",
+        "AAA"
+      ],
+      "plain": "The interest rate paid by the safest corporate borrowers. Graham scaled his formula by it: when high-grade bonds pay more, stocks deserve lower prices.",
+      "expert": "Moody's seasoned Aaa corporate bond yield (FRED series DAAA). In the revised Graham formula it is Y, set against the 4.4% of Graham's day."
+    },
+    {
+      "key": "dps",
+      "term": "Dividends per share (DPS)",
+      "aliases": [
+        "DPS",
+        "dividends per share"
+      ],
+      "plain": "The cash dividend paid for each share over the year.",
+      "expert": "Used by the dividend discount model for REITs: V = DPS × (1 + g) ÷ (Ke − g)."
+    },
+    {
+      "key": "sec",
+      "term": "SEC and EDGAR",
+      "aliases": [
+        "SEC",
+        "EDGAR"
+      ],
+      "plain": "The U.S. Securities and Exchange Commission, which requires public companies to file audited reports. EDGAR is its public database — every figure in Alpha comes from it.",
+      "expert": "Figures come from the XBRL data in 10-K (annual) and 10-Q (quarterly) filings, through SEC's companyfacts feed or, when that lags, from the filing itself."
+    },
+    {
+      "key": "cik",
+      "term": "CIK",
+      "aliases": [
+        "CIK"
+      ],
+      "plain": "The SEC's permanent ID number for a company, used to find its filings on EDGAR.",
+      "expert": "Central Index Key. It survives ticker changes; a holding-company reorganization creates a new one, which is why ExxonMobil's history comes from its predecessor."
+    },
+    {
+      "key": "sic",
+      "term": "SIC code",
+      "aliases": [
+        "SIC"
+      ],
+      "plain": "A four-digit industry code the SEC assigns each company. Alpha uses it to decide whether a company is valued as an operating business, a bank or insurer, or a REIT.",
+      "expert": "Standard Industrial Classification from the filer's SEC profile: 6798 is REITs; the 6020–6411 range covers banks, brokers and insurers."
+    },
+    {
+      "key": "fred",
+      "term": "FRED",
+      "aliases": [
+        "FRED"
+      ],
+      "plain": "The Federal Reserve Bank of St. Louis's free economic database — the source of the Treasury and AAA bond yields Alpha uses.",
+      "expert": "Series DGS10 and DAAA, published daily to the app's rates file on GitHub Pages; the app never holds an API key."
+    },
+    {
+      "key": "gaap",
+      "term": "GAAP",
+      "aliases": [
+        "GAAP"
+      ],
+      "plain": "Generally Accepted Accounting Principles — the U.S. rules companies follow when preparing their financial statements.",
+      "expert": "XBRL tags in the us-gaap taxonomy tie each filed figure to one of these standard definitions."
+    },
+    {
+      "key": "reit",
+      "term": "REIT",
+      "aliases": [
+        "REITs",
+        "REIT"
+      ],
+      "plain": "Real estate investment trust — a company that owns property or mortgages and must pay out most of its income as dividends.",
+      "expert": "Property REITs are valued on FFO; mortgage REITs, which own loans rather than buildings, are valued like a bank, on book value and return on equity."
+    },
+    {
+      "key": "ebit",
+      "term": "Operating income (EBIT)",
+      "aliases": [
+        "EBIT",
+        "operating income"
+      ],
+      "plain": "Profit from the business's own operations, before interest on its debt and before tax.",
+      "expert": "Earnings before interest and taxes. Taken from the filed operating income; when a company doesn't tag one (JNJ), Alpha uses pre-tax income + interest expense and labels it."
+    },
+    {
+      "key": "fiscal_year",
+      "term": "Fiscal year (FY)",
+      "aliases": [
+        "FY",
+        "fiscal year"
+      ],
+      "plain": "The company's own twelve-month accounting year. It doesn't have to match the calendar — Apple's ends in late September.",
+      "expert": "Labeled by the calendar year in which it mostly falls; 52/53-week years ending in the first days of January count toward the year before."
+    },
+    {
+      "key": "ytd",
+      "term": "Year to date (YTD)",
+      "aliases": [
+        "YTD",
+        "year to date",
+        "year-to-date"
+      ],
+      "plain": "Results from the start of the company's fiscal year up to its latest quarterly report.",
+      "expert": "Quarterly reports (10-Q) give year-to-date totals; the trailing twelve months are built from them: last full year + this year-to-date − last year's year-to-date."
+    },
+    {
+      "key": "nareit",
+      "term": "NAREIT",
+      "aliases": [
+        "NAREIT"
+      ],
+      "plain": "The trade association for U.S. real estate investment trusts. Its definition of funds from operations is the one the industry uses.",
+      "expert": "National Association of Real Estate Investment Trusts. Its FFO: net income + real-estate depreciation − gains on sale of property."
+    },
+    {
+      "key": "hurdle_rate",
+      "term": "Hurdle rate",
+      "aliases": [
+        "hurdle rate",
+        "hurdle"
+      ],
+      "plain": "The minimum yearly return you want before an investment is worth making. Buffett's owner-earnings value discounts at it: the higher your bar, the less the business is worth to you.",
+      "expert": "A policy assumption (10% by default), editable in Settings. Owner earnings per share ÷ hurdle rate gives the no-growth value; Alpha also shows the same value at the 10-year Treasury yield for contrast."
+    }
+  ]
+}

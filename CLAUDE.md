@@ -78,6 +78,7 @@ why; read it before touching presentation code.
 | `scripts`, `.github/workflows` | Publish `rates.json` (FRED) and `tickers.json` to GitHub Pages daily. |
 | `docs` | Plan, architecture, API contract, tasks, issues, sprints, runbook, data verification, UI direction. |
 | `packages/valuation-core/labels/display-labels.json` | **What the app calls things.** Every SEC tag, model key and formula term shown on screen. Edit freely: it changes words, never numbers. `DisplayLabelsTest` checks it; Xcode and Gradle rebuild on change. |
+| `packages/valuation-core/labels/glossary.json` | **Every term the app can define** (Sprint 8): wording plus the `aliases` that link in Expert Mode. Edit freely; `GlossaryTest` fails if Expert Mode shows an abbreviation no entry defines. |
 | `docs/design` | Sprint 5 working files: the share-site prototype and the three explored directions. Not shipped, not built, not tested by CI. |
 
 ## Commands that actually work here
@@ -87,7 +88,7 @@ export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"  
 
 # All tests (run from repo root)
 (cd services/valuation-engine && .venv/bin/python -m pytest -q)                        # 38
-(cd apps/android && ./gradlew :valuation-core:desktopTest testDebugUnitTest)           # 93 + 22
+(cd apps/android && ./gradlew :valuation-core:desktopTest testDebugUnitTest)           # 98 + 22
 (cd apps/ios && xcodebuild -project ValueLens.xcodeproj -scheme ValueLens \
    -destination 'platform=iOS Simulator,id=CCCBA21C-24A4-488B-B751-EECB523241B9' \
    -derivedDataPath build/DerivedData -configuration Debug test)                      # 41
@@ -139,6 +140,10 @@ export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"  
 - **The share-site prototype is a mirror, not the app**: it re-implements the plain-language layer
   in JavaScript against the same report JSON. Core copy changes do not reach it automatically.
   Since Sprint 7 it is also stale on data (O's and ORCL's debt); TestFlight is the review surface now.
+- **After a core API change, the first Xcode build can fail** ("no member …") even though the
+  pre-build step rebuilt the framework: Swift compiled against the old module. Build again.
+- **Expert Mode text goes through `GlossaryText`** (both platforms), not `Text`, so its terms link.
+  A metric row's header is its expand button, so terms link in the expanded area, not the header.
 - **A missing figure is not always a missing tag.** Sprint 7 found three other causes: a mapped tag
   the filer stopped using years ago (LLY capex), SEC's companyfacts not ingesting a filing at all
   (KO's July 10-Q), and a figure that isn't a model input for the sector (AGNC revenue). Check the

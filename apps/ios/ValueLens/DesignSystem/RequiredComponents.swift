@@ -132,7 +132,7 @@ struct DataNotesSection: View {
                 if let title {
                     Text(title).font(.caption.weight(.semibold)).foregroundStyle(Theme.textPrimary)
                 }
-                Text(body).font(.caption).foregroundStyle(Theme.textSecondary)
+                GlossaryText(body, color: Theme.textSecondary).font(.caption)
                     .fixedSize(horizontal: false, vertical: true)
             }
         }

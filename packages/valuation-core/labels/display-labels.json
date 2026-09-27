@@ -215,6 +215,9 @@
   "formulaTerms": {
     "fcf": "free cash flow",
     "ffo": "funds from operations",
+    "EPS_first": "first-year EPS",
+    "EPS_last": "last-year EPS",
+    "OE_per_share": "OE per share",
     "g_b": "book value growth",
     "intrinsic_value": "intrinsic value"
   }

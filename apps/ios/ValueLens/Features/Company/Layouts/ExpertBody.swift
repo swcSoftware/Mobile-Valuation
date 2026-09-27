@@ -45,7 +45,7 @@ struct ExpertBody: View {
         }
 
         if let betaDetail = report.provenance["beta_detail"] {
-            Text(betaDetail).font(.caption).foregroundStyle(Theme.textTertiary)
+            GlossaryText(betaDetail, color: Theme.textTertiary).font(.caption)
         }
 
         if !report.shareClasses.isEmpty {

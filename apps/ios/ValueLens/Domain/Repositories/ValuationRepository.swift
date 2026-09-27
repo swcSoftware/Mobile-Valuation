@@ -42,6 +42,9 @@ struct ExplainSummary: Codable, Sendable {
     var sectorNote: String? = nil
 }
 
+/// A run of text; `key` names the glossary entry it links to (Sprint 8 tap-to-define).
+struct TermSpan: Codable, Sendable, Equatable { let text: String; let key: String? }
+
 struct GlossaryEntry: Codable, Sendable, Identifiable {
     let key: String; let term: String; let plain: String; let expert: String
     var id: String { key }

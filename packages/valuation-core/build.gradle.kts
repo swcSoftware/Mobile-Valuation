@@ -19,21 +19,27 @@ plugins {
  * The file is a declared input, so an edit always rebuilds.
  */
 val displayLabelsJson = file("labels/display-labels.json")
+val glossaryJson = file("labels/glossary.json")   // Sprint 8: every term the app can define, same treatment
 val generatedLabelsDir = layout.buildDirectory.dir("generated/labels/commonMain/kotlin")
 val generateDisplayLabels by tasks.registering {
     inputs.file(displayLabelsJson).withPathSensitivity(PathSensitivity.RELATIVE)
+    inputs.file(glossaryJson).withPathSensitivity(PathSensitivity.RELATIVE)
     outputs.dir(generatedLabelsDir)
     doLast {
-        val text = displayLabelsJson.readText()
-        require(!text.contains("\"\"\"")) { "display-labels.json must not contain triple quotes" }
-        val escaped = text.replace("$", "\${'$'}")
-        val out = generatedLabelsDir.get().file("com/swcsoftware/valuelens/core/GeneratedDisplayLabels.kt").asFile
-        out.parentFile.mkdirs()
-        out.writeText(
-            "package com.swcsoftware.valuelens.core\n\n" +
-            "// GENERATED from packages/valuation-core/labels/display-labels.json — edit that file, not this one.\n" +
-            "internal val DISPLAY_LABELS_JSON: String = \"\"\"" + escaped + "\"\"\"\n"
-        )
+        fun embed(source: File, constant: String, fileName: String) {
+            val text = source.readText()
+            require(!text.contains("\"\"\"")) { "${source.name} must not contain triple quotes" }
+            val escaped = text.replace("$", "\${'$'}")
+            val out = generatedLabelsDir.get().file("com/swcsoftware/valuelens/core/$fileName").asFile
+            out.parentFile.mkdirs()
+            out.writeText(
+                "package com.swcsoftware.valuelens.core\n\n" +
+                "// GENERATED from packages/valuation-core/labels/${source.name} — edit that file, not this one.\n" +
+                "internal val $constant: String = \"\"\"" + escaped + "\"\"\"\n"
+            )
+        }
+        embed(displayLabelsJson, "DISPLAY_LABELS_JSON", "GeneratedDisplayLabels.kt")
+        embed(glossaryJson, "GLOSSARY_JSON", "GeneratedGlossary.kt")
     }
 }
 
@@ -64,6 +70,7 @@ tasks.withType<Test>().configureEach {
     inputs.dir(project.file("../../services/valuation-engine/tests/fixtures")).withPathSensitivity(PathSensitivity.RELATIVE)
     inputs.file(project.file("../../services/valuation-engine/valuation_engine/normalize/tags.py")).withPathSensitivity(PathSensitivity.RELATIVE)
     inputs.file(project.file("labels/display-labels.json")).withPathSensitivity(PathSensitivity.RELATIVE)
+    inputs.file(project.file("labels/glossary.json")).withPathSensitivity(PathSensitivity.RELATIVE)
 }
 
 android {

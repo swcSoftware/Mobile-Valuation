@@ -122,7 +122,7 @@ private fun NoteRow(title: String?, body: String, tint: Color) {
             if (title != null) {
                 Text(title, style = MaterialTheme.typography.bodySmall, color = VL.textPrimary)
             }
-            Text(body, style = MaterialTheme.typography.bodySmall, color = VL.textSecondary)
+            com.swcsoftware.valuelens.ui.components.GlossaryText(body, VL.textSecondary, style = MaterialTheme.typography.bodySmall)
         }
     }
 }

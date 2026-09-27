@@ -254,3 +254,13 @@ fixed in the prototype and logged for the real implementation:
 Debt load gained its trend line in Sprint 7 (ISSUES #81): total debt ÷ equity per filed year, skipping
 years with negative equity. Because lower is better, its phrases read "Lowest in N years", "Lower
 than its N-yr average" — never "above its average", which would read as more debt.
+
+## Tap to define (Sprint 8, owner decision 2026-09-26)
+
+In Expert Mode every term the Glossary defines is dotted-underlined in the text's own color; a tap opens a
+half-height sheet (plain definition, precise definition, "See it in the Glossary"). Chosen over a jump to
+the Glossary page (the round trip was the complaint) and over a bubble at the word (cramped, and different
+on Android). Tap rather than long-press: long-press is undiscoverable and already opens the system text
+menu. Only the first mention per block links, so a paragraph isn't a wall of underlines. Metric-row
+headers don't link — they are the expand button (#94).
+

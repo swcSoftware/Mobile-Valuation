@@ -163,7 +163,7 @@ struct SnapshotGrid: View {
         LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
             ForEach(items, id: \.0) { key, label, fmt in
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(label).font(.caption).foregroundStyle(Theme.textSecondary)
+                    GlossaryText(label, color: Theme.textSecondary).font(.caption)
                     Text(snapshot[key].map { fmt($0.value) } ?? "—").font(.body.monospacedDigit()).foregroundStyle(Theme.textPrimary)
                     if let s = snapshot[key] { Text(Labels.tag(s.tag)).font(.caption2).foregroundStyle(Theme.textTertiary).lineLimit(1) }
                 }
@@ -213,7 +213,7 @@ struct AssumptionsGrid: View {
         ]
         VStack(spacing: 8) {
             ForEach(rows, id: \.0) { k, v in
-                HStack { Text(k).foregroundStyle(Theme.textSecondary); Spacer(); Text(v).font(.body.monospacedDigit()).foregroundStyle(Theme.textPrimary) }
+                HStack { GlossaryText(k, color: Theme.textSecondary); Spacer(); Text(v).font(.body.monospacedDigit()).foregroundStyle(Theme.textPrimary) }
             }
         }
     }

@@ -14,6 +14,13 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.CompositionLocalProvider
+import com.swcsoftware.valuelens.ui.components.GlossaryDefinitionSheet
+import com.swcsoftware.valuelens.ui.components.GlossaryLinks
+import com.swcsoftware.valuelens.ui.components.LocalGlossary
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -54,6 +61,12 @@ fun ValueLensApp(state: AppState) {
             nav.navigate("company/${t}/${known?.cik ?: 0}/${java.net.URLEncoder.encode(known?.name ?: t, "UTF-8")}")
         }
 
+        // Sprint 8: tap a term in Expert Mode → its definition in a sheet, without leaving the screen.
+        var term by remember { mutableStateOf<String?>(null) }
+        term?.let { k ->
+            GlossaryDefinitionSheet(k, state.expertMode, onDismiss = { term = null }, onOpenGlossary = { focus -> term = null; nav.navigate("glossary?focus=$focus") })
+        }
+        CompositionLocalProvider(LocalGlossary provides GlossaryLinks(state.expertMode) { term = it }) {
         Scaffold(containerColor = VL.background, bottomBar = {
             if (showTabs) NavigationBar(containerColor = VL.surface) {
                 listOf(Triple("watchlist", "Watchlist", Icons.Filled.List), Triple("search", "Search", Icons.Filled.Search), Triple("settings", "Settings", Icons.Filled.Settings)).forEach { (r, label, icon) ->
@@ -73,12 +86,15 @@ fun ValueLensApp(state: AppState) {
                 composable("search") { SearchScreen(state, ::open) }
                 composable("settings") { SettingsScreen(state, onReplayOnboarding = { nav.navigate("identity") { popUpTo(0) } }, onGlossary = { nav.navigate("glossary") }, onIndex = { nav.navigate("index") }) }
                 composable("index") { TagIndexScreen { nav.popBackStack() } }
-                composable("glossary") { GlossaryScreen(state) { nav.popBackStack() } }
+                composable("glossary?focus={focus}", arguments = listOf(navArgument("focus") { type = NavType.StringType; nullable = true; defaultValue = null })) { e ->
+                    GlossaryScreen(state, focus = e.arguments?.getString("focus")) { nav.popBackStack() }
+                }
                 composable("company/{ticker}/{cik}/{name}", arguments = listOf(navArgument("ticker") { type = NavType.StringType }, navArgument("cik") { type = NavType.LongType }, navArgument("name") { type = NavType.StringType })) { e ->
                     val c = CompanyRef(e.arguments!!.getString("ticker")!!, e.arguments!!.getLong("cik"), java.net.URLDecoder.decode(e.arguments!!.getString("name")!!, "UTF-8"))
                     CompanyDetailScreen(state, c, onBack = { nav.popBackStack() }, onOpenSettings = { nav.navigate("settings") })
                 }
             }
+        }
         }
     }
 }

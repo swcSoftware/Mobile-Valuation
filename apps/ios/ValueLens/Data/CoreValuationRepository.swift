@@ -184,6 +184,22 @@ struct CoreValuationRepository: ValuationRepository {
     private static let labelLock = NSLock()
     nonisolated(unsafe) private static var labelCache: [String: String] = [:]
 
+    /// Sprint 8: `text` split into plain and glossary-linked runs by the core. Cached like the labels.
+    static func glossaryLinks(_ text: String) -> [TermSpan] {
+        glossaryLock.lock(); defer { glossaryLock.unlock() }
+        if let hit = glossaryLinkCache[text] { return hit }
+        let out = (try? JSONDecoder().decode([TermSpan].self, from: Data(core.glossaryLinkJson(text: text).utf8))) ?? [TermSpan(text: text, key: nil)]
+        glossaryLinkCache[text] = out
+        return out
+    }
+    static func glossaryEntry(_ key: String) -> GlossaryEntry? { glossaryEntries.first { $0.key == key } }
+    static let glossaryEntries: [GlossaryEntry] = {
+        guard let g = try? core.glossaryJson() else { return [] }
+        return (try? JSONDecoder().decode([GlossaryEntry].self, from: Data(g.utf8))) ?? []
+    }()
+    private static let glossaryLock = NSLock()
+    nonisolated(unsafe) private static var glossaryLinkCache: [String: [TermSpan]] = [:]
+
     static func tagIndex() -> [TagIndexEntry] {
         guard let j = try? core.tagIndexJson() else { return [] }
         return (try? JSONDecoder().decode([TagIndexEntry].self, from: Data(j.utf8))) ?? []

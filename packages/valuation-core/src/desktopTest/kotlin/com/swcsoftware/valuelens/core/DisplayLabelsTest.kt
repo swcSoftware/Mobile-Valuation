@@ -20,8 +20,11 @@ class DisplayLabelsTest {
     private fun report(t: String): ValuationReport =
         json.decodeFromString(javaClass.getResource("/fixtures/$t.json")!!.readText())
 
-    /** snake_case — how a machine key looks once it leaks into text. */
-    private val snake = Regex("\\b[a-z][a-z0-9]*(?:_[a-z0-9]+)+\\b")
+    /**
+     * snake_case — how a machine key looks once it leaks into text. Also a capitalised head with a word
+     * after the underscore (`OE_per_share`, missed until Sprint 8); a math subscript (`FCFF_t`) is fine.
+     */
+    private val snake = Regex("\\b(?:[a-z][a-z0-9]*(?:_[a-z0-9]+)+|[A-Z][A-Za-z0-9]*(?:_[a-z]{2,}[a-z0-9]*)+)\\b")
 
     @Test fun theFileParsesAndIsVersioned() {
         assertTrue(DisplayLabels.version.matches(Regex("\\d{4}-\\d{2}-\\d{2}")), "version should be a date")

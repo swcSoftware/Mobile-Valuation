@@ -116,7 +116,7 @@ fun ExpertBody(ctx: LayoutContext) {
             MetricRow(res.composite, emphasize = true, expandAll = expandAll, expandVersion = expandVersion); ThinDivider()
             res.metrics.filter { it.key != "fcff_projection" }.forEach { MetricRow(it, expandAll = expandAll, expandVersion = expandVersion) }
         }
-        r.provenance["beta_detail"]?.let { Text(it, style = MaterialTheme.typography.bodySmall, color = VL.textTertiary, modifier = Modifier.padding(top = 6.dp)) }
+        r.provenance["beta_detail"]?.let { com.swcsoftware.valuelens.ui.components.GlossaryText(it, VL.textTertiary, Modifier.padding(top = 6.dp), style = MaterialTheme.typography.bodySmall) }
 
         if (r.shareClasses.isNotEmpty()) {
             SectionHeader("Share classes", "From the filing cover page; ratios from per-class EPS, in ${r.company.ticker} share terms")
@@ -164,7 +164,7 @@ fun ExpertBody(ctx: LayoutContext) {
         Card(Modifier.padding(top = 8.dp)) {
             val a = r.assumptions
             listOf("AAA corporate yield (Y)" to Fmt.pct(a.aaaYieldPct, 2), "10-yr Treasury (rf)" to Fmt.pct(a.treasury10yPct, 2), "Hurdle rate" to Fmt.pct(a.hurdleRatePct), "Equity risk premium" to Fmt.pct(a.equityRiskPremiumPct), "Beta (${r.provenance["beta"] ?: "?"})" to Fmt.number(a.beta), "Terminal growth" to Fmt.pct(a.terminalGrowthPct), "Exit multiple" to "${Fmt.number(a.exitMultiple, 0)}×", "Projection years" to "${a.projectionYears}", "Growth cap" to Fmt.pct(a.maxGrowthPct, 0))
-                .forEach { (k, v) -> Row(Modifier.padding(vertical = 3.dp)) { Text(k, color = VL.textSecondary, modifier = Modifier.weight(1f)); Text(v, color = VL.textPrimary) } }
+                .forEach { (k, v) -> Row(Modifier.padding(vertical = 3.dp)) { com.swcsoftware.valuelens.ui.components.GlossaryText(k, VL.textSecondary, Modifier.weight(1f)); Text(v, color = VL.textPrimary) } }
         }
             if (!ctx.expertModeAlwaysOn) TextButton({ ctx.onSetShowMath(false) }, Modifier.fillMaxWidth()) { Text("Hide the math", color = VL.textSecondary) }
     }

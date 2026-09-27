@@ -246,7 +246,7 @@ struct CheckStripCard: View {
                                 Capsule().fill(color(check.status)).frame(width: 2)
                                 VStack(alignment: .leading, spacing: 2) {
                                     Text(check.label).font(.caption.weight(.semibold)).foregroundStyle(Theme.textPrimary)
-                                    Text(Labels.sentence(check.message)).font(.caption).foregroundStyle(Theme.textSecondary)
+                                    GlossaryText(Labels.sentence(check.message), color: Theme.textSecondary).font(.caption)
                                         .fixedSize(horizontal: false, vertical: true)
                                 }
                             }

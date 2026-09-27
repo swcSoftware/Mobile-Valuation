@@ -26,6 +26,7 @@
 		4E3082FC71A6F24106DAC3C1 /* RequiredComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6249289AD4515856983C7EE4 /* RequiredComponents.swift */; };
 		4F05C103A7A445E2C8966C1F /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB47EAD56F25075486E3A65 /* Theme.swift */; };
 		502FEF6843337DD00D22D80A /* PresentationSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64DB999A4BAC6EBC0E823F83 /* PresentationSettingsTests.swift */; };
+		51D12F5E386EA6480D96B93B /* GlossaryText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F26CDC5979681AF41C76B6 /* GlossaryText.swift */; };
 		563F829E9A60346C9786CBE3 /* CoverageGapCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3218A417367A2F5A9E3476 /* CoverageGapCard.swift */; };
 		5A07A1A0BC124BC2AA287000 /* ValuationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A4A835F0EC58DE68BE74F9 /* ValuationRepository.swift */; };
 		5B57A92F829F4D1FCA3A0FC8 /* ClassicLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2B9E34FEA57B70B638DC23 /* ClassicLayout.swift */; };
@@ -124,6 +125,7 @@
 		CA7BFE79DA868AD4461872CE /* HistoryViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViews.swift; sourceTree = "<group>"; };
 		D5B6F7420AF70A9854D8231F /* CompanyDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyDetailView.swift; sourceTree = "<group>"; };
 		D8C04C1974599039FEB6F870 /* DossierView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DossierView.swift; sourceTree = "<group>"; };
+		D9F26CDC5979681AF41C76B6 /* GlossaryText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlossaryText.swift; sourceTree = "<group>"; };
 		DBB47EAD56F25075486E3A65 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		E1C0F4EA23293AB9E82A1525 /* MetricRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricRow.swift; sourceTree = "<group>"; };
 		E5086FDE0F067158F24661A0 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -248,6 +250,7 @@
 				3F3218A417367A2F5A9E3476 /* CoverageGapCard.swift */,
 				58DBC1A2858240171F95189B /* ExplainViews.swift */,
 				56C043C8119525143FFB7C42 /* Formatters.swift */,
+				D9F26CDC5979681AF41C76B6 /* GlossaryText.swift */,
 				78BBA3DBCED5551B4994AAD6 /* LayoutStyle.swift */,
 				9047AF702CA9D5061FABA1FF /* MarginOfSafetyView.swift */,
 				E1C0F4EA23293AB9E82A1525 /* MetricRow.swift */,
@@ -511,7 +514,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "set -e\nFW=\"$SRCROOT/../../packages/valuation-core/build/XCFrameworks/release/ValuationCore.xcframework\"\n# The display labels are compiled into the core, so an edit to them must rebuild it —\n# otherwise the app keeps showing the old words with no error (Sprint 6).\nLABELS=\"$SRCROOT/../../packages/valuation-core/labels/display-labels.json\"\nif [ ! -d \"$FW\" ] || [ \"$LABELS\" -nt \"$FW/Info.plist\" ]; then\n  cd \"$SRCROOT/../android\"\n  export JAVA_HOME=\"${JAVA_HOME:-/Applications/Android Studio.app/Contents/jbr/Contents/Home}\"\n  ./gradlew :valuation-core:assembleValuationCoreReleaseXCFramework -q\nfi\n";
+			shellScript = "set -e\nFW=\"$SRCROOT/../../packages/valuation-core/build/XCFrameworks/release/ValuationCore.xcframework\"\n# The display labels are compiled into the core, so an edit to them must rebuild it —\n# otherwise the app keeps showing the old words with no error (Sprint 6).\nLABELS=\"$SRCROOT/../../packages/valuation-core/labels/display-labels.json\"\nGLOSSARY=\"$SRCROOT/../../packages/valuation-core/labels/glossary.json\"\nif [ ! -d \"$FW\" ] || [ \"$LABELS\" -nt \"$FW/Info.plist\" ] || [ \"$GLOSSARY\" -nt \"$FW/Info.plist\" ]; then\n  cd \"$SRCROOT/../android\"\n  export JAVA_HOME=\"${JAVA_HOME:-/Applications/Android Studio.app/Contents/jbr/Contents/Home}\"\n  ./gradlew :valuation-core:assembleValuationCoreReleaseXCFramework -q\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -533,6 +536,7 @@
 				083F3581611D5E21D30EFE4C /* ExplainViews.swift in Sources */,
 				03E085E9A8D6C35465BC1520 /* Exporter.swift in Sources */,
 				6119CA8B0347CFBDE3FAF17D /* Formatters.swift in Sources */,
+				51D12F5E386EA6480D96B93B /* GlossaryText.swift in Sources */,
 				5E55F3A541CF9B0EDB504946 /* GlossaryView.swift in Sources */,
 				F7B895159BD986E7CFCFD3A0 /* HistoryViews.swift in Sources */,
 				2F063405C38709B89C73A9A1 /* Identity.swift in Sources */,

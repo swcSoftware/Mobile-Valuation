@@ -173,6 +173,8 @@ class ValuationCore(
 
     @Throws(Exception::class)
     fun glossaryJson(): String = json.encodeToString(Explain.glossary)
+    /** `text` split into plain and glossary-linked spans (Expert Mode tap-to-define, Sprint 8). */
+    fun glossaryLinkJson(text: String): String = json.encodeToString(Glossary.link(text))
     /**
      * A company name as it should be *shown*: "Merck & Co., Inc.", not "MERCK & CO., INC.". Display
      * only — the filed name stays the evidence everywhere it is used as such (ISSUES #85).

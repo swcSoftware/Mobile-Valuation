@@ -209,7 +209,7 @@ fun SnapshotGrid(r: ValuationReport) {
             row.forEach { (k, label, f) ->
                 val s = r.snapshot[k]
                 Column(Modifier.weight(1f)) {
-                    Text(label, style = MaterialTheme.typography.bodySmall, color = VL.textSecondary)
+                    com.swcsoftware.valuelens.ui.components.GlossaryText(label, VL.textSecondary, style = MaterialTheme.typography.bodySmall)
                     Text(s?.let { f(it.value) } ?: "—", color = VL.textPrimary, fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
                     s?.let { Text(com.swcsoftware.valuelens.core.DisplayLabels.tag(it.tag), fontSize = 11.sp, color = VL.textTertiary, maxLines = 1) }
                 }

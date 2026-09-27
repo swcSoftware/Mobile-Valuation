@@ -33,13 +33,13 @@ struct MetricRow: View {
 
             if expanded {
                 VStack(alignment: .leading, spacing: 8) {
-                    Text(Labels.formula(metric.formula)).font(.vlMono).foregroundStyle(Theme.info)
+                    GlossaryText(Labels.formula(metric.formula), color: Theme.info).font(.vlMono)
                         .fixedSize(horizontal: false, vertical: true)
                     if !metric.inputs.isEmpty {
                         VStack(alignment: .leading, spacing: 3) {
                             ForEach(metric.inputs.keys.sorted(), id: \.self) { k in
                                 HStack {
-                                    Text(Labels.input(k, metric: metric.key)).font(.caption).foregroundStyle(Theme.textSecondary)
+                                    GlossaryText(Labels.input(k, metric: metric.key), color: Theme.textSecondary).font(.caption)
                                     Spacer()
                                     Text(Fmt.input(k, metric.inputs[k] ?? nil)).font(.vlMono).foregroundStyle(Theme.textPrimary)
                                 }
@@ -53,7 +53,7 @@ struct MetricRow: View {
                         }
                     }
                     ForEach(metric.notes, id: \.self) { n in
-                        Text(Labels.sentence(n)).font(.caption).foregroundStyle(Theme.textSecondary).fixedSize(horizontal: false, vertical: true)
+                        GlossaryText(Labels.sentence(n), color: Theme.textSecondary).font(.caption).fixedSize(horizontal: false, vertical: true)
                     }
                 }
                 .padding(12)
@@ -76,7 +76,7 @@ struct SourceLine: View {
             Text("\(source.form) · period ending \(source.periodEnd) · filed \(source.filed) · \(source.accession)")
                 .font(.caption2).foregroundStyle(Theme.textTertiary)
             if !source.note.isEmpty {
-                Text(Labels.sentence(source.note)).font(.caption2).foregroundStyle(Theme.textTertiary).fixedSize(horizontal: false, vertical: true)
+                GlossaryText(Labels.sentence(source.note), color: Theme.textTertiary).font(.caption2).fixedSize(horizontal: false, vertical: true)
             }
         }
     }

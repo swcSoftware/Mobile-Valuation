@@ -425,6 +425,26 @@ blast radius with `scripts/value_snapshot.py` (new: snapshot the universe before
 - [x] #6 interest expense — nothing to map: AAPL files no interest figure; DHI's `InterestCostsIncurred`
       was tried and reverted (it inflated DHI's EBIT proxy ~5%). Both keep the labeled assumed rate.
 
+## Sprint 8 — Tap to define (2026-09-26, built on `dev`) ✅
+
+**The owner's brief (from playtesting build 2):** Expert Mode's acronyms are hard to remember, and going
+to the Glossary and back every time is slow. **Owner decisions:** a half-height sheet over the current
+screen (not a jump to the Glossary page); tap, not tap-and-hold; start now.
+
+- [x] The Glossary moved to `packages/valuation-core/labels/glossary.json` (owner-editable, compiled in
+      like the display labels; Xcode rebuilds on change). The original 10 entries are word for word; 35
+      added — every abbreviation Expert Mode shows, found by scanning the eleven sample reports.
+- [x] `Glossary.link(text)` in the core: longest alias wins, capitalised aliases are case-sensitive,
+      first mention only, `_` is a boundary (`FCFF_t`). Both apps underline the same words.
+- [x] `GlossaryTest`: every entry complete, no alias points at two entries, linking never changes the
+      text, and **every abbreviation on screen has a definition** (it found EBIT, FY, YTD, NAREIT).
+- [x] iOS `GlossaryText` + `.glossarySheet()`; Android `GlossaryText` + `ModalBottomSheet` (dotted
+      underline drawn from the text layout, since Compose has none). Formulas, input names, notes,
+      source notes, data checks, data notes, the beta line, balance-sheet and assumption labels.
+      Outside Expert Mode the text is plain.
+- [x] "See it in the Glossary" opens the full list scrolled to the entry, outlined.
+- [x] Found on the way: #95 (capitalised machine keys) fixed; #94 (headers don't link) logged.
+
 ## Backlog — candidate sprints (proposed 2026-09-26, not yet ordered)
 
 Derived from ISSUES, the Sprint 5 carry-overs and PLAN "Later" after the first TestFlight build.
