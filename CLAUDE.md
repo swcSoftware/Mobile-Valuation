@@ -89,10 +89,10 @@ export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"  
 
 # All tests (run from repo root)
 (cd services/valuation-engine && .venv/bin/python -m pytest -q)                        # 38
-(cd apps/android && ./gradlew :valuation-core:desktopTest testDebugUnitTest)           # 98 + 27
+(cd apps/android && ./gradlew :valuation-core:desktopTest testDebugUnitTest)           # 100 + 27
 (cd apps/ios && xcodebuild -project ValueLens.xcodeproj -scheme ValueLens \
    -destination 'platform=iOS Simulator,id=CCCBA21C-24A4-488B-B751-EECB523241B9' \
-   -derivedDataPath build/DerivedData -configuration Debug test)                      # 46
+   -derivedDataPath build/DerivedData -configuration Debug test)                      # 47
 
 # iOS framework (Xcode's pre-build script does this too)
 (cd apps/android && ./gradlew :valuation-core:assembleValuationCoreReleaseXCFramework)

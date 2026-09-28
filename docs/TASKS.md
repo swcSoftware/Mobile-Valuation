@@ -473,6 +473,22 @@ readable from MCD's page — and appended to the PDF export after the report.
 - [x] Found on the way: two exports within one second shared a filename; the notes version is now `-notes`.
 - [ ] Owner: try it on the phone (needs a build from this branch once merged).
 
+### B. The SEC filings behind the numbers (owner, same day)
+**Owner's choice** (over an on-demand viewer and a plain browser link): every filing a figure came from is
+downloaded when the company page opens, readable in the app, and deleted when the page closes.
+- [x] Core `Filings`: `filings_used` on the report (filing, the periods it supplied, the concepts) — no new
+      requests on the valuation path; `filingDocuments` resolves each main document from EDGAR's filing list,
+      fetching an older page only for a filing missing from "recent" (JPM has 70 older pages). Python mirror.
+- [x] The row wording ("10-K for the period ending 2024-12-31 · supplied FY2022–FY2023") comes from the core.
+      Found before shipping: a "period ending" taken from the values was misleading — a 10-K often supplies only
+      its comparative years, and a 10-Q's latest date was its cover-page share count.
+- [x] iOS and Android: downloader (one at a time, 200 ms apart, the user's SEC identity; temp/cache dir;
+      deleted when the page closes; swept at launch), a card in both layouts, list sheet, in-app reader over the
+      local copy (images from sec.gov), "Open on SEC.gov".
+- [x] Measured on KO: 10 filings, 43–46 MB on disk. SEC compresses them in transit (a 12 MB 10-K is under 1 MB).
+- [x] Verified by hand on both platforms: download, list, reader, deletion on leaving.
+- [ ] #96 (logged): KO's first load on the Android emulator was slow; measure on a device.
+
 ## Backlog — candidate sprints (proposed 2026-09-26, not yet ordered)
 
 Derived from ISSUES, the Sprint 5 carry-overs and PLAN "Later" after the first TestFlight build.

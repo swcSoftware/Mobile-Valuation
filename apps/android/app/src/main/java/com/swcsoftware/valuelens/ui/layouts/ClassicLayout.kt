@@ -161,7 +161,7 @@ if (!expert) {
     ExpertBody(ctx)
 }
 // Sprint 9: the user's private notes, the same component in either layout.
-Column(Modifier.padding(top = 16.dp)) { com.swcsoftware.valuelens.ui.components.CompanyNotesSection(r.company) }
+Column(Modifier.padding(top = 16.dp), verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(16.dp)) { com.swcsoftware.valuelens.ui.components.FilingsUsedCard(); com.swcsoftware.valuelens.ui.components.CompanyNotesSection(r.company) }
 Text(r.disclaimer, style = MaterialTheme.typography.bodySmall, color = VL.textTertiary, modifier = Modifier.fillMaxWidth().padding(top = 20.dp), textAlign = androidx.compose.ui.text.style.TextAlign.Center)
     }
 }

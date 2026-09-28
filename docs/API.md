@@ -79,3 +79,21 @@ ModelResult = {"name", "intrinsic_value_per_share", "composite": Metric, "metric
 Contract changes must update: this file, `packages/valuation-core/.../domain/Models.kt`,
 `apps/ios/.../ValuationReport.swift`, the bundled `SampleData/*.json` (iOS) and `assets/*.json` (Android),
 and the test fixtures under `services/valuation-engine/tests/fixtures`.
+
+## `filings_used` (Sprint 9)
+
+Every report carries the SEC filings its figures were read from, newest first:
+
+```json
+"filings_used": [
+  {"accession": "0001628280-26-050503", "form": "10-Q", "filed": "2026-07-29",
+   "periods": ["TTM"], "concepts": ["revenue", "cost_of_revenue", "net_income", "..."]}
+]
+```
+
+`periods` are the report's periods the filing *supplied* (`FY2023`, `TTM`), not the filing's own period: when a
+later 10-K restates a year, the newer figure wins, so a 10-K often supplies only its comparative years. Computed
+values (`valuelens:derived`) are not listed; their inputs are. Resolving each filing's main document
+(`filingDocumentsJson` / `filingDocuments` in the core) adds `document_url`, `index_url`, `report_date` (the
+filing's own period, from EDGAR) and the core-worded `title` and `supplied`.
+

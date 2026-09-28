@@ -23,6 +23,7 @@ class AppState(app: Application) {
     private val prefs = AppPrefs(app)
     private val app = app
     val watchlistStore = WatchlistStore(app)
+    init { com.swcsoftware.valuelens.data.FilingsDownloader.sweep(app.cacheDir) }   // Sprint 9: leftovers from a crash
     private val notesStore = com.swcsoftware.valuelens.data.NotesStore(java.io.File(app.filesDir, "notes.json"))
 
     var identity: SecIdentity? by mutableStateOf(identityStore.load())

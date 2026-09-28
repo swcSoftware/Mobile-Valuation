@@ -109,6 +109,10 @@ fun CompanyDetailScreen(state: AppState, company: CompanyRef, onBack: () -> Unit
         }
     }
     LaunchedEffect(company.ticker) { load() }
+    // Sprint 9: this company's filings, downloaded while the page is open and deleted when it closes.
+    val filings = remember(company.ticker) { com.swcsoftware.valuelens.data.FilingsDownloader(context.cacheDir) }
+    LaunchedEffect(report?.generatedAt) { report?.let { filings.run(it, state.repository, state.identity?.userAgent) } }
+    androidx.compose.runtime.DisposableEffect(company.ticker) { onDispose { filings.discard() } }
 
     Column(Modifier.fillMaxSize().background(VL.background)) {
         Row(Modifier.fillMaxWidth().background(VL.surface).padding(8.dp, 12.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -165,6 +169,7 @@ fun CompanyDetailScreen(state: AppState, company: CompanyRef, onBack: () -> Unit
                 androidx.compose.runtime.CompositionLocalProvider(
                     com.swcsoftware.valuelens.ui.components.LocalGlossary provides
                         com.swcsoftware.valuelens.ui.components.GlossaryLinks(ctx.expert, links.onTerm),
+                    com.swcsoftware.valuelens.ui.components.LocalFilings provides filings,
                 ) {
                     when (state.layoutStyle) {
                         LayoutStyle.CLASSIC -> ClassicLayout(ctx)

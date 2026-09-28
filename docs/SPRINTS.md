@@ -413,5 +413,9 @@ of its PDF export.
   past the bottom.
 - Two exports in the same second no longer overwrite each other.
 
-**Tests**: iOS 46 (+5), Android 27 (+5); core and engine unchanged (98, 38).
+- **The SEC filings behind the numbers** (owner's choice of design): every filing a figure came from is
+  downloaded when the company page opens, listed with the years it supplied, readable in-app, and deleted when
+  the page closes. KO: 10 filings, ~45 MB on disk, far less over the network (SEC compresses them).
+
+**Tests**: engine 38 · core 100 (+2) · Android 27 (+5) · iOS 47 (+6).
 

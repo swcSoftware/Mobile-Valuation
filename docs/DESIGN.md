@@ -272,3 +272,10 @@ than one page, so a thesis and later updates read as a timeline. Notes are never
 touch non-negotiable 7. The export menu offers the dossier with and without notes because notes are
 private and dossiers get shared.
 
+## The filings behind the numbers (Sprint 9, owner decision 2026-09-28)
+
+Owner's choice among three designs: download every filing used when the page opens (chosen), download one on
+demand, or open EDGAR in a browser. A filing is titled by its own period and says which years Alpha took from
+it, because the two differ whenever a later filing restated a year — showing only one would mislead. The
+card sits above the notes in both layouts and states that the copies are deleted when you leave.
+

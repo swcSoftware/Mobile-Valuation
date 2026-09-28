@@ -26,6 +26,8 @@ interface ValuationRepository {
     suspend fun rates(): RatesSnapshot?
     /** Prefilled GitHub issue URL for a concept-map gap; the user reviews and submits it. */
     fun coverageIssueUrl(reportJson: String): String?
+    /** The filings behind a report with each main document's URL (Sprint 9); empty when offline or unknown. */
+    suspend fun filingDocuments(report: ValuationReport): List<com.swcsoftware.valuelens.domain.FilingDocument> = emptyList()
 }
 
 /** OkHttp-backed blocking fetcher for the core. */
@@ -85,6 +87,9 @@ class CoreValuationRepository(context: Context, private val userAgent: String?) 
     }
 
     override suspend fun rates(): RatesSnapshot? = withContext(Dispatchers.IO) { core.rates() }
+    override suspend fun filingDocuments(report: ValuationReport) = withContext(Dispatchers.IO) {
+        runCatching { core.filingDocuments(report, ua()) }.getOrDefault(emptyList())
+    }
 
     override fun coverageIssueUrl(reportJson: String): String? = runCatching { core.coverageIssueUrl(reportJson) }.getOrNull()
 }
