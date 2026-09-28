@@ -17,7 +17,8 @@
 | — | 2026-09-26 | TestFlight 1.0 (2) (Sprints 6 + 7) | App Store Connect |
 | 8 | 2026-09-26 | Tap to define: glossary file, term links in Expert Mode and the report card | `staging` 2026-09-28 |
 | — | 2026-09-28 | TestFlight 1.0 (3) (Sprint 8) | App Store Connect |
-| 9 | 2026-09-28 → | Private notes per company, in the PDF export | branch `feature/sprint-9-notes` |
+| 9 | 2026-09-28 | Private notes per company (in the PDF); the SEC filings behind the numbers, readable in-app | `staging` 2026-09-28 |
+| — | 2026-09-28 | TestFlight 1.0 (4) (Sprint 9) | App Store Connect |
 
 ## Sprint 0 — 2026-09-18 — Alpha skeleton
 
@@ -400,7 +401,7 @@ Found stale while doing this and corrected: ISSUES #82 (fixed by Sprint 5's per-
 marked open), PLAN and ARCHITECTURE (no entries past Sprint 5), the `debt_coverage` row in
 DATA_VERIFICATION.
 
-## Sprint 9 — 2026-09-28 — Private notes per company (on `feature/sprint-9-notes`)
+## Sprint 9 — 2026-09-28 — Private notes per company, and the filings behind the numbers (promoted to `staging` 2026-09-28)
 
 **Goal** (owner): private notes that belong to a company, readable from its page, and included at the end
 of its PDF export.
@@ -418,4 +419,25 @@ of its PDF export.
   the page closes. KO: 10 filings, ~45 MB on disk, far less over the network (SEC compresses them).
 
 **Tests**: engine 38 · core 100 (+2) · Android 27 (+5) · iOS 47 (+6).
+
+**Owner sign-off, 2026-09-28** ("working great" on the simulator build); merged `feature/sprint-9-notes` →
+`dev` (fast-forward) and promoted.
+
+## Promotion to `staging` — 2026-09-28 (second)
+
+Fast-forward of `dev` → `staging` (previously `fed3808`) after every suite passed on the promoted commit with a
+clean working tree: engine 38 · core 100 · Android 27 · iOS 47. `main` untouched. TestFlight 1.0 (4) built from
+the same commit. What moved:
+
+| Commit | What |
+|---|---|
+| `802f139` | Notes on iOS: store, company-page section, dossier "Your notes", with/without export |
+| `f70557b` | Notes on Android; the Android dossier wraps text and paginates |
+| `b4fb458` | Core `Filings` (`filings_used`, main-document lookup) and the iOS filings card, list and reader |
+| `cbe9cf3` | Filings on Android; filing-row wording moved to the core (docs, ISSUES #96) |
+| `731b437` | The core half of that wording change, left out of `cbe9cf3` — which did not compile on its own |
+| (this commit) | Docs for the promotion; build number 4 |
+
+Lesson recorded in CLAUDE.md: `cbe9cf3` was committed from a partial `git add` while tests ran green on the
+working tree. Check the tree is clean before trusting a test run.
 

@@ -9,12 +9,12 @@ runs **on the device**; there is no server. Deep context lives in `docs/` — st
 [docs/TASKS.md](docs/TASKS.md) (current sprint) and [docs/SPRINTS.md](docs/SPRINTS.md) (what shipped
 when). This file is the index and the tripwires.
 
-**`staging` holds Sprints 0–8** (promoted 2026-09-28): two layouts over one set of numbers (report
-card default), grading in the core, runtime theming, plain-language labels (Sprint 6), the "numbers
-that go missing" fixes (Sprint 7) and tap-to-define (Sprint 8). TestFlight build 1.0 (3) matches it.
-**Sprint 9 (private notes per company) is on `feature/sprint-9-notes`.** The timeline is at the top of
-[docs/SPRINTS.md](docs/SPRINTS.md); [docs/DESIGN.md](docs/DESIGN.md) records every UI decision and
-why — read it before touching presentation code.
+**`staging` holds Sprints 0–9** (latest promotion 2026-09-28): two layouts over one set of numbers (report
+card default), grading in the core, runtime theming, plain-language labels (Sprint 6), the "numbers that go
+missing" fixes (Sprint 7), tap-to-define (Sprint 8), and private notes plus the SEC filings behind the numbers
+(Sprint 9). TestFlight build 1.0 (4) matches it. No sprint is in progress; the backlog is at the end of
+[docs/TASKS.md](docs/TASKS.md) and the timeline at the top of [docs/SPRINTS.md](docs/SPRINTS.md).
+[docs/DESIGN.md](docs/DESIGN.md) records every UI decision and why — read it before touching presentation code.
 
 ## Non-negotiables
 
@@ -147,6 +147,8 @@ export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"  
   Links follow the *screen's* expert state (`glossaryLinksEnabled` / `LocalGlossary`), which includes
   "Show me the math" — not just the global Expert Mode switch.
   A metric row's header is its expand button, so terms link in the expanded area, not the header.
+- **A green test run only describes a clean tree.** Sprint 9's `cbe9cf3` was pushed from a partial
+  `git add` while the tests passed on uncommitted files; it didn't compile on its own. `git status` first.
 - **A missing figure is not always a missing tag.** Sprint 7 found three other causes: a mapped tag
   the filer stopped using years ago (LLY capex), SEC's companyfacts not ingesting a filing at all
   (KO's July 10-Q), and a figure that isn't a model input for the sector (AGNC revenue). Check the

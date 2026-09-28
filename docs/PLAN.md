@@ -137,8 +137,9 @@ gap-fill for filings SEC's companyfacts hasn't ingested. Each fix measured over 
 Every abbreviation in Expert Mode links to a definition in a half-height sheet; the glossary is an
 editable file of 45 terms.
 
-### Sprint 9 — Private notes per company (2026-09-28, in progress on `feature/sprint-9-notes`)
-On-device notes attached to a company, shown on its page and appended to its PDF export.
+### Sprint 9 — Private notes, and the filings behind the numbers ✅ (2026-09-28)
+On-device notes attached to a company, shown on its page and appended to its PDF export. Every SEC filing a
+figure came from is downloaded while the company page is open, readable in the app, and deleted on leaving.
 
 ### Alpha Pro — subscriptions (candidate, after release readiness)
 Cheap monthly/yearly subscription via StoreKit 2 / Play Billing, gating depth (Expert Mode, unlimited

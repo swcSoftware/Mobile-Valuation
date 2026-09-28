@@ -449,7 +449,7 @@ screen (not a jump to the Glossary page); tap, not tap-and-hold; start now.
       Mode, not the screen's "Show me the math". Both fixed on both platforms — a screen showing expert
       detail links its terms either way — and `GlossaryTest` now covers the report card's text too.
 
-## Sprint 9 — Private notes per company (2026-09-28, on `feature/sprint-9-notes`)
+## Sprint 9 — Private notes per company, and the filings behind the numbers (2026-09-28) ✅ promoted to staging 2026-09-28
 
 **The owner's brief:** private, on-device notes linked to a company — a note about MCD lives on and is
 readable from MCD's page — and appended to the PDF export after the report.
@@ -471,7 +471,7 @@ readable from MCD's page — and appended to the PDF export after the report.
 - [x] Tests: iOS `NotesTests` (5, including the exported PDF's text and order), Android `NotesTest` (5,
       including the wrap). Verified by hand on the iOS simulator and the Android emulator.
 - [x] Found on the way: two exports within one second shared a filename; the notes version is now `-notes`.
-- [ ] Owner: try it on the phone (needs a build from this branch once merged).
+- [x] Owner sign-off (2026-09-28); shipped in TestFlight 1.0 (4).
 
 ### B. The SEC filings behind the numbers (owner, same day)
 **Owner's choice** (over an on-demand viewer and a plain browser link): every filing a figure came from is
