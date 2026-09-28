@@ -28,6 +28,7 @@ final class AppRouter {
 struct ValueLensApp: App {
     @State private var settings = AppSettings()
     @State private var watchlist = WatchlistStore()
+    @State private var notes = NotesStore()
     @State private var router = AppRouter()
 
     var body: some Scene {
@@ -35,6 +36,7 @@ struct ValueLensApp: App {
             RootView()
                 .environment(settings)
                 .environment(watchlist)
+                .environment(notes)
                 .environment(router)
                 .onOpenURL { _ = router.handle($0) }
         }

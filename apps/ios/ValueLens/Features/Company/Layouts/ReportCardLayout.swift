@@ -58,6 +58,9 @@ struct ReportCardLayout: View {
                 .tint(Theme.accent)
             }
 
+            // Sprint 9: the user's private notes, the same component in either layout.
+            CompanyNotesSection(company: report.company)
+
             ProvenanceRow(report: report)
 
             Text(report.disclaimer)

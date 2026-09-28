@@ -4,6 +4,8 @@ import SwiftUI
 struct DossierView: View {
     let report: ValuationReport
     let model: ValuationModel
+    /// The user's notes on this company (Sprint 9), after the report; empty when excluded.
+    var notes: [CompanyNote] = []
 
     var body: some View {
         let r = report.result(for: model)
@@ -53,6 +55,19 @@ struct DossierView: View {
             block("Assumptions") {
                 let a = report.assumptions
                 Text("AAA yield \(Fmt.pct(a.aaaYieldPct, decimals: 2)) · 10-yr Treasury \(Fmt.pct(a.treasury10YPct, decimals: 2)) · hurdle \(Fmt.pct(a.hurdleRatePct)) · ERP \(Fmt.pct(a.equityRiskPremiumPct)) · β \(Fmt.number(a.beta)) · terminal g \(Fmt.pct(a.terminalGrowthPct)) · exit \(Fmt.number(a.exitMultiple, decimals: 0))× · source: \(a.rateSource)")
+            }
+            if !notes.isEmpty {
+                Divider()
+                block("Your notes") {
+                    Text("Written by you in Alpha — your own views, not part of the valuation above.").font(.caption2).foregroundStyle(.secondary)
+                    ForEach(notes) { n in
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(NoteDates.caption(n)).font(.system(size: 8, weight: .semibold)).foregroundStyle(.secondary)
+                            Text(n.text).fixedSize(horizontal: false, vertical: true)
+                        }
+                        .padding(.top, 4)
+                    }
+                }
             }
             Divider()
             Text(report.disclaimer).font(.caption2).foregroundStyle(.secondary)

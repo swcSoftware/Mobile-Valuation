@@ -7,6 +7,7 @@ struct CompanyDetailView: View {
     @Environment(AppRouter.self) private var router
     @State private var vm: CompanyViewModel
     @State private var showPriceSheet = false
+    @Environment(NotesStore.self) private var notesStore
     @State private var exportItem: ExportItem?
     @State private var showExportMenu = false
     @State private var showMath = false
@@ -54,7 +55,12 @@ struct CompanyDetailView: View {
                     Menu {
                         Button { openIssue(r) } label: { Label("Report a data problem", systemImage: "exclamationmark.bubble") }
                     Divider()
-                    Button { export(.pdf, r) } label: { Label("PDF valuation dossier", systemImage: "doc.richtext") }
+                    // Notes are private and a dossier is often shared, so both are one tap away (Sprint 9).
+                    let notes = notesStore.notes(for: r.company.ticker)
+                    Button { export(.pdf, r, notes: notes) } label: { Label(notes.isEmpty ? "PDF valuation dossier" : "PDF dossier with your notes", systemImage: "doc.richtext") }
+                    if !notes.isEmpty {
+                        Button { export(.pdf, r) } label: { Label("PDF dossier without notes", systemImage: "doc") }
+                    }
                         Button { export(.cardSquare, r) } label: { Label("Share card (1:1)", systemImage: "square") }
                         Button { export(.cardWide, r) } label: { Label("Share card (16:9)", systemImage: "rectangle") }
                     } label: { Image(systemName: "square.and.arrow.up") }
@@ -82,9 +88,9 @@ struct CompanyDetailView: View {
         if let url = settings.repository.coverageIssueURL(for: r) { UIApplication.shared.open(url) }
     }
 
-    private func export(_ kind: ExportKind, _ r: ValuationReport) {
+    private func export(_ kind: ExportKind, _ r: ValuationReport, notes: [CompanyNote] = []) {
         Task { @MainActor in
-            if let url = await Exporter.export(kind, report: r, model: vm.model) { exportItem = ExportItem(url: url) }
+            if let url = await Exporter.export(kind, report: r, model: vm.model, notes: notes) { exportItem = ExportItem(url: url) }
         }
     }
 
