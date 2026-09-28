@@ -29,6 +29,8 @@ struct ValueLensApp: App {
     @State private var settings = AppSettings()
     @State private var watchlist = WatchlistStore()
     @State private var notes = NotesStore()
+
+    init() { FilingsDownloader.sweep() }   // Sprint 9: filings left behind by a crash or a killed app
     @State private var router = AppRouter()
 
     var body: some Scene {

@@ -45,6 +45,7 @@ object Report {
             company = CompanyRef(fin.ticker, fin.cik, fin.name), quote = quote, assumptions = a.toDomain(),
             snapshot = snapshot, history = history(fin), growth = growth(fin),
             modelA = modelA, modelB = modelB,
+            filingsUsed = Filings.used(fin),
             warnings = Coverage.sectorAwareWarnings(fin.warnings, mode), disclaimer = DISCLAIMER, generatedAt = generatedAt,
             dataChecks = dataChecks, provenance = provenance, sector = sector, shareClasses = shareClasses, coverage = coverage,
         )

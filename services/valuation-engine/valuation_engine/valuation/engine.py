@@ -61,6 +61,31 @@ def financials_payload(fin: NormalizedFinancials) -> dict:
     }
 
 
+def filings_used(fin: NormalizedFinancials) -> list[dict]:
+    """Every 10-K/10-Q a figure was read from, newest first (mirror of Filings.used in the core, Sprint 9).
+    `periods` are the report periods it supplied, not the filing's own period (a later 10-K's restatement wins)."""
+    from ..normalize.tags import CONCEPTS
+    order = [c.key for c in CONCEPTS]
+    period_order = [p.label for p in fin.annual] + ["TTM"]
+    entries = [(p.label, k, sv) for p in fin.annual for k, sv in p.values.items()]
+    if fin.ttm:
+        entries += [("TTM", k, sv) for k, sv in fin.ttm.values.items()]
+    if fin.current_shares is not None:
+        entries.append(("TTM", "shares_outstanding", fin.current_shares))
+    by_acc: dict[str, list] = {}
+    for label, key, sv in entries:
+        if sv.taxonomy == "valuelens" or not sv.accession or not sv.form.startswith(("10-K", "10-Q")):
+            continue
+        by_acc.setdefault(sv.accession, []).append((label, key, sv))
+    out = []
+    for acc, items in by_acc.items():
+        first = items[0][2]
+        out.append({"accession": acc, "form": first.form, "filed": first.filed.isoformat(),
+                    "periods": sorted({l for l, _, _ in items}, key=period_order.index),
+                    "concepts": sorted({k for _, k, _ in items}, key=lambda k: order.index(k) if k in order else len(order))})
+    return sorted(out, key=lambda f: f["filed"], reverse=True)
+
+
 async def build_assumptions(overrides: dict[str, float | None]) -> Assumptions:
     rates = await get_rates()
     def pick(name: str, default: float) -> float:
@@ -108,6 +133,7 @@ async def build_valuation(ticker: str, user_agent: str | None, overrides: dict[s
         "assumptions": assumptions.to_dict(),
         "snapshot": snapshot,
         "history": history,
+        "filings_used": filings_used(fin),
         "growth": growth_summary(fin),
         "model_a": model_a,
         "model_b": model_b,

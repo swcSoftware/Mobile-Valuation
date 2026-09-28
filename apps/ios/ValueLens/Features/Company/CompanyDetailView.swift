@@ -8,6 +8,8 @@ struct CompanyDetailView: View {
     @State private var vm: CompanyViewModel
     @State private var showPriceSheet = false
     @Environment(NotesStore.self) private var notesStore
+    /// Sprint 9: this company's filings, downloaded while the page is open and deleted when it closes.
+    @State private var filings = FilingsDownloader()
     @State private var exportItem: ExportItem?
     @State private var showExportMenu = false
     @State private var showMath = false
@@ -69,6 +71,11 @@ struct CompanyDetailView: View {
         }
         .task { if vm.report == nil { await vm.load(using: settings.repository, overrides: settings.overrides) } }
         .task(id: vm.report) { if let r = vm.report { explain = await settings.repository.explain(r) } }
+        .onChange(of: vm.report?.generatedAt, initial: true) { _, _ in
+            if let r = vm.report { filings.start(r, repository: CoreValuationRepository(userAgent: settings.identity?.userAgent), userAgent: settings.identity?.userAgent) }
+        }
+        .onDisappear { filings.discard() }
+        .environment(filings)
         // Re-grade when the lens changes; the valuation itself is untouched, so nothing reloads.
         .task(id: ReportCardKey(report: vm.report, lens: settings.investorLens, layout: settings.layoutStyle)) {
             guard settings.layoutStyle == .reportCard, let r = vm.report else { return }

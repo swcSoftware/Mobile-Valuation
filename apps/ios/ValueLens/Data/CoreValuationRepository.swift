@@ -133,6 +133,13 @@ struct CoreValuationRepository: ValuationRepository {
         return try? JSONDecoder().decode(ExplainSummary.self, from: Data(json.utf8))
     }
 
+    /// The filings behind a report and each main document's URL (Sprint 9). Needs the core's own JSON.
+    func filingDocuments(_ report: ValuationReport) async -> [FilingDocument] {
+        guard let raw = report.rawJSON, let ua = userAgent,
+              let json = try? await onCore({ try Self.core.filingDocumentsJson(reportJson: raw, userAgent: ua) }) else { return [] }
+        return (try? JSONDecoder.engine.decode([FilingDocument].self, from: Data(json.utf8))) ?? []
+    }
+
     func reportCard(_ report: ValuationReport, lens: InvestorLens) async -> ReportCardSummary? {
         // The core's own JSON, as with `explain` — a Swift re-encode would not round-trip.
         let s: String

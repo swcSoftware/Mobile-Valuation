@@ -119,6 +119,31 @@ import kotlinx.serialization.Serializable
     @SerialName("share_classes") val shareClasses: List<ShareClass> = emptyList(),
     /** Concept-map gaps for this filer (Sprint 4 Track A). Detection only; never changes a value. */
     val coverage: CoverageReport? = null,
+    /** Every SEC filing a figure in this report was read from (Sprint 9); empty in reports saved earlier. */
+    @SerialName("filings_used") val filingsUsed: List<FilingUsed> = emptyList(),
+)
+
+/** One filing the report read figures from, and which concepts it supplied (Sprint 9: verify in-app). */
+@Serializable data class FilingUsed(
+    val accession: String, val form: String, val filed: String,
+    /**
+     * The report's periods this filing supplied figures for (`FY2023`, `TTM`), oldest first. Not the filing's own
+     * period: a later 10-K's restated figure wins, so a 10-K often supplies only its comparative years.
+     */
+    val periods: List<String>,
+    /** Concept keys (`revenue`, `net_income`…) whose values came from this filing, in map order. */
+    val concepts: List<String>,
+)
+
+/** A filing used, with where its main document lives on EDGAR (resolved when the company page opens). */
+@Serializable data class FilingDocument(
+    val filing: FilingUsed,
+    /** The filing's main document (the 10-K/10-Q itself); null when EDGAR's filing list doesn't name it. */
+    @SerialName("document_url") val documentUrl: String? = null,
+    /** EDGAR's index page for the filing, always available. */
+    @SerialName("index_url") val indexUrl: String,
+    /** The period the filing itself reports on (EDGAR's `reportDate`); null when the filing list doesn't say. */
+    @SerialName("report_date") val reportDate: String? = null,
 )
 
 // ---- Sprint 1 additions -------------------------------------------------------------------

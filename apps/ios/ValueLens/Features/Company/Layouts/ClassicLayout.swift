@@ -94,7 +94,8 @@ struct ClassicLayout: View {
                 basicBody
             }
 
-            // Sprint 9: the user's private notes, the same component in either layout.
+            // Sprint 9: the filings behind the numbers, and the user's private notes — the same in either layout.
+            FilingsUsedCard()
             CompanyNotesSection(company: report.company)
 
             ProvenanceRow(report: report)

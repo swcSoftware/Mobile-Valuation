@@ -105,6 +105,9 @@ class Edgar(private val fetcher: Fetcher, cache: KeyValueCache, private val user
         return null
     }
 
+    /** One older page of the filing list (`CIK##########-submissions-001.json`), cached a day (Sprint 9). */
+    fun submissionsPage(name: String): String? = runCatching { getText("https://data.sec.gov/submissions/$name", DAY) }.getOrNull()
+
     /** Raw submissions text (for the latest-filing lookup) — same cache entry the profile uses. */
     fun submissionsText(cik: Long): String? = runCatching { getText(FilerIdentity.submissionsUrl(cik), DAY) }.getOrNull()
 
