@@ -9,11 +9,12 @@ runs **on the device**; there is no server. Deep context lives in `docs/` — st
 [docs/TASKS.md](docs/TASKS.md) (current sprint) and [docs/SPRINTS.md](docs/SPRINTS.md) (what shipped
 when). This file is the index and the tripwires.
 
-**Sprint 5 is closed and on `staging`** (2026-09-24, `d403096`): two layouts over one set of numbers,
-with the report card as the default, grading in the core, runtime theming, and first-letter-capital
-company names. The next sprint has not been planned yet — see the carry-overs at the end of
-[docs/SPRINTS.md](docs/SPRINTS.md). [docs/DESIGN.md](docs/DESIGN.md) records every UI decision and
-why; read it before touching presentation code.
+**`staging` holds Sprints 0–8** (promoted 2026-09-28): two layouts over one set of numbers (report
+card default), grading in the core, runtime theming, plain-language labels (Sprint 6), the "numbers
+that go missing" fixes (Sprint 7) and tap-to-define (Sprint 8). TestFlight build 1.0 (3) matches it.
+**Sprint 9 (private notes per company) is on `feature/sprint-9-notes`.** The timeline is at the top of
+[docs/SPRINTS.md](docs/SPRINTS.md); [docs/DESIGN.md](docs/DESIGN.md) records every UI decision and
+why — read it before touching presentation code.
 
 ## Non-negotiables
 

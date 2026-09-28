@@ -31,7 +31,15 @@ its normalization and models exactly (`OracleTest`). It still runs for developme
 | `Market.kt` | Quote; 5-year monthly regression beta vs ^GSPC; `RatesSnapshot` + loader |
 | `DataChecks.kt` | The verification gate and provenance map (docs/DATA_VERIFICATION.md) |
 | `Report.kt`, `ValuationCore.kt` | Report assembly; blocking facade (+ JSON entry points for Swift) |
-| `Explain.kt` | Plain-language copy: verdict sentences, health facts, glossary, model names |
+| `Explain.kt` | Plain-language copy: verdict sentences, health facts, model names |
+| `Sector.kt`, `FilerIdentity.kt`, `ShareClasses.kt` | Sector modes (bank/insurer/REIT models), successor-issuer lookup, multi-class shares from the XBRL instance (Sprint 3) |
+| `Coverage.kt` | Concept-map gap report and prefilled GitHub issue; sector-aware requirements (Sprint 4A, 7) |
+| `Grading.kt`, `GradingRules.kt` | Report-card grades against printed, per-sector, per-lens rules (Sprint 5) |
+| `CompanyNames.kt` | Display form of filed names ("Merck & Co., Inc.") (Sprint 5) |
+| `DisplayLabels.kt` | Plain words for tags, keys and formulas from `labels/display-labels.json` (Sprint 6) |
+| `GapFill.kt` | Reads a filing SEC's companyfacts hasn't ingested yet, only for a lagging filer (Sprint 7) |
+| `Glossary.kt` | Glossary entries from `labels/glossary.json` and the term linker for tap-to-define (Sprint 8) |
+| `labels/*.json` | Owner-editable words: display labels and glossary, compiled in by a Gradle task |
 | `domain/Models.kt` | Serializable contract shared with Android; iOS decodes the same JSON |
 
 Tests (`src/desktopTest`): `OracleTest` (diff vs Python), `CoreFacadeTest` (fake network: beta,

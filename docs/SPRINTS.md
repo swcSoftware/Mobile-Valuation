@@ -1,5 +1,24 @@
 # Sprint Log
 
+
+## Timeline at a glance
+
+| Sprint | Dates | What | Where it is |
+|---|---|---|---|
+| 0 | 2026-09-18 | Alpha skeleton: engine, iOS, Android | `staging` |
+| 1 | 2026-09-19 | Any ticker, anywhere | `staging` |
+| 2 | 2026-09-19 | On-device core, Expert Mode, data-verification gate, measured beta | `staging` |
+| 3 | 2026-09-21 | Every ticker gives an honest answer: successors, sector modes, share classes, normalized working capital | `staging` |
+| 4 (A) | 2026-09-22 | Concept-map feedback loop and weekly coverage probe (Track B, release readiness, still open) | `staging` |
+| 5 | 2026-09-22 → 24 | Two layouts (report card default), grading in the core, runtime theming | `staging` at `d403096` |
+| 6 | 2026-09-24 | Plain-language labels file, Index page; public name "Alpha" | `staging` 2026-09-28 |
+| — | 2026-09-24 | First TestFlight build, 1.0 (1) | App Store Connect |
+| 7 | 2026-09-26 | Numbers that go missing: capex, debt, negative equity, companyfacts lag | `staging` 2026-09-28 |
+| — | 2026-09-26 | TestFlight 1.0 (2) (Sprints 6 + 7) | App Store Connect |
+| 8 | 2026-09-26 | Tap to define: glossary file, term links in Expert Mode and the report card | `staging` 2026-09-28 |
+| — | 2026-09-28 | TestFlight 1.0 (3) (Sprint 8) | App Store Connect |
+| 9 | 2026-09-28 → | Private notes per company, in the PDF export | branch `feature/sprint-9-notes` |
+
 ## Sprint 0 — 2026-09-18 — Alpha skeleton
 
 **Goal**: fully tappable iOS MVP in the simulator, backed by a real EDGAR-driven valuation engine.
@@ -72,7 +91,7 @@ runs on both simulators.
 **Owner actions to finish Track B**: add `FRED_API_KEY` secret, enable Pages on `gh-pages`, run
 the workflow once. Until then the apps use the bundled 2026-09-17 snapshot and say so.
 
-## Sprint 3 — 2026-09-21 — Every ticker gives an honest answer (in progress)
+## Sprint 3 — 2026-09-21 — Every ticker gives an honest answer
 
 **Day 1**: coverage probe across 14 diverse tickers exposed three gaps (reorganized filers, banks,
 REITs). Track A shipped: successor-issuer resolution (XOM → Exxon Mobil Corp) in the core and the
@@ -130,7 +149,7 @@ number. 1 of 77 universe tickers was affected; 5 regression tests added.
 **Sprint 4 Track A closed**; Track B (release readiness) remains open and unstarted. `dev` and
 `staging` both at `6427ade`; `main` untouched.
 
-## Sprint 5 — 2026-09-22 — Two layouts, one set of numbers (in progress, design phase)
+## Sprint 5 — 2026-09-22 → 09-24 — Two layouts, one set of numbers (promoted to `staging` at `d403096`)
 
 **Goal**: give the app a second presentation that doesn't read like a reference book, without
 touching a single number and without disturbing the layout that already works.
@@ -259,7 +278,7 @@ Carried forward, none app-breaking:
 - **#86** — price/value sit on the red–green axis; check under colour-blindness simulation.
 - Sprint 4 Track B (release readiness) is still open and unstarted.
 
-## Sprint 6 — 2026-09-24 — Plain language for every label (built on `dev`)
+## Sprint 6 — 2026-09-24 — Plain language for every label (promoted to `staging` 2026-09-28)
 
 **Goal**: no machine key on a value screen. `us-gaap:EarningsPerShareDiluted` reads "Earnings per
 share (diluted)"; `OE = net_income + d_and_a − …` reads "OE = net income + depreciation and
@@ -297,7 +316,7 @@ Build 0.1.0 (1) archived in Release, signed with the team's Apple Distribution i
 to App Store Connect from `dev` (Sprint 6 + the "Alpha" rename). Added the privacy manifest and the
 team ID; procedure in RUNBOOK §2b. Internal TestFlight only — not a staging promotion.
 
-## Sprint 7 — 2026-09-26 — Numbers that go missing (built on `dev`)
+## Sprint 7 — 2026-09-26 — Numbers that go missing (promoted to `staging` 2026-09-28)
 
 **Goal**: real companies stop showing blanks or wrong figures. First sprint planned from the owner's
 TestFlight playtesting; every item followed the full routine (Python first, Kotlin mirror, oracle,
@@ -335,7 +354,7 @@ Sprints 6 + 7 from `dev` at the owner's request while remote. Found on the way: 
 `MARKETING_VERSION`/`CURRENT_PROJECT_VERSION` (xcodegen wrote a fixed 1.0 (1)), so build 1 shipped as 1.0,
 not 0.1.0. The plist now reads both settings; marketing version set to 1.0 to stay on that train.
 
-## Sprint 8 — 2026-09-26 — Tap to define (built on `dev`)
+## Sprint 8 — 2026-09-26 — Tap to define (promoted to `staging` 2026-09-28)
 
 **Goal** (owner, from playtesting TestFlight build 2): Expert Mode's abbreviations are hard to remember,
 and the round trip to the Glossary is too slow. Tap a term, read its definition in place.
@@ -350,4 +369,34 @@ and the round trip to the Glossary is too slow. Tap a term, read its definition 
 - Verified on the iOS simulator and the Android emulator: underline, tap, sheet, jump to the entry.
 
 **Tests**: 199 (38 engine · 98 core · 22 Android · 41 iOS), all green.
+
+## Promotion to `staging` — 2026-09-28
+
+Fast-forward of `dev` → `staging` (previously `d403096`, Sprint 5), after every suite passed on the
+promoted commit: 199 tests (38 engine · 98 core · 22 Android · 41 iOS). `main` untouched. What moved:
+
+| Commit | What |
+|---|---|
+| `66e6378` | Sprint 5 close-out docs and carry-overs |
+| `e18f5f3` | Sprint 6: `labels/display-labels.json`, every machine key in plain words, Index page |
+| `472621c` | Public name "Alpha" in every user-visible string; identifiers keep "ValueLens" |
+| `e27e26a` | First TestFlight upload: team ID, privacy manifest, `ExportOptions.plist` |
+| `d199dc1` | Backlog of candidate sprints, including Alpha Pro subscriptions |
+| `c215fb6` | #71 capex for LLY/VZ; probe suggests what a filer files instead; `value_snapshot.py` |
+| `8c7fee9` | #81 debt load gets a trend (`total_debt` in the annual history) |
+| `8a3d601` | #92 long-term debt filed as notes: ORCL (grade A → D), O, DHI; short-term-only debt warns |
+| `3c2fe7b` | #78 negative equity measured against EBITDA instead of vanishing |
+| `b7f259d` | #6 interest expense: nothing honest left to map (recorded why) |
+| `e2c0dd6` | #72/#74 financials: revenue not critical; sector-aware "missing concepts" note |
+| `fe719f1` | #53 `GapFill`: read a filing SEC's companyfacts hasn't ingested (KO, PLD, V, PYPL) |
+| `d2cf20f` | Sprint 7 close-out; bundled samples regenerated |
+| `8603975` | TestFlight 1.0 (2); version numbers now reach the plist |
+| `935c7c9` | Sprint 8: tap-to-define, `labels/glossary.json` (45 terms), capitalised machine keys (#95) |
+| `02d7cc2` | Tap-to-define on the report card and under "Show me the math" |
+| `c9952fb` | iOS: `GlossaryText` tolerates a missing settings object (fixed a test crash) |
+| (this commit) | Docs brought up to date for the promotion; build number 3 |
+
+Found stale while doing this and corrected: ISSUES #82 (fixed by Sprint 5's per-sector rules, still
+marked open), PLAN and ARCHITECTURE (no entries past Sprint 5), the `debt_coverage` row in
+DATA_VERIFICATION.
 

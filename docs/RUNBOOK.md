@@ -53,7 +53,7 @@ App Store Connect record: "Alpha - Stock Valuations", bundle `com.swcsoftware.va
 **Bump `CURRENT_PROJECT_VERSION` in `project.yml` first** — App Store Connect rejects a repeated
 build number for the same `MARKETING_VERSION`.
 The plist reads both from `project.yml` since build 2; before that xcodegen wrote a fixed "1.0 (1)",
-so `MARKETING_VERSION` is `1.0` to match what shipped. Uploaded: 1.0 (1) 2026-09-24, 1.0 (2) 2026-09-26.
+so `MARKETING_VERSION` is `1.0` to match what shipped. Uploaded: 1.0 (1) 2026-09-24, 1.0 (2) 2026-09-26, 1.0 (3) 2026-09-28.
 ```bash
 cd apps/ios && xcodegen generate
 xcodebuild -project ValueLens.xcodeproj -scheme ValueLens -configuration Release \

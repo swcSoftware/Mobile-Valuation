@@ -42,7 +42,7 @@ data, or explicitly labeled *assumed* — and an assumed input is always visible
 | `signs` | revenue, shares, D&A positive | — | any violated |
 | `working_capital` | raw one-year ΔNWC within 30% of net income of the normalized figure | further apart (one-off) | — |
 | `tag_coverage` | every line item from a current tag | stale tags dropped (lists them) | — |
-| `debt_coverage` | debt tags found | liabilities > 0 but no debt tag | — |
+| `debt_coverage` | long-term debt found | liabilities > 0 but no debt tag, or only short-term debt (non-financials; since Sprint 7) | — |
 | `beta` | measured | assumed | — |
 | `tax_rate` | derived | assumed | — |
 | `cost_of_debt` | derived | assumed | — |

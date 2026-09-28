@@ -339,7 +339,7 @@ the oracle (non-negotiable 3).
 Model changes, normalization, tag-map edits, technical analysis (permanently, blueprint §1), and
 direction B. Sprint 4 Track B (release readiness) is still open and unaffected.
 
-## Sprint 6 — Plain language for every label (2026-09-24, built on `dev`)
+## Sprint 6 — Plain language for every label (2026-09-24) ✅ promoted to staging 2026-09-28
 
 **The owner's brief:** views show machine keys — `us-gaap:EarningsPerShareDiluted` — which make the
 app less presentable. Build a separate mapping file, updated as needed, that controls how tags and
@@ -400,7 +400,7 @@ data references are shown: `us-gaap:EarningsPerShareDiluted` → "Earnings per s
       simulator), on both platforms and in the exported dossier's formulas.
 
 
-## Sprint 7 — Numbers that go missing (2026-09-26, built on `dev`) ✅
+## Sprint 7 — Numbers that go missing (2026-09-26) ✅ promoted to staging 2026-09-28
 
 **Goal:** real companies stop showing blanks or wrong figures. Every item changes normalization, so
 each follows the full routine: Python first, mirror Kotlin, regenerate the oracle, and measure the
@@ -425,7 +425,7 @@ blast radius with `scripts/value_snapshot.py` (new: snapshot the universe before
 - [x] #6 interest expense — nothing to map: AAPL files no interest figure; DHI's `InterestCostsIncurred`
       was tried and reverted (it inflated DHI's EBIT proxy ~5%). Both keep the labeled assumed rate.
 
-## Sprint 8 — Tap to define (2026-09-26, built on `dev`) ✅
+## Sprint 8 — Tap to define (2026-09-26) ✅ promoted to staging 2026-09-28
 
 **The owner's brief (from playtesting build 2):** Expert Mode's acronyms are hard to remember, and going
 to the Glossary and back every time is slow. **Owner decisions:** a half-height sheet over the current

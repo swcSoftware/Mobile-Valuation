@@ -117,13 +117,28 @@ Opt-in gap reporting → weekly human review → reviewed map changes (never aut
 concept-coverage probe; TestFlight / Play internal track; crash reporting; accessibility; store
 assets; licensed quote/beta source.
 
-### Sprint 5 — Two layouts, one set of numbers (2026-09-22, in progress)
+### Sprint 5 — Two layouts, one set of numbers ✅ (2026-09-24)
 A design and UI sprint. A second presentation ("report card": light, graded health facts) arrives
 **beside** the existing dark layout rather than replacing it, chosen in Settings. Theme becomes
 independent of layout (light/dark/system, with a user-chosen accent later), which requires the one
 global change in the sprint: `Theme`'s compile-time constants become runtime-resolved tokens.
 The four trust-carrying elements become required components with a test, because two layouts means
 two places they can be dropped. Reasoning and decisions: `docs/DESIGN.md`.
+
+### Sprint 6 — Plain language for every label ✅ (2026-09-24)
+Machine keys and XBRL tags become words through an owner-editable `labels/display-labels.json`; raw
+tags move to an Index page. Public name becomes "Alpha".
+
+### Sprint 7 — Numbers that go missing ✅ (2026-09-26)
+Capex and debt read for filers that tag them differently, negative equity stated, debt trend, and a
+gap-fill for filings SEC's companyfacts hasn't ingested. Each fix measured over the 77-ticker universe.
+
+### Sprint 8 — Tap to define ✅ (2026-09-26)
+Every abbreviation in Expert Mode links to a definition in a half-height sheet; the glossary is an
+editable file of 45 terms.
+
+### Sprint 9 — Private notes per company (2026-09-28, in progress on `feature/sprint-9-notes`)
+On-device notes attached to a company, shown on its page and appended to its PDF export.
 
 ### Alpha Pro — subscriptions (candidate, after release readiness)
 Cheap monthly/yearly subscription via StoreKit 2 / Play Billing, gating depth (Expert Mode, unlimited
