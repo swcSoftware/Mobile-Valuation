@@ -264,3 +264,11 @@ on Android). Tap rather than long-press: long-press is undiscoverable and alread
 menu. Only the first mention per block links, so a paragraph isn't a wall of underlines. Metric-row
 headers don't link — they are the expand button (#94).
 
+## Private notes (Sprint 9, 2026-09-28)
+
+A company's notes sit at the bottom of its page, above the disclaimer, in both layouts — the reading of
+the report comes first, and the notes are the user's words, not the core's. Several dated notes rather
+than one page, so a thesis and later updates read as a timeline. Notes are never numbers, so they don't
+touch non-negotiable 7. The export menu offers the dossier with and without notes because notes are
+private and dossiers get shared.
+

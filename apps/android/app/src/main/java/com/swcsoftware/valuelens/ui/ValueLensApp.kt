@@ -66,7 +66,7 @@ fun ValueLensApp(state: AppState) {
         term?.let { k ->
             GlossaryDefinitionSheet(k, expert = true, onDismiss = { term = null }, onOpenGlossary = { focus -> term = null; nav.navigate("glossary?focus=$focus") })
         }
-        CompositionLocalProvider(LocalGlossary provides GlossaryLinks(state.expertMode) { term = it }) {
+        CompositionLocalProvider(LocalGlossary provides GlossaryLinks(state.expertMode) { term = it }, com.swcsoftware.valuelens.ui.components.LocalNotes provides state) {
         Scaffold(containerColor = VL.background, bottomBar = {
             if (showTabs) NavigationBar(containerColor = VL.surface) {
                 listOf(Triple("watchlist", "Watchlist", Icons.Filled.List), Triple("search", "Search", Icons.Filled.Search), Triple("settings", "Settings", Icons.Filled.Settings)).forEach { (r, label, icon) ->

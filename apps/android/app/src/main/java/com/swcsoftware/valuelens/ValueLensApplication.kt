@@ -23,6 +23,7 @@ class AppState(app: Application) {
     private val prefs = AppPrefs(app)
     private val app = app
     val watchlistStore = WatchlistStore(app)
+    private val notesStore = com.swcsoftware.valuelens.data.NotesStore(java.io.File(app.filesDir, "notes.json"))
 
     var identity: SecIdentity? by mutableStateOf(identityStore.load())
         private set
@@ -64,6 +65,14 @@ class AppState(app: Application) {
     fun updateWatchlist(r: ValuationReport) { watchlistStore.update(r); syncWatchlist() }
     fun removeFromWatchlist(ticker: String) { watchlistStore.remove(ticker); syncWatchlist() }
     fun inWatchlist(ticker: String) = watchlist.any { it.company.ticker == ticker }
+
+    // Sprint 9: private notes per company. `notes` is observable so the company page redraws on change.
+    val notes = mutableStateListOf<com.swcsoftware.valuelens.data.CompanyNote>().apply { addAll(notesStore.notes) }
+    private fun syncNotes() { notes.clear(); notes.addAll(notesStore.notes) }
+    fun notesFor(ticker: String) = notes.filter { it.ticker == ticker.uppercase() }.sortedByDescending { it.updatedAt }
+    fun addNote(ticker: String, companyName: String, text: String) { notesStore.add(ticker, companyName, text); syncNotes() }
+    fun updateNote(id: String, text: String) { notesStore.update(id, text); syncNotes() }
+    fun deleteNote(id: String) { notesStore.delete(id); syncNotes() }
 
     suspend fun refreshWatchlist() {
         val repo = repository

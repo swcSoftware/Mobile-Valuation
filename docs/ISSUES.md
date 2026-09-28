@@ -22,7 +22,7 @@ instruction for alpha). Severity: **P1** blocks core flow · **P2** wrong number
 | 11 | P3 | ios | Keyboard does not auto-dismiss after entering identity; tap outside. | Add `.scrollDismissesKeyboard(.interactively)`. | open |
 | 12 | P3 | ios | Watchlist pull-to-refresh is sequential; 10 tickers ≈ 10 round trips. | Now a TaskGroup (Sprint 1). Android is still sequential (see #24). | fixed |
 | 13 | P3 | ios | Keychain writes require a signed build; `CODE_SIGNING_ALLOWED=NO` builds silently fail to persist identity. | Documented in RUNBOOK. | documented |
-| 14 | P3 | ios | ImageRenderer PDF is single-page; long histories will clip past 792pt. | Paginate in Sprint 3. | open |
+| 14 | P3 | ios | ~~ImageRenderer PDF is single-page; long histories will clip past 792pt.~~ **Corrected 2026-09-28:** it doesn't clip — the page grows to the content's height (MCD with a note: 612×987 pt), verified by extracting the PDF's text. The real limitation is a non-standard page height, which prints poorly. Android's dossier now paginates (Sprint 9). | Paginate iOS into 792-pt pages when printing matters. | open |
 | 15 | P3 | android | Scaffold has never been compiled; dependency versions are best-effort. | | open |
 | 16 | P2 | engine | JNJ (and other 52/53-week filers) had two fiscal years mapped to the same label, double-counting in charts. | Fixed via `fiscal_year_for()`. | fixed |
 | 17 | P3 | engine | EPS TTM is computed additively (FY + YTD − prior YTD); exact only when share count is stable. Note is shown on the metric. | | accepted |

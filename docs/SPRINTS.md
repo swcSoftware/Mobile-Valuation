@@ -400,3 +400,18 @@ Found stale while doing this and corrected: ISSUES #82 (fixed by Sprint 5's per-
 marked open), PLAN and ARCHITECTURE (no entries past Sprint 5), the `debt_coverage` row in
 DATA_VERIFICATION.
 
+## Sprint 9 — 2026-09-28 — Private notes per company (on `feature/sprint-9-notes`)
+
+**Goal** (owner): private notes that belong to a company, readable from its page, and included at the end
+of its PDF export.
+
+**Delivered** — both platforms, same behavior:
+- "Your notes" on every company page, above the disclaimer, in either layout: several dated notes, newest
+  first; add, edit, delete (confirmed). Stored on the device only (iOS with complete file protection).
+- The PDF dossier appends "Your notes" after the report and before the disclaimer; the export menu offers
+  a version without them. Android's dossier now wraps note text and starts a new page instead of drawing
+  past the bottom.
+- Two exports in the same second no longer overwrite each other.
+
+**Tests**: iOS 46 (+5), Android 27 (+5); core and engine unchanged (98, 38).
+

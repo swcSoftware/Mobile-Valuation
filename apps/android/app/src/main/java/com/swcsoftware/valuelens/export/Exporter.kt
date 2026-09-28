@@ -38,13 +38,17 @@ object Exporter {
         typeface = if (mono) Typeface.MONOSPACE else Typeface.create(Typeface.SANS_SERIF, if (bold) Typeface.BOLD else Typeface.NORMAL)
     }
 
-    fun sharePdf(context: Context, r: ValuationReport, model: ValuationModel) {
+    fun sharePdf(context: Context, r: ValuationReport, model: ValuationModel, notes: List<com.swcsoftware.valuelens.data.CompanyNote> = emptyList()) {
         val res = r.result(model); val mos = res.marginOfSafety
         val doc = PdfDocument()
-        val page = doc.startPage(PdfDocument.PageInfo.Builder(612, 792, 1).create())
-        val c = page.canvas; var y = 50f; val left = 36f; val right = 576f
-        fun line(text: String, p: Paint, dy: Float = 14f) { c.drawText(text, left, y, p); y += dy }
-        fun row(l: String, v: String, p: Paint = paint(Color.BLACK, 9f)) { c.drawText(l, left, y, p); val w = p.measureText(v); c.drawText(v, right - w, y, p); y += 13f }
+        var pageNo = 1
+        var page = doc.startPage(PdfDocument.PageInfo.Builder(612, 792, pageNo).create())
+        var c = page.canvas; var y = 50f; val left = 36f; val right = 576f
+        // Start a new page rather than drawing over the disclaimer or off the bottom (Sprint 9: notes are
+        // free text of any length; long histories could already overflow).
+        fun ensure(dy: Float) { if (y + dy > 740f) { doc.finishPage(page); pageNo++; page = doc.startPage(PdfDocument.PageInfo.Builder(612, 792, pageNo).create()); c = page.canvas; y = 50f } }
+        fun line(text: String, p: Paint, dy: Float = 14f) { ensure(dy); c.drawText(text, left, y, p); y += dy }
+        fun row(l: String, v: String, p: Paint = paint(Color.BLACK, 9f)) { ensure(13f); c.drawText(l, left, y, p); val w = p.measureText(v); c.drawText(v, right - w, y, p); y += 13f }
         fun header(t: String) { y += 8f; line(t.uppercase(), paint(Color.GRAY, 8f, bold = true), 12f) }
         line("Alpha Valuation Dossier", paint(Color.BLACK, 18f, bold = true), 20f)
         line("${r.company.displayName} (${r.company.ticker}) · CIK ${r.company.cik} · ${r.generatedAt.take(10)}", paint(Color.DKGRAY, 10f), 18f)
@@ -65,9 +69,20 @@ object Exporter {
         header("Assumptions")
         val a = r.assumptions
         line("AAA ${Fmt.pct(a.aaaYieldPct, 2)} · 10-yr ${Fmt.pct(a.treasury10yPct, 2)} · hurdle ${Fmt.pct(a.hurdleRatePct)} · ERP ${Fmt.pct(a.equityRiskPremiumPct)} · β ${Fmt.number(a.beta)} · g ${Fmt.pct(a.terminalGrowthPct)} · exit ${Fmt.number(a.exitMultiple, 0)}× · ${a.rateSource}", paint(Color.BLACK, 8f))
-        y = 760f; line(r.disclaimer, paint(Color.GRAY, 7f))
+        if (notes.isNotEmpty()) {
+            header("Your notes")
+            line("Written by you in Alpha — your own views, not part of the valuation above.", paint(Color.GRAY, 7f), 12f)
+            val body = paint(Color.BLACK, 9f)
+            notes.forEach { n ->
+                y += 4f
+                line(com.swcsoftware.valuelens.ui.components.noteCaption(n), paint(Color.GRAY, 7f, bold = true), 11f)
+                wrapText(n.text, right - left) { body.measureText(it) }.forEach { line(it, body, 12f) }
+            }
+        }
+        c.drawText(r.disclaimer, left, 760f, paint(Color.GRAY, 7f))
         doc.finishPage(page)
-        val file = File(docsDir(context), "Alpha-${r.company.ticker}-${System.currentTimeMillis()}.pdf")
+        // "-notes" keeps the two versions apart, matching iOS.
+        val file = File(docsDir(context), "Alpha-${r.company.ticker}-${System.currentTimeMillis()}${if (notes.isEmpty()) "" else "-notes"}.pdf")
         file.outputStream().use { doc.writeTo(it) }; doc.close()
         share(context, file, "application/pdf")
     }

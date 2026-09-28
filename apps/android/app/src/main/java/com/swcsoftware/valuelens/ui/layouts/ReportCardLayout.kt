@@ -155,6 +155,8 @@ fun ReportCardLayout(ctx: LayoutContext) {
             ExpertBody(ctx)
         }
 
+        // Sprint 9: the user's private notes, the same component in either layout.
+        com.swcsoftware.valuelens.ui.components.CompanyNotesSection(r.company)
         ProvenanceRow(r)
         Text(r.disclaimer, style = MaterialTheme.typography.bodySmall, color = VL.textTertiary,
              modifier = Modifier.fillMaxWidth().padding(top = 20.dp), textAlign = TextAlign.Center)

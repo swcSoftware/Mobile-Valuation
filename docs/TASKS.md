@@ -449,6 +449,30 @@ screen (not a jump to the Glossary page); tap, not tap-and-hold; start now.
       Mode, not the screen's "Show me the math". Both fixed on both platforms — a screen showing expert
       detail links its terms either way — and `GlossaryTest` now covers the report card's text too.
 
+## Sprint 9 — Private notes per company (2026-09-28, on `feature/sprint-9-notes`)
+
+**The owner's brief:** private, on-device notes linked to a company — a note about MCD lives on and is
+readable from MCD's page — and appended to the PDF export after the report.
+
+**Decisions taken while building (routine; change any of them on request):**
+- Several dated notes per company rather than one page, newest-edited first; edits keep the written date.
+- Keyed by ticker. Removing a company from the watchlist keeps its notes.
+- Shown by both layouts just above the disclaimer, as one shared component; not gated on Expert Mode.
+- Clearing a note's text deletes it (as in Notes); Delete asks first, since nothing can be recovered.
+- The export menu offers the dossier **with** and **without** notes when a company has any: notes are
+  private and a dossier is often shared.
+- Stored as `notes.json`: iOS Application Support with complete file protection (unreadable while the
+  phone is locked); Android's private files directory. No network, no new privacy-manifest entry
+  (no file-timestamp APIs are read; dates are stored in the file).
+
+- [x] iOS: `NotesStore`, `CompanyNotesSection` + editor sheet, dossier "Your notes" block, export menu.
+- [x] Android: `NotesStore`, `CompanyNotesSection` + editor sheet, dossier block with word wrap and a
+      new page when text runs past the bottom (the Android dossier was a fixed single page).
+- [x] Tests: iOS `NotesTests` (5, including the exported PDF's text and order), Android `NotesTest` (5,
+      including the wrap). Verified by hand on the iOS simulator and the Android emulator.
+- [x] Found on the way: two exports within one second shared a filename; the notes version is now `-notes`.
+- [ ] Owner: try it on the phone (needs a build from this branch once merged).
+
 ## Backlog — candidate sprints (proposed 2026-09-26, not yet ordered)
 
 Derived from ISSUES, the Sprint 5 carry-overs and PLAN "Later" after the first TestFlight build.

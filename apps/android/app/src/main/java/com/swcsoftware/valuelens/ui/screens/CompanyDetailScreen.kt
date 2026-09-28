@@ -120,7 +120,10 @@ fun CompanyDetailScreen(state: AppState, company: CompanyRef, onBack: () -> Unit
                 Box {
                     TextButton({ showExport = true }) { Text("⇪", color = VL.accent, fontSize = 18.sp) }
                     DropdownMenu(showExport, { showExport = false }) {
-                        DropdownMenuItem({ Text("PDF valuation dossier") }, { showExport = false; Exporter.sharePdf(context, r, model) })
+                        // Notes are private and a dossier is often shared, so both are one tap away (Sprint 9).
+                        val notes = state.notesFor(r.company.ticker)
+                        DropdownMenuItem({ Text(if (notes.isEmpty()) "PDF valuation dossier" else "PDF dossier with your notes") }, { showExport = false; Exporter.sharePdf(context, r, model, notes) })
+                        if (notes.isNotEmpty()) DropdownMenuItem({ Text("PDF dossier without notes") }, { showExport = false; Exporter.sharePdf(context, r, model) })
                         DropdownMenuItem({ Text("Share card (1:1)") }, { showExport = false; Exporter.shareCard(context, r, model, square = true) })
                         DropdownMenuItem({ Text("Share card (16:9)") }, { showExport = false; Exporter.shareCard(context, r, model, square = false) })
                     }
