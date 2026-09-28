@@ -108,3 +108,40 @@ def test_filers_with_long_term_debt_tags_keep_them(aapl, ko, jnj):
         for p in fin.annual + [fin.ttm]:
             if "long_term_debt" in p.values:
                 assert p.values["long_term_debt"].tag.startswith("LongTermDebt"), (fin.ticker, p.label, p.values["long_term_debt"].tag)
+
+
+def _ttm_edges():
+    import json
+    from pathlib import Path
+    from valuation_engine.edgar.companyfacts import parse_companyfacts
+    from valuation_engine.edgar.tickers import CompanyRef
+    from valuation_engine.normalize.statements import normalize
+    raw = json.loads((Path(__file__).parent / "fixtures" / "companyfacts_TTM_EDGES.json").read_text())
+    return normalize(parse_companyfacts(raw, CompanyRef(ticker="TTME", cik=2, name=raw["entityName"]))).ttm
+
+
+def test_a_filed_twelve_month_column_is_the_ttm():
+    """ISSUES #98 (Amazon): the 10-Q's twelve-months-ended figure is used as filed, not rebuilt or dropped."""
+    t = _ttm_edges()
+    ni = t.values["net_income"]
+    assert ni.value == 136e6 and ni.period_end.isoformat() == "2026-06-30" and "as filed in the 10-Q" in ni.note
+    assert t.values["revenue"].value == 1300e6   # no twelve-month column: FY + H1 − prior H1, as before
+
+
+def test_computed_annual_values_are_rebuilt_not_carried(jnj):
+    """ISSUES #97: JNJ's operating income is the EBIT proxy; in the TTM it must run to the latest quarter."""
+    t = jnj.ttm
+    assert t.values["operating_income"].taxonomy == "valuelens"
+    assert t.values["operating_income"].period_end == t.values["revenue"].period_end
+
+
+def test_lagging_lines_are_rebuilt_or_labeled():
+    """ISSUES #99, owner policy: rebuild where the inputs are current, otherwise keep the annual figure and say so."""
+    t = _ttm_edges()
+    pretax = t.values["pretax_income"]
+    assert pretax.taxonomy == "valuelens" and pretax.value == 136e6 + 34e6
+    assert "isn't reported in the latest 10-Q" in pretax.note
+    da = t.values["d_and_a"]
+    assert da.value == 60e6 and da.period_end.isoformat() == "2025-12-31"
+    assert da.note.startswith("From the 10-K for the period ending 2025-12-31")
+    assert "From the" not in t.values["revenue"].note, "current lines are untouched"

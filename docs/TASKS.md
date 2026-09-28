@@ -489,6 +489,22 @@ downloaded when the company page opens, readable in the app, and deleted when th
 - [x] Verified by hand on both platforms: download, list, reader, deletion on leaving.
 - [ ] #96 (logged): KO's first load on the Android emulator was slow; measure on a device.
 
+## Sprint 10 — TTM integrity (2026-09-28, on `feature/sprint-10-ttm-integrity`)
+
+**Why:** the owner asked how quarterly and annual figures are combined. A live check across the universe found
+three gaps (ISSUES #97–#99), one of which withheld Amazon's value. **Owner decisions:** fix all three on an
+isolated branch, merged into `dev` by pull request; for #99, rebuild a lagging line where the inputs are current,
+otherwise use the annual figure and label it, and keep withholding for the three core lines only.
+
+- [x] #98 A twelve-months-ended column in a 10-Q is the TTM, used as filed (AMZN; 1 of 77).
+- [x] #97 A computed annual value (the EBIT proxy) is never carried into the TTM; it's rebuilt from current parts
+      (21 of 77). An old tag for such a line is skipped quietly rather than "dropped as stale" beside a figure.
+- [x] #99 Lagging lines rebuilt (pretax income = net income + income tax; 5 of 77) or labeled on the value; new
+      data check `ttm_other_lines` names them and warns without withholding.
+- [x] Evidence: 27 of 77 companies' TTM values changed, no annual value moved; oracle regenerated deliberately
+      (only JNJ changed; AAPL and KO byte-identical); tests on one synthetic filer in both languages.
+- [x] Found and logged, not fixed: #100 (US-only pretax income used as the total — a tag-map change for review).
+
 ## Backlog — candidate sprints (proposed 2026-09-26, not yet ordered)
 
 Derived from ISSUES, the Sprint 5 carry-overs and PLAN "Later" after the first TestFlight build.

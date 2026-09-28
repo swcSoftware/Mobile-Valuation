@@ -441,3 +441,19 @@ the same commit. What moved:
 Lesson recorded in CLAUDE.md: `cbe9cf3` was committed from a partial `git add` while tests ran green on the
 working tree. Check the tree is clean before trusting a test run.
 
+## Sprint 10 — 2026-09-28 — TTM integrity (on `feature/sprint-10-ttm-integrity`, PR into `dev`)
+
+**Why:** the owner asked how quarterly figures are combined with annual ones. The design (FY + year-to-date −
+prior year-to-date; never a quarter scaled up) was sound, but a live check found 37 of 77 companies with a
+twelve-month line ending months before revenue, and Amazon's value withheld.
+
+**Delivered**
+- #98: a twelve-months-ended column in a 10-Q is used as filed — Amazon is valued again.
+- #97: the estimated operating income is rebuilt from current parts instead of carried from the year (21
+  companies, including JNJ, Merck, Pfizer, Chevron).
+- #99 (owner policy): a lagging line is rebuilt where possible, otherwise labeled with where it came from; a new
+  data check names those lines. None is used silently any more.
+- Found: #100, US-only pretax income used as the total for MCD, ORCL, PG and PYPL — logged for tag-map review.
+
+**Tests**: engine 41 (+3) · core 104 (+4) · Android 27 · iOS 47. Oracle regenerated deliberately (JNJ only).
+

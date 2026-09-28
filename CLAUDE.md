@@ -88,8 +88,8 @@ missing" fixes (Sprint 7), tap-to-define (Sprint 8), and private notes plus the 
 export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"   # no system JDK
 
 # All tests (run from repo root)
-(cd services/valuation-engine && .venv/bin/python -m pytest -q)                        # 38
-(cd apps/android && ./gradlew :valuation-core:desktopTest testDebugUnitTest)           # 100 + 27
+(cd services/valuation-engine && .venv/bin/python -m pytest -q)                        # 41
+(cd apps/android && ./gradlew :valuation-core:desktopTest testDebugUnitTest)           # 104 + 27
 (cd apps/ios && xcodebuild -project ValueLens.xcodeproj -scheme ValueLens \
    -destination 'platform=iOS Simulator,id=CCCBA21C-24A4-488B-B751-EECB523241B9' \
    -derivedDataPath build/DerivedData -configuration Debug test)                      # 47

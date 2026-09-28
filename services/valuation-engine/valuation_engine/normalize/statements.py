@@ -174,6 +174,11 @@ def _ttm_flow_for_tag(tag: str, facts: list[Fact], concept: Concept, fy_value: S
         if concept.unit == "shares":
             return _to_sv(cur, note="Weighted-average shares from latest 10-Q YTD period")
         assert cur.start is not None
+        # A 10-Q that files a twelve-months-ended column (Amazon's cash-flow statement) has already done the
+        # arithmetic: that figure *is* the TTM. Taking it as "year to date" found no annual anchor and fell back
+        # to the 10-K, six months stale (ISSUES #98). Ordinary 10-Qs top out near 9 months and never get here.
+        if MIN_ANNUAL_DAYS <= (cur.duration_days or 0) <= MAX_ANNUAL_DAYS:
+            return _to_sv(cur, derived=False, note=f"Twelve months ended {cur.end}, as filed in the 10-Q")
         # Prior-year comparable YTD (same filing usually includes it)
         prior_start, prior_end = cur.start - timedelta(days=365), cur.end - timedelta(days=365)
         prior = [
@@ -457,6 +462,48 @@ def _fix_share_scale(periods: list[Period], warnings: list[str], current_shares:
             + "); corrected against net income ÷ EPS.")
 
 
+TTM_LAG_DAYS = 100   # the same line as the `ttm_alignment` check's warning
+
+
+def _settle_lagging_ttm(ttm: Period) -> None:
+    """
+    A 10-Q doesn't report every line a 10-K does, so some TTM flows fall back to the annual figure and end months
+    before revenue (ISSUES #99: 37 of 77 filers). Owner policy, 2026-09-28: rebuild a lagging line from current
+    ones where the inputs exist; otherwise keep the annual figure and say so on it. Lines within 100 days of
+    revenue — the ordinary case — are untouched.
+    """
+    anchor_sv = ttm.values.get("revenue") or ttm.values.get("net_income")
+    if anchor_sv is None:
+        return
+    anchor = anchor_sv.period_end
+    flow_keys = {c.key for c in CONCEPTS if c.kind == Kind.FLOW}
+
+    def lagging(key: str) -> bool:
+        sv = ttm.values.get(key)
+        return sv is not None and (anchor - sv.period_end).days > TTM_LAG_DAYS
+
+    def current(key: str) -> bool:
+        return key in ttm.values and not lagging(key)
+
+    # Rebuild: pretax income = net income + income tax, both current (COST, MCD, PYPL, SHOP tag pretax income
+    # only in their 10-Ks). An approximation — net income here includes noncontrolling interests and discontinued
+    # operations — and labeled as one.
+    if lagging("pretax_income") and current("net_income") and current("income_tax"):
+        ni, tax = ttm.values["net_income"], ttm.values["income_tax"]
+        old = ttm.values["pretax_income"]
+        ttm.values["pretax_income"] = SourcedValue(
+            value=ni.value + tax.value, tag="derived", taxonomy="valuelens", accession=ni.accession, form=ni.form,
+            period_end=ni.period_end, period_start=ni.period_start, filed=ni.filed, derived=True,
+            note=f"net_income + income_tax (approximation): pretax income isn't reported in the latest 10-Q; "
+                 f"the last filed figure ends {old.period_end}")
+
+    # Label: everything still lagging keeps the annual figure and says where it came from.
+    for key in sorted(k for k in ttm.values if k in flow_keys and lagging(k)):
+        sv = ttm.values[key]
+        label = f"From the {sv.form} for the period ending {sv.period_end}: the latest 10-Q doesn't report this line"
+        sv.note = f"{label}. {sv.note}" if sv.note else label
+
+
 def fiscal_year_for(end: date) -> int:
     """52/53-week fiscal years can end on Jan 1–7 of the following calendar year (JNJ, etc.)."""
     return end.year - 1 if (end.month == 1 and end.day <= 7) else end.year
@@ -499,7 +546,14 @@ def normalize(cf: CompanyFacts, max_years: int = 10) -> NormalizedFinancials:
     if latest is not None:
         ttm = Period(label="TTM", period_end=latest.period_end, fiscal_year=None, form="10-K+10-Q")
         for c in flows:
-            sv = _ttm_flow(cf, c, latest.values.get(c.key))
+            # A value Alpha computed for the year (the EBIT proxy when OperatingIncomeLoss isn't tagged) is not a
+            # filed figure: carried into the TTM it posed as current while its inputs were 6–9 months older (JNJ,
+            # MRK, IBM… ISSUES #97). Leave it out, and `_derive(ttm)` rebuilds it from the TTM parts.
+            fy = latest.values.get(c.key)
+            computed = fy is not None and fy.taxonomy == "valuelens"
+            sv = _ttm_flow(cf, c, None if computed else fy)
+            if computed and sv is not None and sv.period_end <= latest.period_end:
+                sv = None   # an old tag (JNJ stopped OperatingIncomeLoss years ago): not current; rebuild instead
             if sv:
                 ttm.values[c.key] = sv
                 ttm.period_end = max(ttm.period_end, sv.period_end)
@@ -514,6 +568,7 @@ def normalize(cf: CompanyFacts, max_years: int = 10) -> NormalizedFinancials:
         if stale:
             warnings.append("Dropped stale TTM values (tag no longer reported): " + ", ".join(stale))
         _fix_share_scale([ttm], warnings)
+        _settle_lagging_ttm(ttm)
         # Δ working capital for TTM is measured against the latest fiscal year end (annualized in the normalization)
         _derive(ttm, periods)
         if ttm.period_end == latest.period_end:

@@ -89,6 +89,23 @@ object DataChecks {
                 if (spread <= 10) "Revenue, net income and cash flow all end ${ends.max()}." else "TTM line items end up to $spread days apart — some tags lag a filing.", "revenue", "net_income", "cfo")
         }
 
+        // 4b. Every other twelve-month line (ISSUES #99). A 10-Q doesn't report every line a 10-K does; those lines
+        // use the last annual figure, or are rebuilt from current ones. Owner policy: say so, don't withhold — the
+        // three lines above keep the power to withhold.
+        val anchor = (t?.get("revenue") ?: t?.get("net_income"))?.periodEnd
+        if (t != null && anchor != null) {
+            val others = Concepts.ALL.filter { it.kind == Kind.FLOW && it.key !in setOf("revenue", "net_income", "cfo") }.map { it.key }
+            val annual = others.mapNotNull { k -> t[k]?.takeIf { it.periodEnd.daysUntil(anchor) > Statements.TTM_LAG_DAYS }?.let { k to it } }
+            val rebuilt = others.filter { k -> t[k]?.let { it.taxonomy == "valuelens" && it.note.contains("isn't reported in the latest 10-Q") } == true }
+            val rebuiltText = rebuilt.joinToString(" ") { "${DisplayLabels.concept(it)} was rebuilt from current lines." }
+            if (annual.isEmpty()) add("ttm_other_lines", "Every twelve-month figure is current", "pass",
+                ("Every twelve-month line runs to $anchor. " + rebuiltText).trim())
+            else add("ttm_other_lines", "Every twelve-month figure is current", "warn",
+                ("The latest 10-Q doesn't report these, so the last annual figure is used: " +
+                    annual.joinToString("; ") { (k, sv) -> "${DisplayLabels.concept(k)} (to ${sv.periodEnd})" } + ". " + rebuiltText).trim(),
+                *annual.map { it.first }.toTypedArray())
+        }
+
         // 5. Filing freshness
         fin.ttm?.periodEnd?.let { end ->
             val age = end.daysUntil(today)

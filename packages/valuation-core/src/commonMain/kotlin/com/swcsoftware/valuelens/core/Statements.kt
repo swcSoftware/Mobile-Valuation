@@ -83,6 +83,9 @@ object Statements {
             if (fyValue != null && latestEnd <= fyValue.periodEnd) return fyValue
             val cur = q.filter { it.end == latestEnd }.maxWith(compareBy<Fact> { it.durationDays ?: 0 }.thenBy { it.filed })
             if (c.unit == "shares") return toSv(cur, note = "Weighted-average shares from latest 10-Q YTD period")
+            // A twelve-months-ended column in a 10-Q already *is* the TTM (Amazon; ISSUES #98). Ordinary 10-Qs top
+            // out near 9 months and never get here.
+            if ((cur.durationDays ?: 0) in MIN_ANNUAL_DAYS..MAX_ANNUAL_DAYS) return toSv(cur, note = "Twelve months ended ${cur.end}, as filed in the 10-Q")
             val curStart = cur.start!!
             val priorStart = curStart - 365; val priorEnd = cur.end - 365
             val prior = facts.filter { it.start != null && it.start.near(priorStart, 10) && it.end.near(priorEnd, 10) }
@@ -239,6 +242,31 @@ object Statements {
      * Corrected only when an independent reference agrees on a clean power of 1000, and always noted.
      * Mirror of `_fix_share_scale` in statements.py.
      */
+    /** The same line as the `ttm_alignment` check's warning. */
+    const val TTM_LAG_DAYS = 100
+
+    /**
+     * A 10-Q doesn't report every line a 10-K does, so some TTM flows fall back to the annual figure and end months
+     * before revenue (ISSUES #99). Owner policy, 2026-09-28: rebuild a lagging line from current ones where the
+     * inputs exist; otherwise keep the annual figure and say so on it. Mirror of `_settle_lagging_ttm`.
+     */
+    private fun settleLaggingTtm(t: PeriodCore) {
+        val anchor = (t.values["revenue"] ?: t.values["net_income"])?.periodEnd ?: return
+        val flowKeys = Concepts.ALL.filter { it.kind == Kind.FLOW }.map { it.key }.toSet()
+        fun lagging(k: String) = t.values[k]?.let { it.periodEnd.daysUntil(anchor) > TTM_LAG_DAYS } ?: false
+        fun current(k: String) = k in t.values && !lagging(k)
+        if (lagging("pretax_income") && current("net_income") && current("income_tax")) {
+            val ni = t.values["net_income"]!!; val tax = t.values["income_tax"]!!; val old = t.values["pretax_income"]!!
+            t.values["pretax_income"] = SourcedValueCore(ni.value + tax.value, "derived", "valuelens", ni.accession, ni.form, ni.periodEnd, ni.periodStart, ni.filed,
+                derived = true, note = "net_income + income_tax (approximation): pretax income isn't reported in the latest 10-Q; the last filed figure ends ${old.periodEnd}")
+        }
+        for (k in t.values.keys.filter { it in flowKeys && lagging(it) }.sorted()) {
+            val sv = t.values[k]!!
+            val label = "From the ${sv.form} for the period ending ${sv.periodEnd}: the latest 10-Q doesn't report this line"
+            sv.note = if (sv.note.isNotEmpty()) "$label. ${sv.note}" else label
+        }
+    }
+
     private fun fixShareScale(periods: List<PeriodCore>, warnings: MutableList<String>, currentShares: SourcedValueCore? = null) {
         val corrected = mutableSetOf<String>()
         for (p in periods) {
@@ -303,12 +331,17 @@ object Statements {
         val latest = periods.lastOrNull()
         if (latest != null) {
             val t = PeriodCore("TTM", latest.periodEnd, null, "10-K+10-Q")
-            for (c in flows) ttmFlow(cf, c, latest.values[c.key])?.let { sv -> t.values[c.key] = sv; if (sv.periodEnd > t.periodEnd) t.periodEnd = sv.periodEnd }
+            // A value Alpha computed for the year (the EBIT proxy) is not a filed figure: carried into the TTM it posed
+            // as current while its inputs were 6–9 months older (ISSUES #97). Leave it out; deriveTtm rebuilds it.
+            for (c in flows) ttmFlow(cf, c, latest.values[c.key]?.takeIf { it.taxonomy != "valuelens" })
+                // An old tag (JNJ stopped OperatingIncomeLoss years ago) where the year was computed: not current; rebuild instead.
+                ?.takeUnless { latest.values[c.key]?.taxonomy == "valuelens" && it.periodEnd <= latest.periodEnd }?.let { sv -> t.values[c.key] = sv; if (sv.periodEnd > t.periodEnd) t.periodEnd = sv.periodEnd }
             for (c in instants) ttmInstant(cf, c)?.let { t.values[c.key] = it }
             val stale = t.values.filter { (_, sv) -> sv.periodEnd.daysUntil(t.periodEnd) > 540 }.keys.toList()
             stale.forEach { t.values.remove(it) }
             if (stale.isNotEmpty()) warnings += "Dropped stale TTM values (tag no longer reported): " + stale.joinToString(", ")
             fixShareScale(listOf(t), warnings)
+            settleLaggingTtm(t)
             derive(t, periods)
             if (t.periodEnd == latest.periodEnd) t.form = "10-K"
             ttm = t
