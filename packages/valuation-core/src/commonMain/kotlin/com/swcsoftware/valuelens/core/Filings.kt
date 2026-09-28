@@ -42,6 +42,13 @@ object Filings {
         }.sortedByDescending { it.filed }
     }
 
+    /** "FY2022–FY2023", "TTM", "FY2025 and TTM" — the years a filing supplied, as the list shows them. */
+    fun supplied(periods: List<String>): String {
+        val fy = periods.filter { it != "TTM" }
+        val years = when (fy.size) { 0 -> ""; 1 -> fy[0]; else -> "${fy.first()}–${fy.last()}" }
+        return listOf(years, if ("TTM" in periods) "TTM" else "").filter { it.isNotEmpty() }.joinToString(" and ")
+    }
+
     fun indexUrl(cik: Long, accession: String) =
         "https://www.sec.gov/Archives/edgar/data/$cik/${accession.replace("-", "")}/$accession-index.htm"
 
@@ -70,7 +77,9 @@ object Filings {
         }
         return filings.map { f ->
             val (doc, reportDate) = primary[f.accession] ?: ("" to "")
-            FilingDocument(f, doc.takeIf { it.isNotBlank() }?.let { documentUrl(cik, f.accession, it) }, indexUrl(cik, f.accession), reportDate.takeIf { it.isNotBlank() })
+            val rd = reportDate.takeIf { it.isNotBlank() }
+            FilingDocument(f, doc.takeIf { it.isNotBlank() }?.let { documentUrl(cik, f.accession, it) }, indexUrl(cik, f.accession), rd,
+                title = rd?.let { "${f.form} for the period ending $it" } ?: "${f.form} filed ${f.filed}", supplied = supplied(f.periods))
         }
     }
 

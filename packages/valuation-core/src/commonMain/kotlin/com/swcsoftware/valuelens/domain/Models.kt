@@ -144,6 +144,10 @@ import kotlinx.serialization.Serializable
     @SerialName("index_url") val indexUrl: String,
     /** The period the filing itself reports on (EDGAR's `reportDate`); null when the filing list doesn't say. */
     @SerialName("report_date") val reportDate: String? = null,
+    /** "10-K for the period ending 2024-12-31", or "10-K filed 2025-02-20" when EDGAR doesn't say. */
+    val title: String = "",
+    /** The years this filing supplied: "FY2022–FY2023", "TTM", "FY2025 and TTM". */
+    val supplied: String = "",
 )
 
 // ---- Sprint 1 additions -------------------------------------------------------------------

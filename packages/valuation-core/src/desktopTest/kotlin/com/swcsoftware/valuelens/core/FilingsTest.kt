@@ -51,6 +51,11 @@ class FilingsTest {
         }
         assertEquals("https://www.sec.gov/Archives/edgar/data/1/000000000126000002/x-20260630.htm", docs[0].documentUrl)
         assertEquals("2026-06-30", docs[0].reportDate, "the filing's own period comes from EDGAR's list")
+        assertEquals("10-Q for the period ending 2026-06-30", docs[0].title)
+        assertEquals("10-K filed 2022-02-10", docs[1].title, "no report date: say when it was filed, not a guessed period")
+        assertEquals("FY2020–FY2021", docs[1].supplied)
+        assertEquals("TTM", docs[0].supplied)
+        assertEquals("FY2025 and TTM", Filings.supplied(listOf("FY2025", "TTM")))
         assertNull(docs[1].reportDate, "the older page in this test doesn't carry one")
         assertEquals("https://www.sec.gov/Archives/edgar/data/1/000000000122000001/x-20211231.htm", docs[1].documentUrl)
         assertNull(docs[2].documentUrl, "2019 isn't covered by any page: no document, but still an index link")

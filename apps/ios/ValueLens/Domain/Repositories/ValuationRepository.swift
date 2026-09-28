@@ -53,15 +53,9 @@ struct FilingDocument: Codable, Hashable, Sendable, Identifiable {
     let filing: FilingUsed; let documentUrl: String?; let indexUrl: String
     /// The period the filing itself reports on, from EDGAR's filing list.
     let reportDate: String?
+    /// Worded by the core so both apps describe a filing the same way (non-negotiable 7).
+    let title: String; let supplied: String
     var id: String { filing.accession }
-    /// "10-K for the period ending 2024-12-31", or "10-K filed 2025-02-20" when EDGAR doesn't say.
-    var title: String { reportDate.map { "\(filing.form) for the period ending \($0)" } ?? "\(filing.form) filed \(filing.filed)" }
-    /// "FY2022–FY2023", "TTM", "FY2025 and TTM".
-    var supplied: String {
-        let fy = filing.periods.filter { $0 != "TTM" }
-        let years = fy.count > 1 ? "\(fy.first!)–\(fy.last!)" : (fy.first ?? "")
-        return [years, filing.periods.contains("TTM") ? "TTM" : ""].filter { !$0.isEmpty }.joined(separator: " and ")
-    }
 }
 
 /// A run of text; `key` names the glossary entry it links to (Sprint 8 tap-to-define).

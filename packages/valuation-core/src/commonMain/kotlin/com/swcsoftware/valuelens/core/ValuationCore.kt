@@ -178,10 +178,14 @@ class ValuationCore(
      * filing list is usually already cached; older pages are fetched only for filings missing from it.
      */
     @Throws(Exception::class)
-    fun filingDocumentsJson(reportJson: String, userAgent: String): String {
-        val r = json.decodeFromString<ValuationReport>(reportJson)
+    fun filingDocumentsJson(reportJson: String, userAgent: String): String =
+        json.encodeToString(filingDocuments(json.decodeFromString<ValuationReport>(reportJson), userAgent))
+
+    /** Typed form for Android. */
+    @Throws(Exception::class)
+    fun filingDocuments(r: ValuationReport, userAgent: String): List<com.swcsoftware.valuelens.domain.FilingDocument> {
         val ed = edgar(userAgent)
-        return json.encodeToString(Filings.documents(r.filingsUsed, r.company.cik, ed.submissionsText(r.company.cik)) { ed.submissionsPage(it) })
+        return Filings.documents(r.filingsUsed, r.company.cik, ed.submissionsText(r.company.cik)) { ed.submissionsPage(it) }
     }
     /** `text` split into plain and glossary-linked spans (Expert Mode tap-to-define, Sprint 8). */
     fun glossaryLinkJson(text: String): String = json.encodeToString(Glossary.link(text))
