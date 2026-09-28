@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-26",
+ "generated": "2026-09-28",
  "universe": 77,
  "results": [
   {
@@ -474,7 +474,7 @@
    "cik": 21344,
    "company": "COCA COLA CO",
    "sector": "general",
-   "period": "2026-04-03",
+   "period": "2026-07-03",
    "resolved": [
     "revenue",
     "cost_of_revenue",
@@ -1287,7 +1287,7 @@
    "cik": 1045609,
    "company": "Prologis, Inc.",
    "sector": "reit",
-   "period": "2026-03-31",
+   "period": "2026-06-30",
    "resolved": [
     "revenue",
     "operating_income",
@@ -2481,7 +2481,7 @@
    "cik": 1403161,
    "company": "VISA INC.",
    "sector": "general",
-   "period": "2026-03-31",
+   "period": "2026-06-30",
    "resolved": [
     "revenue",
     "operating_income",
@@ -2570,7 +2570,7 @@
    "cik": 1633917,
    "company": "PayPal Holdings, Inc.",
    "sector": "general",
-   "period": "2026-03-31",
+   "period": "2026-06-30",
    "resolved": [
     "revenue",
     "operating_income",
@@ -2596,6 +2596,7 @@
     "liabilities_and_equity",
     "equity",
     "long_term_debt",
+    "short_term_debt",
     "goodwill",
     "intangibles"
    ],
