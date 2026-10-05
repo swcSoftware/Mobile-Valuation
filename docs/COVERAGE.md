@@ -1,6 +1,6 @@
 # Concept-map coverage
 
-Generated 2026-09-28 by `scripts/coverage_probe.py` over 77 tickers (`scripts/universe.txt`), sector-aware. Regenerate after any change to the tag map; the weekly workflow fails if a company loses a concept it previously resolved.
+Generated 2026-10-05 by `scripts/coverage_probe.py` over 77 tickers (`scripts/universe.txt`), sector-aware. Regenerate after any change to the tag map; the weekly workflow fails if a company loses a concept it previously resolved.
 
 **77 valued · 0 not valued · 0 regressions**
 

@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-28",
+ "generated": "2026-10-05",
  "universe": 77,
  "results": [
   {
@@ -1492,7 +1492,7 @@
    "cik": 320187,
    "company": "NIKE, Inc.",
    "sector": "general",
-   "period": "2026-05-31",
+   "period": "2026-08-31",
    "resolved": [
     "revenue",
     "cost_of_revenue",
@@ -2643,7 +2643,7 @@
    "cik": 920760,
    "company": "LENNAR CORP /NEW/",
    "sector": "general",
-   "period": "2026-05-31",
+   "period": "2026-08-31",
    "resolved": [
     "revenue",
     "operating_income",
