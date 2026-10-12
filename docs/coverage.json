@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-05",
+ "generated": "2026-10-12",
  "universe": 77,
  "results": [
   {
@@ -358,7 +358,7 @@
    "cik": 909832,
    "company": "COSTCO WHOLESALE CORP /NEW",
    "sector": "general",
-   "period": "2026-05-10",
+   "period": "2026-08-30",
    "resolved": [
     "revenue",
     "cost_of_revenue",
@@ -386,7 +386,8 @@
     "liabilities_and_equity",
     "equity",
     "long_term_debt",
-    "short_term_debt"
+    "short_term_debt",
+    "goodwill"
    ],
    "gaps": []
   },
@@ -512,7 +513,7 @@
    "cik": 77476,
    "company": "PepsiCo, Inc.",
    "sector": "general",
-   "period": "2026-06-13",
+   "period": "2026-09-05",
    "resolved": [
     "revenue",
     "cost_of_revenue",
@@ -2401,7 +2402,7 @@
    "cik": 723125,
    "company": "Micron Technology, Inc.",
    "sector": "general",
-   "period": "2026-05-28",
+   "period": "2026-09-03",
    "resolved": [
     "revenue",
     "cost_of_revenue",
