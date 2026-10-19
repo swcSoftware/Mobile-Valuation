@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-12",
+ "generated": "2026-10-19",
  "universe": 77,
  "results": [
   {
@@ -319,7 +319,7 @@
    "ticker": "TSLA",
    "status": "ok",
    "cik": 1318605,
-   "company": "Tesla, Inc.",
+   "company": "TESLA, INC.",
    "sector": "general",
    "period": "2026-06-30",
    "resolved": [
@@ -433,7 +433,7 @@
    "ticker": "PG",
    "status": "ok",
    "cik": 80424,
-   "company": "The Procter & Gamble Company",
+   "company": "PROCTER & GAMBLE Co",
    "sector": "general",
    "period": "2026-06-30",
    "resolved": [
@@ -511,7 +511,7 @@
    "ticker": "PEP",
    "status": "ok",
    "cik": 77476,
-   "company": "PepsiCo, Inc.",
+   "company": "PEPSICO INC",
    "sector": "general",
    "period": "2026-09-05",
    "resolved": [
