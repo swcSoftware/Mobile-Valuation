@@ -1,14 +1,14 @@
 {
  "as_of": "2026-10-16",
- "published_at": "2026-10-19T17:15:41Z",
+ "published_at": "2026-10-20T15:29:09Z",
  "aaa_yield_pct": 6.06,
- "treasury_10y_pct": 5.1,
+ "treasury_10y_pct": 5.09,
  "source": "FRED DAAA / DGS10",
  "history": [
   {
    "date": "2026-10-16",
    "aaa": 6.06,
-   "t10": null
+   "t10": 5.09
   },
   {
    "date": "2026-10-15",
