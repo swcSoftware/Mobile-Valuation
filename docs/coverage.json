@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-19",
+ "generated": "2026-10-26",
  "universe": 77,
  "results": [
   {
@@ -44,7 +44,7 @@
    "ticker": "MSFT",
    "status": "ok",
    "cik": 789019,
-   "company": "MICROSOFT CORPORATION",
+   "company": "Microsoft Corporation",
    "sector": "general",
    "period": "2026-06-30",
    "resolved": [
@@ -203,7 +203,7 @@
    "cik": 1326801,
    "company": "Meta Platforms, Inc.",
    "sector": "general",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "cost_of_revenue",
@@ -230,6 +230,7 @@
     "liabilities_and_equity",
     "equity",
     "long_term_debt",
+    "short_term_debt",
     "goodwill",
     "intangibles"
    ],
@@ -319,9 +320,9 @@
    "ticker": "TSLA",
    "status": "ok",
    "cik": 1318605,
-   "company": "TESLA, INC.",
+   "company": "Tesla, Inc.",
    "sector": "general",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "cost_of_revenue",
@@ -395,7 +396,7 @@
    "ticker": "WMT",
    "status": "ok",
    "cik": 104169,
-   "company": "WALMART INC.",
+   "company": "Walmart Inc.",
    "sector": "general",
    "period": "2026-07-31",
    "resolved": [
@@ -433,9 +434,9 @@
    "ticker": "PG",
    "status": "ok",
    "cik": 80424,
-   "company": "PROCTER & GAMBLE Co",
+   "company": "PROCTER & GAMBLE CO",
    "sector": "general",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "cost_of_revenue",
@@ -552,7 +553,7 @@
    "cik": 200406,
    "company": "Johnson & Johnson",
    "sector": "general",
-   "period": "2026-06-28",
+   "period": "2026-09-27",
    "resolved": [
     "revenue",
     "cost_of_revenue",
@@ -1607,9 +1608,9 @@
    "ticker": "NFLX",
    "status": "ok",
    "cik": 1065280,
-   "company": "NETFLIX INC",
+   "company": "Netflix, Inc.",
    "sector": "general",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "cost_of_revenue",
@@ -1644,7 +1645,7 @@
    "cik": 1166691,
    "company": "COMCAST\u00a0CORPORATION",
    "sector": "general",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "operating_income",
@@ -1717,7 +1718,7 @@
    "cik": 732717,
    "company": "AT&T INC.",
    "sector": "general",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "operating_income",
@@ -1864,7 +1865,7 @@
    "cik": 773840,
    "company": "Honeywell International Inc",
    "sector": "general",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "cost_of_revenue",
@@ -1904,7 +1905,7 @@
    "cik": 100885,
    "company": "UNION PACIFIC CORP",
    "sector": "general",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "operating_income",
@@ -1978,7 +1979,7 @@
    "cik": 936468,
    "company": "LOCKHEED MARTIN CORPORATION",
    "sector": "general",
-   "period": "2026-06-28",
+   "period": "2026-09-27",
    "resolved": [
     "revenue",
     "cost_of_revenue",
@@ -2015,9 +2016,9 @@
    "ticker": "GE",
    "status": "ok",
    "cik": 40545,
-   "company": "GENERAL ELECTRIC CO",
+   "company": "GENERAL ELECTRIC COMPANY",
    "sector": "general",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "operating_income",
@@ -2053,9 +2054,9 @@
    "ticker": "MMM",
    "status": "ok",
    "cik": 66740,
-   "company": "3M CO",
+   "company": "3M COMPANY",
    "sector": "general",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "cost_of_revenue",
@@ -2092,9 +2093,9 @@
    "ticker": "IBM",
    "status": "ok",
    "cik": 51143,
-   "company": "INTERNATIONAL BUSINESS MACHINES CORP",
+   "company": "INTERNATIONAL BUSINESS MACHINES CORPORATION",
    "sector": "general",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "cost_of_revenue",
@@ -2361,7 +2362,7 @@
    "cik": 97476,
    "company": "TEXAS INSTRUMENTS INCORPORATED",
    "sector": "general",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "cost_of_revenue",
@@ -2607,9 +2608,9 @@
    "ticker": "AXP",
    "status": "ok",
    "cik": 4962,
-   "company": "AMERICAN EXPRESS CO",
+   "company": "AMERICAN EXPRESS COMPANY",
    "sector": "financial",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "operating_income",
