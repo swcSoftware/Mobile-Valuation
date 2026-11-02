@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-26",
+ "generated": "2026-11-02",
  "universe": 77,
  "results": [
   {
@@ -44,9 +44,9 @@
    "ticker": "MSFT",
    "status": "ok",
    "cik": 789019,
-   "company": "Microsoft Corporation",
+   "company": "MICROSOFT CORP",
    "sector": "general",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "cost_of_revenue",
@@ -86,7 +86,7 @@
    "cik": 1652044,
    "company": "Alphabet Inc.",
    "sector": "general",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "cost_of_revenue",
@@ -126,7 +126,7 @@
    "cik": 1652044,
    "company": "Alphabet Inc.",
    "sector": "general",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "cost_of_revenue",
@@ -164,9 +164,9 @@
    "ticker": "AMZN",
    "status": "ok",
    "cik": 1018724,
-   "company": "AMAZON COM INC",
+   "company": "AMAZON.COM, INC.",
    "sector": "general",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "cost_of_revenue",
@@ -434,7 +434,7 @@
    "ticker": "PG",
    "status": "ok",
    "cik": 80424,
-   "company": "PROCTER & GAMBLE CO",
+   "company": "PROCTER & GAMBLE Co",
    "sector": "general",
    "period": "2026-09-30",
    "resolved": [
@@ -476,7 +476,7 @@
    "cik": 21344,
    "company": "COCA COLA CO",
    "sector": "general",
-   "period": "2026-07-03",
+   "period": "2026-10-02",
    "resolved": [
     "revenue",
     "cost_of_revenue",
@@ -633,7 +633,7 @@
    "cik": 59478,
    "company": "ELI LILLY AND COMPANY",
    "sector": "general",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "cost_of_revenue",
@@ -951,7 +951,7 @@
    "cik": 70858,
    "company": "BofA Finance LLC",
    "sector": "financial",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "operating_income",
@@ -983,7 +983,7 @@
    "cik": 72971,
    "company": "WELLS        FARGO & COMPANY/MN",
    "sector": "financial",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "operating_income",
@@ -1015,7 +1015,7 @@
    "cik": 886982,
    "company": "The Goldman Sachs Group, Inc.",
    "sector": "financial",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "operating_income",
@@ -1129,7 +1129,7 @@
    "cik": 80661,
    "company": "PROGRESSIVE CORP/OH/",
    "sector": "financial",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "operating_income",
@@ -1193,7 +1193,7 @@
    "cik": 1423689,
    "company": "AGNC INVESTMENT CORP.",
    "sector": "financial",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "net_income",
     "eps_diluted",
@@ -1289,7 +1289,7 @@
    "cik": 1045609,
    "company": "Prologis, Inc.",
    "sector": "reit",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "operating_income",
@@ -1304,6 +1304,7 @@
     "dividends_paid",
     "dividends_per_share",
     "cash",
+    "short_term_investments",
     "total_assets",
     "total_liabilities",
     "liabilities_and_equity",
@@ -1380,9 +1381,9 @@
    "ticker": "AMT",
    "status": "ok",
    "cik": 1053507,
-   "company": "AMERICAN TOWER CORP /MA/",
+   "company": "AMERICAN TOWER CORPORATION",
    "sector": "reit",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "operating_income",
@@ -1680,9 +1681,9 @@
    "ticker": "VZ",
    "status": "ok",
    "cik": 732712,
-   "company": "VERIZON COMMUNICATIONS INC",
+   "company": "Verizon Communications Inc.",
    "sector": "general",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "operating_income",
@@ -1755,7 +1756,7 @@
    "cik": 12927,
    "company": "THE BOEING COMPANY",
    "sector": "general",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "cost_of_revenue",
@@ -2131,7 +2132,7 @@
    "ticker": "ORCL",
    "status": "ok",
    "cik": 1341439,
-   "company": "Oracle Corporation",
+   "company": "ORACLE CORP",
    "sector": "general",
    "period": "2026-08-31",
    "resolved": [
@@ -2245,9 +2246,9 @@
    "ticker": "INTC",
    "status": "ok",
    "cik": 50863,
-   "company": "INTEL CORP",
+   "company": "Intel Corporation",
    "sector": "general",
-   "period": "2026-06-27",
+   "period": "2026-09-26",
    "resolved": [
     "revenue",
     "cost_of_revenue",
@@ -2360,7 +2361,7 @@
    "ticker": "TXN",
    "status": "ok",
    "cik": 97476,
-   "company": "TEXAS INSTRUMENTS INCORPORATED",
+   "company": "TEXAS INSTRUMENTS INC",
    "sector": "general",
    "period": "2026-09-30",
    "resolved": [
@@ -2535,7 +2536,7 @@
    "cik": 1141391,
    "company": "Mastercard Incorporated",
    "sector": "general",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "operating_income",
@@ -2572,7 +2573,7 @@
    "cik": 1633917,
    "company": "PayPal Holdings, Inc.",
    "sector": "general",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "operating_income",
@@ -2608,7 +2609,7 @@
    "ticker": "AXP",
    "status": "ok",
    "cik": 4962,
-   "company": "AMERICAN EXPRESS COMPANY",
+   "company": "AMERICAN EXPRESS CO",
    "sector": "financial",
    "period": "2026-09-30",
    "resolved": [
@@ -2743,9 +2744,9 @@
    "ticker": "FOXA",
    "status": "ok",
    "cik": 1754301,
-   "company": "Fox Corporation",
+   "company": "FOX CORPORATION",
    "sector": "general",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "operating_income",
@@ -2819,7 +2820,7 @@
    "cik": 1713445,
    "company": "Reddit, Inc.",
    "sector": "general",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "cost_of_revenue",
