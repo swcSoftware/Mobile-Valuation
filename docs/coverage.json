@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-02",
+ "generated": "2026-11-09",
  "universe": 77,
  "results": [
   {
@@ -8,7 +8,7 @@
    "cik": 320193,
    "company": "Apple Inc.",
    "sector": "general",
-   "period": "2026-06-27",
+   "period": "2026-09-26",
    "resolved": [
     "revenue",
     "cost_of_revenue",
@@ -593,7 +593,7 @@
    "cik": 731766,
    "company": "UnitedHealth Group Incorporated",
    "sector": "financial",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "cost_of_revenue",
@@ -673,7 +673,7 @@
    "cik": 1551152,
    "company": "AbbVie Inc.",
    "sector": "general",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "cost_of_revenue",
@@ -713,7 +713,7 @@
    "cik": 310158,
    "company": "Merck\u00a0& Co., Inc.",
    "sector": "general",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "cost_of_revenue",
@@ -753,7 +753,7 @@
    "cik": 78003,
    "company": "PFIZER INC",
    "sector": "general",
-   "period": "2026-06-28",
+   "period": "2026-09-27",
    "resolved": [
     "revenue",
     "cost_of_revenue",
@@ -827,7 +827,7 @@
    "cik": 93410,
    "company": "Chevron Corp",
    "sector": "general",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "cost_of_revenue",
@@ -866,7 +866,7 @@
    "cik": 1163165,
    "company": "ConocoPhillips",
    "sector": "general",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "cost_of_revenue",
@@ -919,7 +919,7 @@
    "cik": 19617,
    "company": "JPMORGAN CHASE & CO",
    "sector": "financial",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "operating_income",
@@ -1048,7 +1048,7 @@
    "cik": 316709,
    "company": "SCHWAB CHARLES CORP",
    "sector": "financial",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "operating_income",
@@ -1081,7 +1081,7 @@
    "cik": 1067983,
    "company": "BERKSHIRE HATHAWAY INC",
    "sector": "financial",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "operating_income",
@@ -1160,7 +1160,7 @@
    "cik": 899051,
    "company": "ALLSTATE CORP",
    "sector": "financial",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "operating_income",
@@ -1255,7 +1255,7 @@
    "cik": 726728,
    "company": "REALTY INCOME CORPORATION",
    "sector": "reit",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "operating_income",
@@ -1335,9 +1335,9 @@
    "ticker": "SPG",
    "status": "ok",
    "cik": 1063761,
-   "company": "SIMON PROPERTY GROUP, INC.",
+   "company": "SIMON PROPERTY GROUP,\u00a0INC.",
    "sector": "reit",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "operating_income",
@@ -1459,7 +1459,7 @@
    "cik": 63908,
    "company": "McDONALD\u2019S CORPORATION",
    "sector": "general",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "operating_income",
@@ -1793,7 +1793,7 @@
    "cik": 18230,
    "company": "CATERPILLAR INC",
    "sector": "general",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "cost_of_revenue",
@@ -1939,9 +1939,9 @@
    "ticker": "UPS",
    "status": "ok",
    "cik": 1090727,
-   "company": "UNITED PARCEL SERVICE INC",
+   "company": "United Parcel Service, Inc.",
    "sector": "general",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "operating_income",
@@ -2284,9 +2284,9 @@
    "ticker": "AMD",
    "status": "ok",
    "cik": 2488,
-   "company": "ADVANCED MICRO DEVICES INC",
+   "company": "ADVANCED MICRO DEVICES, INC",
    "sector": "general",
-   "period": "2026-06-27",
+   "period": "2026-09-26",
    "resolved": [
     "revenue",
     "cost_of_revenue",
@@ -2324,7 +2324,7 @@
    "cik": 804328,
    "company": "QUALCOMM INC/DE",
    "sector": "general",
-   "period": "2026-06-28",
+   "period": "2026-09-27",
    "resolved": [
     "revenue",
     "cost_of_revenue",
@@ -2484,7 +2484,7 @@
    "cik": 1403161,
    "company": "VISA INC.",
    "sector": "general",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "operating_income",
@@ -2709,7 +2709,7 @@
    "cik": 1564708,
    "company": "NEWS CORPORATION",
    "sector": "general",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "operating_income",
@@ -2744,7 +2744,7 @@
    "ticker": "FOXA",
    "status": "ok",
    "cik": 1754301,
-   "company": "FOX CORPORATION",
+   "company": "Fox Corp",
    "sector": "general",
    "period": "2026-09-30",
    "resolved": [
@@ -2781,9 +2781,9 @@
    "ticker": "UAA",
    "status": "ok",
    "cik": 1336917,
-   "company": "Under Armour, Inc.",
+   "company": "UNDER ARMOUR, INC.",
    "sector": "general",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "cost_of_revenue",
@@ -2890,7 +2890,7 @@
    "cik": 1594805,
    "company": "Shopify Inc.",
    "sector": "general",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "cost_of_revenue",
@@ -2925,7 +2925,7 @@
    "cik": 1321655,
    "company": "Palantir Technologies Inc.",
    "sector": "general",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "cost_of_revenue",
