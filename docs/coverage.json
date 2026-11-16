@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-09",
+ "generated": "2026-11-16",
  "universe": 77,
  "results": [
   {
@@ -1381,7 +1381,7 @@
    "ticker": "AMT",
    "status": "ok",
    "cik": 1053507,
-   "company": "AMERICAN TOWER CORPORATION",
+   "company": "AMERICAN TOWER CORP /MA/",
    "sector": "reit",
    "period": "2026-09-30",
    "resolved": [
@@ -1457,7 +1457,7 @@
    "ticker": "MCD",
    "status": "ok",
    "cik": 63908,
-   "company": "McDONALD\u2019S CORPORATION",
+   "company": "MCDONALDS CORP",
    "sector": "general",
    "period": "2026-09-30",
    "resolved": [
@@ -1534,7 +1534,7 @@
    "cik": 829224,
    "company": "Starbucks Corporation",
    "sector": "general",
-   "period": "2026-06-28",
+   "period": "2026-09-27",
    "resolved": [
     "revenue",
     "operating_income",
@@ -1550,7 +1550,6 @@
     "dividends_paid",
     "buybacks",
     "dividends_per_share",
-    "gain_on_sale",
     "cash",
     "short_term_investments",
     "receivables",
@@ -2094,7 +2093,7 @@
    "ticker": "IBM",
    "status": "ok",
    "cik": 51143,
-   "company": "INTERNATIONAL BUSINESS MACHINES CORPORATION",
+   "company": "INTERNATIONAL BUSINESS MACHINES CORP",
    "sector": "general",
    "period": "2026-09-30",
    "resolved": [
@@ -2853,7 +2852,7 @@
    "cik": 1769628,
    "company": "CoreWeave, Inc.",
    "sector": "general",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "cost_of_revenue",
