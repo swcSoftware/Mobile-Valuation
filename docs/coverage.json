@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-16",
+ "generated": "2026-11-24",
  "universe": 77,
  "results": [
   {
@@ -1418,9 +1418,9 @@
    "ticker": "HD",
    "status": "ok",
    "cik": 354950,
-   "company": "The Home Depot, Inc.",
+   "company": "HOME DEPOT,\u00a0INC.",
    "sector": "general",
-   "period": "2026-08-02",
+   "period": "2026-11-01",
    "resolved": [
     "revenue",
     "cost_of_revenue",
@@ -1573,7 +1573,7 @@
    "cik": 1744489,
    "company": "WALT DISNEY CO/",
    "sector": "general",
-   "period": "2026-06-27",
+   "period": "2026-10-03",
    "resolved": [
     "revenue",
     "operating_income",
@@ -2283,7 +2283,7 @@
    "ticker": "AMD",
    "status": "ok",
    "cik": 2488,
-   "company": "ADVANCED MICRO DEVICES, INC",
+   "company": "ADVANCED MICRO DEVICES INC",
    "sector": "general",
    "period": "2026-09-26",
    "resolved": [
@@ -2443,7 +2443,7 @@
    "cik": 858877,
    "company": "CISCO SYSTEMS, INC.",
    "sector": "general",
-   "period": "2026-07-25",
+   "period": "2026-10-24",
    "resolved": [
     "revenue",
     "cost_of_revenue",
@@ -2676,7 +2676,7 @@
    "cik": 882184,
    "company": "D.R. Horton, Inc.",
    "sector": "general",
-   "period": "2026-06-30",
+   "period": "2026-09-30",
    "resolved": [
     "revenue",
     "cost_of_revenue",
